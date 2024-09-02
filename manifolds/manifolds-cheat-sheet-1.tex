@@ -1,0 +1,275 @@
+Define a (topological) manifold and give some (counter-)examples
+
+Suppose \( M \) is a topological space. We say that \( M \) is a topological manifold of
+dimension \( n \) or a topological \(n\)-manifold if it has the following properties
+
+1. \( M \) is a Hausdorff space: for every pair of distinct points \( p,q \in M \), there are
+disjoint open subsets \( U, V \subseteq M\) such that \( p \in U \) and \( q \in V \).
+2. \( M \) is second-countable: there exists a countable basis for the topology of \( M \).
+3. \( M \) is locally Euclidean of dimension \( n \): each point of \( M \) has a neighborhood
+that is homeomorphic to an open subset of \( \mathbb{R}^n \).
+The third property means, more specifically, that for each \( p \in M \) we can find:
+
+An open subset \( U \subseteq M \) containing p, an open subset \( \hat{U} \subseteq \mathbb{R}^n \), and
+a homeomorphism \( \phi : U \to \hat{U} \).
+
+Examples of manifolds are \( \mathbb{R}^n \) itself, the space of matrices \( \text{Mat}_n(\mathbb{R}) \)
+the projective space \( P_n(\mathbb{R}) \), the spheres \( S^n \) and cubes \( C^n \)
+
+Standard counterexamples are the real line with two origins, 
+defined as the disjoint union of \( A \times \mathbb{R}, B \times \mathbb{R} \) and taking the quotient with respect to
+the equivalence relation \( (A, x) \sim (B, y) \) if \( x = y \and x \neq 0, y \neq 0 \). Then there can't be found
+any 2 disjoint open neighborhoods containing \( (A, 0) \) and the other \( (B, 0) \).
+The Cantor set or \( \mathbb{Q} \) are totally disconnected, hence do not allow for any neighborhood
+around a point, which would be homeomorphic to some subset of \( \mathbb{R} \).
+
+
+Define the different notions of connectedness and their relation to manifolds
+
+A top. space \( (X, \tau) \) is
+1. connected if there do not exist two disjoint, nonempty, open subsets of \( X \) whose
+union is \( X \);
+2. path-connected, if every pair of points in \( X \) can be joined by a path in \( X \); and
+3. locally path-connected if \( X \) has a basis of path-connected open subsets.
+
+Let \( M \) be a topological manifold.
+(a) \( M \) is locally path-connected.
+(b) \( M \) is connected if and only if it is path-connected.
+(c) The components of \( M \) are the same as its path components.
+(d) \( M \) has countably many components, each of which is an open subset of \( M \) and
+a connected topological manifold.
+
+
+Define the compactness and similar constructions
+
+Compactness:
+Let \( A \) be a subset of a topological space \( (X, \tau) \),
+Then \( A \) is said to be compact if for every set \( I \) and every family of open sets, 
+\( O_i, i \in I \), s.t. \( A \subseteq \cup_{i \in I} O_i \) (definition of open covering) there exists
+a finite subfamily/subcovering \( O_{i_1}, O_{i_2}, \dots, O_{i_n} \) s.t. \( A \subseteq \cup_{i=0}^{\infty} O_i \)
+
+Some useful propositions are.
+1. Every closed subset of a compact set is compact.
+2. A compact subset of a Hausdorff top. space is closed.
+3. Let \( f : (X, \tau) \to (Y, \tau_1) \) be a cont. surjective map. If \( (X, \tau) \) is compact, then \( (Y, \tau_1) \) is compact.
+4. Let \( A \) be a compact subset of a metric space \( (X, d) \), where \( d \) is the metric.
+   Then A is closed and bounded.
+5. The converse of 4 is the Generalized Heine Borel Theorem it holds for example in \( \mathbb{R}^n \) for \( n < \infty \), so also for \( \mathbb{C}^n = \mathbb{R}^{2n}\),
+
+The finite intersection property F.I.P. requires from a family \( \mathcal{F} \) of subsets of \( X \) that for any finite number 
+of members in \( \mathcal{F} \), \( \cap_{i \in I} F_i  \neq \emptyset \), \( |I| < \infty \).
+We then have the equivalent characterization a set \( A \) is compact iff. every family of closed subsets in A
+with the F.I.P. additionally satisfies \( \cap_{F \in \mathcal{F}} F \neq \emptyset \).
+
+Precompact or relatively compact:
+A set \( A \) is precompact, if \( \bar{A} \) is compact.
+
+Locally compact
+Each point \( x \) in \( X \) has at least one neighborhood, which is compact.
+
+We have the fact that every topological manifold is locally compact.
+
+Let \( M \) be a topological space. A collection \( \mathcal{F} \) of subsets of \( M \) is said to be locally
+finite if each point of \( M \) has a neighborhood that intersects at most finitely many
+of the sets in \( \mathcal{F} \). Given a cover \( \mathcal{U} \) of \( M \); another cover \( \mathcal{V} \) is called a refinement of
+\( \mathcal{U} \) if for each \( V \in \mathcal{V} \) there exists some \( U \in \mathcal{U} \) such that \( V \subseteq U \). 
+We say that \( M \) is, paracompact if every open cover of \( M \) admits an open, locally finite refinement.
+
+Note that if \( \mathcal{F} \) is locally finite then 
+\( \{\bar{F}| F \in \mathcal{F}\}   \) is also locally finite
+\( \overline{\cup_{F \in \mathcal{F}} F} = \cup_{F \in \mathcal{F}} \bar{F}\)
+
+Every topological manifold is paracompact. In fact, given a topological manifold M; an open cover \( \mathcal{F} \) of M;
+and any basis \( \mathcal{B} \) for the topology of M; there exists a countable, locally finite open
+refinement of \( \mathcal{F} \) consisting of elements of \( \mathcal{B} \).
+This was stated without proof in the lecture.
+
+
+
+Define an atlas of a manifold and state some facts about transition maps
+
+Let \( M \) be a topological n-manifold. If \( (U, \phi), (V, \psi) \) are two charts such that
+\( U \cap V \neq \emptyset \), the composite map \( \psi \circ \phi^{-1} : \phi(U \cap V) \to \psi(U \cap V)\) 
+is called the transition map from \( \phi \) to \( \psi \). It is a composition of homeomorphisms, and
+is therefore itself a homeomorphism. 
+
+Two charts \( (U, \phi), (V, \psi) \) are said to be
+smoothly compatible if either \( U \cap V = \emptyset \) or the transition map is a diffeomorphism. 
+Since \(\phi(U \cap V), \psi(U \cap V)\) are open subsets of \( \mathbb{R}^n \), smoothness
+of this map is to be interpreted in the ordinary sense of having continuous partial
+derivatives of all orders.
+
+We define an atlas for \( M \) to be a collection of charts whose domains cover \( M \).
+An atlas \( \mathcal{A} \) is called a smooth atlas, if any two charts in \( \mathcal{A} \) are 
+smoothly compatible with each other. A weaker notion is, if we only require 
+\( \psi \circ \phi^{-1} \in C^{k}(\mathbb{R}^n, \mathbb{R}^n)\).
+
+A smooth atlas \( \mathcal{A} \) on \( M \) is maximal if it is
+not properly contained in any larger smooth atlas. This just means that any chart that
+is smoothly compatible with every chart in \( \mathcal{A} \) is already in \( \mathcal{A} \).
+A smooth manifold \( M \) is then \( (M, \mathcal{A}) \), where \( \mathcal{A} \) is maximal 
+(and sometimes referred to as smooth structure).
+
+Potentially insert here a picture for reference.
+
+Define submersions, immersions and embeddings
+and provide proofs of their local representation theorems.
+
+Let \(f : M \to N\) be a smooth (or \( C^k(M, N) \) ) map.
+
+(1) \(f\) is a submersion at \(p\) if \(df_p : T_p M \to T_{f(p)} N\) is surjective.
+(2) \(f\) is an immersion at \(p\) if \(df_p : T_p M \to T_{f(p)} N\) is injective. 
+We say \(f\) is a submersion/immersion if it is a submersion/immersion at each point.
+(3) \(f\) is an embedding if \( f \) if it is an immersion and a homeomorphism onto its image.
+
+Naturally
+If \(f\) is a submersion, then \(\text{dim}\ M ≥ \text{dim}\ N\).
+If \(f\) is an immersion, then \(\text{dim}\ M \leq \text{dim}\ N\).
+If \(f\) is a submersion/immersion at \( p \), then it is a submersion/immersion near \( p \).
+
+If \( m \geq n \) then
+\(\pi: \mathbb{R}^m \to \mathbb{R}^n, \quad (x^1, \dots, x^m) \mapsto (x^1, \dots, x^n)\)
+is a submersion
+
+If \( m \leq n \) then
+\( \iota: \mathbb{R}^m \to \mathbb{R}^n, \quad (x^1, \dots, x^m) \mapsto (x^1, \dots, x^m, 0, \dots, 0) \)
+is an immersion.
+
+Local representation of submersions theorem (Canonical Submersion Theorem)
+Let \(f : M \to N\) be a submersion at \(p \in M\), then \(m = \dim M \geq n = \dim N\), and there exists charts \((\varphi_1, U_1, V_1)\) around \(p\) and \((\psi_1, X_1, Y_1)\) around \(q = f(p)\) such that
+
+\(\psi_1 \circ f \circ \varphi_1^{-1} = \pi |_{V_1}.\)
+
+Local representation of immersions theorem (Canonical Immersion Theorem)
+Let \(f : M \to N\) be an immersion at \(p \in M\), then \(m = \dim M \leq n = \dim N\), and there exists charts \((\varphi_1, U_1, V_1)\) around \(p\) and \((\psi_1, X_1, Y_1)\) around \(q = f(p)\) such that
+
+\(\psi_1 \circ f \circ \varphi_1^{-1} = \iota |_{V_1}.\)
+
+In the lecture the Canonical Immersion Theorem was covered under the name "Local representation of immersions" and its proof goes as follows
+
+Take a chart \((\varphi, U, V)\) near \(p\) and a chart \((\psi, X, Y)\) near \(f(p)\) so that \(f(U) \subset X\). Since \(f\) is an immersion,
+\(d(\psi \circ f \circ \varphi^{-1})_{\varphi(p)} = d\psi_{q} \circ df_{p} \circ d(\varphi^{-1})_{\varphi(p)} : T_{\varphi(p)}V = \mathbb{R}^m \to T_{q}Y = \mathbb{R}^n\)
+is injective. Denote \(F = \psi \circ f \circ \varphi^{-1}\). Then the Jacobian matrix \((\frac{\partial F^i}{\partial x^j})\) is an \(m \times n\) matrix of rank \(m\) at \(\varphi(p)\). 
+
+By reordering the coordinates if necessary, we may assume the sub-matrix
+\(\frac{\partial F^i}{\partial x^j}, \quad 1 \leq i \leq m, 1 \leq j \leq m\)
+is nonsingular at \(\varphi(p)\). (Note that this re-ordering procedure can be done by modifying \((\psi, X, Y)\) to another chart \((\tilde{psi}, X_1, Y_1)\), and thus we really have \(F = \tilde{\psi} \circ f \circ \varphi^{-1}\).) Define
+\(G : V \to \mathbb{R}^m, \quad (x^1, \dots, x^m, y^1, \dots, y^{n-m}) \mapsto F(x) + (0, \dots, 0, y_1, \dots, y_{n-m})\)
+
+Then \(dG_{\varphi(p)}\) is nonsingular at \( (\phi(p), 0, \dots, 0) \). By the inverse function theorem, there is a neighborhood \(V_0\) of \(\varphi(p)\) so that \(G\) is a diffeomorphism from \(V_0\) to \(G(V_0)\). Let \(H\) be the inverse of \(G\) on \(G(V_0)\). Note that \(F = G \circ \iota \). Let \(U_1 = \varphi^{-1}(V_0)\), \(V_1 = G(V_0)\), and \(\psi_1 = H \circ \psi \). Then \((\psi, U_1, V_1)\) is a chart near \(f(p)\), and
+
+\(\psi_1 \circ f \circ \varphi^{-1} = (H\circ \psi) \circ f \circ \phi^{-1} = H \circ F = H \circ G \circ \iota = \iota.\)
+
+Moreover with respect to the subspace topology \( f \) is on \( U_1 \) to \( V_1 \) an embedding.
+
+The proof for submersion is almost the same with the modification that \( G : V \to \mathbb{R}^m,\ (x_1, \dots, x^m) \to (F^1, \dots, F^n, x^{n+1}, \dots, x^m) \)
+and we instead modify \( \phi_1 = G \circ \phi \).
+
+(This results generalize without issues to \( C^k(M) \).
+
+\( c^{k+1}, c^n \)
+
+Define (embedded) submanifolds and immersed submanifolds
+
+We will be a little more specific and call them embedded submanifolds instead of the lecture just referring to them as submanifolds.
+
+If \(U\) is an open subset of \(\mathbb{R}^m\) and \(k \in \{0, \dots, m\}\), a \(k\)-dimensional slice of \(U\) (or simply a \(k\)-slice) is any subset of the form 
+\(C = \{(x^1, \dots, x^k, x^{k+1}, \dots, x^n) \in U : x^{k+1} = 0, \dots, x^m = 0\}\)
+for some constants \(c^{k+1}, \dots, c^n\). (When \(k = m\), this just means \(C = U\).) Clearly, every \(k\)-slice is homeomorphic to an open subset of \(\mathbb{R}^k\). 
+More abstractly if \( (U, \phi) \) is a chart of a manifold \( M \) and \( C = S \cap U \) with \( \phi(C) \) being a \( k \)-slice of \( \phi(U) \), we simply 
+call \( C \) a \( k \)-slice of \( U \)
+
+Given a subset \(S \subseteq M\) and a nonnegative integer \(k\), we say that \(S\) satisfies the local \(k\)-slice condition if each point of \(S\) is contained in the domain of a smooth chart \((U, \varphi)\) for \(M\) such that \(S \cap U\) is a single \(k\)-slice in \(U\). Any such chart is called   
+a slice chart for \(S\) in \(M\), and the corresponding coordinates \((x^1, \dots, x^m)\) are called slice coordinates.
+
+If \( S \subset M \) is a subset that satisfies the local k-slice condition, then with the subspace topology, \( S \) is a topological man-
+ifold of dimension \( k \), and it has a smooth structure making it into a k-dimensional embedded submanifold of M which was of dimension \( m \).
+This situation can be abbreviated by, \( \forall x \in S, \exists (U, \phi) \in \mathcal{A}_M, \phi(M \cap U) = (\mathbb{R}^k \times 0_{m-k}) \cap \phi(U) \).
+
+Submanifolds with \( k=1 \) are called curves, \( k=2 \) surfaces and \( k = m - 1 \) as hypersurfaces. The number \( n = m - k \) is referred to as the codimension of \( S \).
+
+A common alternative definition is to say that an embedded submanifold \( S \subseteq M \) is a manifold in the subspace topology, endowed with a smooth
+structure to which the inclusion map \( \iota : S \to M \) is a smooth embedding. 
+This definition is completely equivalent to the one of the lecture, which is made by precise by Corollary 3.2.6
+
+\( S \subset M \) is a differentiable submanifold of \( M \) if and only if there is a differentiable manifold \( \tilde{S} \) and smooth embedding
+\( f : \tilde{S} \to M \) with \( f(\tilde{S}) = S \). Further \( f : \bar{S} \to S \) must be then a smooth diffeomorphism.
+
+An immersed submanifold \( S \) of \( M \) is a subset \( S \subseteq M \) endowed with a topology (not necessarily the subspace topology)
+that makes it a manifold and a smooth structure with respect to which the inclusion map \( \iota : S \to M\) is a smooth immersion.
+
+Note that immersed submanifolds are very much dependend on the specific choice of \( \iota \), since the topology of \( M \) does not fix the one of \( S \)
+and with that the smooth structure. Thus two different looking \( \iota \) may define conceptually the same manifold (such as the Lemniscate given as an example in the lecture), but do not so under strict consideration.
+
+State and prove the constant rank theorem and with that regular value theorem
+
+Constant rank theorem
+Suppose \( M \) and \( N \) are smooth manifolds of dimensions \( m \) and \( n \), respectively, and \( F:M\rightarrow N \) is a smooth map with constant rank \( r \). 
+For each \( p\in M \) there exist smooth charts \((U, \varphi)\) for \( M \) centered at \( p \) and \((V, \psi)\) for \( N \) centered at \( F(p) \) such that \( F(U)\subseteq V \), in which \( F \) has a coordinate representation of the form 
+
+\(F(x^{1},\dots,x^{r},x^{r+1},\dots,x^{m})=(x^{1},\dots,x^{r},0,\dots,0).\quad \text{4.1}\)
+In particular, if \( F \) is a smooth submersion, this becomes 
+\( F(x^{1},\dots,x^{n},x^{n+1},\dots,x^{m})=(x^{1},\dots,x^{n}) \)
+
+and if \(F\) is a smooth immersion, it is 
+
+\(\hat{F}(x^{1},\dots,x^{m})=(x^{1},\dots,x^{m},0,\dots,0).\)
+
+Proof. Because the theorem is local, after choosing smooth coordinates we can replace \( M \) and \( N \) by open subsets \( U\subseteq\mathbb{R}^{m} \) and \(V\subseteq\mathbb{R}^{n}\). The fact that \(DF(p)\) has rank \(r\) implies that its matrix has some \(r\times r\) submatrix with nonzero determinant. 
+By reordering the coordinates, we may assume that it is the upper left submatrix,   
+\((\partial F^i / \partial x^j)\) for \(i,j=1,...,r\). Let us relabel the standard coordinates as \((x,y)= (x^{1},...,x^{r},y^{1},...,y^{m-r})\) in \(\mathbb{R}^{m}\) and 
+\((v,w)=(v^{1},\dots,v^{r},w^{1},\dots,w^{n-r})\) in \(\mathbb{R}^{n}\). By initial translations of the coordinates, we may assume without loss of generality that \(p=(0,0)\) and \(F(p)=(0,0)\). If we write \(F(x,y)=(Q(x,y),R(x,y))\) for some smooth maps \(Q:U\rightarrow\mathbb{R}^{r}\) and \(R: U\rightarrow\mathbb{R}^{n-r}\), then our hypothesis is that   
+
+\((\partial Q / \partial x^j)\) is nonsingular at \((0,0)\). 
+
+Define \(\varphi: U \rightarrow \mathbb{R}^m\) by \(\varphi(x,y)=(Q(x,y),y)\). Its total derivative at \((0,0)\) is 
+
+\[D\varphi(0,0)=
+\begin{pmatrix}
+\frac{\partial Q^{l}}{\partial x^{j}}(0,0) & \frac{\partial Q^{l}}{\partial y^{j}}(0,0) \\
+0 & \delta_{j}^{i}
+\end{pmatrix}
+\] 
+
+The matrix \(D\varphi(0,0)\) is nonsingular by virtue of the hypothesis. 
+Therefore, by the inverse function theorem, there are connected neighborhoods \(U_{0}\) of (0,0) and \(\tilde{U}_{0}\) of \(\varphi(0,0)=(0,0)\) such that \(\varphi: U_0 \rightarrow \tilde{U}_0\) is a diffeomorphism. 
+By shrinking \(U_{0}\) and \(\tilde{U}_{0}\) if necessary, we may assume that \(\tilde{U}_{0}\) is an open cube. 
+Writing the inverse map as \(\varphi^{-1}(x,y)=(A(x,y),B(x,y))\) for some smooth functions 
+\(A: \tilde{U}_0 \rightarrow \mathbb{R}^r\) and \(B:\tilde{U}_{0}\rightarrow\mathbb{R}^{m-r}\), we compute
+
+\((x,y)=\varphi(A(x,y),B(x,y))=(\underline{Q}(A(x,y),B(x,y)),B(x,y)). \qquad (4.5)\)
+
+Comparing \(y\) components shows that \(B(x,y)=y,\) and therefore \(\varphi^{-1}\) has the form
+
+\(\varphi^{-1}(x,y)=(A(x,y),y)\)
+
+On the other hand, \(\varphi\circ\varphi^{-1}=Id\) implies \(Q(A(x,y),y)=x,\) and therefore \(F\circ\varphi^{-1}\) has the form
+
+\(F\circ\varphi^{-1}(x,y)=(x,\tilde{R}(x,y))\)
+
+where \(R: \tilde{U}_{0}\rightarrow\mathbb{R}^{n-r}\) is defined by \(\tilde{R}(x,y)=R(A(x,y),y)\). The Jacobian matrix of this composite map at an arbitrary point \((x,y)\in\tilde{U}_{0}\) is
+
+\[D(F\circ\varphi^{-1})(x,y)=
+\begin{pmatrix}
+\delta_{j}^{i} & \frac{\partial\tilde{R}^{l}}{\partial x^{j}}(x,y) \\
+0 & \frac{\partial\tilde{R}^{i}}{\partial y^{j}}(x,y)
+\end{pmatrix}.\]
+
+Since composing with a diffeomorphism does not change the rank of a map, this matrix has rank \(r\) everywhere in \(U_{0}\). The first \(r\) columns are obviously linearly independent, so the rank can be \(r\) only if the derivatives \(\partial \tilde{R}^{i} / \partial y^{j}\) vanish identically on \(\tilde{U}_{0}\), which implies that \(\tilde{R}\) is actually independent of \((y^{1},...,y^{m-r})\). (This is one reason we arranged for \(\tilde{U}_{0}\) to be a cube.) Thus, if we let \(S(x)=\tilde{R}(x,0)\), then we have
+
+\(F\circ\varphi^{-1}(x,y)=(x,S(x)) \qquad (4.6)\)
+
+To complete the proof, we need to define an appropriate smooth chart in some neighborhood of \((0,0)\in V\). Let \(V_{0}\subseteq V\) be the open subset defined by \(V_{0}=\{(v,w)\in V:(v,0)\in\tilde{U_{0}}\}\). Then \(V_{0}\) is a neighborhood of (0,0). Because \(U_{0}\) is a cube and \(F\circ\varphi^{-1}\) has the form (4.6), it follows that \(F\circ\varphi^{-1}(\tilde{U}_{0})\subseteq V_{0}\), and therefore \(F(U_{0})\subseteq V_{0}\). Define \(\psi:V_{0}\rightarrow\mathbb{R}^{n}\) by \(\psi(v,w)=(v,w-S(v))\). This is a diffeomorphism onto its image, because its inverse is given explicitly by \(\psi^{-1}(s,t)=(s,t+S(s))\); thus \((V_{0},\psi)\) is a smooth chart. It follows from (4.6) that
+
+\(\psi \circ F \circ \varphi^{-1} |_{\tilde{U}_0} = \psi \circ (x, S(x)) = (x, S(x) - S(x)) = (x, 0) = \pi |_{\tilde{U}_0}.\)
+
+
+The regular value theorem also known as constant-rank level set theorem states then
+Let \( M \) and \( N \) be smooth manifolds, and let \( \Phi : M \to N \)W  be a smooth map with constant rank \( r \). 
+Each level set of \( \Phi \) is a properly embedded submanifold of codimension \( r \) in \( M \) .
+
+Write \(m = \dim M\), \(n = \dim N\), and \(k = m - r\). Let \(c \in N\) be arbitrary, and let \(S\) denote the level set \(\Phi^{-1}(c) \subset M\). From the rank theorem, for each \(p \in S\) there are smooth charts \((U, \varphi)\) centered at \(p\) and \((V, \psi)\) centered at \(c = \Phi(p)\) in which \(\Phi\) has a coordinate representation of the form (4.1), and therefore \(S \cap U\) is the slice   
+ 
+\(\{(x^1, \dots, x^r, x^{r+1}, \dots, x^m) \in U : x^1 = \dots = x^r = 0\}.\)
+
+Thus \(S\) satisfies the local \(k\)-slice condition, so it is an embedded submanifold of dimension \(k\). It is closed in \(M\) by continuity, so it is properly embedded.

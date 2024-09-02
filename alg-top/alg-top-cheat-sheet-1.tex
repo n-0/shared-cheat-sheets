@@ -1,0 +1,265 @@
+Define an \( n \)-simplex
+
+Fix an ambient space \(\mathbb{R}^N\) and \(n \in \mathbb{N}\). 
+
+\(n+1\) points \(p_0, p_1, ... , p_n \in \mathbb{R}^N\) are (affine linear) independent if the differences \(p_1 - p_0, ... , p_n - p_0 \in \mathbb{R}^N\) are linearly independent. 
+Equivalently, if they are not contained in an \((n-1)\)-dimensional affine subspace of \(\mathbb{R}^N\).
+
+An \(n\)-simplex in \(\mathbb{R}^N\) (or \(n\)-dimensional simplex, or just simplex, if we don't want to specify its dimension) is the convex hull of \(n+1\) affine linear independent points 
+\(p_0, \dots, p_n\): 
+\(\langle p_0, p_1, \dots, p_n \rangle := \{ \sum_{i=0}^n t_i p_i \mid 0 \leq t_i \leq 1, \sum_{i=0}^n t_i = 1 \} \subset \mathbb{R}^N.\)
+The points \(p_0, \dots, p_n\) are the vertices of the simplex.
+
+An ordered simplex is a simplex together with an ordering of the vertices.
+
+A face of a simplex \(\langle p_0, ... , p_n \rangle\) is the simplex spanned by a subset of the vertices \(\{ p_0, \dots, p_n \}\). The vertices are thus the 0-dimensional faces. 
+The 1-dimensional faces are called \textbf{edges}, and the \((n-1)\)-dimensional faces are called facets.
+
+Let \(e_0, \dots, e_n \in \mathbb{R}^{n+1}\) be the standard basic vectors. Their convex hull is the standard simplex in \(\mathbb{R}^{n+1}\).
+\(\Delta^n := \langle e_0, \dots, e_n \rangle = \{ (t_0, ... , t_n) \mid 0 \leq t_i \leq 1, \sum_{i=0}^n t_i = 1 \}.\) 
+We denote its \(i\)-th facet as 
+\(\Delta_i^n := \langle e_0, \dots, \hat{e}_i , \dots, e_n \rangle.\)
+
+Note that any \(n\)-simplex \(\langle p_0, \dots, p_n \rangle \subseteq \mathbb{R}^N\) is homeomorphic to the standard \(n\)-simplex \(\Delta^n\) via the map
+\(\Delta^n \rightarrow \langle p_0, \dots, p_n \rangle\)
+\((t_0, ... , t_n) \mapsto t_0 p_0 + \dots + t_n p_n\) 
+
+
+Define affine spaces and convex/affine hulls
+
+An affine space is a set \(A\) together with a vector space \(V\) over a field \(K\), and an operation 
+\(\ -\ : A \times V \to A,\ (a, v) \mapsto a - v \in A \)
+satisfying the Weyl axioms:
+
+1. \( \forall a \in A, v \in V \) there is a unique \( b \in A \) s.t. \( b - a = v \)
+2. \( \forall a, b, c \in A (c-b) + (b-a) = c-a \)
+
+Then \( - \) is free and transitive (from the first). In particular for any fixed \( a \in A \)
+\( a - \cdot \) is bijection from \( V \) to \( A \).
+One can define then the associate addition via \( a - v = b \iff b + v = a \).
+
+Essentially, an affine space allows you to move around using vectors, but it doesn't have a fixed origin for performing operations like addition or scalar multiplication directly on points.
+One can always turn them into a vector space, by choosing some point \( c \) as the origin and converting all other points \( b \) into vectors by the vector from \( c - b \).
+Classical examples in euclidean space are "subspaces" which do not contain the origin (otherwise we could take \( A = V \)).
+
+Special operations specific to affine spaces are affine transformations \( f : (A, V_K) \to (B, W_K) \) (same underlying field)
+which satisfy that there is some linear map \( l : V \to W \) s.t. \( m(x - y) = f(x) - f(y) \). If \( f : A \to A \) it must be an
+automorphism and can be written as an invertible linear transformation and a translation (e.g. \( f(x) = Mx + b \).
+If an origin is fixed then \( b \) is always the image of this point under f.
+They preserve collinearity, parallelism, convexity, ratios of lengths of parallel line segments and barycenters,
+but not necessarily distances or angles.
+
+Convex hulls
+
+A set of points \( S \) in Euclidean space is convex if \( \forall a, b \in S \implies ta + (1 - t)b \in S,\ t \in [0, 1] \)
+Equivalently its the intersection of all convex sets containing \( S \) or the set of all convex combinations of points in \( S \),
+which is \( \{ \sum_{i} \alpha_i x_i | x_i \in S,\ \alpha_i \geq 0, \sum_i \alpha_i = 1\} \)
+
+
+Affine hulls
+Is similarly defined the same, except we do not require the \( \alpha_i \) to be non-negative.
+
+Define geometric simplicial complexes and triangulations. 
+
+A (geometric) simplicial complex in \(\mathbb{R}^N\) is a collection \(S\) of simplices in \(\mathbb{R}^N\) satisfying the conditions:
+
+1. The faces of every simplex in \(S\) are also in \(S\).
+2. The intersection of two simplices \(\sigma_1, \sigma_2 \in S\) is either empty or a face of both \(\sigma_1\) and \(\sigma_2\)
+(and hence also in \(S\)). 
+
+Simplifying constructions even more one defines abstract simplicial complexes as \( (V, \Sigma) \), where \( V \) is a set of vertices \( V \)
+and \( \Sigma \) the faces s.t. \( v \in V \implies \{v\} \in \Sigma \), \( U \in \Sigma \), \( U' \subseteq U \implies U' \in \Sigma \). This does not require some ambient space.
+
+Let \(S\) be a geometric simplicial complex in \(\mathbb{R}^N\). The corresponding polyhedron is 
+
+\( |S| := \bigcup_{\sigma \in S} \sigma \subset \mathbb{R}^N.\)
+
+A topological space \(X\) is called \textbf{triangulable} if it is homeomorphic to the polyhedron \(|S|\) of some geometric simplicial complex \(S\) (in some \(\mathbb{R}^N\)). The simplicial complex \(S\) together with an homeomorphism \(|S| \to X\) is called a \textbf{triangulation} of \(X\).
+
+A tetrahedron is a triangulation of \( S^2 \)
+
+We can think of a cylinder as a square with two opposite sides identified. Splitting this
+rectangle by one diagonal does not give a triangulation, since the intersection of the two
+triangles consists of two segments. One needs actually at least 6 triangles to triangulate
+the cylinder (Exercise).
+
+The union of two segments/arcs at their ends is not a triangulation of \( S^1 \) , since the
+intersection of the segments \( a_1, a_2 \) consists of two points \( x_1, x_2 \), i.e. two simplices, so 
+\( x_2 \) is not a face of \( a_1 \) and \( x_1 \) not of \( x_2 \).
+
+Give the abstract definition of chain complexes and describe the special case of simplicial complexes 
+
+An abelian group \(A\) is graded if it is the direct sum \(A = \bigoplus_{n \in \mathbb{Z}} A_n\) of certain subgroups \(A_n \subseteq A\). 
+A homomorphism \(f: A = \bigoplus_{n \in \mathbb{Z}} A_n \to B = \bigoplus_{n \in \mathbb{Z}} B_n\) between graded groups is a graded homomorphism of degree \(r\) if \(f(A_n) \subseteq B_{n+r}\) 
+for every \(n \in \mathbb{Z}\).
+
+Thus a complex can be considered as a graded group, i.e. as the direct sum \(A = \bigoplus_{n \in \mathbb{Z}} A_n\) together with an endomorphism \(d: A \to A\) of degree -1 such that \(d^2 = 0\). 
+
+Let \(A_\bullet\) be a chain complex. 
+
+1. The elements of the subgroups \(B_n(A_\bullet) := \text{im} d_{n+1}\) and \(Z_n(A_\bullet) := \ker d_n\) are called \(n\)-boundaries and \(n\)-cycles of \(A_\bullet\), and by the condition \(d^2 = 0\) it holds \(B_n(A_\bullet) \subseteq Z_n(A_\bullet)\).
+2. The quotient \(H_n(A_\bullet) := Z_n(A_\bullet) / B_n(A_\bullet) = \ker d_n / \text{im } d_{n+1}\) is called the \(n\)-th homology group of the complex \(A_\bullet\).
+3. Two \(n\)-chains \(a, a' \in A_n\) are \textbf{homologous}, written \(a \sim a'\), if the difference \(a' - a\) is a boundary \(d_{n+1}(b)\) for some \(b \in A_{n+1}\). If \(a\) or \(a'\) is a cycle, then so is the other, and they define the same class in \(H_n(A_\bullet)\).
+
+E.g. a simplicial \(n\)-chain is given by the free group \( C(A) \)of all faces of some simplex \( A \), and \( C_n(A) \) are the free groups of the \(n\)th-faces of \( A \)
+and the boundary homomorphism is given by \( d_n\sigma = \partial_n \sigma = \sum_{i=0}^n (-1)^i \langle p_0, \dots, \hat{p_i}, \dots, \p_n \rangle \).
+
+An important lemma is \( \partial^2 = \partial_{n-1} \circ \partial_n = 0 \).
+
+Define singular homology
+
+1. A singular \(n\)-simplex in \(X\) is a continuous map
+\(\sigma: \Delta^n \to X,\)
+where \(\Delta^n = \langle e_0, \dots, e_n \rangle \subseteq \mathbb{R}^{n+1}\) denotes the standard simplex.
+2. A singular \(n\)-chain in \(X\) is a formal (finite) \(\mathbb{Z}\)-linear combination of singular \(n\)-simplices, i.e.
+\(\sum_{\sigma \in \Delta_n(X)} a_\sigma \sigma; \quad a_\sigma \in \mathbb{Z}, \)
+
+where \(\Delta_n(X) = \{\sigma: \Delta^n \to X \mid \sigma \text{ continuous}\}\) denotes the set of all singular \(n\)-simplices, and \(a_\sigma \neq 0\) for only finitely many \(\sigma\). 
+More formally: the group of singular \(n\)-chains is the free abelian group
+
+\(C_n(X) := \bigoplus_{\sigma \in \Delta_n(X)} \mathbb{Z} \sigma \)
+generated by all \(n\)-simplices \(\Delta_n(X)\).
+
+With this definition we obviously have \(C_n(X) = 0\) for every \(n < 0\).
+
+Example: By the very definition, 1-simplices in \(X\) are precisely the (oriented) paths in \(X\). As for the 0-simplices, they are maps from \(\Delta^0 = \{e_0\}\) to \(X\), which are uniquely determined by its image point. Thus 0-simplices are just the points of \(X\). 
+
+The boundary of a singular \(n\)-simplex \(\sigma: \Delta^n \to X\) is the singular \((n-1)\)-chain 
+
+\(\partial \sigma = \sum_{i=0}^{n} (-1)^i \sigma|_{\langle e_0, \dots, \hat{e}_i, \dots, e_n \rangle} = \sum_{i=0}^{n} (-1)^i \sigma \circ F_i\)
+The boundary of a singular \(n\)-chain \(\sum a_\sigma \sigma\) is \(\sum a_\sigma (\partial \sigma)\). This defines the \(n\)-th boundary homomorphism
+\(\partial_n : C_n(X) \to C_{n-1}(X). \qquad (1.8)\)
+
+As in the simplicial case, we set by convention \(\partial_0 = 0\). 
+We call:
+\(B_n(X) := \text{im} \partial_{n+1} \subseteq C_n(X)\) the subgroup of singular \(n\)-boundaries.
+\(Z_n(X) := \ker \partial_n \subseteq C_n(X)\) the subgroup of singular \(n\)-cycles, and
+Two singular chains \(c_1, c_2 \in C_n(X)\) are homologous, written \(c_1 \sim c_2\), if their difference is a boundary: \(c_1 - c_2 \in B_n(X)\),
+and the singular homology group is gven by \( H_n(X) \coloneqq Z_n(X)/B_n(X) \).
+
+It holds again \( \partial^2 = 0 \).
+
+Derive the homology of a one point space.
+
+We can trivially compute the singular homology of a point \(X = \{p\}\). Indeed, for any \(n \in \mathbb{N}\) there is exactly one \(n\)-simplex \(\sigma_n: \Delta^n \to X\), the constant map. Thus \(C_n(X) = \mathbb{Z} \sigma_n \cong \mathbb{Z}\) for every \(n \ge 0\). 
+
+As for the boundary of \(\sigma_n\), it is the alternating sum of \(n + 1\) constant \((n-1)\)-simplices. If \(n\) is odd all simplices cancel out, while if \(n\) is even there is one simplex remaining. This means 
+
+\[\partial_n \sigma_n = \begin{cases}
+0 & \text{if } n \text{ is odd}, \\
+\sigma_{n-1} & \text{if } n > 0 \text{ is even}.
+\end{cases}\]
+
+That is, \(\partial_n\) is zero for odd \(n\) (as well as for \(n = 0\) by convention), and \(\partial_n\) is an isomorphism for even \(n\). The singular complex looks like
+
+\(\dots \xrightarrow{0} \mathbb{Z} \xrightarrow{1} \mathbb{Z} \xrightarrow{0} \mathbb{Z} \xrightarrow{1} \mathbb{Z} \xrightarrow{0} \mathbb{Z} \xrightarrow{1} \mathbb{Z} \xrightarrow{0} \mathbb{Z} \xrightarrow{1} 0.\)
+
+This gives:
+
+* For odd \(n\): \(B_n(X) = \text{im } \partial_{n+1} = C_n(X)\). Thus \(B_n(X) = Z_n(X)\) and \(H_n(X) = 0\). 
+* For even \(n > 0\) we have \(Z_n(X) = \ker \partial_n = 0\), hence \(B_n(X) = Z_n(X) = 0\) and anyway also \(H_n(X) = 0\).
+* At \(n = 0\) we have \(B_0(X) = \text{im } \partial_1 = 0\) but \(Z_0(X) = C_0(X)\). Hence \(H_0(X) = C_0(X) \cong \mathbb{Z}\).
+
+Summarizing:
+
+\[H_n(\{p\}) \cong \begin{cases}
+0 & \text{if } n > 0, \\
+\mathbb{Z} & \text{if } n = 0.
+\end{cases}\]
+
+
+Define the augmented singular complex and give an application for the homology groups of connected spaces.
+
+The augmented singular complex of \(X\) is
+
+\(\tilde{C}_\bullet(X): \dots \rightarrow C_n(X) \xrightarrow{\partial_n} C_{n-1}(X) \rightarrow \dots \rightarrow C_1(X) \xrightarrow{\partial_1} C_0(X) \xrightarrow{\tilde{\epsilon}} \mathbb{Z} \rightarrow 0 \qquad (1.11)\)
+The corresponding homology groups are the reduced homology groups \(\tilde{H}_n(X)\) of \(X\).
+The new homomorphism is explicitly given by \( \epsilon(\sum_{x \in X}a_x x) = \sum_{x \in X} \epsilon(a_x x) = \sum_{x \in X} a_x\).
+One can think of \( \tilde{C}_{-1}(X) = \mathbb{Z} \) as being generated by the trivial map \( \sigma : \emptyset \to X \).
+
+We have the following facts:
+For \( n \neq 0 \), \( \tilde{H}_n(X) = H_n(X) \)
+\( \epsilon \) descends to a surjective hom. \( \bar{\epsilon}: H_0(X) \to \mathbb{Z} \) with \( \tilde{H}_0(X) = \ker \bar{\epsilon} \)
+
+Let \( X \) be path connected, then  \( H_0(X) \simeq \mathbb{Z} \).
+Proof we claim that \( \text{im}\Partial_1 = \ker \epsilon \) from which the result follows \( H_0(X) = C_0(X) /\text{im} \partial_1 = C_0(X) / \ker \epsilon \simeq \text{im} \epsilon = \mathbb{Z} \)
+Since \( C_1(X) \) consists of paths \( \sigma : \Delta^1 = \langle e_0, e_1 \rangle \to X \) then \( \partial_1 \sigma = \sigma(e_1) - \sigma(e_0) \) and \( \epsilon(\partial_1 \sigma) = 1 - 1 = 0 \),
+so \( \text{im} \partial_1 \subseteq \ker \epsilon \)
+Conversely let \( c = \sum_{p \in X} a_p p \in \ker \epsilon \) and \( p_0 \in X \) arbitrary. As \( X \) is path-connected, for each \( p \in X\) there is some path \(\sigma_p(e_0) = p_0,\ \sigma_p(e_1) =p \) joining them, and since \( \sum_{p \in X} a_p = 0 \) by assumption, we have the chain
+\( c = \sum_{p \in X} a_p p - (\sum_{p \in X} a_p)p_0 = \sum_{p \in X} a_p(p - p_0) = \sum_{p \in X} a_p \partial_1 \sigma_p \in \text{im} \partial_1 \).
+
+
+Define chain maps, state some properties and show that they descend to well-defined homomorphisms in Homology.
+
+A chain map or chain homomorphism \(f: A_\bullet \to B_\bullet\) is a sequence of group homomorphisms \(f_n: A_n \to B_n\), commuting with the differentials of \(A_\bullet\) and \(B_\bullet\), i.e.
+
+\(d_{n}^B \circ f_n = f_{n-1} \circ d_{n}^B, \forall n \in \mathbb{Z}\)
+the superscripts are sometimes dropped for simplicity.
+In other words, the following diagram is commutative:
+
+Copy the diagram from page 11 from Definition 2.1.1, here into Anki Card
+\[\begin{tikzcd}
+\dots \arrow[r] & A_{n+1} \arrow[r,"d_{n+1}"] \arrow[d,"f_{n+1}"] & A_n \arrow[r,"d_n"] \arrow[d,"f_n"] & A_{n-1} \arrow[r] \arrow[d,"f_{n-1}"] & \dots \\
+\dots \arrow[r] & B_{n+1} \arrow[r,"d_{n+1}"] & B_n \arrow[r,"d_n"] & B_{n-1} \arrow[r] & \dots
+\end{tikzcd}\]
+
+If we think of the complexes \(A_\bullet\) and \(B_\bullet\) as graded groups, a chain map \(f\) is precisely a graded homomorphism of degree 0 commuting with the differentials: \(d \circ f = f \circ d\).
+Note that if \(f: A_\bullet \to B_\bullet\) and \(g: B_\bullet \to C_\bullet\) are two chain maps, then \(h = g \circ f: A_\bullet \to C_\bullet\) is also a chain map. Indeed, it holds \(h_n = g_n \circ f_n\) for every \(n\), and 
+
+\(d_n \circ h_n = d_n \circ g_n \circ f_n = g_{n-1} \circ d_n \circ f_n = g_{n-1} \circ f_{n-1} \circ d_n = h_{n-1} \circ d_n.\)
+
+A canonical example are the inclusions and projections induced by subcomplexes.
+A subcomplex \( A_{\bullet}' \) of a chain complex \( A_\bullet \) is a sequence of subgroups \(A_{n}'_n \subseteq A_{n} \) such that \( d_n(A_{n}') \subseteq A_{n-1}', \forall n \)
+The inclusion \( \iota A_{n}' \to A \) then is a chain map since \( d \circ \iota = \iota \circ d \).
+Since complexes are abelian, the quotient group \( B_n = A_n / A_{\bullet}' \) is well-defined and we can descend the differential to \( d^B_n([a_n]) = [d_n(a_n)] \),
+which still satisfies \( d^B_{n-1} \circ d^B_{n} = 0 \). \( B_n \) is also called the quotient complex and the projection \( \pi_n : A_n \to B_n \) is a chain map.
+
+Let \(f: A_\bullet \to B_\bullet\) be a chain map. 
+1. For every \(n \in \mathbb{Z}\), the map 
+\(f_* = H_n(f) : H_n(A_\bullet) \to H_n(B_\bullet), \quad [a] \mapsto [f(a)] (= [f_n(a)])\)
+is a well-defined group homomorphism. 
+2. If moreover \(g: B_\bullet \to C_\bullet\) is a second chain map, then the composition \(h = g \circ f: A_\bullet \to C_\bullet\) satisfies
+\(h_* = g_* \circ f_* : H_n(A_\bullet) \to H_n(C_\bullet)\)
+for every \(n \in \mathbb{Z}\).
+
+For completeness such proofs for well-definedness typically consist of the following steps
+1. Verify that \( f_{*} \) is linear (usually easy if \( f \) has an explicite description)
+2. If \( a \in Z_n(A_\bullet) \) then \( f_n(a) \in Z_n(B_\bullet) \)
+3. If \( [a] = [a'] \) then \( [f_n(a)] = [f_n(a')] \)
+
+For 1. note that \( [a] + [a'] = [a + a'] \), thus 
+\(f_*([a] + [a']) = f_*([a + a']) = [f_n(a + a')] = [f_n(a) + f_n(a')] \)
+\(= [f_n(a)] + [f_n(a')] = f_*([a]) + f_*([a'])\)
+For 2
+\( a \in Z_n(A_\bullet) \iff d_n(a) = 0 \implies d_n(f_n(a)) = f_{n-1}(d_n(a)) = f_{n-1}(0) = 0\)
+where we used the defining property of chain maps in the equality after the implication.
+3.
+Observe that \( [a] = [a'] \iff a' - a = d_{n+1}(\alpha) \in B_n(A_{\bullet}\) for some \( \alpha \in A_{n+1} \), so
+\( f_n(a') - f_n(a) = f_n(d_{n+1}(\alpha)) = d_{n+1}(f_{n+1}(\alpha)) \in B_{n+1}(B_\bullet) \)
+so \( [f_n(a)] = [f_n(a')] \) and we used the defining property of chain maps in the second equality.
+
+Define the descendence of continuous maps in homology.
+
+Let now \(f: X \to Y\) be a continuous map between two topological spaces. For any \(n\)-simplex \(\sigma: \Delta^n \to X\) in \(X\), composition with \(f\) gives an \(n\)-simplex on \(Y\):
+\(f_\sharp(\sigma) := f \circ \sigma: \Delta^n \to Y.\)
+
+Extending this by \(\mathbb{Z}\)-linearity we obtain group homomorphisms 
+\(f_\sharp: C_n(X) \to C_n(Y) \quad f_\sharp \big(\sum a_\sigma \sigma \big) := \sum a_\sigma f_\sharp (\sigma).\)
+
+We have the following Lemma. The morphisms \(f_\sharp\) define a chain map \(f_\sharp: C_\bullet(X) \to C_\bullet(Y)\).
+
+It is enough to check the equality \(f_\sharp \circ \partial_n = \partial_n \circ f_\sharp\) on any \(n\)-simplex \(\sigma: \Delta^n \to X\), i.e. \(f_\sharp (\partial \sigma) = \partial (f_\sharp (\sigma))\). By \(\mathbb{Z}\)-linearity of \(f_\sharp\) and the definition of \(\partial \sigma\) it holds
+
+\(f_\sharp (\partial \sigma) = f_\sharp \big( \sum_{i=0}^n (-1)^i \sigma |_{\langle e_0, \dots, \hat{e}_i, \dots, e_n \rangle} \big) = \sum_{i=0}^n (-1)^i f_\sharp \big( \sigma |_{\langle e_0, \dots, \hat{e}_i, \dots, e_n \rangle} \big) \)
+\(= \sum_{i=0}^n (-1)^i \big( (f \circ \sigma) |_{\langle e_0, \dots, \hat{e}_i, \dots, e_n \rangle} \big)  = \partial (f \circ \sigma) = \partial (f_\sharp (\sigma)). \)
+
+We have the following facts:
+1. The identity \(\text{id}_X : X \to X\) induces the identity in \(C_\bullet(X)\), and thus also in homology: 
+\[(\text{id}_X)_* = \text{id}_{H_n(X)} \text{ for every } n \in \mathbb{Z}.\] 
+2. If \(f: X \to Y\) and \(g: Y \to Z\) are two continuous maps, then \((g \circ f)_\sharp = g_\sharp \circ f_\sharp\), and thus also \((g \circ f)_* = g_* \circ f_*\).
+
+This gives immediately the following result, showing that homeomorphic spaces have isomorphic homology.
+
+Let \(f : X \to Y\) be a homeomorphism. Then \(f_* : H_n(X) \to H_n(Y)\) is an isomorphism for every \(n \in \mathbb{Z}\)
+
+Proof: Let \(g = f^{-1} : Y \to X\) be the inverse map, so that \(g \circ f = \text{id}_X\) and \(f \circ g = \text{id}_Y\). Then for any \(n \in \mathbb{Z}\) holds \(g_* \circ f_* = (\text{id}_X)_* = \text{id}_{H_n(X)}\) and \(f_* \circ g_* = (\text{id}_Y)_* = \text{id}_{H_n(Y)}\). Thus \(f_*\) is an isomorphism with \((f_*)^{-1} = g_*\).

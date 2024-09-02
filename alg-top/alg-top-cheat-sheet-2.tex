@@ -1,0 +1,103 @@
+Define chain homotopy and state same std. facts.
+
+Let \( A_\bullet, B_\bullet \) be chain complexes and \( f,g : A_\bullet \to B_\bullet \) chain maps.
+
+A chain homotopy between \( f \) and \( g \) is a sequence of group homs. \( P_n : A_n \to B_{n+1} \)
+(or graded homs. \( P : A_\bullet \to B_\bullet \) of degree 1),
+such that \(f - g = d \circ P + P \circ d\), i.e. 
+\(f_n - g_n = d^B_{n+1} \circ P_n + P_{n-1} \circ d^A_n \quad \text{for every } n \in \mathbb{Z}.\)
+
+If there is a chain homotopy \(P\), the chain maps \(f\) and \(g\) are said to be chain-homotopic and we write \(f \simeq g\).
+
+We have the following propositions:
+
+The chain map \(f\) is a chain homotopy equivalence if there is another chain map \(h: B_\bullet \to A_\bullet\) such that \(h \circ f \simeq \text{id}_{A_\bullet}\), 
+and \(f \circ h \simeq \text{id}_{B_\bullet}\). Such an \(h\) is called a chain homotopy inverse.
+Proof. 
+Let \(P\) be a chain-homotopy between \(f\) and \(g\), so that \(f = g + d \circ P + P \circ d\). From the explicit description of \(f_*\) and \(g_*\), it follows
+
+\(f_*([a]) = [f(a)] = [g(a) + d(P(a)) + P(d(a))] = [g(a)] = g_*([a])\)
+for every \([a] \in H_n(A_\bullet)\). Here we have used that \(d(a) = 0\) (since \(a \in Z_n(A_\bullet) = \ker d_n\)) and that \(d(P(a)) \in B_n(B_\bullet)\), hence this summand does not change the homology class.
+
+If \( f, g : A_\bullet \to B_\bullet \) are chain homotopic, then \( f_{\ast} = g_{\ast} : H_n(A_\bullet) \to H_n(B_{\bullet})\)
+for every \( n \in \mathbb{Z} \).
+
+Let \( h : B_\bullet \to A_\bullet \) be a chain hom. inv. of \( f_{\bullet} \). Then \( h \circ f \simeq \text{id}_{A_{\bullet}} \), \( f \circ h \simeq \text{id}_{B_{\bullet}} \) and the previous we have that \( (h_\ast \circ f_{\ast} = \text{id}_{H_n(A)} \), \( (f_\ast \circ h_{\ast} = \text{id}_{H_n(B)} \). The result follows.
+
+
+Define homotopies and their relation to homology groups.
+
+Two continuous maps \( f, g : X \to Y \) are homotopic if there is a continuous map
+\( H : X \times [0, 1] \to Y \) such that \( H(x, 0) = f(x) \) and \(H(x, 1) = g(x)\) for every \( x \in X \). 
+In this case we write \( f \simeq g \).
+
+Similarly as for chain homotopies, \( f : X \to Y \) is a homotopy equivalence if there is some cont. \( g : Y \to X \)
+called homotopy inverse with \( g \circ f \simeq \text{id}_X \) and \( f \circ g \simeq \text{id}_{Y} \).
+We write \( X \simeq Y \) and say that \( X \) and \( Y \). Homotopy equivalent or have the
+same homotopy type.
+
+We then have the powerful theorem \( 3.2.1 \), which asserts that if \( f,g : X \to Y \) are homotopic,
+then \( f_{\ast} = g_{\ast} : H_n(X) \to H_n(Y) \) for all \( n \in \mathbb{N} \).
+The core idea in the proof is to show the existence of chain homotopy between \( f_{\sharp},g_{\sharp} : C_\bullet(X) \to C_\bullet(Y) \).
+To this end, let \( \Delta^n \)be standard \( n \)-simplex and consider the prism \(\Delta^n \times [0, 1] \subseteq \mathbb{R}^{n+2} \)
+with new vertices due to the copies of the original simplex at the "bottom" \( v_i \coloneqq  (e_i, 0) \) and \( w_i \coloneqq  (e_i, 1) \) at the "top"
+(See the attached image). The prism can then be decomposed into the union of \( (n+1) \)-simplices \( \Delta_i = \langle v_0, \dots, v_i, w_i, \dots, w_n \rangle \).
+
+We can "sweep" through each of these \( \Delta_i \) by moving \( w_i \) down to \( v_i \) and get an \( n \)-simplex
+\(\langle (e_i, t), w_1, \dots, w_n \rangle \) for each \( t \in [0, 1] \).
+
+Let now \( H : X \times I \to Y\) be a homotopy from \( f \) to \( g \) and \( \sigma : \Delta^n \to X \in C_n(X) \).
+Extending it by the identity \( \tilde{\sigma} \coloneqq \sigma \times \text{id}_{[0, 1]} : \Delta^n \times I \to X \times I \)
+and similarly \( \tilde{H} = H \circ \tilde{\sigma} : \Delta^n \times I \to Y \) has the desired side effect of satisfying
+\( \tilde{H}|_{\langle v_0, \dots, v_n\rangle} = \tilde{H}|_{\Delta^n \times \{0\}} = f \circ \sigma \) and 
+\( \tilde{H}|_{\langle w_0, \dots, w_n\rangle} = \tilde{H}|_{\Delta^n \times \{1\}} = g \circ \sigma \),
+so its a homotopy between \( f \circ \sigma, g \circ \sigma \). 
+We then define the prism operator \( P_n : C_n(X) \to C_{n+1}(Y) \)
+\( P(\sigma) \coloneqq \sum_{i=0}^n (-1)^i \tilde{H}|_{\Delta_i} = \sum_{i=0}^n (-1)^i \tilde{H}|_{\langle w_0, \dots, v_i, w_i, w_n\rangle}\)
+
+With some additional effort it can then be shown that this indeed a chain homotopy.
+
+Corollary
+If \(f: X \to Y\) is a homotopy equivalence, then \(f_*: H_n(X) \to H_n(Y)\) is an isomorphism for every \(n \in \mathbb{N}\).
+Proof. Let \(g: Y \to X\) be a homotopy inverse. From \(g \circ f \simeq \text{id}_X\) and Theorem 3.2.1 it follows
+\(g_* \circ f_* = (g \circ f)_* = (\text{id}_X)_* = \text{id}_{H_n(X)},\)
+and analogously \(f_* \circ g_* = \text{id}_{H_n(Y)}\). Thus \(f_*\) is a group isomorphism, with \((f_*)^{-1} = g_*\).
+
+If \(X\) is a contractible space, i.e. \(\text{id}_X\) is homotopic to a constant map (e.g. \(X \subseteq \mathbb{R}^k\) is an open or closed ball), then \(H_0(X) \cong \mathbb{Z}\) and \(H_n(X) = 0\) for every \(n > 0\).
+
+If \(X\) is homotopic to a constant map, then \(X\) is homotopy equivalent to a point \(\{p\}\) whose Homology group is the stated one and since the homotopy
+from the contraction is invertible, \( H_n(X) \sigmeq H_n(\{p\})\), by the previous.
+
+One a more abstract note, the theorem asserts that the homology \( H_n \) is a functor between the homotopy category \( \textbf{HTop} \) 
+(topological spaces with homotopy classes of cont. maps as morphisms) and \( \text{AbGrp} \).
+
+A consequence
+
+Define the different kinds of retracts and their relation to homology groups
+
+Let \(X\) be a topological space and \(A \subseteq X\) a subset, and denote by \(\iota : A \to X\) the inclusion map. 
+
+1. \(A\) is a retract of \(X\), if there is a retraction map, i.e. a continuous map \(r: X \to A\) such that \(r|_A = r \circ \iota = \text{id}_A\).
+2. \(A\) is a deformation retract if there is a retraction \(r: X \to A\) such that \(\iota \circ r \simeq \text{id}_X\).
+More explicitely for every \( x \in X \) and \( a \in A \) there is some \( H : X \times I \to A \) with \( H(x, 0) = x \) and \( H(x, 1) = r(x) \).
+3. \(A\) is a strong deformation retract, if its is a deformation retract and also satisfying \( H(t, a) = a \) for all \( t \in [0, 1] \).
+
+Every non-empty space is trivially retractable to some point in it.
+
+A standard example of a strong deformation retract are \( S^n \) and \( \mathbb{R}^{n+1}\setminus \{0\} \),
+and the homotopy is
+\( H(x, t) = (1 - t)x + t\frac{x}{\|x\|} \)
+
+The situation where a deformation retract is not strong is a little bit more elaborate.
+
+Fact:
+If \(A \subseteq X\) is a deformation retract, then \(\iota_* : H_n(A) \cong H_n(X)\) are isomorphisms for every \(n \in \mathbb{N}\).
+
+For the relative homology of \( (X, A) \) we have that the LSE simplifies to an SES 
+
+\( 0 \to H_n(A) \to H_n(X) \to H_n(X, A) \to 0 \)
+where the middle two morphisms are \( \iota_{\ast} \) and the canonical \( \pi \).
+
+Moreover it holds the splitting lemma since \( r_\ast \iota_\ast = \text{id}_{H_n(A)} \), so we can write
+\( H_n(X) \simeq H_n(A) \oplus H_n(X, A) \).
+

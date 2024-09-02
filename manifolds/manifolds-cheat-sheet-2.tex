@@ -1,0 +1,47 @@
+Define a smooth map between manifolds
+
+A somewhat idiosyncratic style is to refer to use the term function only for maps with codomain \( \mathbb{R}^m \).
+
+Suppose \(M\) is a smooth \(n\)-manifold, \(k\) is a nonnegative integer, and \(f : M \rightarrow \mathbb{R}^k\) is any function. We say that \(f\) is a smooth function
+if for every \(p \in M\), there exists a smooth chart \((U, \varphi)\) for \(M\) whose domain contains \(p\) and 
+such that the composite function \(f \circ \varphi^{-1}\) is smooth on the open subset \(\hat{U} = \varphi(U) \subseteq \mathbb{R}^n\).
+
+Given a function \( f : M \to \mathbb{R}^k \) and a chart \( (U, \phi) \) for \( M \), the function \( \hat{f}: \phi(U) \to \mathbb{R}^k \)
+defined by \( \hat{f}(x) = f \circ \phi^{-1}(x) \) is called the coordinate representatin of \( f \). By definition \( f \) is smooth iff.
+its coord. repr. is smooth in some smooth chart around each point. In fact a smooth function satisfies that \( \hat{f} \) is smooth for all smooth charts.
+
+The definition of smooth functions generalizes easily to maps between manifolds.
+Let \(M, N\) be smooth manifolds, and let \(F : M \rightarrow N\) be any map. We say that \(F\) is a smooth map if for every \(p \in M\), there exist smooth charts \((U, \varphi)\) containing \(p\) and 
+\((V, \psi)\) containing \(F(p)\) such that \(F(U) \subseteq V\) and the composite map \(\psi \circ F \circ \varphi^{-1}\) is smooth from \(\varphi(U)\) to \(\psi(V)\). If \(M\) and \(N\) are smooth manifolds.
+
+These notions can be generalized to not necessarily smooth maps, but only continuously \( k \)-times differentiable maps.
+Be careful that the notion of continuity is less restrictive in the case of manifolds (see also other flash card) and that differentiability requires adaptedness.
+Let \( C^k(M, N) \) be the space of all these maps between manifolds \( M, N \), then this is a unital Banach algebra under addition and
+multiplication over \( \mathbb{R} \) and \( C^{\infty}(M, N) = \cap_{k \in \mathbb{N}} C^{k}(M, N) \). We abbreviate \( C^{k}(M) = C^{k}(M, \mathbb{R}^m) \)
+
+A helpful result is
+Gluing Lemma for Smooth Maps
+Let \(M\) and \(N\) be smooth manifolds with or without boundary, and let \(\{U_\alpha\}_{\alpha \in A}\) be an open cover of \(M\). Suppose that for each \(\alpha \in A\), we are given a smooth map \(F_\alpha : U_\alpha \to N\) such that the maps agree on overlaps: \(F_\alpha |_{U_\alpha \cap U_\beta} = F_\beta |_{U_\alpha \cap U_\beta}\) for all \(\alpha\) and \(\beta\). Then there exists a unique smooth map \(F : M \to N\) such that \(F|_{U_\alpha} = F_\alpha\) for each \(\alpha \in A\).
+
+
+Define continuity of maps between manifolds, adaptedness and differentiability
+
+A map \( f : M \to N \) between top. spaces \( (M, \tau_M),\ (N, \tau_N) \) is continuous in \( p \in M \), if for each open neighborhood \( V \in \tau_N\) 
+of \( f(p) \) the preimage \( f^{-1}(V) \) is a neighborhood of \( p \).
+
+Be careful that this does not require \( f^{-1}(V) \) to be open as well (only to contain some open set from \( \tau_M \)).
+An example highlighting this is \( f(x) = x \) if \( x \neq 1 \) and otherwise \( 0 \) then \( f \) is continuous at \( 0 \) even though
+\( (-\epsilon, \epsilon) \cup \{1\} \) is not open.
+However a continuous function \( f \) is defined to be continuous in every point and then we have \( f^{-1}(V) \in \tau_M \).
+
+Let \( (M, \mathcal{A}_M), (N, \mathcal{N}) \) be \( C^k \)-manifolds, and \( f \) continuous in \( p \in M \) and \( \phi : V \to \Lambda \)
+any chart from \( \mathcal{A}_N \) containing \( q = f(p) \). Then there is a chart \( \psi: U \to \Omega \) containing \( p \) compatible with \( \mathcal{A}_M \) 
+with \( f(U) \subset V \).
+Proof:
+Take any chart \( (\tilde{\psi}, \tilde{U}) \) containing \( p \). Since \( f^{-1}(V) \) contains some open set \( p \in \hat{U} \) we set \( U = \tilde{U} \cap \hat{U} \)
+and restrict \( \psi = \tilde{\psi}|_{U} \) to obtain the desired chart.
+
+Local charts \( (U, \psi), (V, \phi) \) with \( p \in U \) and \( f(p) \in V \) with \( f(U) \subset V \) are referred to as adapted and exist according to the previous lemma.
+
+A map \( f : M \to N \) is called differentiable in \( p \), if there are adapted charts \( (U, \psi), (V, \phi) \) s.t.
+\( \phi \circ f \circ \psi^{-1} : \mathbb{R}^m \to \mathbb{R}^n \) is differentiable.
