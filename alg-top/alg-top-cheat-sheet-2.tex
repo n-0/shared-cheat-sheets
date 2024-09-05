@@ -25,7 +25,7 @@ for every \( n \in \mathbb{Z} \).
 Let \( h : B_\bullet \to A_\bullet \) be a chain hom. inv. of \( f_{\bullet} \). Then \( h \circ f \simeq \text{id}_{A_{\bullet}} \), \( f \circ h \simeq \text{id}_{B_{\bullet}} \) and the previous we have that \( (h_\ast \circ f_{\ast} = \text{id}_{H_n(A)} \), \( (f_\ast \circ h_{\ast} = \text{id}_{H_n(B)} \). The result follows.
 
 
-Define homotopies and their relation to homology groups.
+Define a Homotopy, give some examples and essential properties
 
 Two continuous maps \( f, g : X \to Y \) are homotopic if there is a continuous map
 \( H : X \times [0, 1] \to Y \) such that \( H(x, 0) = f(x) \) and \(H(x, 1) = g(x)\) for every \( x \in X \). 
@@ -36,8 +36,23 @@ called homotopy inverse with \( g \circ f \simeq \text{id}_X \) and \( f \circ g
 We write \( X \simeq Y \) and say that \( X \) and \( Y \). Homotopy equivalent or have the
 same homotopy type.
 
-We then have the powerful theorem \( 3.2.1 \), which asserts that if \( f,g : X \to Y \) are homotopic,
+If \( X, Y \) are homeomorphic, then they have the same homotopy type, but the converse does not necessarily hold.
+
+\( X \) is path-connected if and only if \( Y \) is.
+\( X \) is simply connected if and only if \( Y \) is.
+
+Let \( C \subseteq \mathbb{R}^n \) be convex and \( f, g : [0, 1] \to C \) paths with the same endpoints, then the
+linear homotopy is given by
+\( H(s, t) = (1-t)f(s) + tg(s) \)
+
+\( R^n \) or more generally any space homeomorphic to a ball, has the same homotopy type as a point \( p \) inside it, since
+\( H(t, x) = tp + (1-t)\text{id}_{\mathbb{R}^n}(x) \)
+
+Prove that homotopic maps induce the same chain map between homologies
+
+We have the powerful theorem \( 3.2.1 \), which asserts that if \( f,g : X \to Y \) are homotopic,
 then \( f_{\ast} = g_{\ast} : H_n(X) \to H_n(Y) \) for all \( n \in \mathbb{N} \).
+
 The core idea in the proof is to show the existence of chain homotopy between \( f_{\sharp},g_{\sharp} : C_\bullet(X) \to C_\bullet(Y) \).
 To this end, let \( \Delta^n \)be standard \( n \)-simplex and consider the prism \(\Delta^n \times [0, 1] \subseteq \mathbb{R}^{n+2} \)
 with new vertices due to the copies of the original simplex at the "bottom" \( v_i \coloneqq  (e_i, 0) \) and \( w_i \coloneqq  (e_i, 1) \) at the "top"
@@ -78,11 +93,13 @@ Define the different kinds of retracts and their relation to homology groups
 Let \(X\) be a topological space and \(A \subseteq X\) a subset, and denote by \(\iota : A \to X\) the inclusion map. 
 
 1. \(A\) is a retract of \(X\), if there is a retraction map, i.e. a continuous map \(r: X \to A\) such that \(r|_A = r \circ \iota = \text{id}_A\).
+More explicitely for all \( x \in X, a \in A\) we have \( r(x) \in A \) and \( r(a) = a \) and continuous \( r \), which is usually the hard part.
 2. \(A\) is a deformation retract if there is a retraction \(r: X \to A\) such that \(\iota \circ r \simeq \text{id}_X\).
 More explicitely for every \( x \in X \) and \( a \in A \) there is some \( H : X \times I \to A \) with \( H(x, 0) = x \) and \( H(x, 1) = r(x) \).
 3. \(A\) is a strong deformation retract, if its is a deformation retract and also satisfying \( H(t, a) = a \) for all \( t \in [0, 1] \).
 
 Every non-empty space is trivially retractable to some point in it.
+If \( X \) is Hausdorff then \( A \) must be closed.
 
 A standard example of a strong deformation retract are \( S^n \) and \( \mathbb{R}^{n+1}\setminus \{0\} \),
 and the homotopy is
@@ -92,6 +109,7 @@ The situation where a deformation retract is not strong is a little bit more ela
 
 Fact:
 If \(A \subseteq X\) is a deformation retract, then \(\iota_* : H_n(A) \cong H_n(X)\) are isomorphisms for every \(n \in \mathbb{N}\).
+(To see this note that deformation retracts are a homotopy equivalence between \( A \) and \( X \)).
 
 For the relative homology of \( (X, A) \) we have that the LSE simplifies to an SES 
 
@@ -101,3 +119,186 @@ where the middle two morphisms are \( \iota_{\ast} \) and the canonical \( \pi \
 Moreover it holds the splitting lemma since \( r_\ast \iota_\ast = \text{id}_{H_n(A)} \), so we can write
 \( H_n(X) \simeq H_n(A) \oplus H_n(X, A) \).
 
+Define the fundamental group
+
+Given a topological space \(X\) and a base point \(x_0 \in X\), the \textbf{fundamental group} of \(X\) at \(x_0\), denoted by \(\pi_1(X, x_0)\), is the set of homotopy classes of loops based at \(x_0\).
+
+Recall the definitions
+Loop: A loop based at \(x_0\) is a continuous map \(f: [0, 1] \to X\) such that \(f(0) = f(1) = x_0\). 
+Homotopy class: The homotopy class of a loop \(f\), denoted by \([f]\), is the set of all loops based at \(x_0\) that are homotopic to \(f\).
+The group structure is created by the following components:
+1. Identity: The constant loop at \(x_0\) represents the identity element.
+2. Multiplication: The product of two homotopy classes \([f]\) and \([g]\) is defined as \([f] \cdot [g] = [f * g]\), where \(f * g\) is the loop obtained by 
+first traversing \(f\) and then traversing \(g\).
+More explicitely:
+\[
+    (\gamma \cdot \gamma')(t) = \begin{cases}
+    \gamma(2t) & \text{if } t \in [0, \frac{1}{2}], \\
+    \gamma'(2t - 1) & \text{if } t \in [\frac{1}{2}, 1].
+    \end{cases}
+\]
+3. Inverse: The inverse of a homotopy class \([f]\) is the homotopy class of the loop obtained by traversing \(f\) in the reverse direction, denoted by \([f]^{-1} = [f(1-t)]\).
+
+Example
+
+* The fundamental group of a simply connected space (like a disk or a sphere) is the trivial group (containing only the identity element), as all loops can be continuously shrunk to a point.
+* The fundamental group of a circle is the group of integers \(\mathbb{Z}\), as loops can wind around the circle multiple times in either direction. 
+
+State the relation between the fundamental group and first homology group.
+
+Recall: 
+The commutator \( [a, b] \coloneqq  ghg^{-1}h^{-1} = (gh)(hg)^{-1}\) 
+The commutator subgroup,
+\( G' \coloneqq \{ [a, b] | a, b \in G \}\}\)
+The abelianization of \( G \)
+\( G^{\text{ab}} \coloneqq G/G' \)
+with the universal property that for each \( f : G \to A \), where \( A \) is abelian we have a unique \( g : G^{\text{ab}} \to A \),
+s.t. \( f = g \circ \pi \), where \( \pi : G \to G^{\text{ab}} \) is canonical.
+
+Theorem 3.3.2. Let \(X\) be any topological space and \(x_0 \in X\) any point. Then the map
+\(h: \pi_1(X, x_0) \to H_1(X), \quad [\gamma] \mapsto [\gamma]\)
+is a well-defined, also called the Hurewicz homomorphism. 
+If moreover \(X\) is path-connected, then \(h\) is surjective and \(\ker h\) is the commutator subgroup of \(\pi_1(X)\), i.e. \(H_1(X) \simeq \pi_1(X)^{\text{ab}}\).
+The proof consists of the following steps:
+Prove that if \( \gamma, \gamma' \) are homotopic they're also homologous, this is done in a similar manner as for the prism operator,
+by defining the homotopy \( H : [0, 1] \times [0, 1] \to X \) with \( H(s, 0) = \gamma(s) \), \( H(s, 1) = \gamma'(s) \)
+and \( H(0, t) = H(1, t) = x_0 \). Split the square domain of \( H \) via the diagonal \( (0, 0), (1, 1) \) into 2 triangles \( T_1, T_{2}\) and consider the restrictions
+\( \sigma_i \coloneqq H|_{T_{i}} \), then they're simplices on \( X \) and \( \sigma \coloneqq \sigma_{1} - \sigma_{2} \in C_{2}(X)\) , with boundary
+\( H|_{\langle p_0, p_1 \rangle} - H|_{\langle p_3, p_2 \rangle} = \gamma - \gamma'\).
+
+Then define the triangle \( \Delta \) with vertices \( p_0 = (0, 0),\ p_{1} = (1, \frac{1}{2}), p_2 = (0, 1) \) and the singular simplex \( \sigma : \Delta \to X\)
+given by \( \sigma(s, t) \coloneqq (\gamma \cdot \gamma')(t) \) then \( \Partial \sigma = \sigma|_{\langle p_1, p_2 \rangle} - \sigma|_{\langle p_0, p_2 \rangle} + \sigma|_{\langle p_0, p_1 \rangle} = \gamma' - (\gamma \cdot \gamma') + \gamma = 0\), so \( \gamma \cdot \gamma' \sim \gamma + \gamma' \).
+And we have indeed a well-defined homomorphism.
+Surjectivity is not too suprising due to path connectedness, since every \( \gamma : \Delta^1 \to X \) is already a cycle and moreover
+for every cycle \( \sigma \in Z_1(X) \) not starting/ending in \( x_0 \) we can find a path \( \alpha(0) = x_0,\ \alpha(1) = x_1 \),
+and then \( \alpha^{-1} \cdot \gamma \cdot \alpha \) is a loop starting/ending at \( x_0 \), which is homologous to \( \sigma \).
+
+The last part is rather involved, although one direction \( \pi_1(X)^{\text{ab}} \subseteq \text{ker} h\) is trivial.
+
+
+Define affine (singular) simplices, the cone operator and the barycentry subdivision operator
+with std. facts.
+
+Remember that affine maps are invariant under convexity, meaning, if \(f : M \to M'\) (both domain/codomain convex)
+it holds \( f(\sum_{i=0}^k t_i p_i  = \sum_{i=0}^k t_if(p_i) \) for any convex set of points \( \{p_i\}_{i \in [k]} \).
+
+Let \( M \) be convex and \( \Delta^n = \langle e_0, \dots, e_n \rangle\) the standard \( n \)-simplex.
+Given n+1 points \(p_i \in M\) let \( [p_0, \dots, p_n] \) decode the unique affine mapping \( f \) with \( f(p_i) = e_i \),
+which we also refer to as affine singular simplex.
+We can then consider the subgroups \( A_n(M) \) of the free group on the (usual) singular simplexes \( C_n(M) \), which only contains
+linear combinations of such affine maps and obtain the complex of of affine singular chains.
+
+The main benefit of switching the definition is to not require our points to be linearly independent, hence the singular simplices may have a lower dimensional image,
+so its more a technicality. Hatcher completely omits this detail for example.
+
+Let \( b \in M \) any point
+and define the cone operator by \( \mathcal{C}_b(\sigma) = [b, p_0, \dots, p_n] \) with \( \sigma = [p_0, \dots, p_n] \) (an affine singular simplex)
+and extending it linearly for arbitrary chains.
+We implicitely assume to work over the augmented chain complex so we must consider the degenerate case \( \mathcal{C}_b([\emptyset]) = [b] \).
+
+We then have 
+\( \partial \circ \mathcal{C}_b + \mathcal{C}_b \circ \partial = \text{id} \)
+for all \( \sigma \in A_n(M) \), so \( \mathcal{C}_b \) is a homotopy between the identity and the zero maps of \( A_\bullet(M) \).
+
+
+The barcycenter of an affine singular simplex \( \sigma = [p_0, \dots, p_n] \) in \( M \) is \( b(\sigma) \coloneqq \frac{\sum_{i=0} p_i}{n+1} \),
+this inspires the barycentric subdivision operators \( \mathcal{B}_n : A_n(M) \to A_n(M) \) which are inductively defined via \( \mathcal{B}_n = \text{id} \)
+for \( n \leq 0 \) (augmented case included) and otherwise \( \mathcal{B}_n(\sigma) \coloneqq \mathcal{C}_{b(\sigma)}(\mathcal{B}_{n-1}(\partial \sigma)) \)
+and extending it linearly for arbitrary chains.
+
+The geometric interpretation of it goes like this: the barycentric subdivision of a
+simplex is obtained by first subdividing all its facets, and then taking the cone over each part
+with vertex at the barycenter (with suitable signs). The basic case is the barycentric subdivision
+of points (0-simplices), which are the points themselves becasue \( \mathcal{B}_0 = \text{id} \).
+
+(Insert here image from Hatcher page 120 Chapter 2).
+
+Let \( \sigma \) be an affine singular \( n \)-simplex in \( \mathbb{R}^m \). Then each affine singular simplex
+\( \sigma' \in \mathcal{B}_n(\sigma) \) has diameter \( d(\sigma') \leq \frac{n}{n+1}d(\sigma) \),
+and for the diameter it holds \( d(\sigma) = \sup_{0 \leq i < j < n} \|p_i - p_j\| \).
+
+The affine barycentric subdivision \( \mathcal{B} : A_\bullet(M) \to A_\bullet(M) \) is a chain map
+\( \partial_n \circ \mathcal{B}_n = \mathcal{B}_{n-1} \circ \partial_n \) for every \( n \in \mathbb{Z} \).
+
+Define the group hom. \( \mathcal{T}_n : A_n(M) \to A_{n+1}(M) \) by 
+\( \mathcal{T}_n = 0 \) for \( n \leq 0 \)
+and otherwise \( \mathcal{T}_{n}(\sigma) \coloneqq \mathcal{C}_{b(\sigma}(\sigma -  \mathcal{T}_{n-1}(\partial \sigma)) \) extend it linearly for arbitrary chains.
+Then \( \mathcal{T} \) is a chain homotopy between \( \text{id} \) and \( \mathcal{B} \) so \( \partial \circ \mathcal{T} + \mathcal{T} \circ \partial = \text{id} - \mathcal{B} \).
+
+Build up the prerequisites for the theorem of small chains and state it.
+
+We first generalize the barycentric subdivision operators from affine (singular) simplexes to standard singular simplexes,
+Define \( \mathcal{S}_n : C_n(X) \to C_n(X) \) by \( \mathcal{S}_n(\sigma) := \sigma_{\sharp}\mathcal{B}_n(\text{id}_{\Delta^n})\)
+and also \( h_n(\sigma) \coloneqq \sigma_{\sharp}\mathcal{T}(\text{id}_{\Delta^n}) \) where \( \text{id}_{\Delta^n} \)
+is the identity map of the standard simplex (which is of course also an affine (singular) simplex).
+Then \( \mathcal{S}_n, h_n \) inherit all the properties we previously determined.
+Moreover \( \mathcal{S}^m \) is chain homotopic to the identity and a chain homotopy is given by
+\( h^{(m)} \coloneqq h \circ (\text{id} + \mathcal{S} + \dots + \mathcal{S}^{m-1} \).
+
+Let \( \mathcal{U} = \{U_i\}_{i \in I} \) be an open cover of \( X \), then a singular simplex \( \sigma : \Delta^n \to X \)
+is \( \mathcal{U} \)-small if its image is contained in one of the \( U_i \in \mathcal{U} \).
+A singular n-chain \( \sum_j a_j \sigma_j \) is \( \mathcal{U} \)-small if each \( \sigma_j \) is.
+
+We denote by \( C^{\mathcal{U}}_n(X) \subseteq C_n(X) \) the subgroup of \( \mathcal{U} \)-small \( n \)-chainsA, which is freely
+generated by the \( \mathcal{U} \)-small \( n \)-simplices. This creates a (\( \mathcal{U} \)-small) subcomplex since the boundary
+of each singular simplex must also be \( \mathcal{U} \)-small.
+
+The theorem of small chains then states:
+The inclusion \(\iota: C^{U}_\bullet(X) \to C_\bullet(X)\) is a chain homotopy equivalence. 
+More precisely, there is another chain map \(p: C_\bullet(X) \to C^{U}_\bullet(X)\) such that \(p \circ \iota = \text{id}_{C^{U}_\bullet(X)}\) 
+and \(\iota \circ p \simeq \text{id}_{C_\bullet(X)}\).
+
+In particular, \(\iota_*: H_n(C^{U}_\bullet(X)) \to H_n(X)\) is an isomorphism.
+The proof goes along the following lines:
+Since \( U_i \) cover \( X \) \( \sigma^{-1}(U_i) \) is a cover of \( \Delta^n \) for each \( \sigma \),
+by a standard theorem of analysis there is the Lebesgue number \( \lambda \) s.t. for each \( p \in \Delta^n \)
+the open ball \( B_\lambda(p) \subset U_i \) for some \( i \). Thus there is some \( m \) such that
+the iterated barycentric subdivision \( \mathcal{S}^m(\sigma) = \sigma_{\sharp}(\mathcal{B}^m(\Delta^n)) \)is \( \mathcal{U} \)-small.
+Define then \( D_n(\sigma) \coloneqq h^{(m(\sigma))} \), then with a lot of effort it can be shown that \( \rho \coloneqq \text{id} - \partial \circ D - D \circ \partial \)
+is the desired chain map and \( D_n \) the chain homotopy.
+
+
+
+Derive how a short exact sequence of complexes can be turned into a long exact sequence.
+
+Suppose we have the (not necessarily and most of time not short) sequence
+\( C_n(A) \to C_n(B) \to C_n(C) \)
+where \( A_\bullet, B_\bullet, C_\bullet \) are chain complexes
+with chain maps \( f_n, g_n \) respectively
+Our goal is to extend this to a long chain
+\( \dots H_{n+1}(C) \to H_n(A) \to H_n(B) \to H_n(C) \to H_{n-1}(A) \to \dots \).
+To this end consider the commutative diagram
+(insert diagram from page 33. after Example 5.1.4)
+
+Suppose that \([c] \in H_n(C_\bullet)\) is represented by a cycle \(c \in Z_n(C_\bullet) \subset C_n\), i.e. \(d(c) = 0\). 
+
+Since \(g\) is surjective, there is \(b \in B_n\) such that \(g(b) = c\). Since \(g\) is a chain map, we have
+
+\[g(d(b)) = d(g(b)) = d(c) = 0.\] 
+
+Thus \(d(b) \in \ker g = \text{im } f\) by exactness.
+
+Since \(f\) is injective, there is a unique \(a \in A_{n-1}\) such that \(f(a) = d(b)\). Moreover \(f(d(a)) = d(f(a)) = d(d(b)) = 0\). The injectivity of \(f\) gives \(d(a) = 0\), thus \(a \in Z_{n-1}(A_\bullet)\) defines a homology class \([a] \in H_{n-1}(A_\bullet)\).
+
+This allows us to fix the connecting homomorphism 
+
+\(\Phi_n([c]) := [a]. \qquad (5.4)\)
+
+We then need to verify that the class \([a] \in H_{n-1}(A_\bullet)\) is independent of the choices of \(c\) and \(b\).
+
+Suppose \(c, c' \in Z_n(C_\bullet)\) are two homologous \(n\)-cycles, i.e. \([c] = [c'] \in H_n(C_\bullet)\), and choose \(b, b' \in B_n\) such that \(c = g(b)\) and \(c' = g(b')\). Denote \(a, a' \in A_{n-1}\) the unique elements such that 
+\(f(a) = d(b) \text{ and } f(a') = d(b').\)
+
+Since \(c \sim c'\), there is \(\bar{c} \in C_{n+1}\) such that \(d(\bar{c}) = c' - c\). Since \(g\) is surjective, we can find \(\bar{b} \in B_{n+1}\) such that \(g(\bar{b}) = \bar{c}\). 
+Since \(g\) is a chain map, we have \(g(d(\bar{b})) = d(g(\bar{b})) = d(\bar{c}) = c' - c = g(b') - g(b)\). 
+Thus \(b' - b - d(\bar{b}) \in \ker g = \text{im } f\), so there is a unique \(\bar{a} \in A_n\) such that \(b' - b - d(\bar{b}) = f(\bar{a})\). 
+Applying \(d\), and since \(f\) is a chain map, we obtain \(f(d(\bar{a})) = d(f(\bar{a})) = d(b' - b) - d^2(\bar{b}) = d(b' - b) = f(a') - f(a)\). 
+The injectivity of \(f\) gives \(d(\bar{a}) = a' - a\), hence \([a'] = [a]\) as wanted. 
+
+To show that \(\phi_n\) is a group homomorphism, let \(c, c' \in Z_n(C_\bullet)\) represent two homology classes \([c], [c'] \in H_n(C_\bullet)\), 
+choose \(b, b' \in B_n\) such that \(g(b) = c\) and \(g(b') = c'\), and denote by \(a, a' \in A_{n-1}\) the unique elements such that \(f(a) = d(b)\) and \(f(a') = d(b')\), 
+so that \(\phi_n([c]) = [a]\) and \(\phi_n([c']) = [a']\). 
+
+To compute \(\phi_n([c] + [c']) = \phi_n([c + c'])\) we can take \(b + b'\) (since \(g(b + b') = g(b) + g(b') = c + c'\)). Then \(d(b + b') = d(b) + d(b') = f(a) + f(a') = f(a + a')\), so that \(\phi_n([c + c']) = [a + a'] = [a] + [a'] = \phi_n([c]) + \phi_n([c'])\), as wanted.
+
+We conclude \( \phi_n : H_n(C_\bullet) \to H_{n-1}(A_\bullet) \) is a well-defined group homomorphism.

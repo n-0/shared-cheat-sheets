@@ -45,3 +45,156 @@ Local charts \( (U, \psi), (V, \phi) \) with \( p \in U \) and \( f(p) \in V \) 
 
 A map \( f : M \to N \) is called differentiable in \( p \), if there are adapted charts \( (U, \psi), (V, \phi) \) s.t.
 \( \phi \circ f \circ \psi^{-1} : \mathbb{R}^m \to \mathbb{R}^n \) is differentiable.
+
+A map \( f : M \to N \) is a diffeomorphism, if it's a topological homeomorphism and differentiable.
+
+The local diffeomorphism criterion
+Let \( M, N \) be differentiable manifolds of the same dimension \( m \) and \( f \in C^1(M, N) \).
+If \( \text{rk}\ f|_p = m \) for \( p \in M \), then there exists an open neighborhood \(p \in U\), s.t.
+\( f|_{U} : U \to f(U) \) becomes a diffeomorphism.
+Proof:
+We know already that the local representation \( \phi \circ f \circ \psi^{-1} \), \( (U, \psi), (V, \phi) \) is a diffeomorphism
+(since we have full rank at \( p \) by assumption), so we can simply take \( U = \psi^{-1}(V) \).
+
+Diffeomorphisms and Homeomorphism are equivalence relation on the set of topological manifolds.
+Should there be one differentiable structure on a manifold, there are infinitely many of them
+(by simply shifting a chart by a constant for example). While different by construction, most of them are diffeomorphic. 
+
+For \( \text{dim}(M) = \text{dim}(N) \leq 3 \), homeomorphic suprisingly implies diffeomorphic.
+
+
+
+Define critical/regular values/points and the Jacobi matrix of a differentiable map and state some basic facts
+
+If \( \Phi : M \to N \) is a
+smooth map, a point \( p \in M \) is said to be a regular point of \( \Phi \) if \( d\Phi_p : T_p M \to T_{\phi(p)}N \)
+is surjective; it is a critical point of \( \Phi \) otherwise. This means, in particular,
+that every point of M is critical if \( \text{dim}\ M < \text{dim}\ N \), and every point is regular if and
+only if \( \Phi \) is a submersion. 
+
+A point \( c \in N \) is said to be a regular value of \( \Phi \) if
+every point of the level set \( \Phi^{-1}(c) \) is a regular point, and a critical value otherwise.
+In particular, if \( \Phi^{-1}(c) = \emptyset \), then \( c \) is a regular value.
+
+If we have a local representation of \( \Phi \) via adapted charts \( (U, \phi), (V, \psi) \)
+we define the \( \alpha \)-component of \( \Phi \) as
+
+\( \Phi^{\alpha} = \psi^{\alpha} \circ \Phi \circ \phi^{-1} \)
+and if \( \Phi \) is differentiable at \( p \) we can then describe the differential locally as
+
+\( J_{\Phi_{\phi,\psi}}(\phi(p))(\frac{\partial f^{\alpha}}{\partial \phi^i}(\phi(p)) \)
+for \( \alpha \in [1, \dots, n], i \in [1, \dots, m] \).
+
+As \( \text{dim}\ \text{col}\ J = \text{dim}\ \text{row}\ J\) we have \( \text{rk} J = \text{min}\{m, n\} \).
+This rank is independent of charts, since the transition maps as diffeomorphism must have the maximal rank
+possible.
+It should be clear then that a regular point is equivalent to
+\( \text{rk} J(p) = \text{min}\{m, n\} \).
+
+We then have the following facts 
+
+For the set of critical points \(P^{\text{cr}}[\Phi]\) and the set of critical values \(W^{\text{cr}}[\Phi]\) we have:
+\(W^{\text{cr}}[\Phi] = \Phi(P^\text{{cr}}[\Phi]).\)
+Furthermore, for the set of regular points \(P^{\text{reg}}[\Phi]\) and the set of regular values \(W^{\text{reg}}[\Phi]\) we have:
+\(P^{\text{reg}}[\Phi] \cup P^{\text{cr}}[\Phi] = M, \quad W^{\text{\text{reg}}}[\Phi] \cup W^{\text{cr}}[\Phi] = N\)
+and the union is disjoint in each case. However, because of \(\Phi^{-1}(W^{\text{reg}}[\Phi]) \subset P^{\text{reg}}[\Phi]\), in general only
+\(W^{\text{reg}}[\Phi] \cap \Phi(M) \subset \Phi(P^{\text{reg}}[\Phi]).\)
+
+Open/Closedness of regular/criticial points/values
+Let \( M, N \) be of the same dimension \( m \) and \( \Phi \in C^1(M, N) \), then
+1. The set of critical points \( P^{\text{cr}}[\Phi] \) is closed, while \( P^{\text{reg}}[\Phi] \) is open.
+2. If \( M \) is compact, then \( W^{\text{cr}}[\Phi] \subset N \) is closed and \( W^{\text{reg}}[\Phi] \) open.
+Proof:
+
+The determinant is a continuous function and \( \text{det}(J)^{-1}(0) = P^{\text{cr}}[\Phi] \) must then be closed.
+Since \( P^{\text{cr}}[\Phi] = M \setminus P^{\text{reg}}[\Phi] \), the first part is done.
+
+For 2, note that \( P^{\text{cr}}[\Phi] \) closedness implies also compactness and by continuity then
+also \( f(P^{\text{cr}}[\Phi]) = W^{\text{cr}}[\Phi] \) is compact, which implies with 
+\( W^{\text{reg}}[\Phi] = N \setminus W^{\text{cr}}[\Phi] \) the rest.
+
+
+State the prerequisites and the theorems themselves from Brown and Sard.
+
+Let \(M\) and \(N\) be two differentiable manifolds of dimension \(m\) and \(n\), 
+and a mapping \(f \in C^1(M, N)\). 
+Furthermore, let \(M\) be compact. If \(q \in N\) is a regular value, then the following holds:
+
+1. The preimage \(f^{-1}(q)\) is finite.
+2. There exists an open neighborhood \(V\) of \(q\), such that 
+\(\#(f^{-1}(q')) = \#(f^{-1}(q)), \quad \forall q' \in V.\)
+
+
+2.5.7 Lemma
+Let \(A \subset \mathbb{R}^m\) be a null set, that is, let \(\lambda_m(A) = 0\), where \(\lambda_m\) denotes the m-dimensional Lebesgue measure.
+Then for every \(\phi \in C^1(\mathbb{R}^m)\) also \(\phi(A)\) is a null set. 
+
+Definition (Null Set)
+\((M, [\omega])\) be a differentiable manifold. We say \(A \subset M\) is a null set, if for every compatible chart \(x : U \to \Omega\) the set \(x(U \cap A) \subset \mathbb{R}^m\) is a Lebesgue null set.
+
+Lemma
+\((M, [\omega])\) be a differentiable manifold. Then \(A \subset M\) is already a null set, if for every chart \(x : U \to \Omega\) from a compatible atlas \(\mathscr{A}\) the set \(x(U \cap A) \subset \mathbb{R}^m\) is a Lebesgue null set.
+
+Lemma
+Let \(M, N\) be differentiable manifolds of dimensions \(m\) and \(n\) respectively, and let \(f: M \to N\) be continuously differentiable.
+1. If \(m = n\) and \(A \subset M\) is a null set, then \(f(A) \subset N\) is also a null set.
+2. For \(m < n\), \(f(M) \subset N\) is a null set.
+Proof:
+The first part follows from Lemma 2.5.7, as it implies that \( (\psi \circ f)(A) \) must be a null set and the definition of null sets for manifolds does the rest.
+Build the product manifold \( M \times \mathbb{R}^{n - m} \) and the new function \(F: M \times \mathbb{R}^{n - m} \to N,\ F(x, p) = f(x) \),
+since \(M \times \{x_0\}\) is a null set for all \( x_0 \in M \times \mathbb{R}^{n - m}\) and \( F \) a function from two manifolds of the same dimension
+we can apply part 1.
+
+Theorem (Sard's Theorem)
+Let \(M, N\) be differentiable manifolds with \(m := \dim M \leq n := \dim N\) and a 
+mapping \(f \in C^1(M, N)\). Then the set \(W^{cr}[f]\) of critical values of \(f\) is a null set.
+
+Theorem (Brown's Theorem)
+Let \(M, N\) be differentiable manifolds with \(m := \dim M \leq n := \dim N\) and a mapping \(f \in C^1(M, N)\). 
+Then the set \(W^{reg}[f] \subset N\) of regular values of \(f\) is a dense subset of \(N\).
+Null sets have empty interior, hence by Sard's theorem its complement must be dense.
+
+
+Define partitions of unity and state their existence for
+manifolds.
+
+Let \(M\) be a differentiable manifold.
+(a) A partition of unity on \(M\) is a family \((f_i)_{i \in I}\) of functions on \(M\), here \(I\) is an arbitrary index set, with the following properties:
+(i) \(f_i \geq 0\) on \(M\).
+(ii) \((A_i)_{i \in I}\) with \(A_i := \text{supp} f_i\), \(i \in I\), forms a locally finite cover of \(M\). Here, \(\text{supp} f_i = \{x \in A_i : f_i(x) \neq 0\}\) denotes the support of \(f_i\).
+(iii) It is \(\sum_{i \in I} f_i(p) = 1\) for all \(p \in M\).
+
+Note that, due to (ii), the sum in (iii) is well-defined.
+The partition is called smooth, if all functions \(f_i\) are smooth.
+
+(b) If \((U_i)_{i \in I}\) is an open cover of \(M\) and \((f_i)_{i \in I}\) is a partition of unity with \(\text{supp} f_i \subset U_i\), we say \((f_i)_{i \in I}\) is a partition of unity with respect to \((U_i)_{i \in I}\).
+
+Let \( M \) be a differentiable manifolds and \( \{U_i\}_{i \in I}\) an open cover. Then there exists a locally finite refinement \( \{V_j\}_{j \in J}\)
+and a smooth partition of unity with respect to \( \{V_j\}_{j \in J} \).
+Proof:
+
+We set \(B(0,r) := \{x \in \mathbb{R}^m : \|x\| < r\}\). There exists a smooth function \(g: \mathbb{R}^m \to \mathbb{R}\) with
+*\(g(x) = 1\), for \(x \in B(0,1)\)
+*\(g(x) \geq 0\), for \(x \in B(0,2)\)
+*\(g(x) = 0\), for \(x \notin B(0,2)\).
+
+This can be seen as follows. Let 
+\[h(t) := 
+\begin{cases}
+0, & t \leq 0 \\
+e^{-1/t}, & t > 0
+\end{cases}.
+\]
+
+\(h\) is smooth. Then the function 
+\( g(x) = \frac{h(4 - \|x\|^2)}{h(4 - \|x\|^2) + h(\|x\|^2 - 1)} \)
+is smooth as well and has the desired properties.
+
+(Insert image from page 27 script (Th. 2.3.3))
+
+As manifolds are paracompact it immediately follows the existence of the locally finite refinement \( \{V_j\}_{j \in J}\),
+updating the charts such that \( B(0, 2) \subset \phi(V_j) \) is possible without issues and moreover
+\( \bar{V}_j = \phi^{-1}_j(B(0, 1)) \) is still a locally finite refinement .
+
+Setting \( g_j(p) = (g \circ \phi_j)(p) \) for \( p \in V_j \) and otherwise \( g_j(p) = 0 \) and then \( f_j = \frac{g_j}{\sum_k g_k} \)
+is the desired partition of unity.

@@ -1,0 +1,81 @@
+Define the tangent space of a manifold
+
+The tangent space is a linear (more rarely, affine) space of vectors tangent to a smooth (differentiable) manifold \( M \) at a given point \( a \in M \),
+denoted by \( T_a M \)
+
+For curves, surfaces and submanifolds embedded in a Euclidean subspace \( \mathbb{R}^n \) the tangent subspace can be identified with an affine subset 
+(of the corresponding dimension \( 1,2,\dots \)) in the ambient space, passing through \( a \). 
+For abstract manifolds \( T_aM \) is naturally isomorphic to the linear space of derivations \( D : C^\infty(M) \to \mathbb{R}^m \) of 
+
+of the ring of smooth functions on \( M \) satisfying the Leibniz rule:
+\(  D\in T_a M\iff D:C^\infty(M)\to\R\) 
+\(D(f\pm g)=Df\pm Dg,\ D(\lambda f)=\lambda Df\) 
+\(D(f\cdot g)=f(a)\cdot Dg+g(a)\cdot Df. \)
+
+The main reason for the abstraction is that we do not have any ambient space in which we could define the vectors tangent to the manifold.
+The (disjoint) union of tangent spaces to a manifold to all its points has a natural structure of a over \( M \), called the tangent bundle.
+
+To make the relation between the affine space of vectors tangent to a point and the ring of derivations more concrete,
+say \( M \subset \mathbb{R}^m \) and take any \( v \in \mathbb{R}_{a}^m \) (vectors tangent to the point \( a \)) 
+and \( f \in C^{\infty}(\mathbb{R}^n) \) then we can build the directional derivative at \( a \) along \( v \) via
+
+\( D_v(f)|_a = D_v f(a) = \lim_{h \to 0} \frac{f(a + hv) - f(a)}{h} = \frac{d}{dt} f(a + tv)|_{t=0} \)
+this is linear and satisfies of course the Lebniz rule.
+If we write \( v_a = v^i e_i|_a \) in a standard basis the chain rule gives
+\( \frac{d}{dt} f(a + tv)|_{t=0} = v(\frac{df}{dx}(a + tv))|_{t=0} = v^i\frac{df}{dx^i}(a) \).
+
+In fact one can prove that there is an isomorphism of \( v \in T_a M \) and derivations \( D_v \) at \( a \),
+but the latter exists without any prior assumption of \( M \) being in \( \mathbb{R}^m \).
+
+Conversely one can interpret \( D(f) : \mathbb{R}^m \to \mathbb{R}^n \) (as was it done in the lecture), although this requires
+additional effort because \( \mathbb{R}^m \) actually refers here to a local parameterization of \( f \) via some chart
+\( (\phi, U) \) and actually \( f : U \to \mathbb{R}^n \) such that \( D(f) \coloneqq D(\tilde{f} \) and \( \tilde{f} = f \circ \phi^{-1} \).
+
+This causes then the issue of verifying compatibility with transition maps, that is our tangent vectors \( v \) are taken from the tangent space 
+to \( \phi(a) \in \mathbb{R}^m \) and one has to show that if \( (\psi, V) \), \( a \in V \) and any \( f : U \to \mathbb{R}^n \)
+parameterized via \( \phi \) by default and \( \tilde{f} \) its parameterization via \( \psi \):
+
+\( Df(v)|_a = D(f \circ \phi^{-1})(v)|_a = D(f \circ \psi^{-1} \circ \psi \circ \phi^{-1})(v)|_a = D(\tilde{f} \circ \psi \circ \phi^{-1})(v)|_a \)
+\( = D\tilde{f})(D \psi \circ \phi^{-1}(v))|_{\psi(a)}\)
+
+so if \( Df(v) = D\tilde{f}(\tilde{v})\) then it must be \( \tilde{v} = D \psi \circ \phi^{-1}(v) \).
+Thus the tangent space at \( a \) is here defined as the quotient space of all \( v \in T_{\phi(a)}, \tilde{v} \in T_{\psi} \)
+s.t.   
+\( \tilde{v} = D(\psi \circ \phi^{-1})(v)|_{a} \)
+
+
+Define the differential of a map \( F : M \to N \) at \( p \)
+
+Assuming that \( F \) is \( C^k \) differentiable at \( p \) the differential can be defined via the derivation construction
+as the map \( dF_p : T_p M \to T_{F(p)} N\) that is  \( dF_p \) refers to the derivation in \( T_p N \) satisfying
+for \( f \in C^k(N)\) and derivation \( (v : C^k(M) \to \mathbb{R}) \in T_p M \)
+\( dF_p(v)(f) = v(f \circ F) \)
+since \( f \circ F \in C^k(M) \), so \( v(f \circ F) \) is well defined.
+
+Properties of Differentials. 
+Let \(M\), \(N\), and \(P\) be smooth manifolds with or without boundary, let \(F: M \to N\) and \(G: N \to P\) be smooth maps, and let \(p \in M\).
+(a) \(dF_p: T_pM \to T_{F(p)}N\) is linear.
+(b) \(d(G \circ F)_p = dG_{F(p)} \circ dF_p: T_pM \to T_{G \circ F(p)}P\).
+(c) \(d(\text{Id}_M)_p = \text{Id}_{T_pM}: T_pM \to T_pM\).
+(d) If \(F\) is a diffeomorphism, then \(dF_p: T_pM \to T_{F(p)}N\) is an isomorphism, and \((dF_p)^{-1} = d(F^{-1})_{F(p)}\).
+
+With that its also relatively easy to obtain the lecture definition (which is again dependent on local charts).
+For any chart \( \phi : U \to \mathbb{R}^m \) we have that \( \{\frac{d}{dx^i}|_{\phi(p)}\}_{i \in [m]} \) forms a basis of \( T_{\phi(p)} \mathbb{R}^m \)
+and as \( \phi \) is a diffeomorphism \( d\phi_p : T_p M \to T_{x(p)} \mathbb{R}^m \) is a isomorphism between and for any \( f \in C^k(U) \)
+we can define the action of a basis vector \( \frac{d}{d\tilde{x}^i}|_p = (d\phi_p)^{-1}(\frac{d}{dx^i}|_{\phi(p)}\) of \( T_p M \) via
+\( \frac{d}{d\tilde{x}^i}|_p f = \frac{d}{dx^i}|_{\phi(p)}(f \circ \phi^{-1}) \).
+More generally if \( v = v_i \frac{d}{d\tilde{x}^i} \in T_p M \) and \( F : M \to N \) then
+\( dF_p(v) = dF_p(v_i \frac{d}{d\tilde{x}^i}) = v_i dF(\frac{d}{d\tilde{x}^i}) = v_i \frac{dF^j}{d\tilde{x}^i}\frac{d}{d\tilde{y^j}} \)
+Note that we are still using the Einstein sum notaiton so 
+\( v_i \frac{dF^j}{d\tilde{x}^i}\frac{d}{d\tilde{y^j}} = \sum_i^m \sum_j^n v_i \frac{dF^j}{d\tilde{x}^i}\frac{d}{d\tilde{y^j}} \)
+since \(dF_j \) generally does not map one basis vector \( \frac{d}{d\tilde{x}^i} \) to some \( \frac{d}{d\tilde{y}^i} \) but rather
+a linear combination of the \( \frac{d}{d\tilde{y}^i} \). In particular we can see that this is nothing but the Jacobi matrix in disguise
+with each column encoding how \( \frac{d}{d\tilde{x}^i} \) translates into \( \frac{d}{d\tilde{y}^i} \).
+
+so we can simply use 
+\( \{\frac{d}{dx^i}|_{x(p)}\) to describe the basis vectors of \( T_p M \).
+
+kand we can rather inspect
+
+Simply by noting that \(  \)
+

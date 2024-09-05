@@ -1,0 +1,350 @@
+Prove the existence of the Mayer-Vietories Sequence
+
+We now come back to the discussion at the beginning of the section. Let \(\mathcal{U} = \{U, V\}\) be a covering of \(X\), i.e. the subsets \(U, V \subset X\) satisfy 
+\(\text{int}\ U \cup \text{int}\ V = X\). Consider the inclusions \(i_U : U \cap V \to U\), \(i_V : U \cap V \to V\), \(j_U : U \to X\) and \(j_V : V \to X\), 
+and denote \(C^{U}_\bullet(U + V) = C^{U}_\bullet(X)\) the complex of \(U\)-small singular chains. We define then the chain morphisms
+\(f = (i_U, -i_V) : C_\bullet(U \cap V) \to C_\bullet(U) \oplus C_\bullet(V), \quad c \mapsto (c, -c)\)
+and
+\(g = (j_U + j_V) : C_\bullet(U) \oplus C_\bullet(V) \to C_\bullet(U + V), \quad (c_U, c_V) \mapsto c_U + c_V.\)
+
+The inclusions are just there to make the proof trivial that this is indeed a chain map.
+Theorem 5.2.1. With the above notations, the following hold:
+
+1. \(f\) and \(g\) give a short exact sequence of complexes
+\(0 \to C_\bullet(U \cap V) \xrightarrow{f_\sharp} C_\bullet(U) \oplus C_\bullet(V) \xrightarrow{g_\sharp} C_\bullet(U + V) \to 0.\)
+
+2. There is a long exact sequence of homology groups: the Mayer-Vietoris sequence in homology
+\(\dots \xrightarrow{\delta_n} H_n(U \cap V) \xrightarrow{(i_{U*}, -i_{V*})} H_n(U) \oplus H_n(V) \xrightarrow{j_{U*} + j_{V*}} H_n(X) \xrightarrow{\delta_n} H_{n-1}(U \cap V)\)
+
+Proof:
+By the definition of small chains, each the image of each singular simplex is either contained in \( U \) or \( V \), making \( g \) surjective.
+It is trivial to assert that \( f \) is injective since \( (0, 0) = f(a) \) implies already that \( a = 0 \).
+It should be straighforward to see that \( \text{ker}\ g = \text{im} f \).
+Thus we can use the existence of the connecting homomorphism \( \phi_n \) together with the theorem of small chains, to assert
+\( H_n(C_{\bullet}(U + V)) = H_n(C^{\mathcal{U}}_{\bullet}(X)) \simeq H_n(X) \)
+
+
+The connecting homomorphism can be a little simplified here,
+let \( [c] \in H_n(X) \simeq H_n(U + V) \) then by the Theorem of small chains we have cycles \( c = c_{U} + c_{V} = g(c_{U}, c_{V}) \)
+Moreoso there is a unique \( a \in C_{n-1}(U \cap V) \) with \( f(a) = \partial(c_U, c_V) \), but then \( a = \partial c_U = -\partial c_V  \)
+so \( \phi_n([c_U + c_V]) = [\partial c_U] = - [\partial c_V] \).
+
+Mayer-Vietoris also works in reduced homology, where we instead use the augmented chain complexes 
+\( \tilde{C}_\bullet(U), \tilde{C}_\bullet(V), \tilde{C}_\bullet(U \cap V) \),
+one needs to be careful however should \( U \cap V = \emptyset \) then we still have \( H_{-1}(\emptyset) \simeq \mathbb{Z} \).
+
+
+Compute the (reduced) Homology of a sphere with the help of Mayer-Vietoris
+
+Example 5.3.1. We can now compute the (reduced) homology of a sphere \(S^n\). For \(n = 0\), \(S^0 \subset \mathbb{R}^1\) consists of two points \(\{1, -1\}\). Thus 
+\[H_k(S^0) = \begin{cases}
+\mathbb{Z}^2 & \text{for } k = 0, \\
+0 & \text{for } k \neq 0,
+\end{cases} \quad \text{and} \quad \tilde{H}_k(S^0) = \begin{cases}
+\mathbb{Z} & \text{for } k = 0, \\
+0 & \text{for } k \neq 0.
+\end{cases}\]
+
+We can now inductively write \(S^n\) as the union of the (slightly enlarged) hemispheres
+
+\(U := \{(x_0, \dots, x_n) \in S^n : x_n > -\epsilon\}\)
+and 
+\(V := \{(x_0, \dots, x_n) \in S^n : x_n < \epsilon\},\)
+
+which are both homeomorphic to a ball and intersect in a small neighbourhood of the equator
+\(U \cap V = \{(x_0, \dots, x_n) \in S^n : -\epsilon < x_n < \epsilon\}.\)
+
+In particular \(U, V \simeq \{p\}\) and \(U \cap V \simeq S^{n-1}\) (making \(\epsilon \to 0\)), and the Mayer-Vietoris long exact sequence gives
+\(0 = \tilde{H}_k(U) \oplus \tilde{H}_k(V) \to \tilde{H}_k(S^n) \to \tilde{H}_{k-1}(S^{n-1}) \to \tilde{H}_{k-1}(U) \oplus \tilde{H}_{k-1}(V) = 0.\)
+I.e. the connecting homomorphisms are isomorphisms, and by induction we have
+
+\[\tilde{H}_k(S^n) = \begin{cases}
+\mathbb{Z} & \text{for } k = n, \\
+0 & \text{for } k \neq n,
+\end{cases} \quad \text{and thus} \quad H_k(S^n) = \begin{cases}
+\mathbb{Z} & \text{for } k = 0 \text{ or } k = n, \\
+0 & \text{otherwise.}
+\end{cases}\]
+
+After this computation, the implication of homeomorphic spaces having isomorphic homologies assert that 
+two spheres \(S^n\) and \(S^m\) of different dimensions \(n \neq m\) are not homeomorphic.
+
+Also
+For any \(n \geq 1\) there is no retraction from the disk \(D^n\) to its boundary, the sphere \(S^{n-1}\).
+Proof: 
+
+Let \(\iota : S^{n-1} \to D^n\) be the inclusion of \(S^{n-1}\) as the boundary of \(D^n\), 
+and suppose there is a retraction \(r : D^n \to S^{n-1}\), i.e. \(r|_{S^{n-1}} = r \circ \iota = \text{id}_{S^{n-1}}\). 
+Then the composition
+\(r_* \circ \iota_* : H_{n-1}(S^{n-1}) \cong \mathbb{Z} \to H_{n-1}(D^n) = 0 \to H_{n-1}(S^{n-1}) \cong \mathbb{Z}\)
+should be the identity, which is clearly impossible.
+
+
+State and prove the Brower fix point Theorem
+For any \( n \geq 1 \), any continuous map \( f : D^n \to D^n \)
+has a fixed point \( p \in D^n \), (i.e. \(f(p) = p\)).
+Proof: 
+Suppose on the contrary that \(f(x) \neq x\) for all \(x \in D^N\). 
+Then we can define a map \(r: D^n \to S^{n-1}\) by letting \(r(x)\) be the point of \(S^{n-1}\) where the ray in \(\mathbb{R}^n\) starting at \(f(x)\) and passing through 
+\(x\) leaves \(D^n\). Continuity of \(r\) is intuitively clear since small changes from \( h(x) \) change \( x \) also a little since \( f(x) \) is cont.. 
+However we proved already that no such retraction can exist, reductio ad absurdum.
+The situation is pictorially represented below (here \( f = h \)).
+
+
+Define the degree of maps of the sphere and state some properties
+
+Let \(f: S^n\to S^n\) be a continuous map. Then \(f\) induces a homomorphism \(f_*\colon H_n\left(S^n\right) \to H_n\left(S^n\right)\), 
+Considering the fact that \(H_n\left(S^n\right)\cong\mathbb{Z}\), we see that \(f_*\) must be of the form \(f_*\colon x\mapsto\alpha x\) 
+for some fixed \(\alpha\in\mathbb{Z}\). This \(\alpha\) is then called the degree of \(f\).
+Note that \( \text{deg} f \) is independent of the choice of generator, suppose \( \sigma \in H_n(S^n) \) is a generator,
+then the only other is \( - \sigma \) and \( f_{\ast}(-\sigma) = -f_{\ast}(\sigma) = - (\text{deg}\ f)\sigma = (\text{deg}\ f)(- \alpha) \).
+
+Proposition 5.3.6. 
+Let \(f, g: S^n \to S^n\) be two continuous maps. Then it holds:
+1. \(\deg \text{id} = 1\), and \(\deg (f \circ g) = \deg f \cdot \deg g\).
+2. \(\deg f = 0\) if \(f\) is not surjective.
+3. If \(f \simeq g\) are homotopic, then \(\deg f = \deg g\).
+4. If \(f\) is a reflection with respect to a hyperplane (through the origin), then \(\deg f = -1\).
+5. The antipodal map \(-\text{id}_{S^n}: S^n \to S^n\), \(x \mapsto -x\), has degree \((-1)^{n+1}\).
+6. If \(f\) has no fixed points, then \(\deg f = (-1)^{n+1}\).
+
+If \( G \) is a non-trivial group acting freely on \( S^n \) with even \( n \), then \( G \simeq \mathbb{Z}/2\mathbb{Z} \)
+Proof:
+Since homeomorphisms have degree \(\pm 1\), an action of a group \(G\) on \(S^n\) determines a degree function \(d: G \to \{\pm 1\}\). 
+This is a homomorphism since \(\deg (f \circ g) = \deg f \deg g\). 
+If the action is free, \(d\) only \( e \in G \) has fixed points (in fact it is \( \text{id}_{S^n} \)) 
+and all nontrivial element of \(G\) must then have \((-1)^{n+1}\) by the last property from above. 
+Thus when \(n\) is even, \(d\) has trivial kernel (elements sent to \( 1 \)), so \(G \subset \mathbb{Z}_2\).
+
+
+State and prove the Hairy Ball Theorem
+
+Theorem: The sphere \(S^n\) admits a tangent nowhere-vanishing vector field if and only if \(n\) is odd.
+Assume there exists a non-vanishing vector field \( v : S^n \to \mathbb{R}^n \) for \( n \) even.
+Define the homotopy \( H(x, t) \coloneqq \cost(t\pi)x + \sin(t\pi)v(x)(\frac{1}{\|v(x)\|}) \) 
+(here we used the non vanishing part) between the identity map \( \text{id} \) 
+and the antipodal map \( - \text{id} \). The points for each \( t \), \( H(x, t) \)
+lies in on the unit circle contained in the plane spanned by \( x, v(x) \). 
+Since homotopic maps must have the same degree, so we should have 
+\( \text{deg}(-\text{id}) = (-1)^{n+1} = 1 = \text{deg}(\text{id}) \), which is impossible, since \( n+1 \) is odd.
+
+
+It is left to show that there always exist some nowhere-vanishing vector field for \( n = 2k - 1 \) odd.
+We can define \(v(x_1, x_2, \dots, x_{2k-1}, x_{2k}) = (-x_2, x_1, \dots, -x_{2k}, x_{2k-1})\) (which we can do since there is 
+Then \(v(x)\) is orthogonal to \(x\), so \(v\) is a tangent vector field on \(S^n\), and \(|v(x)| = 1\) for all \(x \in S^n\). 
+
+
+Moreover \( S^n \) has a nowhere vanishing vector field iff. \( n \) is odd.
+
+State and prove the Jordan-Curve Theorem
+
+Some useful Lemmas are:
+Let \( 0 \leq r \leq n \) and \( D \subseteq S^n \) a subset homeomorphic to a closed ball \( D^r \subseteq \mathbb{R}^r \).
+Then \( \tilde{H}_k(S^n\setminus D) = 0 \) for all \( k \in \mathbb{Z} \).
+
+From this one can deduce
+Let \( 0 \leq r < n \) and \( S \subseteq S^n \) a subset homeomorphic to the \( r \)-dimensional sphere \( S^r \)
+then \( \tilde{H}_k(S^n \ S) = \mathbb{Z} \) for \( k = n - r - 1 \) and \( 0 \) otherwise.
+
+Finally:
+Let \( n \geq 2 \) and \( S \subseteq \mathbb{R}^n \) a subset homeomorphic to \( S^{n-1} \).
+Then \( \mathbb{R}^n \setminus S \) has two connected components. A bounded one and the other unbounded.
+Proof. 
+Think of \(\mathbb{R}^n \subset S^n\) by adding one point \(p\) at infinity. By the previous Lemma, \(\tilde{H}_0(S^n) \cong \mathbb{Z}\) 
+and so \(H_0(S^n) \cong \mathbb{Z}^2\), implying two path-connected components in \(S^n \setminus S\).
+Since \(S^n \setminus S\) is open (\(S\) is compact in the Hausdorff space \(S^n\), and thus closed), 
+it is also locally path-connected, and thus the path-connected components coincide with the connected components.
+
+The point \(p\) lies in exactly one of them, and removing \(p\) does not disconnect it (because \(n \geq 2\)), 
+so \(\mathbb{R}^n \setminus S\) still has two connected components, and the unbounded one is the one where \(p\) was removed.
+
+Define the relative homology of a pair \( (X, A) \)
+
+Let \((X, A)\) be a pair, i.e. \(X\) is a topological space and \(A \subset X\). 
+The inclusion \(\iota: A \to X\) gives a chain map \(\iota_\sharp: C_\bullet(A) \to C_\bullet(X)\). 
+This chain map is injective, i.e. \(C_\bullet(A)\) is a chain subcomplex of \(C_\bullet(X)\), 
+because \(\iota_\sharp\) identifies \(C_n(A)\) with the subgroup of \(C_n(X)\) generated by simplices \(\Delta^n \to X\) with image in \(A\). 
+Since this inclusion is canonical, we will omit \(\iota_\sharp\) and simply write \(C_\bullet(A) \subset C_\bullet(X)\). 
+
+Definition: 
+The relative (singular) chain complex of the pair \((X, A)\) is \(C_\bullet(X, A) := C_\bullet(X) / C_\bullet(A)\).
+The relative singular homology groups of \((X, A)\) are just the homology groups of the relative complex: \(H_n(X, A) := H_n(C_\bullet(X, A))\).
+
+In particular, for \(A = \emptyset\) we obviously have \(C_\bullet(X, \emptyset) = C_\bullet(X)\) and \(H_n(X, \emptyset) = H_n(X)\).
+Note that the groups of relative chains \(C_n(X, A) = C_n(X) / C_n(A)\) are generated 
+by the singular simplices \(\Delta^n \to X\) whose image is not contained in \(X\). 
+The morphisms \(\pi_n: C_n(X) \to C_n(X, A)\) consist simply of "forgetting" the simplices with image in \(A\).
+
+
+This means for the boundary operator \( \partial \): that if \(c \in C_n(X, A)\), we first interpret \(c\) as a chain in \(X\), 
+then compute its usual boundary in \(C_{n-1}(X)\), 
+and finally discard all simplices in the boundary with image contained in \(A\). Hence the name "boundary relative to \(A\)".
+
+In particular \(\partial c = 0 \in C_{n-1}(X, A)\) if all components of the boundary of \(c\) have image contained in \(A\), 
+although some simplices of \(c\) may not be contained in \(A\). 
+For example: a path joining two points of \(A\) but not entirely contained in \(A\) would be a relative 1-cycle. 
+And the end of a path starting in \(A\) would be a relative 0-boundary.
+
+To be more precise, denote by 
+\(Z_n(X, A) = \{c \in C_n(X) \mid dc \in C_{n-1}(A)\} \subseteq C_n(X),\)
+the relative \(n\)-cycles, and by
+\(B_n(X, A) = \{c \in C_n(X) \mid \exists c' \in C_n(A) \text{ such that } c - c' \in B_n(X)\} \subseteq C_n(X)\)
+the relative \(n\)-boundaries.
+
+Then \( H_n(X, A) = \frac{Z_n(X, A)/C_n(A)}{B_n(X, A)/C_n(A)} \simeq \frac{Z_n(X, A)}{B_n(X, A)} \)
+
+Define a map of pairs and state some essential properties
+
+Let \((X, A)\) and \((Y, B)\) be pairs.
+A map of pairs \(f: (X, A) \to (Y, B)\) is a continuous map \(f: X \to Y\) with \(f(A) \subseteq B\).
+
+Lemma 6.1.3. 
+Let \(f : (X, A) \to (Y, B)\) be a map of pairs. Then
+1. There are natural group homomorphisms \(f_*: H_n(X, A) \to H_n(Y, B)\), defined as \(f_*([c]) = [f_\sharp(c)]\) for any relative \(n\)-cycle \(c\).
+2. If \(g: (Y, B) \to (Z, C)\) is another map of pairs, then \((g \circ f)_* = g_* \circ f_*: H_n(X, A) \to H_n(Z, C)\) for all \(n \in \mathbb{Z}\).
+
+Definition 6.1.4. 
+Two maps of pairs \(f, g: (X, A) \to (Y, B)\) are homotopic (as maps of pairs) (also written \(f \simeq g\)) 
+if there is a homotopy \(H: X \times [0, 1] \to Y\) between \(f\) and \(g\), such that \(H(a, t) \in B\), 
+for every \(a \in A\), \(t \in [0, 1]\), i.e. \(H\) is a map of pairs \((X \times [0, 1], A \times [0, 1]) \to (Y, B)\).
+
+If \( f \simeq g : (X, A) \to (Y, B) \) then \( f_{\ast} = g_{\ast} : H_n(X, A) \to H_n(Y, B)\) for all \( n \in \mathbb{Z} \).
+\( f : (X, A) \to (Y, B) \)
+The proof is based on the same insight as the original one for regular chain maps via the prism operator. 
+
+Define the long exact sequence of relative homology
+
+Theorem 6.1.8:
+Let \((X, A)\) be a pair. Then there are natural connecting homomorphisms \(\Phi_n: H_n(X, A) \to H_{n-1}(A)\) fitting into a long exact sequence
+\(\dots \longrightarrow H_n(A) \xrightarrow{\iota_*} H_n(X) \xrightarrow{\pi_*} H_n(X, A) \xrightarrow{\partial_n} H_{n-1}(A) \longrightarrow \dots\)
+the long exact sequence of relative homology.
+Proof:
+This is a direct consequence of the SES
+\( 0 \longrightarrow C_n(A) \longrightarrow C_n(X) \longrightarrow C_n(X, A) \to 0\)
+and the naturality of the connecting homomorphisms.
+
+The morphisms \(\iota_*\) and \(\pi_*\) in (6.2) are respectively induced by the inclusion \(\iota: A \to X\) and 
+discarding the simplices with image in \(A\). The connecting homomorphisms \(\phi_n: H_n(X, A) \to H_{n-1}(A)\) are determined as follows: 
+a relative homology class \([c] \in H_n(X, A)\) is represented by a relative cycle, i.e. \(c \in C_n(X)\) with \(dc \in C_{n-1}(A)\). 
+From the general construction of connecting homomorphisms we deduce \(\phi_n([c]) = [dc] \in H_{n-1}(A)\). 
+For this reason these connecting homomorphisms are sometimes also written \(\partial\), as the boundary maps.
+
+Suppose \( A \subseteq X\) is a deformation retract of \( X \). Then \( H_n(X, A) = 0, \forall x \in \mathbb{Z}\).
+Proof: \( \iota : A \to X\) induces an isomorphism \( H_n(A) \simeq H_n(X) \), the LES of rel. homol., \( H_n(X, A) = 0 \).
+
+Note that the reduced relative homology bears no benefit since it creates a chain which is equivalent to the following
+\( \dots \tilde{H}_n(A) \longrightarrow \tilde{H}_n(X) \longrightarrow H_n(X, A) \longrightarrow \tilde{H}_{n-1}(A) \longrightarrow \dots \),
+so we would obtain no new information. Moreover \( \tilde{H}_n(X) \simeq H_n(X, \{p\}) \).
+
+
+State and prove the excision theorem
+
+Theorem 6.2.1 (Excision theorem). Let \(X\) be a topological space and \(Z \subset U \subset X\) subspaces such that \(\overline{Z} \subset int U\). 
+Then the inclusion of pairs \((X \setminus Z, U \setminus Z) \to (X, U)\) induces isomorphisms 
+\(H_n(X \setminus Z, U \setminus Z) \cong H_n(X, U)\)
+
+for all \(n \in \mathbb{Z}\). \qquad (6.5)
+
+Proof. Set \(V = X \setminus Z\), so that (6.5) becomes
+\(H_n(V, U \cap V) \cong H_n(X, U).\)
+
+
+Since \(int V = X \setminus \overline{Z}\), the condition \(\overline{Z} \subset int U\) is 
+equivalent to \(int V \cup int U = X\), hence \(\mathcal{U} := \{U, V\}\) is a cover of \(X\). 
+Denote \(C_\bullet(U + V) := C^{U}_\bullet(X)\) 
+(as we did in Section 5.2 when constructing the Mayer-Vietoris sequence) 
+and \(\iota: C_\bullet(U + V) \to C_\bullet(X)\) the natural inclusion. 
+The Theorem of small chains (Theorem 4.2.5) gives a chain map \(p: C_\bullet(X) \to C_\bullet(U + V)\) 
+such that \(p \circ \iota = \text{id}_{C_\bullet(U + V)}\) and \(\iota \circ p \simeq \text{id}_{C_\bullet(X)}\). 
+In particular \(p\) restricts to the identity on the subcomplex \(C_\bullet(U) \subset C_\bullet(U + V) \subset C_\bullet(X)\). 
+This means that we can complete the following commutative diagram 
+
+(Insert diagram from page 44 Theorem 6.2.1)
+
+Moreover, since the chain homotopy \(D: C_\bullet(X) \to C_\bullet(X)\) between \(\iota \circ p\) and \(\text{id}_{C_\bullet(X)}\) 
+can be chosen to be zero on \(C_\bullet(U)\) due to the way the Theorem of small chains handles \( \mathcal{U} \)-small simplexes. 
+Then \(D\) induces also a chain homotopy 
+\(\overline{D}: C_\bullet(X, U) \to C_\bullet(X, U)\) between \(\overline{\iota \circ p}\) and \(\text{id}_{C_\bullet(X, U)}\), 
+and thus \(\iota\) induces isomorphisms
+
+\(H_n(C_\bullet(U + V) / C_\bullet(U)) \cong H_n(X, U). \qquad (6.6)\)
+
+Note that the complex \(C_\bullet(U + V) / C_\bullet(U)\) consists of the free groups generated by the 
+simplices with image in either \(U\) or \(V\) but not in \(U\), 
+i.e. the inclusion \(C_\bullet(V) \hookrightarrow C_\bullet(U + V)\) induces an isomorphism of chain complexes
+
+\(C_\bullet(V, U \cap V) = C_\bullet(V) / C_\bullet(U \cap V) \cong C_\bullet(U + V) / C_\bullet(U)\)
+which in turns gives isomorphisms of homology groups
+\(H_n(V, U \cap V) \cong H_n(C_\bullet(U + V) / C_\bullet(U)). \qquad (6.7)\)
+
+The result then follows combining (6.6) and (6.7).
+
+
+Define good pairs and state the isomorphism in homology for good pairs
+
+Definition: 
+A pair \((X, A)\) is a good pair if \(A \neq \emptyset\) is closed and a strong deformation retract of a neighbourhood, 
+i.e. there is \(A \subseteq int U \subseteq U \subseteq X\) and a continuous map \(r: U \to A\) such that 
+\(U \xrightarrow{r} A \hookrightarrow U\) is homotopic to \(\text{id}_U\) with an homotopy fixing every point of \(A\).
+
+Theorem 6.2.4. 
+Let \((X, A)\) be a good pair. The quotient map \(q: X \to X/A\) is a map of pairs \((X, A) \to (X/A, A/A)\) and induces isomorphisms 
+\(H_n(X, A) \xrightarrow{q_*} H_n(X/A, A/A) \cong \tilde{H}_n(X/A).\)
+
+The second isomorphism follows from \( A/A \) being just like a point in \( X / A \).
+
+For the first isomorphism, suppose \(A\) is a strong deformation retract of a neighbourhood \(A \subset U \subset X\). 
+In particular \(H_n(U, A) = 0\) for every \(n \in \mathbb{Z}\) (Corollary 6.1.10). 
+The long exact sequence of relative homology of the pair \((X, U, A)\) gives then isomorphisms
+\(\dots \longrightarrow H_n(U, A) = 0 \longrightarrow H_n(X, A) \xrightarrow{\hat{\imath}_*} H_n(X, U) \longrightarrow H_{n-1}(U, A) = 0 \longrightarrow \dots.\)
+Also the excision theorem gives the isomorphism \( H_n(X\setminusA, U\setminusA) \simeq H_n(X, U)\)
+Consider then the diagram
+
+(insert diagram from page 45)
+
+The first row are isomorphisms by the previous considerations, the lower ones are as well by noting that \( (X / A, A / A) \)
+is a good pair and repeating the argument of the LES. Lastly we can readily see that \( q^\ast \) is an isomorphism for the last column
+and thus by commutativity all the others are as well.
+
+
+Give some examples of good pairs
+
+Example 6.2.5. 
+Consider the good pair \((D^n, S^{n-1})\) of a closed disk in \(\mathbb{R}^n\) and its boundary. 
+Since \(D^n\) is contractible, the long exact sequence of relative (reduced) homology gives 
+
+\(\tilde{H}_k(D^n, S^{n-1}) \cong \tilde{H}_{k-1}(S^{n-1}),\)
+which is \(\mathbb{Z}\) for \(k = n\) and 0 otherwise.
+
+On the other hand, if we collapse the whole boundary of \(D^n\) into a point, we obtain the \(n\)-dimensional sphere \(S^n\), 
+whose reduced homology groups \(\tilde{H}_k(S^n)\) are also \(\mathbb{Z}\) for \(k = n\) and 0 otherwise.
+
+Let \((X_i, p_i)_{i \in I}\) be a family of pointed spaces and assume that each \((X_i, p_i)\) is a good pair. Then the 
+inclusions \(\iota_i: X_i \hookrightarrow \bigvee_{i \in I} X_i\) give a natural isomorphism
+
+\(\bigoplus_{i \in I} \tilde{H}_n(X_i) \xrightarrow{\hat{\oplus} \iota_{i*}} \tilde{H}_n \left( \bigvee_{i \in I} X_i \right).\)
+
+Proof. 
+Set \(X = \bigsqcup_{i \in I} X_i\) and \(A = \{p_i\}_{i \in I} \subset X\), so that by definition \(\bigvee_{i \in I} X_i = X/A\).
+If each \(p_i\) is a strong deformation retract of a neighbourhood \(p_i \in U_i \subset X_i\), 
+then \(A \subset \bigsqcup_{i \in I} U_i \subset X\) is also a strong deformation retract, hence \((X, A)\) is a good pair.
+
+Note that in general for path disconnected componentes \( \cup X_i = X \), \( C\bullet(X) = \bigoplus_{i \in I} C_\bullet(X_i) \). 
+If furthermore \( A \subseteq X \) then \( C_\bullet(A) = \bigoplus_{i \in I} C_\bullet(A \cap X_i) \). 
+Thus \( C_\bullet(X, A) = \bigoplus_{i \in I} C_\bullet(X_i, A \cap X_i) \) and 
+\( H_n(X, A) = \bigoplus_{i \in I} H_n(X_i, A \cap X_i) \text{ for all } n \in \mathbb{Z} \).
+Applying this to the previous then gives \( \tilde{H}_n(\bigvee_{i \in I} X_i) = H_n(X, A) = \bigoplus_{i \in I} H_n(X_i, p_i) \).
+
+
+
+Define local homology and state a fundamental result for manifolds
+
+Let \( X \) be a top. space and \( p \in X \) a (closed) point. The local homology groups are \( H_n(X, X \setminus \{p\}\).
+By the excision theorem \( H_n(X, X\setminus \{p\}) \simeq H_n(U, U \setminus \{p\}) \) for any neighborhood of \( p \).
+
+Theorem 6.3.3. 
+Let \(M\) be a topological manifold (possibly with boundary) of dimension \(n\). Then 
+1. For any interior point \(p \in M\) there are isomorphisms \(H_n(M, M \setminus \{p\}) \cong \mathbb{Z}\) and \(H_k(M, M \setminus \{p\}) = 0\) for every \(k \neq n\).
+2. For any boundary point \(p \in M\) we have \(H_k(M, M \setminus \{p\}) = 0\) for every \(k \in \mathbb{Z}\).
+
+In particular, if \(U \subset \mathbb{R}^n\) and \(V \subset \mathbb{R}^m\) are homeomorphic non empty open subsets, then \(n = m\).
