@@ -66,16 +66,117 @@ we can define the action of a basis vector \( \frac{d}{d\tilde{x}^i}|_p = (d\phi
 \( \frac{d}{d\tilde{x}^i}|_p f = \frac{d}{dx^i}|_{\phi(p)}(f \circ \phi^{-1}) \).
 More generally if \( v = v_i \frac{d}{d\tilde{x}^i} \in T_p M \) and \( F : M \to N \) then
 \( dF_p(v) = dF_p(v_i \frac{d}{d\tilde{x}^i}) = v_i dF(\frac{d}{d\tilde{x}^i}) = v_i \frac{dF^j}{d\tilde{x}^i}\frac{d}{d\tilde{y^j}} \)
-Note that we are still using the Einstein sum notaiton so 
+Note that we are still using the Einstein sum notation so 
 \( v_i \frac{dF^j}{d\tilde{x}^i}\frac{d}{d\tilde{y^j}} = \sum_i^m \sum_j^n v_i \frac{dF^j}{d\tilde{x}^i}\frac{d}{d\tilde{y^j}} \)
 since \(dF_j \) generally does not map one basis vector \( \frac{d}{d\tilde{x}^i} \) to some \( \frac{d}{d\tilde{y}^i} \) but rather
 a linear combination of the \( \frac{d}{d\tilde{y}^i} \). In particular we can see that this is nothing but the Jacobi matrix in disguise
 with each column encoding how \( \frac{d}{d\tilde{x}^i} \) translates into \( \frac{d}{d\tilde{y}^i} \).
 
-so we can simply use 
-\( \{\frac{d}{dx^i}|_{x(p)}\) to describe the basis vectors of \( T_p M \).
+State how the basis vectors of the tangent space behave under a change of coordinates
 
-kand we can rather inspect
+As we have seen for the description of the differential, if \( \{\frac{d}{d\tilde{x}^i}\} \) is the basis
+induced by the chart \( (U, \phi) \) via \( \frac{d}{d\tilde{x}^i} = d\phi^{-1}(\frac{d}{d\tilde{x}^i}) \in T_{\phi(p)} \mathbb{R}^k \) 
+at the point \( p \) and \( \{\frac{d}{d\tilde{y}^i}\} \) for a chart \( (V, \psi) \) and for ease of notation let \( F = \psi \circ \phi^{-1} \)
+then by the Jacobian representation of the differential
 
-Simply by noting that \(  \)
+\(d_{\phi(p)}(\psi \circ \phi^{-1})(\frac{d}{dx^i}|_{\phi(p)} = \frac{dF^j}{dx^i}(\phi(p))\frac{d}{dy^j} \)
 
+put even more succinct let be two local representations of the same tangent vector be \( v = v^i\frac{d}{dx^i} = = w^i\frac{d}{dy^i} \) 
+(living in \(\mathbb{R}^m\)) 
+we have that 
+\( w^j = \frac{dF^j}{dx^i}(\phi(p))v^i \)
+which is simply the sum of the entries in the \(j\)-th row of the Jacobian.
+
+\( d_{\phi(p)}(\psi \circ \phi^{-1})(\frac{d}{dx^i}|_{\phi_p} = \frac{d\tilde{x}^j}{dx^i}(\phi(p))\frac{d}{d} \)
+
+A vector bundle \(E\) over a base \(M\). 
+A point \(m_1\) in \(M\) corresponds to the origin in a fibre \(E_{m_1}\) of the vector bundle \(E\), and this fibre is mapped down to the point \(m_1\) by the 
+projection \(\pi: E \to M\).]]
+
+Define a vector bundle
+
+A real vector bundle consists of:
+1. topological spaces \(X\) base space and \(E\) total space.
+2. a continuous surjection \(\pi:E \to X\) bundle projection.
+3. for every \(x\) in \(X\), the structure of a finite-dimensional real vector space on the fiber \(\pi^{-1}(\{x\}\))
+
+where the following compatibility condition is satisfied: 
+for every point \(p\) in \(X\), there is an open neighborhood \(U\subseteq X\) of \(p\), a natural number \(k\), and a homeomorphism
+\(\varphi\colon \pi^{-1}(U) \to U \times \mathbb{R}^k\) 
+
+
+such that for all \(x\) in \(U\) and \( v \in \pi^{-1}(x) \),
+* \( \text{pr}_1 \circ \varphi(v) = \pi(v) = x \) for all vectors \(v\) in \(\mathbb{R}^k\)
+* The restriction of \( \phi \) to \( \pi^{-1}(x) \) is a vector space isomorphism from \( \pi^{-1}(x) \) to \( \{q\}\times \mathbb{R}^k \simeq \mathbb{R}^k \)
+
+Pictorially the following diagram commutes
+
+We refer to \( (U, \phi) \) as  a local trivialization and intuitively says the locally the space \( E \) looks like \(U\times \mathbb{R}^k\).
+If there exists a set \( \{(U_i, \phi_i)\} \) with such homeomorphism and \( U_i \) covering all of \( E \), the vector bundle is called trivial.
+
+A generalization are fiber bundles, where we have a triple \( (E, X, \pi, F) \) where \( E \) is again a total space,
+\( X \) the base space, but this time we do not require \( F = \mathbb{R}^k \) but any topological space, 
+so we do not have necessarily a vector space structure locally.
+
+
+Describe the special case of the Tangent bundle for vector bundles
+and show that it is a manifold
+
+Let the total space \( E = TM = \amalg_{p \in M} T_p\ M \) and the natural projection map \( \pi : TM \to M,\ \pi(v_p) = p \)
+where \( v_p \) is a tangent vector at \( p \). The local trivialization is given by \( \phi : \pi^{-1}(U) \to U \times \mathbb{R}^m \)
+via \( \phi(v_p) = (p, v) \).
+
+For it to be a manifold, we begin by defining the maps that will become our smooth charts. 
+Given any smooth chart \((U, \varphi)\) for \(M\), note that \(\pi^{-1}(U) \subset TM\) 
+is the set of all tangent vectors to \(M\) at all points of \(U\). 
+Let \((x^1, \dots, x^n)\) denote the coordinate functions of \(\varphi\), 
+and define a map \(\tilde{\varphi} : \pi^{-1}(U) \to \mathbb{R}^{2n}\) by 
+\(\tilde{\varphi} \left( \left. v^i \frac{\partial}{\partial x^i} \right|_p \right) = (x^1(p), \dots, x^n(p), v^1, \dots, v^n). \qquad (3.13)\)
+
+Its image set is \(\varphi(U) \times \mathbb{R}^n\), which is an open subset of \(\mathbb{R}^{2n}\). 
+It is a bijection onto its image, because its inverse can be written explicitly as
+\(\tilde{\varphi}^{-1}(x^1, \dots, x^n, v^1, \dots, v^n) = \left. v^i \frac{\partial}{\partial x^i} \right|_{\varphi^{-1}(x)}.\)
+
+Now suppose we are given two smooth charts \((U, \varphi)\) and \((V, \psi)\) for \(M\), 
+and let \((\pi^{-1}(U), \tilde{\varphi}), (\pi^{-1}(V), \tilde{\psi})\) be the corresponding charts on TM. 
+
+The sets 
+\(\tilde{\varphi}(\pi^{-1}(U) \cap \pi^{-1}(V)) = \varphi(U \cap V) \times \mathbb{R}^n\) and
+\(\tilde{\psi}(\pi^{-1}(U) \cap \pi^{-1}(V)) = \psi(U \cap V) \times \mathbb{R}^n\)
+
+are open in \(\mathbb{R}^{2n}\), and the transition map 
+\(\tilde{\psi} \circ \tilde{\varphi}^{-1}: \varphi(U \cap V) \times \mathbb{R}^n \to \psi(U \cap V) \times \mathbb{R}^n\) 
+can be written explicitly using our knowledge of the differential for transition maps as
+\(\tilde{\psi} \circ \tilde{\varphi}^{-1} (x^1, \dots, x^n, v^1, \dots, v^n) 
+= \left( F^1(x), \dots, F^n(x), \frac{\partial F^1}{\partial x^j}(x) v^j, \dots, \frac{\partial F^n}{\partial x^j}(x) v^j \right).\),
+where \( F = \tilde{\psi} \circ \tilde{\varphi}^{-1} \).
+This is clearly smooth as the coordinate maps are and also
+
+Choosing a countable cover \(\{U_i\}\) of \(M\) by smooth coordinate domains, 
+we obtain a countable cover of \(TM\) by coordinate domains \(\{\pi^{-1}(U_i)\}\).
+To check the Hausdorff condition (v), just note that any two points in the same fiber of \(\pi\) lie in one chart, 
+while if \((p, v)\) and \((q, w)\) lie in different fibers, 
+there exist disjoint smooth coordinate domains \(U, V\) for \(M\) such that \(p \in U\) and \(q \in V\), 
+and then \(\pi^{-1}(U)\) and \(\pi^{-1}(V)\) are disjoint coordinate neighborhoods containing \((p, v)\) and \((q, w)\), respectively.
+
+To see that \(\pi\) is smooth, note that with respect to charts \((U, \varphi)\) for \(M\) and \((\pi^{-1}(U), \tilde{\varphi})\) for \(TM\), 
+its coordinate representation is \(\pi(x, v) = x\). The \( (x^1, \dots, x^n, v^1, \dots, v^n) \) are also referred to as natural coordinates.
+
+
+Define the cotangent space
+
+For any vector space \( V \) over a field \( \mathbb{K} \), we call linear functions \( f : V \to \mathbb{K} \)
+covectors. The space under addition and multiplication is itself a vector space called the dual space \( V^\ast \).
+
+We have in particular that for each finite dimensional space there is even an isomorphism \(\phi : V \to V^\ast \),
+which is defined on the basis \( \{x_i\}_{i \in [\text{dim}\ V]} \) as \( \phi(x_i) = y_i \), s.t. \( y_i(x_j) = \delta_{i,j} \).
+
+The cotangent space \( T^\ast_p\ M \) is then nothing else but the dual of the tangent space of a point.
+
+We use the special notation \( dx^i \) for its basis vectors and similarly as for tangent vectors it holds for different
+charts \( \phi, \psi \) inducing basis vectors \( d\tilde{x}^i \), \( d\tilde{y}^i \)
+
+\( d\tilde{x}^k|_{\phi(p)} = \frac{dF^k}{d\tilde{x}^j}(\phi(p))dy^j|_{\phi(p)} \).
+
+
+As a prerequisite note the following 
