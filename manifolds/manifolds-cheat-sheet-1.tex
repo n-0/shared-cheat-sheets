@@ -31,6 +31,12 @@ A top. space \( (X, \tau) \) is
 union is \( X \);
 2. path-connected, if every pair of points in \( X \) can be joined by a path in \( X \); and
 3. locally path-connected if \( X \) has a basis of path-connected open subsets.
+4. simply connected 
+\(X\) is simply connected if and only if it is path-connected and whenever \(p : [0, 1] \to X\) and \(q : [0, 1] \to X\) are two paths (that is, continuous maps) 
+with the same start and endpoint (\(p(0) = q(0)\) and \(p(1) = q(1)\)), 
+then \(p\) can be continuously deformed into \(q\) while keeping both endpoints fixed. 
+Explicitly, there exists a homotopy \(F : [0,1] \times [0,1] \to X\) such that \(F(x,0) = p(x)\) and \(F(x,1) = q(x)\).
+(This is also equivalent to saying that any loop is contractible to a point).
 
 Let \( M \) be a topological manifold.
 (a) \( M \) is locally path-connected.
@@ -38,6 +44,8 @@ Let \( M \) be a topological manifold.
 (c) The components of \( M \) are the same as its path components.
 (d) \( M \) has countably many components, each of which is an open subset of \( M \) and
 a connected topological manifold.
+(e) Simple connectedness is equivalent to the fundamental group at each \(p \in M \) being trivial 
+(there are no "holes" in \( M \)).
 
 
 Define the compactness and similar constructions
@@ -201,6 +209,7 @@ that makes it a manifold and a smooth structure with respect to which the inclus
 Note that immersed submanifolds are very much dependend on the specific choice of \( \iota \), since the topology of \( M \) does not fix the one of \( S \)
 and with that the smooth structure. Thus two different looking \( \iota \) may define conceptually the same manifold (such as the Lemniscate given as an example in the lecture), but do not so under strict consideration.
 
+
 State and prove the constant rank theorem and with that regular value theorem
 
 Constant rank theorem
@@ -273,3 +282,12 @@ Write \(m = \dim M\), \(n = \dim N\), and \(k = m - r\). Let \(c \in N\) be arbi
 \(\{(x^1, \dots, x^r, x^{r+1}, \dots, x^m) \in U : x^1 = \dots = x^r = 0\}.\)
 
 Thus \(S\) satisfies the local \(k\)-slice condition, so it is an embedded submanifold of dimension \(k\). It is closed in \(M\) by continuity, so it is properly embedded.
+
+
+
+State the Global Rank theorem
+
+Let \( M \) and \( N \) be smooth manifolds, and suppose \( F : M \to N \) is a smooth map of constant rank. 
+(1) If \( F \) is surjective then it's a smooth submersion. 
+(2) If \( F \) is injective then it's a smooth immersion. 
+(3) If \( F \) is bijective then it's a diffeomorphism.

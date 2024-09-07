@@ -1,0 +1,190 @@
+Define a covering space
+
+(This mainly played a role in the homework and is mostly related to the lecture through Lie groups)
+Let \(X\) be a topological space. 
+A covering of \(X\) is a continuous map \(\pi : \tilde{X} \rightarrow X\) such that for every \(x \in X\) there exists an open neighborhood \(U_x\) of \(x\) 
+and a discrete (topology) space \(D_x\) such that 
+\(\pi^{-1}(U_x)= \displaystyle \bigsqcup_{d \in D_x} V_d \) and 
+\(\pi|_{V_d}:V_d \rightarrow U_x \) is a homeomorphism for every \(d \in D_x \).
+
+\( X \) is then the base and \( \tilde{X} \)the covering space, the open sets \(V_{d}\) are called sheets, 
+which are uniquely determined up to homeomorphism, if \(U_x\) is connected.
+For each \(x \in X\) the discrete set \(\pi^{-1}(x)\) is called the fiber of \(x\). 
+If \(X\) is connected, it can be shown that \(\pi\) is surjective, and the cardinality of \(D_x\) is the same for all \(x \in X\); 
+this value is called the degree of the covering. 
+If \(\tilde X\) is path-connected, then the covering \( \pi : \tilde X \rightarrow X\) is called a path-connected covering. 
+This definition is equivalent to the statement that \(\pi\) is a locally trivial fiber bundle.
+
+In the case of \( C^k \) manifolds it is typically preferred to also require that \( \pi \) is \( C^k \) and similarly the \( \pi|_{V_d} \).
+
+If \( \tilde{X} \) is simply connected, then \( \pi \) is the so called universal cover, which is for unique in the sense
+that any other universal cover \( (\hat{X}, \hat{\pi}) \) is diffeomorphic via some 
+\( \Phi : \hat{X} \to \tilde{X} \) to the original one and \( \pi \circ \Phi  = \hat{\pi} \).
+A non-trivial fact is that this object always exists for smooth connected manifolds.
+
+We have the following facts
+(a) Every smooth (\( C^\infty \)) covering map is a local diffeomorphism, a smooth submersion,
+an open map, and a quotient map.
+(b) An injective smooth covering map is a diffeomorphism.
+(c) A topological covering map is a smooth covering map if and only if it is a local
+diffeomorphism.
+
+Some examples are:
+\( r : \mathbb{R} \to S^1 \) via \( r(t) = (\cos(2\pi t), \sin(2\pi t)) \)
+
+Consider mapping opposite points on a sphere to the same point, making \( S^2 \) a covering space of \( \mathbb{P}^2(\mathbb{R}) \)
+of degree 2.
+
+
+Define homeomorphisms of Lie Groups and give some examples
+
+If \(G\) and \(H\) are Lie groups, a Lie group homomorphism from \(G\) to \(H\) is a smooth map \(F: G \to H\) that is also a group homomorphism. 
+It is called a Lie group isomorphism if it is also a diffeomorphism, which implies that it has an inverse that is also a Lie group homomorphism.   
+In this case we say that \(G\) and \(H\) are isomorphic Lie groups.
+
+The map \(\varepsilon: \mathbb{R} \to S^1\) defined by \(\varepsilon(t) = e^{2\pi i t}\) is a Lie group homomorphism whose kernel is the set \(\mathbb{Z}\) of integers. 
+Similarly, the map \(\varepsilon^n: \mathbb{R}^n \to T^n\) defined by \(\varepsilon^n (x^1, ..., x^n) = (e^{2\pi i x^1}, ..., e^{2\pi i x^n})\) 
+is a Lie group homomorphism whose kernel is \(\mathbb{Z}^n\).
+
+The determinant function \(\det: GL(n, \mathbb{R}) \to \mathbb{R}^*\) is smooth because \(\det A\) is a polynomial in the matrix entries of \(A\). It is a Lie group homomorphism because \(\det(AB) = (\det A) (\det B)\). Similarly, \(\det: GL(n, \mathbb{C}) \to \mathbb{C}^*\) is a Lie group homomorphism.
+
+If \(G\) is a Lie group and \(g \in G\), conjugation by \(g\) is the map \(C_g: G \to G\) given by \(C_g (h) = ghg^{-1}\). 
+Because group multiplication and inversion are smooth, \(C_g\) is smooth, and a simple computation shows that it is a group homomorphism. 
+In fact, it is an isomorphism, because it has \(C_{g^{-1}}\) as an inverse. 
+A subgroup \(H \subset G\) is said to be normal, if \(C_g(H) = H\) for every \(g \in G\). 
+
+We have the facts: 
+1. Every Lie group homomorphism has constant rank.
+2. For any Lie homomorphism to prove that it is an isomorphism it suffices
+to show that it is bijective (opposed to also showing diffeomorphic).
+
+Define Lie subgroups
+
+A Lie subgroup of \( G \) is a subgroup of \( G \) endowed with a topology and smooth structure 
+making it into a Lie group and an immersed submanifold of \( G \).
+
+We have the following standard case
+Suppose \( H \subsetseq G \) is a subgroup (in the algebraic sense) 
+that is also an embedded submanifold. Then \( H \) is a Lie subgroup.
+
+Let \( F : G \to H \) be a Lie group homomorphism. The kernel of \( F \)
+is a properly embedded Lie subgroup of \( G \), whose codimension is equal to the rank
+of \( F \).
+Proof:
+Because \( F \) has constant rank, its kernel \( F^{-1}(e) \) is a properly embedded
+submanifold of codimension equal to the rank \( F \).
+
+If \( F : G \to H \) is an injective Lie group homomorphism, the image of 
+\( F \) has a unique smooth manifold structure such that \( F(G) \) is a Lie subgroup
+of \( H \) and \( F : G \to F(G) \) is a Lie group isomorphism.
+Proof:
+Since a Lie group homomorphism has constant rank, it follows from the
+global rank theorem that \( F \) is a smooth immersion, so its smooth submanifold of \( H \). 
+By injectivity its image is also an algebraic subgroup and thus a Lie subgroup. The rest follows.
+
+Example
+ The set \(SL(n, \mathbb{R})\) of \(n \times n\) real matrices with determinant equal to 1 is called the special linear group of degree \(n\). 
+ Because \(SL(n, \mathbb{R})\) is the kernel of the Lie group homomorphism \(\det: GL(n, \mathbb{R}) \to \mathbb{R}^*\), 
+ it is a properly embedded Lie subgroup. 
+ Because the determinant function is surjective, it is a smooth submersion by the global rank theorem,
+ so \(SL(n, \mathbb{R})\) has dimension \(n^2 - 1\).
+
+
+Define group actions on manifolds
+
+The left action of a Lie group \(G\) on a smooth manifold \(M\) is defined as the map \(\theta: G \times M \to M, (g, p) \mapsto g \cdot p\) 
+such that the following holds:
+(i) \(\forall g, g' \in G, \forall p \in M: g \cdot (g' \cdot p) = (gg') \cdot p\)
+(ii) \(\forall p \in M: e \cdot p = p\)
+We'll sometimes use \(\theta_g(p)\) instead of \(g \cdot p\) to make the map more explicit. 
+With this notation the above requirements become for the left action
+(i) \(\forall g, g' \in G: \theta_g \circ \theta_{g'} = \theta_{gg'}\)
+(ii) \(\theta_e = \text{id}_M\)
+
+A right action is defined exactly the same except that one has to modify the order of arguments due to \( \theta : M \times G, (p, g) \mapsto p \cdot g \).
+
+If \(M\) is a topological space and \(G\) is a topological group, then the left/right action of \(G\) on \(M\) is said to be continuous, 
+if the defining map is continuous. In this case we say that \(M\) is a left/right \(G\)-space. 
+Similarly if \(M\) is a smooth manifold and \(G\) is a Lie group, then the left/right action is said to be smooth if the defining map is a smooth map.
+
+For each \(p \in M\), the orbit of \(p\), denoted by \(G \cdot p\), is the set of all images of \(p\) under the action by elements of \(G\):
+\(G \cdot p = \{g \cdot p : g \in G\}.\)
+For each \(p \in M\), the isotropy group or stabilizer of \(p\), denoted by \(G_p\), 
+is the set of elements of \(G\) that fix \(p\):
+\(G_p = \{g \in G : g \cdot p = p\}.\)
+
+The definition of a group action guarantees that \(G_p\) is a subgroup of \(G\).
+The action is said to be transitive if for every pair of points \(p, q \in M\), there exists \(g \in G\) such that \(g \cdot p = q\), 
+or equivalently if the only orbit is all of \(M\).   
+
+The action is said to be free if the only element of \(G\) that fixes any element of \(M\) is the identity: 
+\(g \cdot p = p\) for some \(p \in M\) implies \(g = e\), or equivalently if every isotropy group is trivial.   
+
+Some examples are:
+If \( G \) is any Lie group and \( M \) is any smooth manifold, the trivial action of \( G \)
+on \( M \) is defined by \( g \cdot p = p \) for all \( g \in G \) and \( p \in M \). It is a smooth action,
+for which each orbit is a single point and each isotropy group is all of G.
+
+The natural action of \( \text{GL}(n, \mathbb{R}) \) on \( \mathbb{R}^n \) is the left action given by matrix 
+multiplication: \( (A,x) \mapsto Ax \). It is smooth because the components of \( Ax \) depend polynomially on
+the matrix entries of \( A \) and the components of \( x \). The orbits are \( \{0\}, \mathbb{R}^{n} \setminus \{0\} \)
+due to invertibility of \( A \).
+
+Every Lie group G acts smoothly on itself by left translation \( L_{g_1}(g_2) \), which is transitive and free.
+ 
+
+Define deck transformations
+
+(Not in the lecture but so ubiquitous in mathematics that I wanted to include it)
+
+Let \( E, M \) be top. spaces and \( \pi : E \to M \) a covering map. An automorphism of \( \pi \),
+referred to as deck transformation, is a homeomorphism \( \phi : E \to E \) satisfies \( \pi \circ \phi = \pi \).
+Expressed in a diagram
+
+
+The set \(\text{Aut}_\pi(E)\) of all automorphisms of \(\pi\), called the automorphism group of \(\pi\), is a group under composition, 
+acting on \(E\) on the left. 
+It can be shown that \(\text{Aut}_\pi(E)\) acts transitively on each fiber of \(\pi\) if and only if \(\pi\) is a normal covering map, 
+which means that \(\pi_*(\pi_1(E, q))\) is a normal subgroup of \(\pi_1(M, \pi(q))\) for every \(q \in E\) (this is quite involved).
+
+Suppose \( E, M \) are smooth manifolds and \( \pi : E \to M \) is a smooth covering map. 
+With the discrete topology, the automorphism group \( \text{Aut}_{\pi}(E) \) is a zero-dimensional Lie group acting 
+smoothly and freely on E.
+
+
+Define Lie-Algebras and explain how they can be motivated by Lie groups
+
+As already noted that a Lie group \( G \) defines a free, transitive group action on itself
+via the left translation \( L : G \times G \to G,\ (g, g') \mapsto g\cdot g' \).
+
+A vector field \( X \) on \( G \) is said to be left-invariant if for all \( g, g' \in G \)
+\( d(L_g)|_{g'}(X_{g'} = X_{gg'} \)
+that is we obtain just again our vector field shifted by \( g \). 
+This is often abbreviated to \( (L_g)_{\ast}X = X \),
+since \( (L_g)_{\ast}(aX + bY) = a(L_g)_{\ast}X + b(L_g)_{\ast}Y \) all such left-invariant vector fields
+are a linear subspace of \( \mathcal(X)(G) \), call it \( \text{Lie}(G) \).
+
+Define the Lie Bracket for vector fields \( X, Y \in \mathcal{X}(G) \) as 
+\( [X, Y] = XY - YX \)
+
+Since pushforwards distribute over Lie Brackets we have
+\( (L_{g})_{\ast}[X, Y] = [(L_{g})_{\ast}X,L_{g})_{\ast}Y] = [X, Y]  \) hence the resulting v.f. \( [X, Y] \)
+is also left-invariant.
+
+This makes \( \text{Lie}(G) \) an algebra over \( \mathbb{R} \)
+with the multiplication defined by \( [X, Y] \) satisfying the following,
+for \( a, b \in \mathbb{R} \) we bilinearity
+\([aX + bY, Z] = a[X, Z] + b[Y, Z]\)
+\([Z, aX + bY] = a[Z, X] + b[Z, Y]\)
+Antisymmetry:
+\( [X, Y] = -[Y, X] \)
+and the Jacobi identity
+\( [X, [Y, Z]] + [Y, [Z, X]] + [Z, [X, Y]] = 0\)
+(easy to remember as anti-clockwise rotation of the letters).
+the Jacobi identity is a substitute for associativity, which does not hold
+in general for brackets in a Lie algebra
+
+Conversely in general, a Lie algebra is vector space with a multiplication called the bracket satisfying the above properties.
+
+Further examples of Lie algebras are \( \mathcal(X)(G) \) itself or \( \text{Mat}_n(\\mathbb{R}) \).
+

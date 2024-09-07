@@ -179,7 +179,124 @@ charts \( \phi, \psi \) inducing basis vectors \( d\tilde{x}^i \), \( d\tilde{y}
 \( d\tilde{x}^k|_{\phi(p)} = \frac{dF^k}{d\tilde{x}^j}(\phi(p))dy^j|_{\phi(p)} \).
 
 
-As a prerequisite note the following 
+Define a section, local & global frames in the context of vector bundles
 
-Good bye World!
-Hello World
+Let \(\pi: E \to M\) be a vector bundle. 
+
+A local section of \(E\) is a continuous map \(\sigma: U \to E\) defined on some open subset \(U \subseteq M\) 
+and satisfying \(\pi \circ \sigma = \text{Id}_U\). 
+This means that \(\sigma(p)\) is an element of the fiber \(E_p\) for each \(p \in U\).
+Should \( U = M \), we speak of a global section.
+To emphasize the distinction, a section defined on all of \(M\) is sometimes called a global section.
+We call \( \{ p \in M : \sigma(p) \neq 0 \} \) the support of a section.
+
+If \(E \to M\) is a smooth vector bundle, 
+the set of all smooth global sections of \(E\) is a vector space 
+under pointwise addition and scalar multiplication:
+
+\((c_1 \sigma_1 + c_2 \sigma_2)(p) = c_1 \sigma_1(p) + c_2 \sigma_2(p)\).
+
+This vector space is usually denoted by \(\Gamma(E)\).
+Further a section can act on a smooth function \( f \in C^{\infty}(M) \) by
+\( (f\sigma)(p) = f(p)\sigma(p) \), which is again a new section (the original one multiplied with the value of \( f \) at \( p \)).
+This will be useful in the context of vector fields.
+
+\(p \in U\). 
+A local frame for \(E\) over \(U\) is an ordered \(k\)-tuple \((\sigma_1, \dots, \sigma_k)\) of linearly independent local sections over \(U\),
+that span \(E_p = \pi^{-1}(p)\) for each \( p \in U\); 
+thus \((\sigma_1(p), \dots, \sigma_k(p))\) is a basis for the fiber \(E_p\), for each \(p \in U\). 
+It is called a global frame if \(U = M\). If \(E \to M\) is a smooth vector bundle, 
+a local or global frame is a smooth frame if each \(\sigma_i\) is a smooth section. 
+We often denote a frame \((\sigma_1, \dots, \sigma_k)\) by \((\sigma_i)\).
+
+Outline how local frames can generate local trivialization and vice versa
+
+Local Frames Associated with Local Trivializations
+Suppose \(\pi: E \to M\) is a smooth vector bundle. 
+If \(\Phi: \pi^{-1}(U) \to U \times \mathbb{R}^k\) is a smooth local trivialization of \(E\), 
+we can use the same idea as in the preceding example to construct a local frame for \(E\) over \(U\). 
+Define maps \(\sigma_1, \dots, \sigma_k: U \to E\) by 
+
+\(\sigma_i(p) = \Phi^{-1}(p, e_i) = \Phi^{-1} \circ \tilde{e}_i (p);\)
+
+Then \(\sigma_i\) is smooth because \(\Phi\) is a diffeomorphism, 
+and the fact that \(\pi_1 \circ \Phi = \pi\) implies that
+
+\(\pi \circ \sigma_i(p) = \pi \circ \Phi^{-1}(p, e_i) = \pi_1(p, e_i) = p,\)
+
+so \(\sigma_i\) is a section. 
+To see that \((\sigma_i(p))\) forms a basis for \(E_p\), just note that \(\Phi\) restricts to an isomorphism from 
+\(E_p\) to \(\{p\} \times \mathbb{R}^k\), and \(\Phi(\sigma_i(p)) = (p, e_i)\), so \(\Phi\) takes \((\sigma_i(p))\) 
+to the standard basis for \(\{p\} \times \mathbb{R}^k \cong \mathbb{R}^k\). 
+We say that this local frame \((\sigma_i)\) is associated with \(\Phi\).
+
+Actually the converse holds as well that is
+Every smooth local frame for a smooth vector bundle is associ-
+ated with a smooth local trivialization
+
+Proof. 
+Suppose \(E \to M\) is a smooth vector bundle and \((\sigma_i)\) is a smooth local frame 
+for \(E\) over an open subset \(U \subseteq M\). 
+We define a map \(\Psi: U \times \mathbb{R}^k \to \pi^{-1}(U)\) by
+
+\(\Psi(p, (v^1, \dots, v^k)) = v^i \sigma_i(p). \qquad (10.4)\)
+
+The fact that \((\sigma_i(p))\) forms a basis for \(E_p\) at each \(p \in U\) implies that \(\Psi\) is bijective, 
+and an easy computation shows that \(\sigma_i = \Psi \circ \tilde{e}_i\). 
+Then with some effort we can show that \(\Psi\) is a diffeomorphism, so \(\Psi^{-1}\) is a smooth local trivialization, 
+whose associated local frame is \((\sigma_i)\).
+
+Combining these facts we have:
+A smooth vector bundle is smoothly trivial if and only if it admits a smooth global frame.
+(As a side effect this proves Lemma 4.4.4 from the lecture).
+
+
+Define a vector field
+
+With the setup of vector bundles a vector field is nothing else but a section 
+of the tangent bundle, that is a smooth map \( \V : M \to TM \)
+with \( \pi \circ V = \text{id}_{M} \).
+
+In local coordinates a vector field can also be written as
+\( V = v^i\frac{d}{dx^i} \)
+
+We call the vector space of all vector fields \( \mathfrak{X}(M) \).
+In particular vector fields have to surprising interactions with \( f \in C^\infty(M) \),
+one is a little trivial namely creating a new vector field by just multiplying with the prefactor \( f \)
+\( V : C^\infty(M) \times \mathfrak{X}(M) \to \mathfrak{X}(M), \ (f, V) \to f \cdot V \),
+the other more interesting
+\( V : C^\infty(M) \to C^\infty(M),\ (Vf)(p) \coloneqq D_{V(p)}f|_{p} \)
+that is at each point \( p \), we take the directional derivative along the tangent vector
+the vector field assigns to the point \( p \).
+Making this more explicit we have
+\( (Vf)(p) = (V^i_p \frac{d}{dx^i}|_{p})f = V^i_p \frac{df}{dx^i}|_{p}\)
+
+So we observe that any vector field \( V \) can be considered as a derivation \( D_{V}|_{p} \) at \( p \),
+We can generalize the pointwise notion of a derivation to say that \( D : C^\infty(M) \to C^\infty(M) \)
+is a derivation, if its a derivation \( D(p) : C^\infty(M) \to \mathbb{R} \) at every point.
+
+This is crucial, because it can be proven that such a map \( D \) is a derivation if and only if
+\( Df = Xf \) for some smooth \( V \in \mathfrak{X}(M) \). This simplifies a lot of proofs from the lecture.
+
+Define a Lie Group
+
+A Lie group is a smooth manifold \( G \) (without boundary) that is also a group in the algebraic sense, 
+with the property that the multiplication map \( m : G \times G \to G \) and inversion map \( i : G \to G \), given by
+\(
+m(g, h) = gh, \quad i(g) = g^{-1},
+\)
+are both smooth. 
+A Lie group is, in particular, a topological group 
+(a topological space with a group structure such that the multiplication and inversion maps are continuous).
+
+If \(G\) is a Lie group, any element \(g \in G\) defines maps \(L_g, R_g: G \to G\), called left translation and right translation, respectively, by 
+
+\(L_g(h) = gh, \quad R_g(h) = hg.\)
+
+Because \(L_g\) can be expressed as the composition of smooth maps 
+
+\(G \xrightarrow{t_g} G \times G \xrightarrow{m} G,\)
+
+where \(t_g(h) = (g,h)\) and \(m\) is multiplication, it follows that \(L_g\) is smooth. 
+It is actually a diffeomorphism of \(G\), because \(L_{g^{-1}}\) is a smooth inverse for it. 
+Similarly, \(R_g: G \to G\) is a diffeomorphism. 

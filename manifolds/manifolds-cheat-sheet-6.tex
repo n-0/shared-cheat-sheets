@@ -1,0 +1,234 @@
+Define the integral curve of a vector field \( V \)
+and prove its existence
+
+If \( V \) is a vector field on \( M \) an integral curve of \( V \)
+is a differentiable \( \gamma : J \to M \) with \( \gamma'(t) = V_{\gamma(t)} \)
+for all \( t \in J \).
+
+We then have for \( V \in \mathfrak{X}(M) \) with \( M \) differentiable
+that
+
+1. For each point \( p \in M \); there exist \( \varepsilon > 0 \) and a smooth curve \( \gamma : (-\varepsilon, \varepsilon) \to M \); 
+that is an integral curve of V starting at p.
+2. For each \( p \in M \), exists some open neighborhood of \( U \) and \( \varepsilon > 0 \)
+s.t. for all \(q \in U\) the integral curve of 1. exists and 
+\( \phi : (-\varepsilon, \varepsilon) \times U \to M, \ \phi(s,q) = c_q(s) \) 
+is smooth.
+
+For a smooth coordinate domain \(U \subseteq M\), we can write a curve \(\gamma\) in local coordinates as
+\[\gamma(t) = (\gamma^1(t), \dots, \gamma^n(t)).\] 
+Then the condition \(\gamma'(t) = V_{\gamma(t)}\) for \(\gamma\) to be an integral curve of \(V\) can be written
+\(\dot{\gamma}^i(t) \frac{\partial}{\partial x^i} \bigg|_{\gamma(t)} = V^i(\gamma(t)) \frac{\partial}{\partial x^i} \bigg|_{\gamma(t)},\)
+which reduces to the following autonomous system of ordinary differential equations (ODEs):
+
+\begin{align*}
+\dot{\gamma}^1(t) &= V^1(\gamma^1(t), \dots, \gamma^n(t)), \\
+&\vdots \\
+\dot{\gamma}^n(t) &= V^n(\gamma^1(t), \dots, \gamma^n(t)). \tag{9.1}
+\end{align*}
+
+with initial condition \( \gamma(0)^i = x^i(p) \), where \( x^i \) is the \( i \)-th coordinate of some chart.
+According to Picard–Lindelöf (which requires Lipschitz continuity of the \( V^i \) granted by the smoothness of \( V \))
+this has then a unique smooth solution.
+
+Moreover the theory of ODE's states on compact subsets ODE's vary smoothly on their initial conditions, hence
+we can choose some smaller neighborhood \( U' \), which is relatively compact in \( U \) and obtain the second statement.
+
+
+What are some useful properties of integral curves?
+
+Lemma 9.3 (Rescaling Lemma). 
+Let \(V\) be a smooth vector field on a smooth manifold \(M\), let \(J \subseteq \mathbb{R}\) be an interval, 
+and let \(\gamma: J \to M\) be an integral curve of \(V\). 
+For any \(a \in \mathbb{R}\), the curve \(\tilde{\gamma}: \tilde{J} \to M\) defined by \(\tilde{\gamma}(t) = \gamma(at)\) 
+is an integral curve of the vector field \(aV\), where \(\tilde{J} = \{t: at \in J\}\).
+Proof:
+We can examine the action of \(\tilde{\gamma}'(t)\)
+on a smooth real-valued function \(f\) defined in a neighborhood of a point \(\tilde{\gamma}(t_0)\). By
+the chain rule and the fact that \(\gamma\) is an integral curve of \(V\),
+
+\[\tilde{\gamma}'(t_0)f 
+= \frac{d}{dt}\bigg|_{t=t_0} (f \circ \tilde{\gamma})(t)
+= \frac{d}{dt}\bigg|_{t=t_0} (f \circ \gamma)(at) 
+= a (f \circ \gamma)' (at_0) 
+= a \gamma' (at_0) f 
+= a V_{\tilde{\gamma}(t_0)} f.
+\qquad \square
+\]
+
+Lemma 9.4 (Translation Lemma). Let \(V\), \(M\), \(J\), and \(\gamma\) be as in the preceding lemma. 
+For any \(b \in \mathbb{R}\), the curve \(\hat{\gamma}: \hat{J} \to M\) defined by \(\hat{\gamma}(t) = \gamma(t + b)\) is also an integral curve of \(V\), 
+where \(\hat{J} = \{t: t + b \in J\}\).
+
+
+Define local flow/global flow and a one parameter subgroup
+as well as complete vector fields.
+
+The map \( \phi : (-\varepsilon, \varepsilon) \times U \to M \), for \( U \subset M \) with \( \phi(s,p) = \gamma_p(s) \),
+and \( \gamma \) being the integral curve starting at \( p \), is called the local flow of \( V \) over \( U \).
+
+Let \( A \) be an index set, \( \{U_{\alpha}\}_{\alpha \in A}\) an open cover of \( M \)
+and \( \{I_{\alpha}\}_{\alpha \in A}\) an Interval in \( \mathbb{R} \) with \(0 \in I_{\alpha} \).
+A family of maps \( \{\phi_{s}^\alpha\}_{\alpha \in U_{\alpha}, s \in I_{\alpha}} \)
+with each being diffeomorphism \( \phi^\alpha_s : U_\alpha \to \phi^\alpha_{s}(U_{\alpha})\),
+s.t. 
+\( \phi^\alpha_s(p) = \gamma_p(s) \) (matches a local flow) 
+with the group laws 
+\( \phi^\alpha_s \circ ^\alpha_t = \phi^\alpha_{s + t}\) for \( s + t \in I_{\alpha} \)
+\( \phi^\alpha_0 = \text{id}_{U_\alpha} \).
+is called a local \( 1 \)-parameter group.
+
+We call \( \mathcal{D}^\alpha = I_\alpha \times U_\alpha \) the flow domains.
+
+A global flow is a diffeomorphism \( \phi : \mathbb{R} \times M \to M \), which is defined
+for all \( t \in \mathbb{R} \) and its derivative fits a vector field at each point.
+
+Vector fields for which we can find a global flow are called complete.
+
+
+
+Prove that a compactly supported smooth vector field is complete.
+
+(Uniform Time Lemma). 
+Let \(V\) be a smooth vector field on a smooth manifold \(M\), and let \(\phi\) be its flow. 
+Suppose there is a positive number \(\varepsilon\) such that for every \(p \in M\), 
+the domain of \(\phi(p)\) contains \((-\varepsilon, \varepsilon)\). Then \(V\) is complete.
+
+Proof. 
+Suppose for the sake of contradiction that for some \(p \in M\), 
+the domain \(D(p)\) of \(\phi(p)\) is bounded above. (A similar proof works if it is bounded below.) 
+Let \(b = \sup D(p)\), let \(t_0\) be a positive number such that \(b - \varepsilon < t_0 < b\), and let \(q = \phi(p)(t_0)\).
+
+The hypothesis implies that \(\phi(q)(t)\) is defined at least for 
+\(t \in (-\varepsilon, \varepsilon)\). 
+Define a curve \(\gamma : (-\varepsilon, t_0 + \varepsilon) \to M\) by 
+
+\[\gamma(t) = \begin{cases}
+\phi(p)(t), & -\varepsilon < t < b, \\
+\phi(q)(t - t_0), & t_0 - \varepsilon < t < t_0 + \varepsilon.
+\end{cases}\]
+
+These two definitions agree where they overlap, because 
+\(\phi(q)(t - t_0) = \phi_{t-t_0}(q) = \phi_{t-t_0} \circ \phi_{t_0} (p) = \phi_{t} (p) = \phi(p)(t)\) 
+by the group law for \(\phi\). 
+By the translation lemma, \(\gamma\) is an integral curve starting at \(p\). 
+Since \(t_0 + \varepsilon > b\), this is a contradiction.
+
+Theorem: Every compactly supported smooth vector field on a smooth manifold is complete.
+
+Proof. 
+Suppose \(V\) is a compactly supported vector field on a smooth manifold \(M\), and let \(K = \text{supp } V\). 
+For each \(p \in K\), there is a neighborhood \(U_p\) of \(p\) and a positive number \(\varepsilon_p\) 
+such that the flow of \(V\) is defined at least on \((-\varepsilon_p, \varepsilon_p) \times U_p\). 
+By compactness, finitely many such sets \(U_{p_1}, \dots, U_{p_k}\) cover \(K\). 
+With \(\varepsilon = \min \{\varepsilon_{p_1}, \dots, \varepsilon_{p_k}\}\), 
+it follows that every maximal integral curve starting in \(K\) is defined at least on \((-\varepsilon, \varepsilon)\). 
+
+Since \(V = 0\) outside of \(K\), every integral curve starting in \(M \setminus K\) is constant 
+and thus can be defined on all of \(\mathbb{R}\). 
+Thus the hypotheses of the uniform time lemma are satisfied, so \(V\) is complete.
+
+Define the Lie-Derivative of vector fields
+
+(Note that this a little simpler than the most general case 
+for tensor fields)
+
+Suppose we wanted to create a derivative in the direction \( v \in T_p M \)
+of some smooth vector field \( W \), naively we would try to evaluate
+
+\(D_v W(p) = \frac{d}{dt} \bigg|_{t=0} W_{p + tv} = \lim_{t \to 0} \frac{W_{p + tv} - W_p}{t}.\)
+
+An easy calculation shows that \( D_v W(p) \) can be evaluated by applying \( D_v \) 
+to each component of \( W \) separately:
+
+\( D_v W(p) = D_v W^i(p) \frac{\partial}{\partial x^i} \bigg|_p. \)
+
+This is however ill-defined since \( W_{p + tv}, W_p \) live in different tangent spaces.
+
+This problem can be circumvented if we replace the vector \(v \in T_pM\) with a vector field \(V \in \mathfrak{X}(M)\), 
+so we can use the flow of \(V\) to push values of \(W\) back to \(p\) and then differentiate. 
+
+Suppose \(M\) is a smooth manifold, \(V\) is a smooth vector field on \(M\), and \(\theta\) is the flow of \(V\). 
+For any smooth vector field \(W\) on \(M\), define a rough vector field on \(M\), 
+denoted by \(\mathcal{L}_V W\) and called the Lie derivative of \(W\) with respect to \(V\), by
+
+\((\mathcal{L}_V W)_p = \frac{d}{dt}\bigg|_{t=0} d(\theta_{-t})_{\theta_t(p)}(W_{\theta_t(p)})\) 
+\(\lim_{t \to 0} \frac{d(\theta_{-t})_{\theta_t(p)}(W_{\theta_t(p)}) - W_p}{t}, \)
+
+provided the derivative exists. For small \(t \neq 0\), at least the difference quotient makes sense: 
+\(\theta_t\) is defined in a neighborhood of \(p\), and \(\theta_{-t}\) is the inverse of \(\theta_t\), 
+so both \(d(\theta_{-t})_{\theta_t(p)}(W_{\theta_t(p)})\) and \(W_p\) are elements of \(T_pM\).
+Should \( M \) have a boundary this definition only works if \( V \) is tangent to \( \partial M \)
+otherwise a more involved construction is required.
+
+
+Insert here image from page 229 (Fig. 9.13)
+
+Prove that the Lie Derivative is a smooth vector field along some other vector field
+
+If we consider this derivative at each point of \( M \) in the direction given by some smooth
+vector field \( V \), \( (\mathcal{L}_v W) \) is in fact again a vector field.
+
+Let \( \theta \) be the flow of \( V \). For any \( p \in M \) let \( (U, (x^i)) \)
+be smooth chart containing \( p \). Choose an open interval \(0 \in J_0\) and open \(U_{0} \subseteq U\)
+containing \(p\) such that \(\theta\) maps \(J_0 \times U_0\) into \(U\). 
+For \((t, x) \in J_0 \times U_0\), write the component functions of \(\theta\) as 
+\((\theta^1(t,x), \dots, \theta^n(t, x))\). Then for any \((t, x) \in J_0 \times U_0\), 
+the matrix of \(d(\theta_{-t})_{\theta_t(x)} : T_{\theta_t(x)}M \to T_x M\) is
+
+\(\left( \frac{\partial \theta^i}{\partial x^j}(-t, \theta(t, x)) \right).\)
+
+Therefore,
+
+\(d(\theta_{-t})_{\theta_t(x)}(W_{\theta_t(x)})\)
+\(= \frac{\partial \theta^i}{\partial x^j}(-t, \theta(t, x)) W^j(\theta(t, x)) \frac{\partial}{\partial x^i} \bigg|_x.\)
+
+Because \(\theta^i\) and \(W^j\) are smooth functions, the coefficient of \(\frac{\partial}{\partial x^i}|_x\) depends smoothly on \((t, x)\). 
+It follows that \((\mathcal{L}_V W)_x\), which is obtained by taking the derivative of this expression with respect to \(t\) 
+and setting \(t = 0\), exists for each \(x \in U_0\) and depends smoothly on \(x\).
+
+Prove that the the Lie-Derivative is the Lie bracket for smooth vector fields
+
+Let \(W = W^k \frac{\partial}{\partial x^k}\), \(V = V^l \frac{\partial}{\partial x^l}\) (sum over \(k\) or \(l\), respectively) 
+be the local representations of \(V\) and \(W\). Then:
+
+\(\mathcal{L}_V W = \frac{\partial}{\partial s}\bigg|_{s=0} \left( \phi_s^* (W^k \frac{\partial}{\partial x^k} ) \right) \)
+\(= \frac{\partial}{\partial s}\bigg|_{s=0} \left( (\phi_{-s})_* (W^k \frac{\partial}{\partial x^k} ) \right)\)
+\(= \frac{\partial}{\partial s}\bigg|_{s=0} \left( W^k \circ \phi_{-s} \frac{\partial \phi_{-s}^l}{\partial x^k} \frac{\partial}{\partial x^l} \right)\)
+\(= \frac{\partial W^k}{\partial x^l} V^l \frac{\partial}{\partial x^k} + W^k \cdot \left( \frac{\partial V^l}{\partial x^k} \frac{\partial}{\partial x^l} \right)\)
+\(= \left( V^l \frac{\partial W^k}{\partial x^l} - W^l \frac{\partial V^k}{\partial x^l} \right) \frac{\partial}{\partial x^k}\)
+\(= [V, W].\)
+
+Here we used the chain rule, \(\phi_0 = \text{Id}_M\) and \(\frac{\partial}{\partial s}\bigg|_{s=0} \phi_{-s} = -V^l\)
+
+
+State the theorem of commuting flows
+
+Let \( V, W \in \mathfrak{X}(M) \) be complete.
+Then tfoa equivalent
+1. \( [V, W] = 0 \)
+2. The flows \( \Phi^V_s, \Phi^W_s \) are commuting, meaning \( \Phi^V_s \circ \Phi^W_s = \Phi^W_t \circ \Phi^V_s \).
+
+(Not sure if the steps of the proof should be dissected because its huge and complicated)
+
+
+Generalize the Lie Derivative to tensor fields
+
+Let \( p \in M \) \( V \in \mathfrak{X}\) and \( \theta \) its flow, if \(t\) is sufficiently close to zero, 
+then \(\theta_t\) is a diffeomorphism from a neighborhood of \(p\) to a neighborhood of \(\theta_t(p)\), 
+so \(d(\theta_t)_p^*\) pulls back tensors at \(\theta_t(p)\) to ones at \(p\)
+by the formula
+
+\(d(\theta_t)_p^* (A_{\theta_t(p)})(v_1, \dots, v_k) = A_{\theta_t(p)} (d(\theta_t)_p(v_1), \dots, d(\theta_t)_p(v_k)).\)
+
+Note that \(d(\theta_t)_p^* (A_{\theta_t(p)})\) is just the value of the pullback tensor field \(\theta_t^* A\) at \(p\).
+
+Given a smooth tensor field \(A \in \Gamma(T^{(k,l)}M)\) on \(M\), we define the Lie derivative of \(A\)
+with respect to \(V\), denoted by \(\mathcal{L}_V A\), by
+
+\((\mathcal{L}_V A)_p = \frac{d}{dt}\bigg|_{t=0} (\theta_t^* A)_p 
+= \lim_{t \to 0} \frac{d(\theta_{-t})_{\theta_t(p)}^* (A_{\theta_t(p)}) - A_p}{t}\)
+
+provided the derivative exists.
+Because the expression being differentiated lies in \(T^k (T_p^* M)\) for all \(t\), 
+\((\mathcal{L}_V A)_p\) makes sense as an element of \(T^k (T_p^* M)\).
