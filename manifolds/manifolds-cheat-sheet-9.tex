@@ -1,0 +1,176 @@
+Define Riemannian manifolds and their metric
+
+(This concept was used quite often in the last section without introducing it)
+
+Let \( M \) be a smooth manifold. A Riemannian metric on M
+is a smooth symmetric covariant 2-tensor field on M, that is positive definite at each point.
+More conretely its some \( g \in \Gamma(T^{(0,2)}(M)) \) with \( g(u,v) = g(v,u) \)
+and \( g_p(u,v) > 0 \) for all non-zero \( u,v \in T_pM \).
+The pair \( (M,g) \) is a Riemannian manifold.
+
+Note that \( g \) is not necessarily a metric by the definition from Topology/Analysis
+but it is under most conditions, which hold in most situations of interest.
+
+In local coordinates we may write \( g = g_{i,j} dx^i \otimes dx^j \), which is in this 
+context shortened to \( g_{ij}dx^idx^j \). This is the reason why its common to call
+a \( m \times m \) matrix also a Riemman metric as it encodes the \( g_{ij} \).
+
+A standard example is of course \( (\mathbb{R}^n, \bar{g}) \) with
+\( \bar{g} = \delta_{ij}dx^idx^j \) and clearly \( \bar{g}_p(v,w) = \langle v, w \rangle \)
+for \( v, w \in T_p \mathbb{R}^n \simeq \mathbb{R}^n \).
+
+In fact we have that all smooth manifolds \( M \) admit a Riemannian metric,
+by the following.
+
+In each chart \( (U_{\alpha}, \phi_\alpha) \) there is a Riemannian metric
+\( g_\alpha = \phi^\ast_{\alpha}\bar{g} \). As usual we can create a partition of unity
+\( \{\psi_\alpha\}_{\alpha} \) subordinate to \( \{U_\alpha\}_{\alpha} \) s.t. we can
+define
+\( g = \sum_{\alpha} \psi_\alpha g_{\alpha} \)
+which turns out to be a Riemannian metric on all of \( M \).
+
+This enables various geometric notions for manifolds such as
+The length/norm
+\( |v|_g = \sqrt{g_p(v, v)} \)
+Angles: The unique \( \theta \in [0, \pi] \) satisfying
+\( \cos \theta = \frac{g_p(v, w)}{|v|_g|w|_g}\).
+Orthogonality:
+\( v \perp w \iff g_p(v,w) = 0 \).
+
+And also the concept of distance, which is a little bit more tricky:
+Given points \( p_1,p_2 \in M \) and a smooth curve segment \( \gamma : [a, b] \to M \)
+with \( \gamma(a) = p_1,\ \gamma(b) = p_2 \) the length of \( \gamma \) is defined as 
+
+\( L_g(\gamma) = \int_{a}^{b} |\gamma'(t)|_g dt \)
+and the distance as 
+\( d(p_1, p_2) \coloneqq \inf_{\gamma} L_g(\gamma) \).
+
+Define the musical isomorphisms in the context of Riemannian manifolds
+
+(This played a marginal role in the final lecture, so its not ncessary for the exam)
+
+A Riemannian metric introduces an isomorphism \( \hat{g}: TM \to T*M \) via
+\( \hat{g}(v)(w) = g_p(v,w)  = g_ij V^iW^j \).
+It is customary to write for a vector field \( X \in \mathfrak{X}(M) \)
+\( \hat{g}(X) = X_j dx^j \), where \( X_j = g_{ij}X^i \),
+thus one says \( \hat{g} \) lowers the index of \( X \) which is also written
+as \( X^\flat \).
+
+Since \( \hat{g} \) is an isomorphism it has an inverse \( \hat{g}^{-1} : T^\ast M \to TM \)
+whose entries in the matrix representation we denote by \( g^{ij} \).
+Then 
+\( \hat{g}^{-1}(\omega) = \omega^i \frac{\partial}{\partial x^i} \), where \( \omega^i = g^{ij} \omega_j \)
+and one says that \( \hat{g}^{-1} \) raises the index of \( \omega \), also termed \( \omega^{\sharp} \).
+
+A helpful menmonic is to note that \( \omega^\sharp \) refers to a (sharp) tangent vector,
+while \( X^\flat \) is a (flat) covector.
+
+One can encode a great deal of information with this construction quite compactly
+for example \( \text{grad} f = (df)^\sharp \).
+
+
+Define the orientation of a manifold
+
+Given an \( n \)-dimensional vector space \( V \) and ordered bases \( \{E_j\}_{j \in [n]}, \{\tilde{E}_j\}_{j \in [n]} \),
+we say that the bases are consistently orientated if the transition matrix \( B^j_i \) defined by
+\( E_i = B^j_i \tilde{E}_j \) has positive determinant.
+
+As it turns out this defines an equivalence relation on the set of all bases for \( V \), which has precisely 2 equivalence classes.
+After picking one of the bases as the standard basis \( \{E_j\}_{j \in [n]} \), we can consistenly say that another basis 
+\(\{\tilde{E}_j\}_{j \in [n]}\) is positively orientated or negatively depending on if its in the same equivalence class.
+
+In the euclidean case it is custom to choose the standard basis as the columns of the identity matrix in the ascending order. 
+
+We can choose for each \( p \in M \) an orientation of \( T_p M\) called a pointwise orientation
+A local frame \( \{\sigma_j\}_{j \in [n]} \in \bigtimes^n \Gamma(TM) \) can then referred to as positively/negatively orientated 
+with respect to this pointwise orientation. If each point is in the domain of an orientated local frame then the pointwise orienation is called continuous.
+Finally an orientation for \( M \) is a continuous pointwise orientation.
+
+Interestingly we can somewhat easier define an orientation then via a nonvanishing \( n \)-form \( \omega \) on \( M \)
+and conversely each such \( \omega \) induces an orientation on \( M \).
+
+To see this simply note that \( \sigma_1(p), \sigma_2(p), \dots, \sigma_n(p) \) defines a dual-frame
+\( \epsilon^i(p) \) for each \( p \) and we can define \( \omega = f \epsilon^1 \wedge \epsilon^2 \dots \wedge \epsilon^n \)
+for some \( f \in C^\infty(M) \), which needs to be non-zero and always positive or negative by connectednes and this can actually be influenced
+by replacing \( \epsilon^1 \) with \( - \epsilon^1 \), if necessary. Note that a partition of unity argument is required to make this work
+on all of \( M \), since we worked only on the local representation of the frames.
+
+We call \( \omega \) an orientation form of \( M \), which has a lot of connections 
+to the theory of integration and Frobenius theorem.
+
+Observe that all of this is consistent with the initial definition in the lecture, which we call
+an orientation determined by a coordinate atlas. Namely each chart determines an orientation of \( T_pM \)
+via the standard orientation of \( \mathbb{R}^n \) and to be consistent two bases for the same vector space
+(the preimages of the standard basis via different charts on their intersection), must have a positive determinant
+on their transition matrix \( B^j_i \sim \psi \circ \phi^{-1} \).
+
+Explain how submanifolds (and with that boundaries) inherit an orientation
+
+Call a vector field along \( S \), a section \( \sigma \in \Gamma(TM)|_S,\ \sigma : S \to TM \)
+s.t. \( \sigma(p) \in T_p M \) for all \( p \in S \).
+
+One then has the theorem:
+Suppose \( M \) is an oriented smooth n-manifold with or without
+boundary, \( S \) is an immersed hypersurface with or without boundary in \( M \); and \( \sigma \) is
+a vector field along \( S \) that is nowhere tangent to \( S \). Then \( S \) has a unique orientation
+such that for each \( p \in S, (E_1, \dots, E_{n-1} \) is an oriented basis for \( T_pS \) if and only if
+\( (\sigma(p), E_1, \dots, E_{n-1}) \) is an oriented basis for \( T_p M \). If \( \omega \) is an orientation form for \( M \),
+then \( \iota^\ast_S(\sigma \lrcorner\omega) \) is an orientation form for \( S \) with respect to this orientation, where
+\( \iota_S : S \to M \) is the inclusion.
+
+This creates the following hack to determine if a submanifold is orientable,
+suppose \( S \subset M \)  is the level set of some \( f \in C^\infty(M) \). Then \( S \) orientable.
+Proof:
+Choose any Riemmanian metric on \( M \) and let \( \sigma = \text{grad} f|_S \). Then \( \sigma \)
+is nowhere tangent to \( S \) and we're done.
+
+Further any boundary \( \partial M \) is a hypersurface and there always exists at least one outward pointing vector field,
+which is then nowhere tangent to \( \partial M \), so should \( M \) be orientable any orientation form \( \omega \) on \( M \) 
+can be made one for \( \partial M \) by \( \iota^\ast_{\partial M}(\sigma \lrcorner \omega) \).
+
+Orientated Riemmanian manifolds enjoy a canonical choice for their orientation form, elaborate 
+
+It can be shown that there exists an orientation form \( \omega_g \in \Omega^n(M) \) called 
+the Riemmanian volume form satisfying for each local orientated orthonormal frame \( (E_i) \)
+\( \omega_g(E_1, \dots, E_n) = 1 \)
+and can expressed locally as
+\( \omega_g = \sqrt{\text{det}(g_{ij})} dx^1 \wedge \dots \wedge dx^n \).
+
+This is useful for integration  as seen in Definition 7.1.25 and Lemma 7.1.16 in the lecture.
+
+
+Define the integral of an \( m \)-form
+
+Let M be a manifold, \(\epsilon > 0\) and \(x: U \to W_\epsilon\) be a chart around \(p \in U\) with
+\[W_\epsilon := \{\xi \in \mathbb{R}^m : |\xi^i| < \epsilon, i = 1, \dots, m\} \]
+and \(x(p) = 0\). Then we call \(x: U \to W_\epsilon\) a cubic coordinate system around \(p\) with radius \(\epsilon\).
+
+Let \( \omega  \) be an \( m \)-form with \( \text{supp } \omega \subset U \) for some pos. orientated cubic coord. sys. \( x : U \to W_\varepsilon \),
+s.t.
+\( \omega = f dx^1 \wedge \dots \wedge x^m \)
+we define the local integral of \( \omega \) as
+\( \int_M \omega \coloneqq \int_{[\varepsilon, \varepsilon]} \dots \int_{[\varepsilon, \varepsilon]} f(x) dx^1 \dots dx^m \),
+this is actually independent of particular choices of the charts since we know that for \( \phi = \tilde{x} \circ x^{-1} \)
+\( \omega = f dx^1 \wedge \dots \wedge x^m = f(\phi(\tilde{x})) |\text{det}(D\phi)| d\tilde{x}^1 \wedge \dots \wedge d\tilde{x}^m \)
+\( = \tilde{f} \wedge \dots \wedge d\tilde{x}^m\)
+so by change of variables theorem
+\( \int_{x(U \cap \tilde{U}} f(x) dx = \int_{\tilde{x}(U \cap \tilde{U}} f(\phi(\tilde{x})) |\text{det}(D\phi)| d\tilde{x} = \int_{\tilde{x}(U \cap \tilde{U}} \tilde{f} d\tilde{x} \)
+
+We can globalize this notion for an \( \omega \) with compact \( \text{supp } \omega \). Let \( (f_\alpha, \{U_\alpha\}_{\alpha}) \) be a partition of unity 
+with respect to some locally finite covering of \( M \), thus \( U_\alpha \cap \text{supp } \neq \emptyset \) but also always only finitely many \( \alpha \)
+are involved then note that
+\( \omega = \sum_\alpha f_\alpha \omega \)
+so set \( \omega_\alpha = f_\alpha \omega \).
+
+This is actually independent of the choice for the partition, which can be seen that for \( (U_\alpha, \omega_\alpha) \), \( (U_\beta, \omega_\beta) \)
+we can define a new one \((U_\gamma, \omega_\gamma) \) with \( K = \bigcup_{\alpha, \beta} (\text{supp } \omega_\alpha \cap U_\alpha) \cup (\text{supp } \omega_\beta \cap U_\beta) \) and \( U_\gamma \) being a partition of unity of \( K \).
+And we have
+\( \int_M f_\gamma \omega = \sum_\alpha \int_M f_\gamma \omega_\alpha = \sum_\beta \int_M f_\gamma \omega_\beta \)
+as well as
+\( \sum_\alpha \int_M \omega_\alpha = \sum_\alpha \sum_\gamma \int f_\gamma \omega_\alpha = \sum_\gamma \sum_\alpha \int f_\gamma \omega_\alpha \)
+\( = \sum_\gamma \int_M f_\gamma \omega_\beta = \sum_\beta \int_M \omega_\beta\)
+
+Thus we can define uniquely
+
+\( \int_M \omega \coloneqq \sum_\alpha \int_M \omega_\alpha \).
+
