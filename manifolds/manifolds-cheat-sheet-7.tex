@@ -1,0 +1,126 @@
+Define a subbundle and their local frame criterion
+
+Given a vector bundle \( \pi_{E} : E \to M \),
+let \( D \subseteq E \) be some topological subspace of \( E \)
+and \( \pi_{D} : E \to M,\ \pi_{D} = \pi_{E}|_{D}\)
+and that for each \( p \in M \), \( D_p = D \cap E_P \)
+is a linear subspace of \( E_p \).
+
+We then call \( (D, \pi_{D}, M) \) a subbundle of \( E \).
+Its rank is the dimension of \( D_p \), which is constant.
+
+Local Frame Criterion for Subbundles:
+
+Let \(\pi: E \rightarrow M\) be a smooth vector bundle, and suppose that for each \(p \in M\) we are given an \(m\)-dimensional   
+linear subspace \(D_p \subseteq E_p\). 
+Then \(D = \bigcup_{p \in M} D_p \subseteq E\) is a smooth subbundle of \(E\) if and only if the following condition is satisfied:
+
+Each point of \(M\) has a neighborhood \(U\) on which there exist smooth local sections \(\sigma_1, \dots, \sigma_m: U \rightarrow E\) 
+with the property that \(\sigma_1(q), \dots, \sigma_m(q)\) form a basis for \(D_q\) at each \(q \in U\).
+
+One can easily obtain subbundles via the not so trivial theorem:
+
+Let \(E, E'\) be smooth vector bundles over a smooth manifold \(M\), 
+and let \(F: E \to E'\) be a smooth bundle homomorphism over \(M\). 
+Define subsets \(\text{Ker} F \subseteq E\) and \(\text{Im} F \subseteq E'\) by
+\(\text{Ker} F = \bigcup_{p \in M} \text{Ker} (F|_{E_p})\) 
+\( \text{Im} F = \bigcup_{p \in M} \text{Im} (F|_{E_p}).\)
+
+Then \(\text{Ker} F\) and \(\text{Im} F\) are smooth subbundles of \(E\) and \(E'\), 
+respectively, if and only if \(F\) has constant rank.
+
+Further examples:
+Let \( V \in \mathfrak{X}(M) \) be a nowhere-vanishing v.f. on \( M \), then \( D \subseteq TM \),
+whose fiber at each \( p \in M \) is \( \text{span}\ V_p \) is a smooth \( 1 \)-dimensional
+subbundle of \( TM \).
+
+
+Define (integrable,involutivity) distributions and 
+prove the easier direction of Frobenius theorem
+
+A distribution \( D \) is a subbundle of rank \( k \) of the tangent bundle \( TN \).
+
+A distribution is involutive if \( \Gamma(D) \) is a Lie-subalgebra of \( TN \),
+thus for all smooth sections \( V,W \in \Gamma(D) \implies [V, W] \in \Gamma(D)\).
+
+A distribution is integrable, if for each \( q \in N \) there is a smooth immersion 
+\( F : M \to N\) with \( q \in F(N) \) and \( DF|_p(T_pM) = D_{F(p)}, \forall p \in M \).
+Such submanifolds \( M \) are referred to as integral manifolds.
+
+We have the theorem
+If \( E \subset TN \) is integrable, then \( E \) is involutive.
+
+Proof: 
+Let \(V, W \in \Gamma(E)\) be given. For an arbitrary point \(q \in N\) we choose an integral manifold \(F: M \to N\) to \(E\) with \(q \in F(M)\). 
+Since immersions are locally embeddings, we can find a small open neighborhood \(U \subset M\) around a point \(p \in F^{-1}(q)\), 
+so that \(F|_U: U \to F(U)\) is even an embedding. 
+Because for every \(p \in U\) the differential \(DF|_p\) maps the tangent space \(T_pM\) isomorphically onto \(E_{F(p)}\), 
+there exist smooth vector fields \(\tilde{V}, \tilde{W} \in \mathfrak{X}(U)\), so that on \(U\) the equations
+
+\(DF(\tilde{V}) = V \circ F\) 
+\(DF(\tilde{W}) = W \circ F\)
+
+are satisfied. Because thus \(\tilde{V}, V\) or \(\tilde{W}, W\) are each \(F\)-related, this also holds for their Lie bracket, that is,
+
+\(DF([\tilde{V}, \tilde{W}]) = [V, W] \circ F.\)
+
+But this means, because of \(DF(T_pM) = E_{F(p)}\), that \([V, W]_{F(U)} \subset TF(E|_{F(U)})\). 
+Because this is possible for every \(q \in N\), it finally follows that \([V, W] \in \Gamma(E)\). This was to be shown.
+
+
+
+State and prove Frobenius theorem (the difficult direction)
+
+Frobenius Theorem:
+Let \( M \) be a smooth manifold and \( E \) some smooth distribution,
+then there exists a smooth integral manifold \( N \) for \( E \) if and only if
+\( E \) is involutive.
+
+We first require the following Lemma
+
+Lemma 5.4.4
+If \(E \subset TN\) is a subbundle of rank \(k\), such that around every point \(p \in N\) on a suitable open neighborhood \(W\) 
+there exists a local frame \(V_1, \dots, V_k \in \mathfrak{X}(E|_W)\) with \([V_i, V_j] = 0\), \(1 \leq i, j \leq k\), 
+then there exists an integral manifold to \(E\) through \(p\). 
+
+More precisely, there exists a chart \(x : U \to \Omega\) near \(p\), such that the level sets \(\{x^{k+1} = c^{k+1}, \dots, x^n = c^n\}\) are embedded integral manifolds for \(E\) and the coordinate vector fields \(\frac{\partial}{\partial x^1}, \dots, \frac{\partial}{\partial x^k}\) form a local frame for \(E\) over \(U\).
+
+
+Thus for the right implication of Frobenius, it suffices to show that there exists a local frame \( V_1, \dots, V_k \) of commutating v.f. for \( E \).
+Let \(V_1, \ldots, V_k: U \rightarrow E\) be any local frame around \(p \in N\). 
+After possibly shrinking the set \(U\), 
+we can additionally assume that we have a chart \(x: U \rightarrow \Omega\) given on \(U\), such that at \(p\) holds:
+
+\(Dx_p(\tilde{V}_j(p)) = \frac{\partial}{\partial x^j} \bigg|_{x(p)}, \quad j = 1, \ldots, k.\)
+
+Furthermore, let \(X_1, \ldots, X_n \in \mathfrak{X}(U)\) be the uniquely determined vector fields with 
+\(Dx(X_j) = \frac{\partial}{\partial x^j}, \quad j = 1, \ldots, n.\)
+Because \(\tilde{V}_j(p) = X_j(p)\), \(j = 1, \ldots, k\), one can achieve by possibly shrinking \(U\) again, that on \(U\) the vector fields
+\(\tilde{V}_1(q), \ldots, \tilde{V}_k(q), X_{k+1}(q), \ldots, X_n(q)\)
+form a basis of \(T_q N\), for every \(q \in U\). It is thus
+\(T_q N = \text{Span} (X_{k+1}(q), \dots, X_n(q))\)
+
+We now consider the projection mapping onto the first k coordinates, that is, the mapping
+\(\Phi: U \to \mathbb{R}^k, \quad \Phi = (x^1, \dots, x^k). \)
+By definition of \(X_j, j = 1, \dots, n\), then holds
+\(D\Phi(X_j) = \frac{\partial}{\partial x^j}, \quad j = 1, \dots, k\)
+and
+\(D\Phi(X_j) = 0, \quad j = k+1, \dots, n.\)
+This means in particular
+\(\text{Ker}(D\Phi|_q) = \text{Span} (X_{k+1}(q), \dots, X_n(q)), \text{ for all } q \in U,\)
+thus 
+\(T_q N = E_q \oplus \text{Ker}(D\Phi|_q).\)
+
+On the other hand, the linear map
+\(D\Phi|_{E_q} : E_q \to T_{\Phi(q)} \mathbb{R}^k = \mathbb{R}^k\)
+is an isomorphism. Let \(A_q: \mathbb{R}^k \to E_q\) be the inverse. We define the vector fields
+\(V_j(q) := A_q \left( \frac{\partial}{\partial x^j} \bigg|_{\Phi(q)} \right), \quad j = 1, \dots, k.\)
+
+These vector fields form a local frame for \(E\) over \(U\) and we claim that they pairwise commute. By construction, it holds
+\(D\Phi(V_j) = \frac{\partial}{\partial x^j} \circ \Phi,\)
+that is, the vector fields \(V_j\) and \(\frac{\partial}{\partial x^j}\) are \(\Phi\)-related. But then also the Lie brackets are \(\Phi\)-related, thus
+\(D\Phi([V_i, V_j]) = \left[ \frac{\partial}{\partial x^i}, \frac{\partial}{\partial x^j} \right] \circ \Phi = 0.\)
+
+Consequently, \([V_i, V_j]|_q\) lies in the kernel of \(D\Phi|_q\). 
+Because \(E\) is involutive by assumption, also \([V_i, V_j]|_q \in E_q\) holds in all cases. 
+Since \(E_q \cap \text{Ker}(D\Phi|_q) = 0\), it follows that \([V_i, V_j]|_q = 0\).

@@ -1,0 +1,234 @@
+Define differential, symmetric forms and the exterior derivative with some properties:
+
+Let \(M\) be a differentiable manifold of dimension \(m\).
+
+1. For \(0 \leq r \leq m\) let \(\bigwedge^r T^*M\) be the vector bundle with fibers \(\bigwedge^r T_p^*M\). 
+It has the rank \(\binom{m}{r}\). Furthermore, we set 
+
+\(\Omega^r(M) := \Gamma \left( \bigwedge^r T^*M \right)\)
+
+and call the elements \(\eta \in \Omega^r(M)\) differential forms of degree \(r\) or also simply \(r\)-forms. 
+Obviously, \(\Omega^0(M) = \Gamma(M \times \mathbb{R}) = C^\infty(M)\) holds, that is, 0-forms are smooth functions.
+
+2. \(V^r(T^*M)\) is the vector bundle with fibers \(V^r T_p^*M\). For \(r \in \mathbb{N}_0\) let
+\(\text{Sym}^r(M) := \Gamma \left( V^r T^*M \right).\)
+Elements \(h \in \text{Sym}^r(M)\) are called symmetric \(r\)-linear forms on \(M\).
+
+Let  \( d : \Omega^r(M) \to \Omega^{r+1}(M) \) be defined in local coordinates as
+\( d( \sum_{J} \omega_J dx^J ) = \sum_{J} d\omega_J \wedge dx^J  \)
+in more detail
+\( d(\sum_J \omega_J dx^{j_1} \wedge \dots \wedge dx^{j_k}) = \sum_{J} \sum_{i} \frac{\partial \omega_J}{\partial x^i} dx^i \wedge dx^{j_1} \dots \wedge dx^{j_k} \)
+and one can even show that
+\( d\omega(V_0, V_1, \dots, V_m) =\)
+\(\sum_{k=0}^r (-1)^k V_k(\omega(V_0, \dots, \hat{V}_k, \dots, V_r)) + \sum_{0 \leq i < j \leq r} (-1)^{i+j}\omega([V_i, V_j], V_0, \hat{V}_k, \dots, V_r) \).
+
+
+To prove its existence one obvserves that both sides are skew-symmetric and that for each \( f \in C^\infty(M) \)
+\( d\omega(fV_0, \dots, V_m) = fd\omega(V_0, V_1, \dots, V_r) \)
+
+Some special cases are \( 0 \)-forms \( f : M \to \mathbb{R} \), then \( df \in \Omega^1(M) \) with
+\( df(V) = Vf, \forall V \in \mathfrak{X}(M) \)
+and in local coordinates \( df =  \frac{\partial f}{\partial x^k} dx^k \)
+
+Its naturally linear
+and for \( \nu \in \Omega^p(M),\ \sigma \in \Omega^{q}(M)\)
+\( d(\nu \wedge \sigma) = d\nu \wedge \sigma + (-1)^p\nu\wedged\sigma \)
+\( d^2 = 0 \)
+
+
+\( (\iota_v dx_1 \wedge \dots \wedge dx_p)(X) = \sum^{p}_{r=1} (-1)^{r-1}f_r dx_1 \wedge \dots \wedge \hat{dx}_r \wedge \dots \wedge dx_p \)
+
+Define the interior product and state some properties
+
+In the most abstract setting \( \iota_v : \Lambda^k(V*) \to \Lambda^{k-1}(V*) \)
+sends a \( p \)-form \( \omega \) to another \( p-1 \) form \( (\iota_v \omega) \)satisfying
+\( (\iota_v\omega)(w_1, w_2, \dots, w_{p-1}) = \omega(v, w_1, \dots, w_{p-1})  \)
+more concretely in local coordinates for covectors \( \omega^1, \dots \omega^k \) 
+and a v.f. \( X = f_i \frac{\partial}{\partial x^i} \)
+
+\( (\iota_v \omega^1 \wedge \dots \wedge \omega^p) = \sum^{p}_{r=1} (-1)^{r-1} \omega^i(v) \omega^1 \wedge \dots \wedge \hat{\omega}^r \wedge \dots \wedge d\omega^p \)
+
+It thus satisfies
+\( \iota_v \circ \iota_v = 0 \)
+and for \( \omega \in \Lambda^k(V^\ast), \nu \in \Lambda^l(V^\ast)\)
+\( \iota_v(\omega \wedge \nu) = (\iota_v \omega) \wedge \nu + (-1)^k \omega \wedge (\iota_v \nu) \)
+
+Often the operation is simply abbreviated to
+\( v \lrcorner \omega = \iota_v \omega \).
+
+
+Elaborate how pullbacks on forms and exterior derivatives interact with each other
+
+For \( F : M \to N \) smooth and \( \omega \in \Omega^k(N) \) the pullback 
+is just the usual
+\( (F^\ast \omega)_p(v_1, \dots, v_k) = \omega_{F(p)}(dF_p(v_1), \dots, dF_p(v_k)) \)
+
+it satisfies linearity and
+\( F^\ast(\omega \wedge \nu) = (F^\ast \omega) \wedge (F^\ast \nu) \)
+and in any smooth chart \( \{y_i\}_{i \in [k]} \)
+\( F^\ast(\sum_{I} \omega_I dy^{i_1}, \wedge \dots \wedge dy^{i_k} = \sum_{I} (\omega_I \circ F) d(y^{i_1} \circ F) \wedge \dots \wedge d(y^{i_k} \circ F) \).
+note that the \( d \) stands here for the differential interpreted as a covector.
+
+The last part has in particular the consequence that for charts \( (U, \{x^i\}_{i \in [k]}), (V, \{y^i\}_{i \in [k]}) \)
+on \( M \) and \( N \) respectively and \( u \in C^{0}^(V) \) on \( U \cap F^{-1}(V) \) it holds
+\( F^\ast (u dy^1 \wedge \dots \wedge dy^k) = (\u \circ F)(\text{det} DF)dx^1 \wedge \dots \wedge dx^k \),
+where \( DF \) is the Jacobian of \( F \) with respect to these charts.
+
+(This is Proposition 14.20 in Lee, if we want to include the proofs later on)
+
+Finally for the exterior derivative \( d : \Omega^{k-1}(M) \to \Omega^{k}(M)\) we have
+\( F^\ast(d\omega) = d(F^\ast\omega) \).
+
+
+Prove Cartan's Magic formula
+
+Note that for \( V \in \mathfrak{X}(M) \) and \( \omega, \nu \in \Omega^\ast(M) \)
+it holds
+\( \mathcal{L}_{V}(\omega \wedge \nu) = (\mathcal{L}_{V} \omega) \wedge \nu + \omega \wedge (\mathcal{L}_{V}\nu) \)
+
+We then state Cartan's Magic formula
+On a smooth manifold \( M \) for any smooth vector field \( V \) and any smooth differential form \( \omega \)
+it holds
+\( \mathcal{L}_{V}(\omega) = V \lrcorner(d\omega) + d(V \lrcorner \omega) \qquad (14.32) \).
+
+Proof:
+We prove that (14.32) holds for smooth \(k\)-forms by induction on \(k\). 
+We begin with a smooth 0-form \(f\), in which case
+\(\iota_V (df) + d(\iota_V f) = \iota_V df = df(V) = Vf = \mathfrak{L}_V f,\)
+which is (14.32).
+
+Now let \(k \geq 1\), and suppose (14.32) has been proved for forms of degree less 
+than \(k\). Let \(\omega\) be an arbitrary smooth \(k\)-form, written in smooth local coordinates as
+\(\omega = \sum_I' \omega_I dx^{i_1} \wedge \dots \wedge dx^{i_k}.\)
+Writing \(u = x^{i_1}\) and \(\beta = \omega_I dx^{i_2} \wedge \dots \wedge dx^{i_k}\), we see that each term in this sum 
+can be written in the form \(du \wedge \beta\), where \(u\) is a smooth function and \(\beta\) is a
+smooth \((k-1)\)-form. The special case of smooth functions \(\mathfrak{L}_V du = d(\mathfrak{L}_V u) = d(Vu)\) was shown somewhere else before. 
+Thus the product rule of the Lie derivative with the exterior product and the induction hypothesis imply
+\(\mathfrak{L}_V (du \wedge \beta) = (\mathfrak{L}_V du) \wedge \beta + du \wedge (\mathfrak{L}_V \beta) \)
+\(= d(Vu) \wedge \beta + du \wedge (\iota_V d\beta + d(\iota_V \beta)). \qquad (14.33) \)
+
+On the other hand, using the facts that both \(d\) and interior multiplication by \(V\) are
+antiderivations, and \(\iota_V du = du(V) = Vu\), we compute
+\(\iota_V d(du \wedge \beta) + d(\iota_V (du \wedge \beta))\)
+\(= \iota_V (-du \wedge d\beta) + d((Vu)\beta - du \wedge (\iota_V \beta))\)
+\(= -(Vu)d\beta + du \wedge (\iota_V d\beta) + d(Vu) \wedge \beta + (Vu)d\beta + du \wedge d(\iota_V \beta).\)
+After the \((Vu)d\beta\) terms are canceled, this is equal to (14.33). \qquad \square
+
+A useful Corollary is \( \mathcal{L}_V(d\omega) = d(\mathcal{L}_V \omega) \)
+which follows by directly substituting Cartan's magic formula and \( d^2 = 0 \).
+
+
+Define the deRham-Cohomology with the preliminaries of exact/closed forms.
+
+We call a \( p \)-form \( \nu \in \Omega^p(M) \) closed, if
+\( d\nu = 0 \)
+We call a \( p \)-form \( \nu \in \Omega^p(M) \) exact, if
+there is a \( p-1 \) form \( \sigma \Omega^{p-1}(M) \) with
+\( \nu = d\sigma \).
+
+
+A \( 1 \)-form \( \nu = \nu_i dx^i \) is closed iff. 
+\( \frac{\partial \nu_i}{\partial x^j} = \frac{\partial \nu_j}{\partial x^i} \)
+for all \( i,j \)
+
+If \( \nu \in \Omega^p(M), \sigma \in \Omega^q(M) \) are closed then \( \nu \wedge \sigma \)
+is as well since
+\( d(\nu \wedge \sigma) = d\nu \wedge \sigma + (-1)^p \nu \wedge d\sigma = 0 + 0 = 0 \)
+
+If \( \nu \in \Omega^p(M) \) is exact and \( \omega \in \Omega^q(M) \) closed
+then \( \nu \wedge \omega \) is closed as well, since
+\( d(\sigma \wedge \omega) = d\sigma \wedge \omega + (-1)^{p-1}\sigma \wedge d\omega = d\sigma \wedge \omega = \nu \wedge \omega \)
+
+Define \( Z^P(M) \subset \Omega^p(M) \) has the space of closed forms (cocycles)
+and \( B^p(M) \subset \Omega^p(M) \) the space of exact forms (coboundaries),
+then \( B^p(M) \subset Z^p(M) \).
+
+Define on \( Z^P(M) \) the equivalence relation \( \nu_1 \sim \nu_2 \) if \( \nu_1 - \nu_2 = d\sigma \)
+for some \( \sigma \in \Omega^p(M) \) that is exact. We can then define the quotient space
+\( H^p_{\text{dR}} \coloneqq Z^p(M)/B^p(M) \)
+better known as the \( p \)-th deRham cohomology, which is an \( \mathbb{R} \)-vector space.
+
+For compact manifolds this space has finite dimensions which is also referred to as the \( p \)-th
+betti number, denoted by \( b_p \coloneqq \text{dim}\ H^p_{\text{dR}}(M)\).
+
+Some examples:
+
+If \( M \) is connected then \( H^0_{\text{dR}}(M) \simeq \mathbb{R} \)
+
+Since \( \Omega^0(M) \simeq C^\infty(M) \) and one assumes \( \Omega^{-1}(M) = \{0\} \)
+the only exact form (coboundary) is \( d(0) = 0 \). Further \( df = 0 \iff f(m) = c, \forall m \in M \)
+thus \( H^0_{\text{dR}}(M) \simeq Z^0(M) / B^0(M) = Z^0(M) \simeq \mathbb{R} \).
+
+
+State Poincare's Lemma
+
+A star domain is a subset of \( S \subset \mathbb{R}^n \) such that there exists an \( s_0 \in S \),
+for which all line segments \( \overline{s_0s} \) to other points \( s \) in \( S \), are also in \( S \).
+
+Let \(M\) be a differentiable manifold, \(p \in M\) and \(x: U \to \Omega\) be a chart around \(p\) 
+with a star-shaped set \(\Omega \subset \mathbb{R}^m\). 
+Then for every closed \(q\)-form \(\omega \in \Omega^q(M)\), \(q \geq 1\)
+\(\omega|_U = d\eta\)
+with a (not uniquely determined) \((q-1)\)-form \(\eta \in \Omega^{q-1}(U)\). 
+In particular, every closed \(q\)-form is locally exact and for the de Rham cohomology groups 
+of star-shaped subsets \(\Omega \subset \mathbb{R}^m\) holds \(H^q_{dR}(\Omega) = \{0\}\) for all \(q \geq 1\).
+
+In relation to algebraic topology this more or less the statement, that contractible spaces have the same cohomology
+as a single point. Note that this can't be derived in this direction, because the Poincare lemma is used in the proof
+that deRham cohomology and singular cohomology are equivalent on manifolds.
+
+
+Prove that the de-Rham cohomology is homotopy invariant
+
+More concretely this means for homotopic maps \( f,g : M \to N \) that the induced cochain maps 
+\( f^\ast = f^\ast[\omega] = [f^\ast \omega] : H^\bullet(M) \to H^\bullet(N)\) are the same \( f^\ast = g^\ast \).
+
+To this end consider the special map \( i_t : M \to M \times I,\ i_t(x) = (x, t) \)
+
+We then have with the help of Cartans magic formula
+that there exists a chain homotopy between \( i_0^\ast, i_1^\ast : \Omega^\ast(M \times I) \to \Omega^\ast(M)\)
+
+Equivalently for each \(p\), we need to define a linear map \(h:\Omega^{p}(M\times I)\rightarrow\Omega^{p-1}(M)\)
+such that
+\(h(d\omega) + d(h\omega) = i_1^*\omega - i_0^*\omega. \qquad (17.4)\)
+Proof:
+Let \(s\) denote the standard coordinate on \(\mathbb{R}\), and let \(S\) be the vector field on \(M \times \mathbb{R}\)
+given by \(S_{(q,s)} = (0, \partial / \partial s)|_{(q,s)}\) under the usual identification \(T_{(q,s)}(M \times \mathbb{R}) \cong T_qM \times T_s \mathbb{R}\). 
+Given a smooth \(p\)-form \(\omega\) on \(M \times I\), define \(h\omega \in \Omega^{p-1}(M)\) by
+\(h\omega=\int_{0}^{1}i_{t}^{*}(S \lrcorner \omega)dt.\)
+More specifically, for any \(q \in M\), this means
+\((h\omega)_{q}=\int_{0}^{1}i_{t}^{*}((S \lrcorner \omega)_{(q,t)})dt,\)
+
+where the integrand is interpreted as a function of \(t\) with values in the vector space
+\(\bigwedge^{p-1}(T^*_q M)\). On any smooth coordinate domain \(U \subseteq M\), the components of the
+integrand are smooth functions of \((q,t) \in U \times I\). so the integral defines a smooth
+\((p-1)\)-form on \(M\). We can compute \(d(h\omega)\) at any point by differentiating under
+the integral sign in local coordinates, which yields
+
+\(d(h\omega)=\int_{0}^{1}d(i_{t}^{*}(S \lrcorner \omega))dt\)
+Therefore, using Cartan's magic formula, we obtain
+\(h(d\omega)+d(h\omega)=\int_{0}^{1}(i_{t}^{*}(S \lrcorner d\omega)+d(i_{t}^{*}(S \lrcorner \omega)))dt\)
+\(=\int_{0}^{1}(i_{t}^{*}(S \lrcorner d\omega)+i_{t}^{*}d(S \lrcorner \omega))dt\)
+\(=\int_{0}^{1}i_{t}^{*}(\mathcal{L}_{S}\omega)dt. \qquad (17.5)\)
+
+To simplify this last expression, we use the flow of \(S\) on \(M \times \mathbb{R}\). 
+The flow is given explicitly by \(\theta_{t}(q,s)=(q,t+s)\), so \(S\) is complete. It
+follows that we can write \(i_{t}=\theta_{t} \circ i_{0}\), and therefore by a previously derived identity for the Lie-Derivative 
+\( \frac{d}{dt}|_{t = t_0}(\theta^\ast_t \omega)_p = (\theta^\ast_{t_0}(\mathcal{L}_V(\omega))_p \)
+we have
+\(i_{t}^{*}(\mathcal{L}_{S}\omega)=i_{0}^{*}(\theta_{t}^{*}(\mathcal{L}_{S}\omega))=i_{0}^{*}(\frac{d}{dt}(\theta_{t}^{*}\omega))=\frac{d}{dt}i_{0}^{*}(\theta_{t}^{*}\omega)=\frac{d}{dt}i_{t}^{*}\omega.\)
+
+Inserting this into (17.5) and applying the fundamental theorem of calculus, we
+obtain (17.4). \qquad \square.
+
+We then have for arbitrary homotopic maps  \( F, G : M \to N \) that 
+\( F^\ast = G^\ast \) since \( F = H \circ i_0,\ G = H \circ i_1 \)
+so \( F^\ast (H \circ i_0)^\ast = i_1^\ast \circ H^\ast = G^\ast \).
+
+Last this implies that manifolds of the same homotopy type have the same de-Rham cohomology,
+by the same argument as in algebraic topology actually, which is 
+that by assumption there are \( F : M \to N, G : N \to M \) with \( F \circ G \) homotopic to \( \text{id}_{M} \)
+and \( G \circ F \) homotopic to \( \text{id}_{N} \) so \( F^\ast : H_{\text{dR}}^p(N) \to H_{\text{dR}}^p(M) \)
+is an isomorphism.
+
+Finally note that we can use the homotopy \( H(x, t) = s_0 + t(x - s_0) \) for our star shaped domain to obtain the Poincare Lemma. 
