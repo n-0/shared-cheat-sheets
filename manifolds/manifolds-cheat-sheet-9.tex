@@ -174,3 +174,226 @@ Thus we can define uniquely
 
 \( \int_M \omega \coloneqq \sum_\alpha \int_M \omega_\alpha \).
 
+
+State and prove Stokes Theorem
+
+Let \( M \) be a compact orientable \( m \)-manifold with boundary \( \partial M \).
+Then for each \( \omega \in \Omega^{m-1}(M) \)
+\( \int_M d\omega = \int_{\partial M} i^\ast \omega \),
+where \( i : \partial M \to M \) is the canonical inclusion.
+
+Since the integral is a sum of compactly supported smooth forms in a positively
+orientated cubic coordinate system it suffices to show this for a single arbitrary summand.
+
+There are 2 cases interior points and one the boundary:
+
+Let \( x: U \to \Omega \) be a cubic coordinate system around an interior point \( p \in M \), 
+that is \(\Omega = W_\epsilon \) with \(\epsilon > 0 \), \(U \cap \partial M = \emptyset\). 
+The \((m-1)\)-form \(\omega\) can be written in these coordinates in the form
+
+\(\omega = \sum_{j=1}^m (-1)^{j-1} a_j dx^1 \wedge \dots \wedge dx^{j-1} \wedge dx^{j+1} \wedge \dots \wedge dx^m \)
+
+with suitable functions \(a_1, \dots, a_m\) and then holds
+
+\(d\omega = \left( \sum_{j=1}^m \frac{\partial a_j}{\partial x^j} \right) dx^1 \wedge \dots \wedge dx^m. \)
+
+Since \(\text{supp} \, \omega \subset U\), it follows in this coordinate system from the fundamental theorem of differential and integral calculus
+
+\(\int_M d\omega = \int_M \left( \sum_{j=1}^m \frac{\partial a_j}{\partial x^j} \right) dx^1 \dots dx^m \)
+\(= \sum_{j=1}^m \int_{[- \epsilon, \epsilon]^{m-1}} (a_j(x^1, \dots, x^{j-1}, \epsilon, x^{j+1}, \dots, x^m) - a_j(x^1, \dots, x^{j-1}, -\epsilon, x^{j+1}, \dots, x^m)) dx^1 \dots dx^{j-1} dx^{j+1} \dots dx^m. \)
+
+Since the support of \(\omega\) in this chart is contained in \(W_\epsilon\), it holds
+
+\(a_j(x^1, \dots, x^{j-1}, \epsilon, x^{j+1}, \dots, x^m) = a_j(x^1, \dots, x^{j-1}, -\epsilon, x^{j+1}, \dots, x^m) = 0.\)
+
+Thus,
+
+\(\int_M d\omega = 0.\)
+
+2. 
+\(x: U \to \Omega\) is a cubic coordinate system around a boundary point \(p \in \partial M\), 
+that is \(\Omega = Q_\epsilon\) with \(\epsilon > 0\), \(U \cap \partial M \neq \emptyset\). 
+Here, now holds
+\(\int_{M} d\omega = \int_0^\epsilon \left( \int_{[-\epsilon, \epsilon]^{m-1}} \left( \sum_{j=1}^m \frac{\partial a_j}{\partial x^j} \right) dx^1 \dotsm dx^{m-1} \right) dx^m \)
+\(= \int_{[-\epsilon, \epsilon]^{m-1}} \left( \int_0^\epsilon \frac{\partial a_m}{\partial x^m} dx^m \right) dx^1 \dotsm dx^{m-1}, \)
+
+because for the same reason as in the first part, here also
+\(\int_{-\epsilon}^\epsilon \frac{\partial a_j}{\partial x^j} dx^j = 0\)
+for \(j = 1, \dots, m-1\).
+
+Because of \(a_m(x^1, \dots, x^{m-1}, \epsilon) = 0\), then overall
+\(\int_M d\omega = -\int_{[-\epsilon, \epsilon]^{m-1}} a_m(x^1, \dots, x^{m-1}, 0) dx^1 \dotsm dx^{m-1}.\)
+Now \((x^1, \dots, x^{m-1})\) is a local coordinate system for \(\partial M \cap U\) and since \(x^m(q) = 0\) for \(q \in U \cap \partial M\), there holds
+\(i^* \omega = (-1)^{m-1} a_m (x^1, \dots, x^{m-1}, 0) dx^1 \wedge \dots \wedge dx^{m-1}.\)
+
+By construction of the compatible orientation on \(\partial M\), \((x^1, \dots, x^{m-1})\) is positively oriented 
+if \(m\) is even and otherwise negatively oriented. 
+The definition of the integral thus implies:
+• If \(m\) is even:
+\(\int_{\partial M} i^* \omega = (-1)^{m-1} \int_{[-\epsilon, \epsilon]^{m-1}} a_m(x^1, \dots, x^{m-1}, 0) dx^1 \dotsm dx^{m-1}\)
+• If \(m\) is odd:
+\(\int_{\partial M} i^* \omega = (-1)^{m} \int_{[-\epsilon, \epsilon]^{m-1}} a_m(x^1, \dots, x^{m-1}, 0) dx^1 \dotsm dx^{m-1}\)
+Either way
+\( \int_{\partial M} i^\ast \omega = - \int_{[-\varepsilon, \varepsilon]^{m-1}} a_m(x^1, \dots, x^{m-1}, 0) dx^1 \dots dx^{m-1} = \int_M d\omega \)
+and we're done.
+
+State some immediate consequences from Stokes theorem
+
+If \(M\) is a compact oriented manifold of dimension \(m\) with \(\partial M = \emptyset\), then
+\(\int_{M} \sigma = 0\)
+holds for all exact \(m\)-forms \(\sigma\).
+
+Proof: By assumption, \(\sigma = d\omega\) with an \((m-1)\)-form \(\omega\). Stokes' theorem implies
+\(\int_{M} \sigma = \int_{M} d\omega = \int_{\partial M} \omega = 0,\)
+because the integral over the empty set vanishes.
+
+Let \(M \subset \mathbb{R}^2\) be a compact 2-dimensional submanifold with boundary. For smooth functions \(f, g: M \rightarrow \mathbb{R}\), then 
+
+\(\int_M \left( \frac{\partial g}{\partial x} - \frac{\partial f}{\partial y} \right) dx \, dy = \int_{\partial M} (f \, dx + g \, dy).\)
+
+Proof: 
+Consider the 1-form \(\omega = f \, dx + g \, dy\). 
+Because of
+\(d\omega = \left( \frac{\partial g}{\partial x} - \frac{\partial f}{\partial y} \right) dx \wedge dy,\)
+the claim follows from Stokes' theorem.
+
+Let \(\Omega \subset \mathbb{C}\) be a bounded domain with a smooth boundary. We set \(z = x + iy\). Then for every holomorphic function \(f\) on \(\Omega\)
+\(\int_{\partial \Omega} f(z) dz = 0.\)
+\textbf{Proof:} 
+Because \(\Omega\) is a bounded domain with smooth boundary, \(M := \Omega\) is a compact differentiable submanifold with boundary. 
+For a function \(f: \Omega \rightarrow \mathbb{C}\) we set 
+
+\(f(z) = u(x,y) + i v(x, y)\)
+
+We consider the complex 1-form
+
+\(\omega = f(z)dz = (u + iv)(dx + idy) = u dx - v dy + i (v dx + u dy) = \omega_1 + i \omega_2\)
+with 
+\(\omega_1 = u dx - v dy, \quad \omega_2 = v dx + u dy.\)
+
+Then it is
+\(\int_{\partial \Omega} f(z) dz = \int_{\partial \Omega} \omega_1 + i \int_{\partial \Omega} \omega_2 = \int_{\Omega} d\omega.\)
+
+Now, however, holds
+\(d\omega = d\omega_1 + i d\omega_2 \)
+and 
+\(d\omega_1 = (-v_x + u_y) dx \wedge dy, \quad d\omega_2 = (u_x - v_y) dx \wedge dy.\)
+Therefore, \(\Omega\) is closed exactly when the Cauchy-Riemann differential equations
+\(u_x = v_y, \quad u_y = -v_x\)
+are satisfied, so exactly when \(f\) is holomorphic, i.e., when \(f_{\bar{z}} = 0\). In this case, then
+\(\int_{\partial \Omega} i^* (f(z)dz) = 0.\)
+
+
+
+Proof the general divergence theorem and state some special cases
+
+Let \( \Omega \) be a volume form on an orientable smooth m-manifold \( M \),
+then for \( X \in \mathfrak{X}(M) \) we call 
+\( (\text{div } X)\Omega \coloneqq \mathcal{L}_{X}\Omega \)
+the divergence of \( X \) with respect to \( \Omega \).
+
+The divergence theorem states:
+Let \(M\) be a compact, oriented differentiable manifold with boundary.
+Then for every volume form \(\Omega\) and every smooth vector field \(X \in \mathfrak{X}(M)\)
+
+\(\int_{M} (\operatorname{div} X) \Omega = \int_{\partial M} i^*(X \lrcorner \Omega)\)
+
+Proof: This follows immediately from Stokes' theorem, when we use the Cartan formula
+\(\mathcal{L}_X \Omega = d(X \lrcorner \Omega) + X \lrcorner d\Omega = d(X \lrcorner \Omega)\),
+and since \( \Omega \) is an \( m \)-form, \( d\Omega = 0 \).
+
+This takes on concrete shape for example in \( \mathbb{R}^{3} \) as
+
+Let \(\Omega \subset \mathbb{R}^3\) be a bounded domain with a smooth boundary. 
+If \(\partial \Omega\) is equipped with the compatible orientation, then for every smooth vector field \(V \in \mathfrak{X}(\Omega)\)
+
+\(\int_{\Omega} \operatorname{div} V \, dxdydz = \int_{\partial \Omega} \langle i^*V, \nu \rangle d\mu.\)
+
+Here, \(d\mu\) is the induced area element on \(\partial \Omega\) and \(\nu\) is the outward-pointing unit normal vector.
+In particular if \( F = (F^x, F^y, F^z) : U \to \partial \Omega \) we have \( \nu = \frac{F_{\zeta^1} \times F_{\zeta^2}}{\|F_{\zeta^1} \times F_{\zeta^2}\|} \)
+where \( (\zeta^1, \zeta^2) \) are the local coordinates for \( \partial \Omega \), we can even express this with respect to the Riemannian metric
+since \( \|F_{\zeta^1} \times F_{\zeta^2}\| = \sqrt{\text{det}g_{ij}} \) so that the RHS reads 
+\( \int_U \langle F^\ast V, \nu \rangle \sqrt{\text{det}g_{ij}} d\zeta^{1} \wedge d\zeta^{2} \)
+
+This is also often expressed as
+\(\int_{\Omega} \operatorname{div} V \, dxdydz = \int_{\partial \Omega} i^*V \cdot d\vec{\nu}.\)
+with the substitution \( \nu d\mu = d\vec{\nu} \)
+
+In the special case that \( V = V^x \frac{\partial}{\partial x} + V^y \frac{\partial}{\partial y}\) consists only of two components,
+we can use a simpler normal vector induced by a curve \( c : I \to \partial \Omega \) along the boundary, so
+\( \nu \coloneqq \frac{1}{\|\dot{c}\|}(\dot{c}^y, -\dot{c}^x)^T\) and we have on the RHS \( \int_{I} \langle c^\ast V, \nu \rangle \|\dot{c}\|dt \).
+
+Even more explicitely this states
+Let \(\Omega \subset \mathbb{R}^3\) be a bounded domain with a smooth boundary. If \(f, g, h: \mathbb{R}^3 \to \mathbb{R}\) are smooth functions, then
+
+\(\int_{\Omega} (f_x + g_y + h_z) dx dy dz = \int_{\partial \Omega} i^* (f dy \wedge dz + g dz \wedge dx + h dx \wedge dy).\)
+
+One can give for this an even more elementary proof as 
+\(\omega = f dy \wedge dz + g dz \wedge dx + h dx \wedge dy\)
+it holds
+\(d\omega = (f_x + g_y + h_z) dx \wedge dy \wedge dz.\)
+Stokes theorem does the rest.
+
+
+Define the Laplace operator and derive its expression with respect to the
+Riemannian metric.
+
+Let \( (M, g) \) be a Riemannian manifold and \( f \in C^2(M) \),
+define the Laplace operator as \( \Delta : C^{k+2}(M) \to C^k(M) \)
+with \( \Delta f \coloneqq \text{div} \nabla f \) 
+and the definition of \( \nabla f \) that we got from the musical isomorphisms.
+If \( \Delta f = 0 \) we call \( f \) harmonic.
+
+We know that
+\( \mathcal{L}_X \Omega = (\text{div } X)\Omega \)
+and in particular
+\( L_X \Omega (\frac{\partial}{\partial x^1}, \dots, \frac{\partial}{\partial x^m}) \)
+\( = X(\Omega (\frac{\partial}{\partial x^1}, \dots, \frac{\partial}{\partial x^m}))\)
+\( - \sum_{i=1}^m \Omega(\frac{\partial}{\partial x^1}, \dots, [X, \frac{\partial}{\partial x^i}], \dots \frac{\partial}{\partial x^m} \)
+
+Further \( [X, \frac{\partial}{\partial x^i}] = - \sum_{j=1}^m \frac{\partial X^j}{\partial x^i}\frac{\partial}{\partial x^j} \)
+and \( \Omega (\frac{\partial}{\partial x^1}, \dots, \frac{\partial}{\partial x^m}) = \sqrt{\text{det}g_{ij}} \)
+thus if we set \( G = \sqrt{\text{det}g_{ij}} \) the divergence of \( X \) with respect to \( \Omega \) is
+\( (\text{div} X)\sqrt{G} = \sum^m_{i=1} X^i \frac{\partial \sqrt{G}}{\partial x^i} + \sum^m_{i=1}\frac{\partial X^i}{\partial x^i}\sqrt{G}\)
+which can also be written as 
+\( (\text{div} X) = \frac{1}{2}\sum^m_{i=1} X^i \frac{\partial \log{G}}{\partial x^i} + \sum^m_{i=1}\frac{\partial X^i}{\partial x^i} \)
+
+Now if we set \( X = \nabla f\) then it follows 
+
+\( \Delta f = \sum^m_{i,j=1}g^{ij} \frac{\partial f}{\partial x^i \partial x^j} + (\sum^m_{i,j=1} \frac{\partial g^{ij}}{\partial x^i} + \frac{1}{2}g^{ij} \frac{\partial \log{G}}{\partial x^i}) \frac{\partial f}{\partial x^j} \).
+
+State and prove the general divergence theorem with respect to a Riemannian metric
+
+Let \(M, g\) be an oriented Riemannian manifold with boundary, \(d \mu\), \(d \sigma = \nu \lrcorner d\mu\) 
+the induced volume forms on \(M\) and \(\partial M\) respectively, and \(\nu\) the outward-pointing unit normal vector field. 
+Then for every smooth vector field \(X \in \mathfrak{X}(M)\)
+
+\(\int_M \operatorname{div} X \, d\mu = \int_{\partial M} g(X, \nu) \, d\sigma.\)
+
+Proof: Along the boundary holds 
+
+\(X = g(X, \nu) \nu + X^\top,\)
+
+where \(X^\top\) denotes the projection of X onto the tangent space of \(\partial M\).
+Since
+\(i^*(X^\top \lrcorner d\mu) = 0,\)
+it follows
+\(i^*(X \lrcorner d\mu) = g(X, \nu) \nu \lrcorner d\mu = g(X, \nu) d\sigma\)
+and the theorem follows directly from the usual divergence theorem.
+
+
+Prove that on closed orientable smooth manifolds every harmonic function is constant
+and a certain integral identity for the Laplace operator
+
+Preliminary notion: A compact manifold with \( \partial M = \emptyset \) is called closed.
+
+For harmonic functions it holds
+
+\( \text{div}(f \nabla f) = \|\nabla f\|^2 + f \Delta f = \|\nabla f\|^2 \)
+and also \( \|\nabla f\|^2 = g(\nabla f, \nabla f) \).
+The divergence theorem implies due to \( \partial M = \emptyset \)
+\( \int_M \|\nabla f\|^2 d\mu = 0 \) but then \( \nabla f = 0 \), yielding the statement.
+
+Let \( M \) be closed then for every \( f, h \in C^2(M) \)
+\( \int_M f \cdot \Delta h d\mu = \int_M \Delta f \cdot h d\mu \).
+Proof: Follows from \( \text{div}(f \nabla h - h \nabla f) = f\Delta h - h\Delta f \) and inserting the term into the divergence theorem.
