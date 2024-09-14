@@ -123,18 +123,18 @@ The space of \( p \)-multilinear forms is just the tensor product of \(\bigotime
 where \( V^\ast = \text{Hom}(V, \mathbb{R}) \) is the usual dual space.
 
 Covariant tensors are elements of the \( k \)-fold tensor product \( T^k(V^\ast) = \bigotimes_{i = 1}^{p} V^\ast\)
-for example every linear functional \( \omega : V \to \mathbb{R} \) is just a covariant \( 1 \)-tensor so.
+for example every linear functional \( \omega : V \to \mathbb{R} \) is just a covariant \( 1 \)-tensor.
 A covariant \( 2 \)-tensor is a bilinear form for example the inner product on \( \mathbb{R}^n \) is such an object.
 The determinant is a covariant \( n \)-tensor on \( \mathbb{R}^n \).
 
-In the same fashion cotravariant tensors are elements of the \( k \)-fold tensor product \( T^k(V^\ast) = \bigotimes_{i = 1}^{p} V\)
+In the same fashion cotravariant tensors are elements of the \( k \)-fold tensor product \( T^k(V) = \bigotimes_{i = 1}^{p} V\)
 which we understand however as multilinear functionals on forms that is 
-\( \alpha \in T^k(V^\ast),\ \alpha : V^\ast \times V^\ast \dots V^\ast \to \mathbb{R}\).
+\( \alpha \in T^k(V),\ \alpha : V^\ast \times V^\ast \dots V^\ast \to \mathbb{R}\).
 
 Then a mixed tensor on \( V \) of type \( (k,l) \) is
 \( T^{(k,l)}(V) = \underbrace{V \otimes ... \otimes V}_{k \text{ copies}} \otimes \underbrace{V^* \otimes ... \otimes V^*}_{l \text{ copies}}. \)
 
-Some of these spaces are identical:
+Some of these spaces are identical to simpler ones of course:
 
 \( T^{(0,0)}(V) = T^0(V^*) = T^0(V) = \mathbb{R}, \)
 \( T^{(0,1)}(V) = T^1(V^*) = V^*, \)
@@ -145,7 +145,7 @@ Some of these spaces are identical:
 Define the canonical tensor bundles on manifolds
 
 Let \(M\) be a smooth manifold, we define the bundle of covariant \(k\)-tensors on \(M\) by
-\(T^{k,*}TM = \bigsqcup_{p \in M} T^k (T_p^*M).\)
+\(T^{k}T^\ast M = \bigsqcup_{p \in M} T^k (T_p^*M).\)
 
 Analogously, we define the bundle of contravariant \(k\)-tensors by
 \(T^{k}TM = \bigsqcup_{p \in M} T^k (T_pM),\)
@@ -217,20 +217,20 @@ polynomials gives the equivalent multiplication of the residual classes of the t
 Explain how alternize/symmetrize multilinear forms
 
 Suppose we have a multilinear form \( \phi : \bigotimes^p V^\ast,\ v \mapsto \phi(v_1, v_2, \dots, v_p) \) 
-and denote by \( \phi_\sigma \coloneqq \phi(v_{\sigma(1)}, v_{\sigma(2)}, \dots, v_{\sigma(p)}\), where \( \sigma \in S_p \)
+and denote by \( \phi_\sigma \coloneqq \phi(v_{\sigma(1)}, v_{\sigma(2)}, \dots, v_{\sigma(p)})\), where \( \sigma \in S_p \)
 the symmetric group on \( [1, \dots, p] \).
 
 Then the symmetrization of this \( p \)-tensor is defined by \( \text{Sym} : \otimes^p V^\ast \to \bigvee^p V^\ast \),
 \( \text{Sym}_p(\phi) = \frac{1}{p!}\sum_{\sigma \in S_p} \phi_\sigma\).
 
 and the alternization of a \( p \)-tensor is defined by \( \text{Alt} : \otimes^p M \to \bigwedge^p M \),
-\( \text{Alt}_p(\phi) = \frac{1}{p!}\sum_{\sigma \in S_p} \text{sign} \phi_\sigma\).
+\( \text{Alt}_p(\phi) = \frac{1}{p!}\sum_{\sigma \in S_p} \text{sign}(\sigma) \phi_\sigma\).
 
-Additionally we obtain in the tensor algebra \( \bigvee^{p+q} V^\ast \)
+Additionally we obtain in the tensor algebra \( \bigwedge^{p+q} V^\ast \)
 the exterior product of tensors \( \phi, \psi \) of rank \( p \) and \( q \) respectively, via
-\( \phi \wedge \psi \coloneqq \frak{(p+q)!}{p!q!}\text{Alt}_{p+q}(\phi \otimes \psi) \)
-and on \( \bigwdge^{p+q} V^\ast \)
-\( \phi \vee \psi \coloneqq \frak{(p+q)!}{p!q!}\text{Sym}_{p+q}(\phi \otimes \psi) \)
+\( \phi \wedge \psi \coloneqq \frac{(p+q)!}{p!q!}\text{Alt}_{p+q}(\phi \otimes \psi) \)
+and on \( \bigvee^{p+q} V^\ast \)
+\( \phi \vee \psi \coloneqq \frac{(p+q)!}{p!q!}\text{Sym}_{p+q}(\phi \otimes \psi) \)
 
 (Yes this is awful to calculate)
 
@@ -243,7 +243,7 @@ The symmetric product is both associative and even commutative.
 
 In particular for the exterior product there is the following method:
 
-How can be the calculation of exterior products be simplified?
+How can the calculation of exterior products be simplified?
 
 Let \(V\) be an \(n\)-dimensional vector space, and suppose \((e^1, \dots, e^n)\) is any basis for \(V^*\). 
 We now define a collection of \(k\)-covectors on \(V\) that generalize the determinant function on \(\mathbb{R}^n\). 

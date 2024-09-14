@@ -54,7 +54,7 @@ Compactness:
 Let \( A \) be a subset of a topological space \( (X, \tau) \),
 Then \( A \) is said to be compact if for every set \( I \) and every family of open sets, 
 \( O_i, i \in I \), s.t. \( A \subseteq \cup_{i \in I} O_i \) (definition of open covering) there exists
-a finite subfamily/subcovering \( O_{i_1}, O_{i_2}, \dots, O_{i_n} \) s.t. \( A \subseteq \cup_{i=0}^{\infty} O_i \)
+a finite subfamily/subcovering \( J \subset I \), \( |J| < \infty \) s.t. \( A \subseteq \cup_{j=1}^{|J|} O_j \)
 
 Some useful propositions are.
 1. Every closed subset of a compact set is compact.
@@ -70,7 +70,7 @@ We then have the equivalent characterization a set \( A \) is compact iff. every
 with the F.I.P. additionally satisfies \( \cap_{F \in \mathcal{F}} F \neq \emptyset \).
 
 Precompact or relatively compact:
-A set \( A \) is precompact, if \( \bar{A} \) is compact.
+A set \( A \) is precompact, if its closure \( \bar{A} \) is compact.
 
 Locally compact
 Each point \( x \) in \( X \) has at least one neighborhood, which is compact.
@@ -177,17 +177,20 @@ and we instead modify \( \phi_1 = G \circ \phi \).
 
 \( c^{k+1}, c^n \)
 
-Define (embedded) submanifolds and immersed submanifolds
+Define embedded (sub)manifolds
 
 We will be a little more specific and call them embedded submanifolds instead of the lecture just referring to them as submanifolds.
 
 If \(U\) is an open subset of \(\mathbb{R}^m\) and \(k \in \{0, \dots, m\}\), a \(k\)-dimensional slice of \(U\) (or simply a \(k\)-slice) is any subset of the form 
-\(C = \{(x^1, \dots, x^k, x^{k+1}, \dots, x^n) \in U : x^{k+1} = 0, \dots, x^m = 0\}\)
-for some constants \(c^{k+1}, \dots, c^n\). (When \(k = m\), this just means \(C = U\).) Clearly, every \(k\)-slice is homeomorphic to an open subset of \(\mathbb{R}^k\). 
-More abstractly if \( (U, \phi) \) is a chart of a manifold \( M \) and \( C = S \cap U \) with \( \phi(C) \) being a \( k \)-slice of \( \phi(U) \), we simply 
-call \( C \) a \( k \)-slice of \( U \)
+\(C = \{(x^1, \dots, x^k, x^{k+1}, \dots, x^n) \in U : x^{k+1} = c^{k+1}, \dots, x^m = c^m\}\). 
+Note that this can always be simplified under a shift of the origin to \( c^{k+1} = \dots = c^m = 0 \).
+(When \(k = m\), this just means \(C = U\).) Clearly, every \(k\)-slice is homeomorphic to an open subset of \(\mathbb{R}^k\). 
 
-Given a subset \(S \subseteq M\) and a nonnegative integer \(k\), we say that \(S\) satisfies the local \(k\)-slice condition if each point of \(S\) is contained in the domain of a smooth chart \((U, \varphi)\) for \(M\) such that \(S \cap U\) is a single \(k\)-slice in \(U\). Any such chart is called   
+More abstractly if \( (U, \phi) \) is a chart of a manifold \( M \) and \( C \subset U \) s.t. \( \phi(C) \) is a \( k \)-slice of \( \phi(U) \), 
+we also call \( C \) a \( k \)-slice of \( U \).
+
+Given a subset \(S \subseteq M\) and a nonnegative integer \(k\), we say that \(S\) satisfies the local \(k\)-slice condition, 
+if each point of \(S\) is contained in the domain of a smooth chart \((U, \varphi)\) for \(M\) such that \(S \cap U\) is a \(k\)-slice of \(U\). Any such chart is called   
 a slice chart for \(S\) in \(M\), and the corresponding coordinates \((x^1, \dots, x^m)\) are called slice coordinates.
 
 If \( S \subset M \) is a subset that satisfies the local k-slice condition, then with the subspace topology, \( S \) is a topological man-
@@ -203,11 +206,49 @@ This definition is completely equivalent to the one of the lecture, which is mad
 \( S \subset M \) is a differentiable submanifold of \( M \) if and only if there is a differentiable manifold \( \tilde{S} \) and smooth embedding
 \( f : \tilde{S} \to M \) with \( f(\tilde{S}) = S \). Further \( f : \bar{S} \to S \) must be then a smooth diffeomorphism.
 
+Define immersed (sub)manifolds and state the Whitney embedding/immersion theorems
+
+Given a smooth manifold \( \bar{S} \) and a smooth immersion \( \iota : \bar{S} \to M \), we call the image \( \iota(\bar{S}) = S \) an immersed submanifold.
+Thus the topology of \( S \) is not necessarily the subspace topology of \( M \) and is completely dependend on the choice of \( \iota \).
+Thus two different looking \( \iota \) may define conceptually the same manifold (such as the Lemniscate given as an example in the lecture), but do not so
+topologically speaking.
+
+Naturally immersed submanifolds are easier to obtain as embeddings, nevertheless the two are related.
+E.g.
+Let \( \iota(\bar{S}) = S \subseteq M \) be an immersed submanifold, then for each \( p \in \bar{S} \) exists some open neighborhood \( U \)
+s.t. \( \iota(U) \) is an embedded submanifold of \( M \).
+
+Trivially every immersed submanifold, whose \( \iota \) is a diffeomorphism between \( \bar{S} \) and \( S \)  is an embedding
+
+A more useful insight is that if \( \bar{S}, M \) have no boundary then every injective smooth immersion is actually an embedding
+due to the Invariance of domain theorem.
+
+Invariance of domain theorem
+States for \( M, N \) without boundary and \( f : M \to N\) cont., which is locally injective
+(every \( p \in M \) has a neighborhood s.t. \( f \) is injective on it), then \( f \) is an open
+map and a local homeomorphism.
+
+The most powerful related statement is the Whitney embedding theorem,
+Any smooth \( m \)-manifold \( M \) can be immersed into \( \mathbb{R}^{2m-1} \)
+Any smooth \( m \)-manifold \( M \) can be embedded into \( \mathbb{R}^{2m} \)
+this is in fact the best lower bound without further restrictions.
+
+There are however some 
+
 An immersed submanifold \( S \) of \( M \) is a subset \( S \subseteq M \) endowed with a topology (not necessarily the subspace topology)
 that makes it a manifold and a smooth structure with respect to which the inclusion map \( \iota : S \to M\) is a smooth immersion.
 
 Note that immersed submanifolds are very much dependend on the specific choice of \( \iota \), since the topology of \( M \) does not fix the one of \( S \)
-and with that the smooth structure. Thus two different looking \( \iota \) may define conceptually the same manifold (such as the Lemniscate given as an example in the lecture), but do not so under strict consideration.
+and with that the smooth structure.  under strict consideration.
+
+
+% Forgot that i created the card above
+Define the different kinds of submanifolds and state some facts
+
+Suppose \( M \) is a smooth manifold with or without boundary. 
+An embedded submanifold of \( S \)M is a subset \( S \subseteq M \) that is a manifold (without boundary) 
+in the subspace topology, endowed with a smooth structure with respect to which the inclusion map
+\( i : S \to M \) is a smooth embedding.
 
 
 State and prove the constant rank theorem and with that regular value theorem
