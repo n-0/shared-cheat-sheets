@@ -15,15 +15,17 @@ Obviously, \(\Omega^0(M) = \Gamma(M \times \mathbb{R}) = C^\infty(M)\) holds, th
 Elements \(h \in \text{Sym}^r(M)\) are called symmetric \(r\)-linear forms on \(M\).
 
 Let  \( d : \Omega^r(M) \to \Omega^{r+1}(M) \) be defined in local coordinates as
-\( d( \sum_{J} \omega_J dx^J ) = \sum_{J} d\omega_J \wedge dx^J  \)
+\( d( \sum_{J} \omega_J dx^J ) = \sum_{J} d\omega_J \wedge dx^J \)
 in more detail
 \( d(\sum_J \omega_J dx^{j_1} \wedge \dots \wedge dx^{j_k}) = \sum_{J} \sum_{i} \frac{\partial \omega_J}{\partial x^i} dx^i \wedge dx^{j_1} \dots \wedge dx^{j_k} \)
+(that is the derivative \( \frac{\partial \omega_J}{\partial x^i} \) replaces \( \omega_J \) as the smooth coefficient of the elementary forms \( dx^{j_1} \wedge \dots \wedge x^{j_k} \)
+and wedges \( x^i \) in front of it)
 and one can even show that
 \( d\omega(V_0, V_1, \dots, V_m) =\)
 \(\sum_{k=0}^r (-1)^k V_k(\omega(V_0, \dots, \hat{V}_k, \dots, V_r)) + \sum_{0 \leq i < j \leq r} (-1)^{i+j}\omega([V_i, V_j], V_0, \hat{V}_k, \dots, V_r) \).
 
 
-To prove its existence one obvserves that both sides are skew-symmetric and that for each \( f \in C^\infty(M) \)
+To prove its existence one observes that both sides are skew-symmetric and that for each \( f \in C^\infty(M) \)
 \( d\omega(fV_0, \dots, V_m) = fd\omega(V_0, V_1, \dots, V_r) \)
 
 Some special cases are \( 0 \)-forms \( f : M \to \mathbb{R} \), then \( df \in \Omega^1(M) \) with
@@ -35,26 +37,61 @@ and for \( \nu \in \Omega^p(M),\ \sigma \in \Omega^{q}(M)\)
 \( d(\nu \wedge \sigma) = d\nu \wedge \sigma + (-1)^p\nu\wedged\sigma \)
 \( d^2 = 0 \)
 
+Give an alternative expression for the ext. derivative of a \( 1 \)-form
+
+For any smooth 1-form \(\omega\) and smooth vector fields \( X \) and \( Y \), 
+\(
+d\omega(X,Y) = X(\omega(Y)) - Y(\omega(X)) - \omega([X, Y]). \hspace{1cm} (14.28)
+\)
+Proof.
+Since any smooth 1-form can be expressed locally as a sum of terms of the form $u \, dv$ for smooth functions $u$ and $v$, it suffices to consider that case. 
+Suppose \(\omega = u \, dv\), and \(X, Y\) are smooth vector fields. Then the left-hand side of (14.28) is
+
+\[
+\begin{aligned}
+d(u \, dv)(X,Y) &= du \wedge dv(X,Y) = du(X) dv(Y) - dv(X) du(Y) \\
+&= Xu Yv - Xv Yu. 
+\end{aligned}
+\]
+
+The right-hand side is
+
+\[
+\begin{aligned}
+X(u \, dv(Y)) - Y(u \, dv(X)) - u \, dv ([X, Y]) &= X(u Yv) - Y(u Xv) - u [X, Y] v \\
+&= (Xu Yv + uXYv) - (Yu Xv + uYXv) - u(XYv - YXv). 
+\end{aligned}
+\]
+
+After the two \(uXYv\) terms and the two \(uYXv\) terms are canceled, this is equal to the left-hand side.
+
+
+
 
 \( (\iota_v dx_1 \wedge \dots \wedge dx_p)(X) = \sum^{p}_{r=1} (-1)^{r-1}f_r dx_1 \wedge \dots \wedge \hat{dx}_r \wedge \dots \wedge dx_p \)
 
 Define the interior product and state some properties
 
-In the most abstract setting \( \iota_v : \Lambda^k(V*) \to \Lambda^{k-1}(V*) \)
-sends a \( p \)-form \( \omega \) to another \( p-1 \) form \( (\iota_v \omega) \)satisfying
-\( (\iota_v\omega)(w_1, w_2, \dots, w_{p-1}) = \omega(v, w_1, \dots, w_{p-1})  \)
+In the most abstract setting \( \iota_V : \Lambda^k(V^\ast) \to \Lambda^{k-1}(V^\ast) \)
+sends a \( p \)-form \( \omega \) to another \( p-1 \) form \( (\iota_V \omega) \)satisfying
+\( (\iota_V\omega)(w_1, w_2, \dots, w_{p-1}) = \omega(v, w_1, \dots, w_{p-1})  \)
 more concretely in local coordinates for covectors \( \omega^1, \dots \omega^k \) 
 and a v.f. \( X = f_i \frac{\partial}{\partial x^i} \)
 
-\( (\iota_v \omega^1 \wedge \dots \wedge \omega^p) = \sum^{p}_{r=1} (-1)^{r-1} \omega^i(v) \omega^1 \wedge \dots \wedge \hat{\omega}^r \wedge \dots \wedge d\omega^p \)
+\( (\iota_V \omega^1 \wedge \dots \wedge \omega^p) = \sum^{p}_{r=1} (-1)^{r-1} \omega^i(v) \omega^1 \wedge \dots \wedge \hat{\omega}^r \wedge \dots \wedge d\omega^p \)
 
 It thus satisfies
-\( \iota_v \circ \iota_v = 0 \)
+\( \iota_V \circ \iota_V = 0 \)
 and for \( \omega \in \Lambda^k(V^\ast), \nu \in \Lambda^l(V^\ast)\)
-\( \iota_v(\omega \wedge \nu) = (\iota_v \omega) \wedge \nu + (-1)^k \omega \wedge (\iota_v \nu) \)
+\( \iota_V(\omega \wedge \nu) = (\iota_V \omega) \wedge \nu + (-1)^k \omega \wedge (\iota_V \nu) \)
+
+Especially useful in the context of Cartans magic formula is that for \( \omega \in \Omega^1(M) \)
+\( \iota_V \omega = \omega(V) \)
+which means for \( f \in C^\infty(M) \) (0-form) and the ext. derivative
+\( \iota_V df = Vf \).
 
 Often the operation is simply abbreviated to
-\( v \lrcorner \omega = \iota_v \omega \).
+\( v \lrcorner \omega = \iota_V \omega \).
 
 
 Elaborate how pullbacks on forms and exterior derivatives interact with each other

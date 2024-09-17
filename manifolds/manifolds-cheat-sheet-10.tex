@@ -1,0 +1,122 @@
+State and offer proof of some properties of the exterior derivative
+
+
+
+State some useful algebraic identities of the Lie derivative 
+
+For \( f \in C^\infty(M) \)
+\( \mathcal{L}_{V}f = Vf \)
+Proof:
+\( \mathcal{L}_{V}f = \frac{d}{dt}|_{t=0} \theta^\ast_t(f) = \frac{d}{dt}|_{t=0} f(\theta_t) = df(\theta'_0) = df(V) = Vf \)
+
+For \( W \in \mathfrak{M} \)
+\( \mathcal{L}_V(W) = [V, W] \)
+(already proven on another flash card)
+
+For \( \eta \in \Omega^1(M) \)
+\( \mathcal{L}_{V}(\eta)(W) = V(\eta(W)) - \eta([V, W]) \)
+Proof:
+\[
+\begin{aligned}
+\mathcal{L}_{V}(\eta(W)) &= \frac{\partial \eta_k}{\partial x^l} V^l W^k + \eta_l \frac{\partial V^l}{\partial x^k} W^k \\
+&= \frac{\partial}{\partial x^l} (\eta_k W^k) V^l - \eta_k \frac{\partial W^k}{\partial x^l} V^l + \eta_k \frac{\partial V^k}{\partial x^l} W^l \\
+&= V (\eta(W')) - \eta([V, W]).
+\end{aligned}
+\]
+\( \mathcal{L}_{[X, Y]}\omega = [\mathcal{L}_{X}, \mathcal{L}_{Y}]\omega \)
+
+From Cartan's magic formula one can derive 
+\( L_{V}(d\omega) = dL_{V}(\omega) \) and \( L_{V}(W \lrcorner \omega) = W \lrcorner dL_{V}(\omega) \)
+naturally this can't be used for the formula itself, except for the case \( \omega \in \Omega^{0}(M) = C^\infty(M) \), where this is already known.
+
+Product rules:
+\( \mathcal{L}_{V}(\nu(W)) = (\mathcal{L}_V \nu)(W) + \nu \mathcal{L}_V(W) \)
+For arbitrary \(\eta \in \Omega^p(M), , \sigma \in \Omega^q(M) \)
+\( \mathcal{L}_V(\eta \wedge \sigma) = \mathcal{L}_X(\eta) \wedge \sigma + \eta \wedge \mathcal{L}_V(\sigma) \)
+And for arbitrary mixed tensors \( \tau_1, \tau_2 \)
+\( \mathcal{L}_{V}(\tau_1 \otimes \tau_2) = (\mathcal{L}_{V}(\tau_1)) \otimes \tau_2 + \tau_1 \otimes (\mathcal{L}_{V}(\tau_2)) \)
+Further for \( f \in C^\infty(M) \) and any \( \tau \in \Gamma(T^{k,l}M) \)
+\( \mathcal{L}_V(f\tau) = Vf + f\mathcal{L}(\tau) \)
+
+An explicit expression for the Lie Derivative of mixed tensors in Einstein's sum convention is
+\[
+\begin{align}
+(\mathcal{L}_X T) ^{a_1 \ldots a_r}{}_{b_1 \ldots b_s} ={}
+& X^c(\partial_c T^{a_1 \ldots a_r}{}_{b_1 \ldots b_s}) \\
+& {}-{} (\partial_c X ^{a_1}) T ^{c a_2 \ldots a_r}{}_{b_1 \ldots b_s} - \ldots - (\partial_c X^{a_r}) T ^{a_1 \ldots a_{r-1}c}{}_{b_1 \ldots b_s} \\
+& + (\partial_{b_1} X^c) T ^{a_1 \ldots a_r}{}_{c b_2 \ldots b_s} + \ldots + (\partial_{b_s}X^c) T ^{a_1 \ldots a_r}{}_{b_1 \ldots b_{s-1} c}
+\end{align}
+\]
+
+
+This reduces for purely covariant tensors and arbitrary vector fields \( Y_1 \in \mathfrak{X}(M) \) to
+\( (\mathcal{L}_X T)(Y_1, \dots, Y_k) = X(T(Y_1, \dots, Y_k)) - A([X, Y_1], \dots, Y_k) - \dots - A(Y_1, \dots, [X, Y_k]) \)
+
+
+E.g. for a covariant rank 2 tensor field \( T = T_{ab}(x^c)dx^a \otimes dx^b \) we have:
+\[
+\begin{align} 
+(\mathcal {L}_X T) &= (\mathcal {L}_X T)_{ab} dx^a\otimes dx^b\\
+&= X(T_{ab})dx^a\otimes dx^b + T_{cb} \mathcal{L}_X (dx^c) \otimes dx^b + T_{ac}  dx^a \otimes \mathcal{L}_X (dx^c)\\
+&= (X^c \partial_c T_{ab}+T_{cb}\partial_a X^c+T_{ac}\partial_b X^c)dx^a\otimes dx^b\\
+\end{align}
+\]
+
+
+State and prove the regular value theorem for the tangent space of the submanifold
+
+Let \( N, K \) be smooth manifolds of dimension \( n,k \) repspectively and \( n \geq k \).
+Let \( f \in C^\infty(N, K) \), if \( q \in K \) is a regular value of \( f \) and \( M \coloneqq f^{-1}(q) \neq \emptyset \)
+the corresponding submanifold, then \( T_pM = \text{ker } df|_p \subset T_pN \).
+Proof:
+Let \( c : (-\varepsilon, \varepsilon) \to M \) be an arbitrary smooth curve with \( c(0) = p \).
+It suffices to show \( c'(0)\in \text{ker } df|_p \). Since \( \gamma = f \circ c : (-\varepsilon, \varepsilon) \to K \)
+is constant (\( \text{im } \gamma = \{q\} \)) the chain rule implies
+\( 0 = d\gamma|_0 = df_p \circ dc|_0 \), yielding the result.
+
+
+State the implicit function theorem and highlight its relation to the regular value theorem
+
+Let \( f: \mathbb{R}^{n+m} \to \mathbb{R}^m \) be a continuously differentiable function, and let \( \mathbb{R}^{n+m} \) have coordinates \( (\textbf{x}, \textbf{y}) \). 
+Its Jacobian can be written as: 
+
+\[(Jf)(\mathbf{a},\mathbf{b})
+= \left[\begin{array}{ccc|ccc}
+ \frac{\partial f_1}{\partial x_1}(\mathbf{a},\mathbf{b}) & \cdots & \frac{\partial f_1}{\partial x_n}(\mathbf{a},\mathbf{b}) &
+ \frac{\partial f_1}{\partial y_1}(\mathbf{a},\mathbf{b}) & \cdots & \frac{\partial f_1}{\partial y_m}(\mathbf{a},\mathbf{b}) \\
+ \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+ \frac{\partial f_m}{\partial x_1}(\mathbf{a},\mathbf{b}) & \cdots & \frac{\partial f_m}{\partial x_n}(\mathbf{a},\mathbf{b}) &
+ \frac{\partial f_m}{\partial y_1}(\mathbf{a},\mathbf{b}) & \cdots & \frac{\partial f_m}{\partial y_m}(\mathbf{a},\mathbf{b})
+\end{array}\right]
+= \left[\begin{array}{c|c} X & Y \end{array}\right]\]
+
+Fix a point \( (\textbf{a}, \textbf{b}) = (a_1, \dots, a_n, b_1, \dots, b_m) \) with \( f(\textbf{a}, \textbf{b}) = \textbf{0} \) (the origin)
+If the submatrix \( Y \) of the Jacobian matrix of \( f \):
+\( J_{f, \mathbf{y}} (\mathbf{a}, \mathbf{b}) = \left [ \frac{\partial f_i}{\partial y_j} (\mathbf{a}, \mathbf{b}) \right ] \)
+is invertible, then there exists an open set \( U \subset \mathbb{R}^n\) containing \( \textbf{a} \) such that there exists a unique function 
+\( g: U \to \mathbb{R}^m \) such that \( g(\mathbf{a}) = \mathbf{b} \) and \( f(\mathbf{x}, g(\mathbf{x})) = \mathbf{0}, \forall \mathbf{x} \in U \)   
+
+Moreover, \( g \) is continuously differentiable and denoting the \( X \) part of the overall Jacobian of \( f \) as
+\(J_{f, \mathbf{x}} (\mathbf{a}, \mathbf{b}) = \left [ \frac{\partial f_i}{\partial x_j} (\mathbf{a}, \mathbf{b}) \right ]\),
+the Jacobian matrix of partial derivatives of \( g \) in \( U \) is given by 
+
+\[
+\left[\frac{\partial g_i}{\partial x_j} (\mathbf{x})\right]_{m\times n} =- \left [ J_{f, \mathbf{y}}(\mathbf{x}, g(\mathbf{x})) \right ]_{m \times m} ^{-1} \, \left [ J_{f, \mathbf{x}}(\mathbf{x}, g(\mathbf{x})) \right ]_{m \times n}
+\]
+Solving these partial differential equations would give an explicit form for \( g \).
+Intuitively speaking \( g \) parameterizes the \( \textbf{y} \) in the neighborhood \( U \), s.t. \( f(\textbf{x}, \textbf{y}) = 0 \),
+and turns an algebraic relation into the graph of a function.
+
+
+This was used for the regular value theorem for some smooth \( F : M \to N \) with constant rank \( n \) that 
+in local coordinates \( \phi : U \to \mathbb{R}^{n} \times \mathbb{R}^{m+n-n} \simeq \mathbb{R}^{m}, \phi(x) = (Q(x), x_{n+1}, \dots, x_m) \),
+where \( Q \) is the restriction of \( F \) to the first \( n \)-th coordinates for which the Jacobian of \( F \) is invertible,
+must have rank \( n+m \), thus we can find a right inverse \( \phi^{-1} \).
+
+Some like to think of this as an application of the first part of the inverse function theorem instead, which states
+that for cont. diff. \( f : U \to \mathbb{R}^{m} \)
+1. \( df|_a \) is surjective iff. there is some cont. diff. \( g \) with \( f \circ g = \text{id} \)
+2. \( df|_a \) is injective iff. there is some cont. diff. \( g \) with \( g \circ f = \text{id} \)
+The implicit function theorem and the inverse function theorem are completely equivalent to each other.
+
+

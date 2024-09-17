@@ -1,0 +1,294 @@
+Define adjunctions and cells
+
+Let \( X, Y \) be top. spaces and \( A \subseteq X \) a subset with cont. \( \phi : A \to Y \).
+The adjunction space \( X \cup_{\phi} Y\) is the quotient space of \( X \sqcup Y \) by the equiv. relation \( a \sim \phi(a) \)
+for all \( a \in A \).
+
+The cases for identified points \( x, x' \in X \), \( y, y' \in Y \)
+are
+\( [y] = [y'] \) iff. \( y = y' \)
+\( [x] = [y] \) iff. \( \phi(x) = y \), \( x \in A \)
+\( [x] = [x'] \) iff. either \( x = x' \) or \( \phi(x) = \phi(x') \).
+
+One calls \( \phi \) the gluing or attaching map and topology of \( X \cup_{\phi} Y \) is the usual quotient topology,
+that is \( U \subseteq X \cup_{\phi} Y \) is open iff. \( \phi^{-1}(U) \) is (\( \phi \) becomes an open map).
+
+The particular case of \( X = D^n \subset \mathbb{R}^n \) and \( A = S^{n-1} \), we refer to as the adjunction of a \( n \)-cell,
+where an \( n \)-cell is meant to be \( D^n \setminus S^{n-1} \).
+
+
+State some properties of the adjunction space and describe the construction to prove Hausdorfness
+
+Let \( Y_\phi = D^n \cup_\phi Y \) then
+
+1. \( \iota : Y \to Y_\phi \) is a homeomorphism onto its image \( \iota(Y) \) .
+2. The restriction \( \Phi : D^n \to Y_{\phi} \) to the \( n \)-cell is a homeomorphism onto \( Y_\phi \setminus \iota(Y) \).
+3. If \( Y \) is Hausdorff, so is \( Y_\phi \).
+4. If \( Y \) is compact so is \( Y_\phi \).
+
+For 3. one first needs to construct open neighborhoods of points in \( Y_\phi \).
+If \( p \in e^n \subseteq Y_\phi \), a standard open ball \( B_\varepsilon(p) \subset \mathbb{R}^n \) suffices.
+If \( p \in \iota(Y) \) this is more tricky, take some open subset \( V \subset Y \), then \( \iota(V) \) is open,
+while \( \Phi^{-1}(V) = \phi^{-1}(V) \subseteq S^{n-1} \) is not open in \( D^n \) (only in the subspace of its boundary).
+To solve this, enlarge \( V \) by
+
+\( U_{\varepsilon} = V \cup \Phi((1 - \varepsilon, 1) \times \phi^{-1}(V)) \subseteq \Phi(e^n) \)
+and note that \( \Phi(e^n) = ((1 - \varepsilon, 1] \times \phi^{-1}(V)) \cup_\phi V\),
+where we used polar coordinates \( (r, \theta) \) to parameterize \( D^n \setminus \{0\} \).
+Pictorially the situation is described below.
+
+(Insert hand drawn picture here)
+
+
+Then it still holds \( \iota^{-1}(U_{\varepsilon}) = V \) and also \( \Phi^{-1}(U_{\varepsilon}) \simeq (1 - \varepsilon, 1] \times \phi^{-1}(V) \subset D^n \)
+is open.
+
+Hausdorfness for \( x, y \in e^n \), or \( x \in e^n, y \in Y \) is straightforward, for \( x, y \in Y \) however we now can leverage the fact that \( Y \)
+is Hausdorff so there are disjoint open neighborhoods \( V, W \) and their corresponding \( V_\varepsilon, W_\varepsilon \) are still disjoint and open in \( Y_\varphi \).
+
+
+Describe the most basic case of the homology of a CW-complex aka attaching a cell to some top. space
+
+Let \( Y_\phi = D^n \cup_\phi Y \) then
+1. \( (Y_\varphi, Y) \) is a good pair, i.e. \( Y \subseteq Y_\varphi \) is a strong deformation retract of some neighborhood \( Y \subseteq U \subseteq Y_\varphi \).
+2. It holds \( \tilde{H}_k(Y_\varphi) = \tilde{H}_k(Y) \) for all \( k \neq n-1, n \) while for \( k = n-1, n \) there is an exact sequence
+
+\[0 \rightarrow \tilde{H}_n(Y) \xrightarrow{i_*} \tilde{H}_n(Y_{\varphi}) \xrightarrow{\partial_*} \tilde{H}_{n-1}(S^{n-1}) \xrightarrow{j_*} \tilde{H}_{n-1}(Y) \xrightarrow{i_*} \tilde{H}_{n-1}(Y_{\varphi}) \rightarrow 0. \hspace{1cm} (7.2)\]
+
+Proof. 1. For any \(\varepsilon \in (0,1]\), the subset \(U_\varepsilon = ((1-\varepsilon, 1] \times S^{n-1}) \cup_{\varphi} Y\), constructed 
+in the proof for Hausdorfness of adjunction spaces, is an open neighborhood of \(Y \subset Y_{\varphi}\) (in particular it is the "thickening" of \( \phi^{-1}(Y) \)).
+
+Consider now the homotopy \(H: U \times [0,1] \rightarrow U\) defined by
+
+\[
+H([x],t) = \begin{cases}
+[x] & \text{if } x \in Y \subset Y_{\varphi}, \\
+[x + t(\frac{x}{|x|} - x)] = [(s + t(1-s), \theta)] & \text{if } x = (s, \theta) \in (1-\varepsilon, 1] \times S^{n-1}.
+\end{cases} \hspace{1cm} (7.3)
+\]
+
+Pictorially this is just retracting \( U_\varepsilon \) along the radii of the origin back unto the boundary of \( D^n \).
+
+Note that it is well-defined (and hence continuous), since for \([x] \in \Phi((1-\varepsilon, 1] \times S^{n-1}) \cap Y\) 
+it holds \(|x| = 1\) (thought as a point in \(D^n\), and thus \( H([x], t) = [x] \) for every \( t \in [0, 1] \).
+
+It is immediate to check that \( H([x], 1) \in Y \) for every \( x \in U \), thus \( r([x]) \coloneqq H([x], 1) \) defines a map \( r: U \rightarrow Y \). 
+Since \( H([x], 0) = [x] \) for all \( [x] \), \( H \) is a homotopy between \( \text{id}_U \) and \( r \). 
+Moreover, since \( H([x], t) = [x] \) for all \( [x] \in Y \) and \( t \in [0, 1] \), and in particular \( r(x) = x \), \(r\) is a 
+strong deformation retract from \( U \) to \( Y \), as wanted.
+
+2. The second can either be shown via Mayer-Vietoris with the choice \( U = U_\varepsilon, V = e^n \) or the long exact sequence 
+of relative homology for the pair \( (Y, Y\varphi) \).
+
+This allows to derive the Homology of the \( k \)-th skeleton of a CW-complex, 
+if the homology of the \( k-1 \)-th is already known, by setting \( Y = X^(k-1) \) and iterating the theorem by first attaching
+a cell computing the homology and then doing this again until all cells have been attached.
+
+
+Define a CW-complex
+
+Assume that a topological space \( X \) is a disjoint union of cells:
+\[ X = \bigcup_{e \in E} e. \] 
+For each \( k \geq 0 \) , the \(k\)-skeleton \(X^{(k)}\) of \(X\) is defined by 
+\[ X^{(k)} = \bigcup \{e \in E: \dim(e) \leq k\}. \]
+Of course, \(X^{(0)} \subset X^{(1)} \subset X^{(2)} \subset \dotsb\) and \(X = \bigcup_{k \geq 0} X^{(k)}\).
+
+A CW complex/cell complex is an ordered triple \( (X, E, \Phi) \), where \( X \) is a Hausdorff space, \( E \) is a family of cells in \( X \), 
+and \( \Phi = \{\Phi_e : e \in E\} \) is a family of maps, such that 
+
+(1) \( X = \bigcup_{e \in E} e \) (disjoint union); 
+(2) for each \( k \)-cell \( e \in E \), the map \( \Phi_e : (D^k, S^{k-1}) \to (e \cup X^{(k-1)}, X^{(k-1)}) \) is a relative homeomorphism; 
+(3) if \( e \in E \), then its closure \( \overline{e} \) is contained in a finite union of cells in \( E \); 
+(4) \( X \) has the weak topology determined by \( \{\overline{e} : e \in E\} \). 
+
+3. is also called closure finiteness, which combined with 4 represents the CW (closure-weak) prefix.
+If \( (X, E, \Phi) \) is a CW complex, then \( X \) is called a CW space, \( (E, \Phi) \) is called a CW decomposition of \( X \) , 
+and \( \Phi_e \) is called the characteristic map of \( e \).
+This definition has the benefit of skipping a few proofs, necessary in the lecture and is actually more general,
+as it allows to call spaces, which we just found to be homeomorphic to CW complexes to be called CW complexes themselves.
+It reduces to the lecture definition under a certain choice for the \( \Phi \), namely
+
+(i) \( X^0 \) is discrete (aka points); 
+(ii) for each \(n > 0\), there is a (possibly empty) index set \(A_n\), and a family of continuous functions 
+\(\{f_{\alpha}^{n-1} : S^{n-1} \to X^{n-1} \mid \alpha \in A_n\}\) so that
+\[
+X^n = \left( \coprod_{\alpha} D^n \right) \coprod_{\varphi} X^{n-1}, 
+\]
+where \(\varphi = \coprod \varphi_{\alpha}^{n-1}\);
+If \(\Phi_\alpha\) denotes the (usual) composite
+
+\( D^n \xrightarrow{\cong} D^n_\alpha \hookrightarrow \left( \coprod_\alpha D^n_\alpha \right) \coprod X^{n-1} \xrightarrow{} \left( \coprod_\alpha D^n_\alpha \right) \coprod_\varphi X^{n-1}, \)
+
+then \((X, E, \Phi)\) is a CW complex, where
+\[ E = X^0 \cup \bigcup_{n \geq 1} \{ \Phi_\alpha (D^n - S^{n-1}) : \alpha \in A_n \} \]
+and
+\[ \Phi = \{ \text{constant maps to } X^0 \} \cup \bigcup_{n \geq 1} \{ \Phi_\alpha : \alpha \in A_n \}. \]
+
+Further terminology:
+Closed cells refer to \( \Phi_\alpha(D^n_\alpha) \subseteq X \).
+Let \( X \) be a cell complex, a subspace \( A \subseteq X \) is a subcomplex if it is the union of cells of \( X \) and 
+the closure of each cell is also contained in \( A \) (can also be put as \( \text{cl}(e) = \text{im} \phi_e \subset A \).
+The union and intersection of subcomplexes is again a subcomplex.
+The cell complex is finite if \( E \) is. The cell of largest dimension in \( E \) is the dimension of \( X \).
+
+State some properties openess/closedness 
+
+Elaborate on the topology of the different parts of a CW complex
+
+Let \( X, E \) be a CW complex, then
+
+\( X \) is Hausdorff (and even normal)
+If \( X \) is finite then \( X \) is compact.
+
+For some fixed \( n > 0 \), let \( E' \) be a family of \( n \)-cells in \( E \)
+and let \( |E'| \) be the corresponding subcomplex.
+
+1. \( X' = |E'| \cup X^{n-1} \) is closed in \( X \)
+2. every \( n \)-skeleton \( X^{(n)} \) is closed in \( X \)
+3. every \( n \)-cell \( e^n \) is open in \( X^{(n)} \)
+4. \( X^{(n)} \setminus X^{(n-1)} \) is an open subset of \( X^{(n)} \).
+
+Let \( X \) be a cell complex \( K \subseteq X \) a compact subset. 
+Then \( K \) is contained in a finite subcomplex \( A \subseteq X \).
+In particular a closed cell of \( X \) intersects finitely many cells.
+
+Describe roughly the idea to verify that a CW pair is a good pair.
+
+One again needs to construct open subsets in \( X \), this in so far not trivial
+since this means that for all \( X^{(k)} \) the set needs to be open.
+Take an open subset \(U^n\) of some \(X^n\): 
+for each \(\alpha \in \bigcup_{k \geq n+1} I_k\) fix an \(\varepsilon_\alpha \in (0,1)\) and define inductively the open subset
+
+\[ U_\varepsilon^k = \left( \bigcup_{\alpha \in I_k} (1-\varepsilon_\alpha, 1] \times \varphi_\alpha^{-1} (U_\varepsilon^{k-1}) \right) \cup_{(\varphi_\alpha)} U_\varepsilon^{k-1} \subseteq X^k \subseteq X, \hspace{1cm} (7.4) \]
+
+(where again we are describing the points in each ball \(D^k_\alpha\) with polar coordinates). 
+Then \(U_\varepsilon = \bigcup_{k \geq n+1} U_\varepsilon^k \subseteq X\) is an open subset, since \(U_\varepsilon \cap X^k = U_\epsilon^k \subseteq X^k\) is open for 
+each \(k > n\).
+
+To include \( A \) in our open set, we start inductively with \( U^{(0)} = A^{(0)} \) and then \( U^{k} = A^k \cup U_\varepsilon^k \) (of course
+\(U_\varepsilon^{k-1}\) in the expression of \( U_\varepsilon^k \) needs to be replaced by \( U^{(k-1)} \).
+
+We can then verify for each \( k \) that we can find some strong deformation retract \( r_k : U^k \to A^k \) with homotopy \( H_k : U^k \times [0, 1] \to U^k \)
+to show that \( (X, A) \) is a good pair. To this end set \( r_0 = \text{id}_{U^0} \) and \( H_0(x, t) = x \). 
+Inductively we set
+\( r_k(\Phi_\alpha(s, \theta)) = r_{k-1}(\Phi_\alpha(1, \theta)) = r_{k-1}(\phi_\alpha(\theta)) \)
+for \( (s, \theta) \in (1 - \varepsilon, 1] \times \varphi_\alpha^{-1}(U^{k-1}) \) and \( r(x) = x \) if \( x \in A^k \)
+The homotopy is a bit more complicated mostly but the basic gist is \( H_k(x, t) = x \) for \( x \in A^k \) and \( H_{k-1}(r_k(x), t) \) for \( t > c(k) \)
+and join for \( 0 < t \leq c(k) \) with an interpolation via \( \Phi \).
+So if \( x \in U^k \setminus A^k \) we first project along the radii onto \( U^{k-1} \) and then retract via \( r_k \).
+
+State and prove the relative homology of a cell complex \( X^{(n)} \) with respect to its sceleton \( X^{(n-1)} \).
+
+\[
+H_k(X^n, X^{n-1}) \cong \bigoplus_{\alpha \in I_n} H_k(D^n_\alpha, \partial D^n_\alpha) 
+\cong \bigoplus_{\alpha \in I_n} \tilde{H}_{k-1} (\partial D^n_\alpha) 
+\cong 
+\begin{cases}
+\bigoplus_{\alpha \in I_n} \mathbb{Z} e_\alpha & \text{if } k = n, \\
+0 & \text{otherwise.}
+\end{cases}
+\quad (7.5)
+\]
+
+Proof. 
+Each characteristic map \(\Phi_\alpha : (D^n_\alpha, \partial D^n_\alpha) \to (X^n, X^{n-1})\) is a map of pairs, 
+hence there are induced group homomorphisms \((\Phi_\alpha)_* : H_k(D^n_\alpha, \partial D^n_\alpha) \to H_k(X^n, X^{n-1})\) which can be combined into
+
+\[
+\Psi = \bigoplus (\Phi_\alpha)_* : \bigoplus_{\alpha \in I_n} H_k(D^n_\alpha, \partial D^n_\alpha) \longrightarrow H_k(X^n, X^{n-1}). 
+\quad (7.6)
+\]
+
+Further we know that \( X^n, X^{n-1} \) are good pairs, so we have \( H_k(X^n, X^{n-1}) \simeq \tilde{H}_k(X^n / X^{n-1} \).
+Of course \((D^n_\alpha, \partial D^n_\alpha)\) are as well with \( H_k(D^n_\alpha, \partial D^n_\alpha) \simeq \tilde{H}_k(S^n_\alpha) \).
+Since the attached \( \{e^n_\alpha\} \) are unaffected by taking the quotient except that they're all glued now just to a point \( p = X^{n-1}/X^{n-1} \),
+we can express \( X^n/X^{n-1} = \bigvee_\alpha S^n_\alpha \), thus
+\( H_k(X^n, X^{n-1}) \simeq \tilde{H}_k(\bigvee_\alpha S^n_\alpha) = \oplus_\alpha \tilde{H}_k(S^n_\alpha) \simeq \oplus_\alpha H_k(D^n_\alpha, \partial D^n_\alpha) \).
+
+
+State and prove the expression of the homology of CW complex for higher dimensions than its own and how subcomplexes 
+determine the Homology below.
+
+1. \(H_k(X^n) = 0\) for any \(k > n\).
+2. The map \(H_k(X^n) \to H_k(X)\) induced by the inclusion \(X^n \hookrightarrow X\) is an isomorphism for \(k < n\) and surjective for \(k = n\). 
+
+Proof. 
+From the long exact sequence of relative homology of the pair \((X^n, X^{n-1})\) we obtain exact sequences 
+\[
+H_{k+1}(X^n, X^{n-1}) \to H_k(X^{n-1}) \to H_k(X^n) \to H_k(X^n, X^{n-1})
+\]
+
+Since we determined already \(H_{k}(X^n, X^{n-1})\) for all \( k \), (\( 0 \) except for \( n = k \) then \( \oplus_{e_\alpha} \mathbb{Z}e_\alpha \)), so
+we have that \(H_k(X^{n-1}) \rightarrow H_k(X^n)\) is surjective for \(k \neq n\), and injective for \(k \neq n-1\), thus in particular an isomorphism for 
+\(k \neq n, n-1\). So there is a sequence of homomorphisms, which are almost all isomorphisms
+
+\( H_k(X^0) \xrightarrow{\cong} H_k(X^1) \xrightarrow{\cong} \dotsb \xrightarrow{\cong} H_k(X^{k-1}) \hookrightarrow H_k(X^k) \twoheadrightarrow H_k(X^{k+1}) \xrightarrow{\cong} \dotsb \hspace{1cm} (7.7) \)
+Since \(H_k(X^0) = 0\) for all \(k > 0\), \(H_k(X^n) = 0\) for all \(n < k\), as wanted.
+
+The second part then follows directly for \( \text{dim }X < \infty \) the special case of infinity is a more intricate. 
+
+
+Define the cellular chain complex
+
+The cellular chain complex of the cell complex \(X\) is defined by 
+* the abelian groups \(C^{cell}_n(X) := H_n(X^n, X^{n-1}) (\cong \bigoplus_{\alpha \in I_n} \mathbb{Z} e_\alpha)\).
+* and the differentials \(d_n \colon C^{cell}_n(X) \to C^{cell}_{n-1}(X)\) obtained as the composition
+\[ d_n \colon H_n(X^n, X^{n-1}) \xrightarrow{\partial_n} H_{n-1}(X^{n-1}) \xrightarrow{\pi_{n-1}} H_{n-1}(X^{n-1}, X^{n-2}), \]
+where \(\partial_n\) is the connecting homomorphism in relative homology of the pair \((X^n, X^{n-1})\), and \(\pi_{n-1}\) 
+is the map obtained from the pair \((X^{n-1}, X^{n-2})\).
+
+To check that \(C^{cell}_\bullet(X)\) is an actual complex, we compute \(d_{n-1} \circ d_n = \pi_{n-2} \circ \partial_{n-1} \circ \pi_{n-1} \circ \partial_n = 0\), 
+where we have used \(\partial_{n-1} \circ \pi_{n-1} = 0\) by exactness of the long exact sequence of the pair \((X^{n-1}, X^{n-2})\). 
+
+
+Prove the equivalence of cellular and singular homology.
+
+The homology groups of \((C^{cell}_\bullet(X), d)\) are isomorphic to the singular homology groups of \(X: H_n(C^{cell}_\bullet(X)) \cong H_n(X)\).
+
+Proof. 
+To compute the homology of \(C^{cell}_\bullet(X)\) consider the following commutative diagram, where the rows and columns are exact 
+because they are part of the corresponding long exact sequences of relative homology combined with \( H_n(X^{n-1}) = H_{n-1}(X^{n-2}) = H_n(X^{n+1}, X^n) = 0 \)
+and \( H_n(X^{n+1}) \simeq H_n(X) \) by a previous result.
+
+(insert image from page 59. Th. 7.3.4)
+
+There is an isomorphism \(H_n(X) \cong H_n(X^n) / \text{im } \partial_{n+1}\). 
+Note that \(\pi_n\) is injective and maps \(H_n(X^n)\) to \(\ker d_n\), and \(\text{im } \partial_{n+1}\) to \(\text{im } d_{n+1}\). 
+Thus \(H_n(X) \cong \ker d_n / \text{im } d_{n+1}\). But the injectivity of \(\pi_{n-1}\) gives \(\ker d_n = \ker (\pi_{n-1} \circ \partial_n) = \ker \partial_n\). 
+Hence \(H_n(X) \cong \ker d_n / \text{im } d_{n+1} = H_n(C^{cell}_\bullet (X))\) as wanted.
+
+
+Give an explicit description of the boundary map for cellular homology and explain how 
+this can be used to compute Homologies.
+
+We already know that the generators of \(C^{cell}_n(X)\) are the \( n \)-cells of \( X \).
+Let \( \phi^\alpha_n : \partial e^\alpha_n \simeq S^{n-1} \to X^{n-1} \) be the attaching map.
+Consider the composition
+\( \phi^{\alpha \beta}_n : S^{n-1} \to \partial e^\alpha_n \to X^{n-1} \to X^{n-1} / (X^{n-1} \setminus e^\beta_{n-1}) \to S^{n-1} \)
+where first map is an isomorphism due to the characteristic map \( \Phi^\alpha_n \), the second just the regular attaching map \( \phi^\alpha_n \)
+and the third the usual projection into the quotient \( X^{n-1} / (X^{n-1} \setminus e^\beta_{n-1}) \), note that this wraps \( e^\beta_{n-1} \)
+into a sphere as all of its attachments are fused into a single point, which explains the last map as an isomorphism (given by \( \Phi^\beta_{n-1} \)
+
+The boundary map \( \partial_n : C^{cell}_n(X) \to C^{cell}_{n-1}(X)\) 
+is then
+\( \partial_n(e^\alpha_n) = \sum_\beta (\text{deg }) \phi_n^{\alpha\beta} e^\beta_{n-1} \)
+where \( \text{deg } \) is the usual degree of sphere mappings \( S^{n-1} \to S^{n-1} \) and we sum
+over all generators of \( C^{cell}_{n-1} \).
+
+Example:
+
+The torus \( T^2 \) has a cellular decomposition into one \( 0 \)-cell call it \( x \), two \( 1 \)-cells \( a,b \) and one \( 2 \)-cell \( \sigma \).
+Since \( \partial_1 : S^{0} \to S^0 \) is just the constant map its degree must be \( 0 \). 
+The attaching of \( \sigma \) is done according to \( ab(ba)^{-1} \) hence \( \partial_2(\sigma) = (1 - 1)a + (1 - 1)b = 0 \) and trivially
+\( \partial_3 = 0 \) since there are no \( 3 \)-cells. Thus we have the chain complex
+
+\( 0 \to^{\partial_3} \mathbb{Z} \to^{\partial_2} \mathbb{Z} \oplus \mathbb{Z} \to^{\partial_1} \mathbb{Z} \to 0\)
+and the homology group must be
+\[
+H_k(T) = \begin{cases} 
+\mathbb{Z} & k = 0,2 \\ \mathbb{Z}^2 & k = 1 \\ \{0\} & \text{otherwise.} 
+\end{cases}
+\]
+
+The same procedure can be applied to a general genus \( g \)-surface, just that now we have \( 2g \) \(1\)-cells and the attaching is \( abc\dots(abc\dots)^{-1} \)
+so the homology group for \( k=1 \) reads instead \( \mathbb{Z}^{2g} \).
