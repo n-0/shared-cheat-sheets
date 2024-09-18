@@ -292,3 +292,16 @@ H_k(T) = \begin{cases}
 
 The same procedure can be applied to a general genus \( g \)-surface, just that now we have \( 2g \) \(1\)-cells and the attaching is \( abc\dots(abc\dots)^{-1} \)
 so the homology group for \( k=1 \) reads instead \( \mathbb{Z}^{2g} \).
+
+
+Explain the relationship between simplicial and cellular homology
+
+Theorem:
+Let \(\Delta^n \subseteq \mathbb{R}^{n+1}\) be the standard n-simplex and denote by \(\partial \Delta^n \subseteq \mathbb{R}^{n+1}\) its
+boundary as topological n-manifold. Then the homology class of identity \(\text{id}_{\Delta_n}\) gives a generator
+\([\text{id}_{\Delta_n}] \in H_n(\Delta^n , \partial \Delta^n )\) of the n-th relative homology group.
+More generally, any homeomorphism \(\sigma : \Delta^n \to D\) 
+(which must map the boundary \(\partial \Delta^n\) homeomorphically to \(\partial D\)) gives generators \([\sigma] \in H_n(D, \partial D)\), and 
+\([\partial \sigma] \in \tilde{H}_{n−1}(\partialD)\)
+
+Note that this in turn implies a natural generator of the \(H_n(D^n_\alpha, \partial D^n_\alpha)\) since \(D^n \simeq \Delta_n\).

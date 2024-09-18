@@ -1,0 +1,48 @@
+State the Eilenberg-Steenrod Axioms
+
+Eilenberg-Steenrod Axioms for homology theories
+A homology theory is a sequence of functors \(H_n \colon \textbf{Top}^{(2)} \to \textbf{AbGrp}\) 
+(where \(\textbf{Top}^{(2)}\) is the category of pairs of topological spaces with pairs of continuous functions as morphisms)
+with the following properties (in order to lighten notation, we write \(H_n(X, \emptyset) =: H_n(X)\)): 
+
+1. Homotopic invariance: 
+If \(f, g \colon (X, A) \to (Y, B)\) are homotopic continuous maps of pairs, 
+then \(H_n(f) = H_n(g) \colon H_n(X, A) \to H_n(Y, B)\) for every \(n \in \mathbb{Z}\).
+
+2. Long exact sequence: 
+The inclusions 
+\[
+(A, \emptyset) \hookrightarrow (X, \emptyset) \hookrightarrow (X, A)
+\] 
+induce a long exact sequence
+\[
+... \longrightarrow H_n(A) \longrightarrow H_n(X) \longrightarrow H_n(X, A) \xrightarrow{\partial_n} H_{n-1}(A) \longrightarrow ... ,
+\]
+where the connecting homomorphisms \(\partial_n\) are also functorial, 
+in the sense that for any continuous map of pairs \(f \colon (X, A) \to (Y, B)\) 
+the following diagram is commutative:
+\[
+\begin{array}{ccc}
+H_n(X, A) & \xrightarrow{\partial_n} & H_{n-1}(A) \\
+\downarrow H_n(f) & & \downarrow H_{n-1}(f) \\
+H_n(Y, B) & \xrightarrow{\partial_n} & H_{n-1}(B)
+\end{array}
+\]
+
+This corresponds to the categorical notion of natural transformation between the functors \(H_n(-, -)\) and \(H_{n-1}(-, \emptyset)\).
+
+3. Excision: 
+If \(Z \subseteq A \subseteq X\) satisfy \(\overline{Z} \subseteq \text{int} A\) then the inclusion 
+\((X \backslash Z, A \backslash Z) \hookrightarrow (X, A)\) induces isomorphisms 
+\(H_n(X \backslash Z, A \backslash Z) \cong H_n(X, A)\) for every \(n \in \mathbb{Z}\).
+
+4. Sum: If \(X = \bigcup_{i \in I} X_i\) is a disjoint union (with the disjoint union topology), 
+then the inclusions \(X_i \hookrightarrow X\) induce \(\bigoplus_{i \in I} H_n(X_i) \cong H_n(X)\) 
+for every \(n \in \mathbb{Z}\). If I is finite, this follows from the previous axioms.
+
+If \((H_n)_{n \in \mathbb{Z}}\) is a homology theory, we call \(H_n(\{p\})\) its coefficients.
+If \(H_n(\{p\}) = 0\) for \(n \neq 0\) the theory is ordinary. 
+
+Mayer-Vietoris is interestingly a direct consequence of these axioms (in particular of excision).
+
+
