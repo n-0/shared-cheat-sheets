@@ -45,4 +45,209 @@ If \(H_n(\{p\}) = 0\) for \(n \neq 0\) the theory is ordinary.
 
 Mayer-Vietoris is interestingly a direct consequence of these axioms (in particular of excision).
 
+State the definition of finitely generated modules
+and their structure theorem
 
+For an \(R\)-module \(M\) and a family \(\{x_i\}_{i \in I} \subset M\)
+is called a generating set if for each \(m \in M\)
+\(m = \sum_{i \in I} \alpha_i x_i\) with only finitely many \(\alpha_i \neq 0\).
+
+If \(|I| < \infty\) we say that \(M\) is finitely generated and \( |I| \) is the rank of the module \( M \).
+
+It is lin. if
+\(\sum_{i \in I} \alpha_i x_i = 0 \iff \alpha_i = 0, \forall i \in I\)
+
+If \(\{x_i\}_{i \in I}\) satisfies both these conditions its a basis
+and \(M\) is free \(R\)-module.
+
+Equivalently, if there is module homomorphism \( \phi : R^{I} \to M\) with \(\phi(f) = \sum_{i \in I} f(i) x_i\)
+which is surjective (gen. set) and injective (lin. ind.).
+
+For every finitely generated module \( M \) over a PID \( R \), there is a unique decreasing sequence of 
+ideals \( d_1 \supseteq(d_2) \cdots\supseteq(d_n)\)  such that \( M \) is isomorphic to the direct sum of the cyclic modules:
+\( M \simeq R^k \bigoplus_i R/(d_i) = R^k \oplus R/(d_1)\oplus R/(d_2)\oplus\cdots\oplus R/(d_n) \)
+The generators \( d_i \) of the ideals are unique up to multiplication by a unit, and are called invariant factors of \( M \). 
+Since the ideals should be proper, these factors must not themselves be invertible (this avoids trivial factors in the sum), 
+and the inclusion of the ideals means one has divisibility \( d_1\,|\,d_2\,|\,\cdots\,|\,d_n \)
+One can also rewrite this into elementary divisors \( q_i \) which are primary ideals and make up the \( d_i \), 
+(that is for each \( d_j \) there is some set \( J \), s.t. \( \Pi_{i \in J} q_i = d_j \),
+since we are in a PID \( q_i = (p_i)^\alpha_i \) for some prime \( p_i \).
+And then 
+\( M \simeq R^k \bigoplus_i R/((p_i)^\alpha_i) \)
+(note that \( d_i \neq p_i \) except in some trivial cases, since \( p_i | p_j \) can not hold due to primeness.
+
+We call \( \bigoplus_i R/((p_i)^\alpha_i) = T(M) \) the torsion of the module.
+Thus we can write \( M = R^\text{rk(M)} \oplus T(M) \).
+More generally over non PID but commutative rings, \( T(M) = \{x \in M|r \in R,r\text{ is not a zero divisor and }\ rx = 0 \} \).
+For finitely generated groups (which are a special case of modules) this simplifies to 
+\( T(G) = \{g \in G \mid \exists n \in \mathbb{Z}_{>0}, ng = 0\} \)
+
+Finally observe that any finitely generated abelian group is just a module with the same generators over the PID \( \mathbb{Z} \)
+thus the structure theorem of finitely generated abelian group is just a corollary.
+
+Define the Euler characteristic and Betti numbers and give examples
+
+Let \(X\) be a topological space such that \(H_\ast(X) := \bigoplus_{k \in \mathbb{Z}} H_k(X)\) is finitely generated, i.e. 
+each \(H_k(X)\) is finitely generated, and only finitely many of them are non-zero.
+
+1. The \(k\)-th Betti number of \(X\) is \(b_k(X) := \text{rk} \, H_k(X)\).
+2. The Euler characteristic of \(X\) is \(\chi(X) := \sum_{k \in \mathbb{Z}} (-1)^k b_k(X)\) 
+(which is actually a finite sum under the finiteness assumption above).
+
+Examples:
+The \(n\)-dimensional sphere \(S^n\) has Betti numbers \(b_0(S^n) = b_n(S^n) = 1\) and 
+\(b_k(S^n) = 0\) for \(k \neq 0, n\). Thus the Euler characteristic is
+\[
+\chi(S^n) = 1 + (-1)^n = 
+\begin{cases}
+2 & \text{if } n \text{ even}, \\
+0 & \text{if } n \text{ odd}.
+\end{cases}
+\]
+
+Let \(X\) be a finite cell complex of dimension \(n\). Then
+1. \(H_*(X)\) is finitely generated.
+2. If \(X\) contains \(a_k\) \(k\)-cells, then \(\chi(X) = \sum_{k=0}^n (-1)^k a_k\).
+
+
+Define homologies with coefficients
+
+Let \(X\) be a topological space.
+A singular \(n\)-chain in \(X\) with coefficients in \(G\) is a formal (finite) sum of the form
+\(\sum_{\sigma \in \Delta_n(X)} a_\sigma \sigma, \quad a_\sigma \in G,\)
+where \(\Delta_n(X) = \{\sigma : \Delta^n \to X \mid \text{continuous}\}\) denotes the set of all singular \(n\)-simplices in \(X\), 
+and \(a_\sigma \neq 0\) for only finitely many \(\sigma\).
+
+More formally: the group of singular \(n\)-chains with coefficients in \(G\) is the abelian group
+\(C_n(X; G) := \bigoplus_{\sigma \in \Delta_n(X)} G \sigma\)
+
+The \(n\)-th boundary homomorphism \(\partial_n : C_n(X; G) \to C_{n-1}(X; G),\)
+
+is the group homomorphism defined by
+\(\partial_n \left( \sum_{i=0}^n a_\sigma \sigma \right) := \sum_{i=0}^n (-1)^i a_\sigma (\sigma \circ \iota_n^i)\)
+
+(where \((-1)^i a = a\) for even \(i \in \mathbb{Z}\) and \((-1)^i a = -a\) for odd \(i \in \mathbb{Z}\)). 
+It is a straighforward verification to show \(\partial_{n-1} \circ \partial_n = 0\) 
+thus \((C_\bullet(X; G) = \bigoplus_{n \in \mathbb{Z}} C_n(X; G), \partial)\) is a chain complex.
+
+Another pecularity is the definition of augmented chain complexes with
+\(\varepsilon : C_0(X;G) \to C_{-1}(X;G) = G,\ \varepsilon(ap) = a \in G \).
+
+In particular all results built up for singular homology, such as the theorem of small chains
+are equally valid for arbitrary abelian groups \( G \) and such theories satisfy the Eilenberg-Steenrod axioms.
+Similarly cellular homology also works with arbitrary coefficients, what changes is 
+\( H_k(X^n, X^{n-1}) \simeq \bigoplus_{\alpha \in I_n} \tilde{H}_{k-1}(\partial D^n_\alpha;G) \simeq \bigoplus_{\alpha \in I_n} \).
+for \( k = n \) and \( 0 \) otherwise.
+
+Continuous maps \( f : X \to Y \) descend into group homomorphisms \( a\sigma \to f_\sharp(a\sigma) = a(f\circ\sigma) \)
+
+If \( X = \{p\} \) is a point, the same computations as with \( \mathbb{Z} \) coeffs.
+the singular complex with coefficients in \( G \) has the form
+
+\(\cdots \xrightarrow{} G \xrightarrow{\text{id}_G} G \xrightarrow{0} G \xrightarrow{\text{id}_G} G \xrightarrow{0} G \xrightarrow{} 0, \)
+
+so that \(H_0(\{p\}; G) = G[p]\) and \(H_n(\{p\}) = 0\) for \(n \neq 0\). 
+The augmented version gives \(H_n(\{p\}) = 0\) for all \(n \in \mathbb{Z}\).
+
+Thus contractible spaces also have \( H_0(X;G) \simeq G \) and \( 0 \) otherwise.
+
+One can even consider maps between different coefficient homologies, meaning given a homomorphism \( \psi : G_1, \to G_2 \)
+this defines a chain map \( \psi_\ast : C_\bullet(X;G_1) \to C_\bullet(X;G_2) \) via \( \psi_\ast(a\sigma) = \psi(a)\sigma,\ a \in G \)
+and noting that \( \psi(-a) = -\psi(a) \) for commuting with the differential, thus we have \( \psi_\star : H_\bullet(X;G_1) \to H_\bullet(X;G_2) \).
+
+
+
+State and prove the existence of a degree for maps between spheres with arbitrary coefficients for the Homology groups
+
+Let \(f : S^n \to S^n\) be a continuous map of degree \(m\) and \(G\) an abelian group. 
+Then \(f_* : \tilde{H}_n(S^n; G) = G \to \tilde{H}_n(S^n; G) = G\) is given by multiplication by \(m\).
+
+Proof. 
+We know from Mayer-Vietoris that
+\(\varphi_G : G \cong \tilde{H}_0(S^0; G) \cong \ldots \cong \tilde{H}_{n-1}(S^{n-1}) \cong \tilde{H}_n(S^n; G).\)
+Further for a group homomorphism \(\psi : G_1 \to G_2\) it holds
+(INSERT PAGE diagram 2 from page 67, Lemma 8.1.11)
+Let now \([c] \in \tilde{H}_n(S^n; G)\) be any element and set \(g := \varphi_{G}^{-1}([c])\). 
+Let \(\psi : \mathbb{Z} \to G\) be the group homomorphism defined by \(\psi(1) = g\) (i.e. \(\psi(k) = kg\) for any \(k \in \mathbb{Z}\)). 
+If we now consider the homomorphisms induced by \( f \) in homology, and we deduce 
+commutative diagram.
+(INSERT PAGE diagram 3 from page 67, Lemma 8.1.11)
+
+State and compute the Homology groups of the real projective space with \( \mathbb{Z}/2\mathbb{Z} \) as coefficients.
+
+The computation of the homology groups \(H_k(\mathbb{P}^n(\mathbb{R}))\) of the real projective spaces was obtained 
+via cellular homology using that the cellular differential 
+\(
+d_k : H_k(\mathbb{P}^k(\mathbb{R}), \mathbb{P}^{k-1}(\mathbb{R})) \to H_{k-1}(\mathbb{P}^{k-1}(\mathbb{R}), \mathbb{P}^{k-2}(\mathbb{R}))
+\)
+
+was given by multiplication by \( 1 + (-1)^k \). This computation in turn followed from the fact that the antipodal map 
+\( A : S^{k-1} \to S^{k-1} \) has degree \(\text{deg } A = (-1)^k\). Since degrees do not change with coefficients, this still holds for any \( G \), 
+so the cellular chain complex for \(\mathbb{P}^n(\mathbb{R})\) with coefficients in \( G \) also looks like
+
+\(
+0 \longrightarrow G \longrightarrow G \xrightarrow{0} G \longrightarrow G \xrightarrow{2} G \longrightarrow \dotsb \longrightarrow G \xrightarrow{0} G \longrightarrow G \longrightarrow 0
+\)
+if \( n \) is even, and
+
+\(
+0 \longrightarrow G \longrightarrow G \xrightarrow{2} G \xrightarrow{0} G \longrightarrow \dotsb \longrightarrow G \xrightarrow{2} G \xrightarrow{0} G \longrightarrow 0
+\)
+
+if \( n \) is odd.
+
+For \(G = \mathbb{Z}/2\mathbb{Z}\), all differentials become the zero map. Hence it holds
+
+\[
+H_k(\mathbb{P}^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \cong 
+\begin{cases}
+\mathbb{Z}/2\mathbb{Z} & \text{for any } 0 \leq k \leq n, \\
+0 & \text{otherwise.}
+\end{cases}
+\]
+
+State the prerequisites and theorem of Borsuk-Ulam
+
+The group homomorphism \(\psi_\bullet \colon C_\bullet(\mathbb{P}^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \to C_\bullet(S^n; \mathbb{Z}/2\mathbb{Z})\) 
+is a chain map, and
+
+\(
+0 \to C_\bullet(\mathbb{P}^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \xrightarrow{\psi_\bullet} C_\bullet(S^n; \mathbb{Z}/2\mathbb{Z}) \xrightarrow{\varphi_\bullet} C_\bullet(\mathbb{P}^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \to 0
+\)
+
+is a short exact sequence of chain complexes.
+
+where \( \psi_\sharp \) is the induced map by the covering \( \psi: S^n \to \mathbb{P}^n(\mathbb{R}) \) and 
+\( \psi(\sigma) = \sigma_v + \sigma_{-v} = \sigma_v + A_{\sharp}(\sigma)_v\), where \( A: S^n \to S^n \) is the antipodal map
+and \( \sigma_v : \Delta^n \to S^n \) the lift of some \( \sigma \in \Delta^k \to \mathbb{P}^n(\mathbb{R}) \), that is a map 
+s.t. for \( v \in \phi^{-1}(\sigma(e_0)) \).
+
+This can be used to prove the proposition
+Let \(n \in \mathbb{Z}_{\geq 0}\) and \(f : S^n \to S^n\) an odd continuous map (i.e. \(f(-x) = -f(x)\) for every \(x \in S^n\)). 
+Then \(\text{deg } f \in \mathbb{Z}\) is an odd number. 
+
+Proof.
+The case \(n = 0\) is easy, since there are only two possibilities: 
+\(f = \text{id}\) or \(f = -\text{id}\), which have degree 1 and -1 respectively.
+
+Assume from now on that \( n \geq 1 \). Since degrees do not change with coefficients it is enough to show that the map 
+\(
+f_* : H_n(S^n; \mathbb{Z}/2\mathbb{Z}) \to H_n(S^n; \mathbb{Z}/2\mathbb{Z})
+\)
+is not the zero map. One then constructs from the SES a LES with connecting homomorphism \( \phi_n \) from which one can derive that 
+
+\( H_n(\mathbb{P}^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \to H_n(S^n; \mathbb{Z}/2\mathbb{Z}) \)
+is an isomorphisms and also 
+\( \phi_n : H_n(\mathbb{P}^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \to H_{n-1}(\mathbb{P}^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \) 
+\( \varphi_\ast : H_0(S^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \to H_{0}(\mathbb{P}^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \) 
+
+and last a commutative diagram (and similarly for \( \phi_n, \varphi_\ast \), which forces 
+\( f \) to be a an isomorphism and non trivial
+(INSERT diagram (8.12) page 70 Proposition 8.2.3.)
+
+
+Finally we have the theorem of Borsuk-Ulam:
+Let \(n > 0\) and \(f : S^n \to \mathbb{R}^n\) be a continuous map. 
+
+1. If \( f \) is odd, then there is a \( p \in S^n \) such that \( f(p) = 0 \). 
+2. In any case, there is \( p \in S^n \) such that \( f(p) = f(-p) \).

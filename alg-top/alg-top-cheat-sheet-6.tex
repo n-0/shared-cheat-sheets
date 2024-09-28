@@ -1,0 +1,123 @@
+Define cohomologies and translate the basic constructions of homologies.
+
+A cochain complex (of abelian groups) \( (A^\bullet, \delta_A) \) is a sequence 
+
+\(\cdots \xrightarrow{} A^{n-1} \xrightarrow{\delta^{n-1}} A^n \xrightarrow{\delta^{n}} A^{n+1} \xrightarrow{} \cdots\)
+
+of abelian groups and group-homomorphisms (called codifferentials) satisfying \( \delta_A^n \circ \delta_A^{n-1} = 0 \)
+for every \( n \in \mathbb{Z} \). The elements of \( A^n \) are called \(n\)-cochains of \(A^\bullet\)). 
+
+Alternatively, a cochain complex is a graded group \(A^\bullet = \bigoplus_{n \in \mathbb{Z}} A^n\)
+together with an endomorphism \(\delta_A : A^\bullet \to A^\bullet\) of degree \( 1 \) such that \(\delta_A^2 = \delta_A \circ \delta_A = 0\).
+
+The elements of the subgroups \( B^n(A^\bullet) \coloneqq \text{im } \delta_A^{-1} \) and \( Z^n(A^\bullet) \coloneqq \text{ker } \delta_A \) 
+are the \( n \)-coboundaries and \( n \)-cocycles of \( A^\bullet \), and by the condition \( \delta^n_A \circ \delta^{n-1}_A = 0\)
+it holds \( B^n(A^\bullet) \subseteq Z^n(A^\bullet) \). The quotient \( H^n = Z^n(A_\bullet) / B^n(A_\bullet) \) is then called 
+\( n \)-th cohomology.
+
+Of special interest is the case of \((A_\bullet, d_A^\bullet)\) a chain complex, with \( G \)-dual groups \(\operatorname{Hom}(A_n, G)\) inducing via
+\((d_n^A)^\vee\), a cochain complex, due to
+\[
+(d_{n+1}^A)^\vee \circ (d_n^A)^\vee = (d_n^A \circ d_{n+1}^A)^\vee = 0^\vee = 0.
+\]
+We shall denote this by \( H^n(A_\bullet, G) = H^n(\text{Hom}(A_\bullet, G)) \).
+
+Soem general properties for all cohomologies are:
+
+Let \( (A^\bullet, \delta_A) \), \( (B^\bullet, \delta_B) \), \((C^\bullet, \delta_C)\) be cochain complexes.
+
+1. A cochain map \(f \colon A^\bullet \to B^\bullet\) is a graded group homomorphism of degree 0 such that 
+\(f \circ \delta_A = \delta_B \circ f\), i.e. a sequence of group homomorphisms \(f^n \colon A^n \to B^n\) 
+such that \(f^{n+1} \circ \delta_A^n = \delta_B^n \circ f^n\) for every \(n \in \mathbb{Z}\).
+
+2. A chain homotopy between two cochain maps \(f, g \colon A^\bullet \to B^\bullet\) is a graded homomorphism 
+\(P \colon A^\bullet \to B^\bullet\) of degree \(-1\) such that \(g - f = \delta_B \circ P + P \circ \delta_A\) 
+(i.e. a sequence of group homomorphisms \(P^n \colon A^n \to B^{n-1}\) such that 
+\(g^n - f^n = \delta_B^{n-1} \circ P^n + P^{n+1} \circ \delta_A^n\) for all \(n \in \mathbb{Z}\)). 
+If such a \(P\) exists, one says that \(f\) and \(g\) are chain homotopic, and writes \(f \simeq g\).
+
+If \( 0 \to A_\bullet \to B_\bullet \to C_\bullet \to 0 \) is a short exact sequence of cochain complexes, then there
+are natural connecting homomorphisms \( \phi_n : H_n(C_\bullet) \to H_{n+1}(A_\bullet) \) inducing a long
+exact sequence of cohomology groups
+
+\( \cdots \xrightarrow{\phi^{n-1}} H^n(A^\bullet) \xrightarrow{f^\ast} H^n(B^\bullet) \xrightarrow{g^\ast} H^n(C^\bullet) \xrightarrow{\phi_n} H^{n+1}(A^\bullet) \).
+
+
+
+Define the dualization of homomorphism and prove that they descend to well defined homomorphism in cohomology
+
+Let \( A, B, C, G \) be abelian groups then \( \text{Hom}(A, G) \) is an abelian group 
+with the operation \( \phi + \psi = \sigma,\ \sigma(a) = \phi(a) + \psi(a) \).
+
+Actually \( \text{Hom}(-,G) \) is a contraviant functor \( \mathbf{Grp} \to \mathbf{AbGrp} \), meaning for \( f : A \to B \)
+we have \( \text{Hom}(A, G) \xleftarrow{f^{\vee}} \text{Hom}(B, G) \) with \( f^\vee(\phi) = \phi \circ f \)
+and \( (f \circ g)^\vee = g^\vee \circ f^\vee \).
+
+1. If \( f : A_\bullet → B_\bullet \) is a chain map, then \( f^\vee : \text{Hom}(A, G) \to \text{Hom}(B, G) \) is a cochain map. 
+In particular, \( f^\vee \)induces group homomorphisms
+\( f^\ast : H^n(B_\bullet, G) \to H^n(A_\bullet, G),\ [φ] \mapsto [f^\vee(φ)] = [φ ◦ f ] \).
+
+2. If \(f,g : A_\bullet \to B_\bullet\) are chain homotopic chain maps, with homotopy \(P : A_\bullet \to B_\bullet\), then
+\(P^\vee : \operatorname{Hom} (B_\bullet, G) \to \operatorname{Hom} (A_\bullet, G)\)
+is a homotopy between \(f^\vee\) and \(g^\vee\). In particular, \(f^* = g^* : H^n(B_\bullet; G) \to H^n(A_\bullet; G)\).
+
+1. Since a chain map satisfies \(f \circ d_A^\bullet = d_B^\bullet \circ f\), it holds \(f^\vee \circ \delta_B^\bullet = f^\vee \circ (d_B^\bullet)^\vee = (d_B^\bullet \circ f)^\vee = (f \circ d_A^\bullet)^\vee = (d_A^\bullet)^\vee \circ f^\vee = \delta_A^\bullet \circ f^\vee\).
+
+2. Applying \(\operatorname{Hom}(-, G)\) to \(f - g = P \circ d_A^\bullet + d_B^\bullet \circ P\) we obtain \(f^\vee - g^\vee = (f - g)^\vee = (P \circ d_A^\bullet + d_B^\bullet \circ P)^\vee = \delta_A^\bullet \circ P^\vee + P^\vee \circ \delta_B^\bullet\).
+
+
+State the theorems necessary to dualize some well-behaved exact sequences again into exact sequences.
+
+The problem with \( \text{Hom} \) to turn our existing (singular) homology theories into cohomology is, 
+that it does not necessarily preserve exact sequences
+
+Consider the short exact sequence of abelian groups
+\( 0 \longrightarrow \mathbb{Z} \xrightarrow{2} \mathbb{Z} \longrightarrow \mathbb{Z}/2\mathbb{Z} \longrightarrow 0. \)
+
+Applying \( \operatorname{Hom}(-, \mathbb{Z}) \), we obtain the complex
+\( 0 \longrightarrow \operatorname{Hom}(\mathbb{Z}/2\mathbb{Z}, \mathbb{Z}) \longrightarrow \operatorname{Hom}(\mathbb{Z}, \mathbb{Z}) \cong \mathbb{Z} \xrightarrow{2} \operatorname{Hom}(\mathbb{Z}, \mathbb{Z}) \cong \mathbb{Z} \longrightarrow 0\)] 
+
+Using \(\operatorname{Hom}(\mathbb{Z}/2\mathbb{Z}, \mathbb{Z}) = 0\) and 
+\(\operatorname{Hom}(\mathbb{Z}, \mathbb{Z}) \cong \mathbb{Z}\), (9.1) turns into
+\( 0 \longrightarrow 0 \longrightarrow \mathbb{Z} \xrightarrow{2} \mathbb{Z} \longrightarrow 0, \)
+which is not exact at the second \(\mathbb{Z}\) because multiplication by 2 is not surjective.
+
+A workaround are the following insights
+
+Let \( 0 → A → B → C → 0 \) be a short exact sequence of abelian groups. The
+following three assertions are equivalent:
+1. There is a group homomorphism \( r : C → B \) such that \( g ◦ r = \text{id}_C \) .
+2. There is a group homomorphism \( s : B → A \) such that \( s ◦ f = \text{id}_A \) .
+3. There is an isomorphism of groups \( \phi : A \oplus C \to B \) such that
+\( \varphi(a, 0) = f(a),\ g(\varphi(a, c)) = c \), for \( a \in A, c \in C \).
+We call such sequences split and are the onl sequences to precisely preserve exactness under \( \text{Hom}(-, G) \).
+With this nomenclature we also have
+4. For all \( G \), \( f^\vee \) is surjective, then \( 0 → A → B → C → 0 \) is split.
+
+Let \(0 → A → B → C → 0\) be a short exact sequence where \( C \) is a free
+abelian group. Then the sequence is split.
+Proof.
+We find an inverse to \( g : B \to C \) by noting that \( C = \bigoplus_{i \in I} \mathbb{Z} e_i \)
+and that \( g \) is surjective, thus for each \( e_i \) we can find at least one \( b_i \) with \( g(b_i) = e_i \).
+Constructing the inverse as \( r(e_i) = b_i \) and extending it linearly is actually well-defined.
+
+Describe the connecting homomorphism that facilitates long exact sequences in cohomology
+
+The connecting homomorphism for \( 0 → A → B → C → 0 \) turned into \( H^n(A;G) \xleftarrow H^n(B;G) \xleftarrow H^n(C;G)\) is denoted by 
+\(\delta^\vee \colon H^n(A_\bullet; G) \to H^{n+1}(C_\bullet; G)\)
+
+are defined. Let's first write down the usual diagram as in (5.3) adapted to the case of the \(G\)-dual cochain complex:
+
+(INSERT DIAGRAM 1 from page 77 Theorem 9.1.13)
+
+Let \(\varphi \in Z^n(\operatorname{Hom}(A_\bullet, G))\) be a \( n \)-cocycle, i.e. a group homomorphism \( \varphi \colon A_n \to G \) such that 
+\(0 = \delta(\varphi) = \varphi \circ d_{A_{n+1}} \colon A_{n+1} \to G.\)
+Since \(f^\vee\) is surjective, there is a group homomorphism 
+\(\psi \colon B_n \to G \text{ such that } \varphi = f^\vee(\psi) = \psi \circ f.\)
+Since \(\varphi\) is a cocycle and \( f \) is a cochain map, it holds
+\(0 = \delta(\varphi) = \varphi \circ d_A = \psi \circ f \circ d_A = \psi \circ d_B \circ f.\)
+This means that \(\delta(\psi) = \psi \circ d_B \colon B_{n+1} \to G\) vanishes on \(\operatorname{im} f = \ker g\), 
+and thus factors through a map \(\alpha = \widetilde{\psi \circ d} \colon B_{n+1}/ \ker g \cong C_{n+1} \to G\). 
+It holds then \(\delta^\vee([\varphi]) = [\alpha]\).
+
+(INSERT DIAGRAM 2 (9.3) from page 77 Theorem 9.1.13)
