@@ -213,13 +213,14 @@ Thus,
 2. 
 \(x: U \to \Omega\) is a cubic coordinate system around a boundary point \(p \in \partial M\), 
 that is \(\Omega = Q_\epsilon\) with \(\epsilon > 0\), \(U \cap \partial M \neq \emptyset\). 
-Here, now holds
-\(\int_{M} d\omega = \int_0^\epsilon \left( \int_{[-\epsilon, \epsilon]^{m-1}} \left( \sum_{j=1}^m \frac{\partial a_j}{\partial x^j} \right) dx^1 \dotsm dx^{m-1} \right) dx^m \)
-\(= \int_{[-\epsilon, \epsilon]^{m-1}} \left( \int_0^\epsilon \frac{\partial a_m}{\partial x^m} dx^m \right) dx^1 \dotsm dx^{m-1}, \)
-
-because for the same reason as in the first part, here also
+For the same reason as in the first part, namely
 \(\int_{-\epsilon}^\epsilon \frac{\partial a_j}{\partial x^j} dx^j = 0\)
-for \(j = 1, \dots, m-1\).
+for \(j = 1, \dots, m-1\)
+it holds also
+\(\int_{M} d\omega = \int_0^\epsilon \left( \int_{[-\epsilon, \epsilon]^{m-1}} \left( \sum_{j=1}^m \frac{\partial a_j}{\partial x^j} \right) dx^1 \dotsm dx^{m-1} \right) dx^m \)
+\(= \int_{[-\epsilon, \epsilon]^{m-1}} \left( \int_0^\epsilon \frac{\partial a_m}{\partial x^m} dx^m \right) dx^1 \dotsm dx^{m-1}, \).
+(pay attention to the \(dx^m\) term moving into the integrand)
+
 
 Because of \(a_m(x^1, \dots, x^{m-1}, \epsilon) = 0\), then overall
 \(\int_M d\omega = -\int_{[-\epsilon, \epsilon]^{m-1}} a_m(x^1, \dots, x^{m-1}, 0) dx^1 \dotsm dx^{m-1}.\)

@@ -1,0 +1,329 @@
+Define the cup product and state some properties
+
+Let \(X\) be a topological space. Given singular cochains \(\varphi \in C^n(X; R)\) and \(\psi \in C^m(X; R)\), 
+the cup product map \( \cup : C^n(X;R) \times C^m(X;R) \to C^{n+m}(X;R) \) is defined as
+\(
+(\varphi \cup \psi)(\sigma) = \varphi(\sigma|_{[e_0, \dotsc, e_n]}) \cdot \psi(\sigma|_{[e_n, \dotsc, e_{n+m}]}), \hspace{1cm} (11.1)
+\)
+
+where \(\sigma : \Delta^{n+m} = ([e_0, \dotsc, e_n, \dotsc, e_{n+m}]) \to X\) is a singular \((n + m)\)-simplex in \(X\) and the \(\cdot\) is the multiplication in \(R\) 
+(and extended \(\mathbb{Z}\)-linearly to any singular chain).
+
+It satisfies for \( \varphi \in C^n(X;R), \psi \in C^m(X;R), \mu \in C^k(X;R) \)
+\( (\varphi \cup \psi) \cup \mu = \varphi(\psi \cup \mu) \)
+for \( \varphi' \in C^n(X;R), \psi' \in C^m(X;R) \)
+\( (\varphi + \phi') \cup \psi = (\varphi \cup \psi) + (\varphi' \cup \psi) \)
+and 
+\( (\varphi) \cup (\psi + \psi') = (\varphi \cup \psi) + (\varphi \cup \psi') \)
+
+If \( R \) has a multiplicative identity \( 1_R \) then the constant chain \( 1_{C^0} \in C^0(X;R), 1_{C^0}(\sigma) \to 1_R \) 
+is an identity element for \( \cup \), that is \( 1_{C^0} \cup \varphi = \varphi \cup 1_{C^0} = 1_R \).
+
+Applying the coboundary operator gives
+\( \delta(\varphi \cup \psi) = (\delta \varphi) \cup \psi + (-1)^n \varphi \cup (\delta \psi) \in C^{n+m+1}(X;R) \)
+Interestingly its really complicated to define a relation \( h \), s.t. 
+\( \psi \cup \varphi = h(\varphi \cup \psi) \), 
+however there is a rather simple one for the induced cohomology classes. But first
+
+Let \(f : X \to Y\) be a continuous map and \(R\) a ring. Then it holds:
+
+1. \(f^* (\varphi \cup \psi) = (f^*(\varphi)) \cup (f^*(\psi)) \in C^{n+m}(X; R)\) for every \(\varphi \in C^n(Y; R)\) and \(\psi \in C^m(Y; R)\).
+2. If \(R\) has a unit 1, then \(f^*(1) = 1 \in C^0(X; R)\).
+
+Combined with the coboundary formula, one can derive
+
+1. For any topological space \(X\), the formula \([\varphi] \cup [\psi] := [\varphi \cup \psi]\) gives well-defined maps 
+\(\cup : H^n(X; R) \times H^m(X; R) \to H^{n+m}(X; R),\)
+also called \textbf{cup-product}, satisfying the same properties as the regular one.
+2. If \(f : X \to Y\) is a continuous map, then \(f^*([\varphi] \cup [\psi]) = (f^*([\varphi])) \cup (f^*([\psi]))\) for every \([\varphi] \in H^n(X; R)\) and \([\psi] \in H^m(X; R)\).
+
+Assuming that \( R \) is commutative then at least in cohomology the following relation holds
+\( [\psi] \cup [\varphi] = (-1)^{mn}[\varphi] \cup [\psi] \).
+
+One can extend the concept to relative cohomology, where it is defined as
+\( \cup : H^n(X, A;R) \times H^m(X, B;R) \to H^{n+m}(X, A \cup B;R) \) with \( [\varphi] \cup [\psi] \coloneqq [\varphi \cup \psi] \).
+It is possible to show that \(H^{n+m}(X, A \cup B;R) \simeq H^{n+m}(X, A + B;R) \), where \( C^n(A+B;R) = \text{ker}(C^{n+m}(X;R) \xrightarrow{\iota^\vee} C^{n+m}(A+B;R)) \) 
+are the chains derived from \( C^n(A;R) \oplus C^n(B;R) \).
+
+From a broader perspective, \( \cup \) turns the complex \( C^\bullet(X;R) \coloneqq \oplus_{n \geq 0} C^n(X;R) \) into a (usual not commutative) ring with identity.
+The equality \( [\psi] \cup [\varphi] = (-1)^{mn}[\varphi] \cup [\psi] \) is sometimes used to call \( H^\bullet(X;R) \) a graded commutative ring 
+(which is truly commutative if \( R = \mathbb{Z}/2\mathbb{Z} \).
+
+What was only mentioned in the lecture, but not in the script is the fact that the de Rham theorem implies that on differentiable manifolds
+the cup product is the same as the wedge product, explaining the strong similarity. 
+
+
+Give an explicit computation of the cup product 
+
+Consider the Torus via the following diagram
+
+(INSERT DIAGRAM FROM PAGE 101 EXAMPLE 11.1.8)
+
+In particular we have the paths \(a = (p_1, p_2) = (p_3, p_4)\) and \(b = (p_1, p_3) = (p_2, p_4)\), 
+as well as the 2-simplices \(\sigma_1 := (p_1, p_2, p_4)\) and \(\sigma_2 := (p_1, p_3, p_4)\). 
+Moreover we know that 
+\(
+H_1(T) = \mathbb{Z} [a] \oplus \mathbb{Z} [b] \quad \text{and} \quad H_2(T) = \mathbb{Z} [\sigma_1 - \sigma_2].
+\)
+
+Since the homology groups are all free, the universal coefficient theorem for cohomology gives \(H^k(T; \mathbb{Z}) \cong \operatorname{Hom}(H_k(T), \mathbb{Z})$ for all $k \in \mathbb{Z}\). 
+Thus
+\(
+H^1(T) = \mathbb{Z} [\alpha] \oplus \mathbb{Z} [\beta] \quad \text{and} \quad H^2(T) = \mathbb{Z}[\varphi],
+\)
+
+where \(\{[\alpha], [\beta]\}\) is the dual basis of \(\{[a], [b]\}\), resp. \(\{[\varphi]\}\) is the dual basis of \(\{[\sigma_1 - \sigma_2]\}\). 
+This means: \(\alpha\) and \(\beta\) are 1-cocycles such that \(\alpha(a) = \beta(b) = 1\) and \(\alpha(b) = \beta(a) = 0\), while \(\varphi\) is a 2-cocycle such that 
+\(\varphi(\sigma_1 - \sigma_2) = 1\).
+
+Let's now compute the cup products \([\alpha] \cup [\beta]\) and \([\beta] \cup [\alpha]\). Since \([\alpha] \cup [\beta] \in H^2(T; \mathbb{Z}) = \mathbb{Z}[\varphi]\), 
+there is an integer \(n \in \mathbb{Z}\) such that \([\alpha] \cup [\beta] = n[\varphi]\). Since \(\varphi(\sigma_1 - \sigma_2) = 1\), the integer \(n\) can be computed as
+
+\(n = n \cdot \varphi (\sigma_1 - \sigma_2) = ([\alpha] \cup [\beta]) (\sigma_1 - \sigma_2) = (\alpha \cup \beta) (\sigma_1 - \sigma_2)\)
+\(= (\alpha \cup \beta) (\sigma_1) - (\alpha \cup \beta) (\sigma_2) = \alpha (\sigma_1|_{[p_1, p_2]}) \beta (\sigma_1|_{[p_2, p_4]}) - \alpha (\sigma_2|_{[p_1, p_3]}) \beta (\sigma_2|_{[p_3, p_4]})\)
+\(= \alpha (a) \beta (b) - \alpha (b) \beta (a) = 1\).
+
+Thus \([\alpha] \cup [\beta] = [\varphi]\). A similar computation gives however \([\beta] \cup [\alpha] = - [\alpha] \cup [\beta]\).
+
+
+Define the cap product and state some properties
+
+For \(n \geq m \geq 0\), define the cap-product map \(\cap : C^m(X; R) \times C^n(X; R) \to C_{n-m}(X; R)\) as follows:
+
+1. For \(\varphi \in C^m(X; R)\), \(\sigma : \Delta^n = ([e_0, \dotsc, e_n]) \to X\) and \(r \in R\), set 
+
+\(\varphi \cap (\sigma) := \varphi(\sigma|_{[e_{n-m}, \dotsc, e_n]}) \cdot r \sigma|_{[e_0, \dotsc, e_{n-m}]} \in C_{n-m}(X; R).\)
+and extend this definition \( R \)-linearly.
+
+It holds for \( \varphi, \varphi' \in C^m(X;R), \sigma \in C_m(X;R), r \in R \)
+\( (\varphi + \varphi') \cap c = \varphi \cap c + \varphi' \cap c, \ (r\varphi) \cap c = r(\varphi \cap c) \)
+For \( 1_{C_0} \in C^0(X;R) \) it holds
+\( 1_{C_0} \cap \sigma = 1_{C_0}(\sigma(e_n))\sigma = \sigma \)
+and for \( \psi \in C^n(X;R), \nu \in C_n(X;R) \)
+\( \psi \cap \nu = \psi(\nu)\nu(e_0) \in C_0(X;R) \)
+so with the augmentation morphism, \( \varepsilon : C_0(X;R) \to R \), \( \varepsilon \circ \cap \) coincides with the Kroenecker map, since \( \varepsilon(\psi \cap \nu) = \psi(\nu) \).
+
+Moreover for \( \varphi \in C^n(X;R), \psi \in C^k(X;R) \) it holds
+\( (\varphi \cup \psi) \cap c = \varphi \cap (\psi \cap c) \)
+
+and
+\( \partial(\varphi \cap c) = (-1)^m(\delta \varphi) \cap c + \varphi \cap (\partial c) \in C_{n-m-1}(X;R) \).
+Similarly as for the cup product the cap product decends into (co-)homology via
+\( \cap : H^m(X;R) \times H_n(X;R) \to H_{n-m}(X;R), [\varphi] \cap [c] = [\varphi \cap c] \).
+
+For induced chain maps we have the following commutative diagram
+
+(INSERT DIAGRAM 11.11 FROM Corollary 11.2.5, PAGE 104)
+
+and the projection formula
+For any \(\varphi \in C^m(Y; R)\) and \(c \in C_n(X; R)\) it holds
+\(
+f_* (f^* (\varphi) \cap c) = \varphi \cap (f_*(c)) \in C_{n-m}(Y; R).
+\)
+In particular, for any \([\varphi] \in H^m(Y; R)\) and \([c] \in H_n(X; R)\) it holds
+\(
+f_* (f^* ([\varphi]) \cap [c]) = [\varphi] \cap (f_*([c])) \in H_{n-m}(Y; R).
+\).
+
+Last the cap product extends to relative (co)homology via
+\( \cap : H^m(X, A;R) \times H_n(X, A \cup B;R) \to H_{n-m}(X,B;R),\ [\varphi] \cap [c] = [\varphi \cap c] \)
+The reason for \( A \) vanishing in the codomain is that \( \varphi : H^m(X,A;R) \) removes the \( A \) part of any singular \( n \)-chain
+(which must look sth. like \( \partial c = c_A = c_B \), so \( \varphi \cap (\partial c) = \varphi \cap c_B \), which is a cycle only relative to \( B \).
+
+
+State the Künneth formula
+
+The Künneth formula over a PID \( R \)  is the SES
+\( 0 \longrightarrow \bigoplus_{i+j=k} H_i(X;R) \otimes_R H_j(Y;R) \longrightarrow H_k(X \times Y;R) \longrightarrow \bigoplus_{i+j=k-1} \text{Tor}_1^R(H_i(X;R), H_j(Y;R)) \longrightarrow 0 \)
+Which is split thus
+\( H_k(X \times Y;R) = \bigoplus_{i+j=k} H_i(X;R) \otimes_R H_j(Y;R) \oplus \bigoplus_{i+j=k-1} \text{Tor}_1^R(H_i(X;R), H_j(Y;R)) \)
+
+this simplifies immensely over a field \( F \) because then \( \text{Tor}_1^R(H_i(X;R), H_j(Y;R) = 0 \), for all \( i,j \).
+
+This was only mentioned in the lecture, but can sometimes come in handy.
+
+
+
+Define the orientation of a manifold via homology
+
+
+Let \( M \) be a \( n \)-manifold then for any open \( U \) homeomorphic to some open ball in \( \mathbb{R}^n \) it holds
+
+\( H_k(M, M \setminus \{p\}; R) \simeq H_k(U, U \setminus \{q\};R) \simeq \tilde{H}_{k-1}(U \setminus \{p\};R) \simeq H_{k-1}(S^{n-1};R) \)
+\( \simeq R \) if \( k = n \) and \( 0 \) otherwise.
+
+A local orientation at \( p \) of \( M \)  is an element \( o_p \in H_n(M, M \setminus \{p\};R) \), s.t. \( H_n(M, M \{p\};R) = Ro_p \)  a generator of the 
+local homology group. the special case \( R = \mathbb{Z} \) is called a local orientation.
+Two local \( R \)-orientation \( o_p, o_p' \) differ at most by a unit, thus for \( R = \mathbb{Z}, R^\ast = \{\pm 1\} \) implies two local orientations at each point,
+while for \( R = \mathbb{Z}/2\mathbb{Z} \) a unique local \( \mathbb{Z}/2\mathbb{Z} \)-orientation at each point exists.
+
+Introduce the notation for the inclusion of pairs \( (M, M \setminus A) \to (M, M \setminus \{p\}) \), that is for \( a \in H_n(M, M \setminus A;R) \)
+let \( \alpha_p \in H_n(M, M \setminus \{p\}) \) be its image under the descended inclusion.
+
+A family \(\{ \alpha_p \in H_n(M, M \backslash \{p\}; R) \}_{p \in M}\) of elements in the local homology groups is called \(\textbf{coherent}\) 
+if for every \(p \in M\) there is an open neighbourhood \(p \in U \subseteq M\) and a class \(\alpha_U \in H_n(M, M \backslash U; R)\) 
+such that \((\alpha_U)_q = \alpha_q\) for all \(q \in U\).
+
+An \( R \)-orientation of a topological manifold \( M \) (without boundary) is a coherent family \( \{o_p\}_{p \in M} \) of local \( R \)-orientations at each \( p \in M \).
+
+The following diagram for some open \( V \subseteq U \) whose closure is still in \( U \) explains, why a relative homology class \( \alpha_V \in H_n(M, M\setminus V; R)\)
+is uniquely defined for each \( \alpha_p \) s.t. \( ((\alpha_V)_{p} = \alpha_p \).
+
+
+
+State the theorems of orientable compact connected manifolds and the Poincare Duality operators
+
+Let \(M\) be a connected \(n\)-dimensional topological manifold and 
+\(\{\alpha_p \in H_n(M, M \backslash \{p\}; R)\}_{p \in M}\) a coherent family. Then for any compact subset \(K \subseteq M\) it holds:
+
+a) There is a \( \textbf{unique} \), \(\alpha_K \in H_n(M, M \backslash K; R)\) such that \((\alpha_K)_p = \alpha_p\) for every \(p \in K\).
+b) \(H_m(M, M \backslash K; R) = 0\) for all \(m > n\).
+
+The proof is quite involved and consists of showing this for unions of compact sets, then for convex compact sets \( K \), then
+for \( K \) in the charts of \( M \) and last for any compact \( K \), by covering of \( M \) via compact sets in these charts.
+
+As a Corollary we obtain for \( M \) itself compact,
+1. If \(M\) is \(R\)-orientable, then the natural maps \(H_n(M; R) \to H_n(M, M \backslash \{p\}; R) \cong R\) are isomorphisms for all \(p \in M\).
+2. If \(M\) is not \(R\)-orientable, then \(H_n(M; R) \to H_n(M, M \backslash \{p\}; R) \cong R\) has image \(\{r \in R \mid 2r = 0\}\) for every \(p \in M\).
+3. \(H_m(M; R) = 0\) for all \(m > n\).
+
+Again the proof requires a lot of work, but 3 follows directly by the choice \( K = M \) and the second via the universal coefficient theorem
+to sett that \( H_n(M, M \setminus \{p\};R) \simeq H_n(M, M \setminus \{p\};R) \otimes R \), thus an orientation is given by \( o_p \times r \) for some \( R \),
+however if the manifold is not orientable, a coherent manifold must satisfy along a path which would reverse orientation \( o_p \times r = - o_p \times r \), yielding the statement.
+
+We call a generator \( o_M \), s.t. \( H_n(M;R) = Ro_m \) a \( R \)-orientation class or fundamental class of \( M \).
+
+The Poincare-Duality then states
+Let \(M\) be an \(n\)-dimensional compact connected \(R\)-orientable manifold and \(o_M \in H_n(M; R)\) an \(R\)-orientation class. 
+Then the cap-product with \(o_M\) induces isomorphisms 
+\(
+D_M := (o_M \cap -) \colon H^k(M; R) \xrightarrow{\cong} H_{n-k}(M; R)
+\)
+for all \(k \in \mathbb{Z}\), usually called Poincaré-Duality operators.
+
+
+
+Give a list of common homology groups
+
+\[ H_k(\mathbb{P}_n(\mathbb{R})) = 
+\begin{cases} 
+\mathbb{Z} & \text{if } k = 0 \text{ and } k = n \text{ odd} \\
+\mathbb{Z}/2\mathbb{Z} &  k \text{ odd}, 0 < k < n \\
+0 & \text{otherwise}
+\end{cases} \]
+
+\[ H_k(\mathbb{P}_n(\mathbb{C})) = 
+\begin{cases} 
+\mathbb{Z} & \text{if } k \text{ even} \\
+0 & \text{otherwise}
+\end{cases} \]
+
+The sphere can be found with cellular homology or inductively via Mayer-Vietoris:
+
+\[ H_k(S^n) = 
+\begin{cases} 
+\mathbb{Z} & \text{if } k = n \\
+0 & \text{otherwise}
+\end{cases} \]
+
+except if \( n = 0 \) then \( H_0(S^0) = \mathbb{Z} \oplus \mathbb{Z} \) and otherwise \( 0 \)
+
+For a genus \( g \)-surface \( \Sigma_g \), cellular homology is used with the fundamental polygon \( [a_1,b_1]\dots[a_g,b_g] \) to derive the insight
+
+\[ H_k(\Sigma^g) = 
+\begin{cases} 
+\mathbb{Z} & \text{if } k = 0,2 \\
+\mathbb{Z}^{2g} & \text{if } k = 1 \\
+0 & \text{otherwise}
+\end{cases} \]
+
+The \( n \)-torus \( T_n \) (the special case of \( n = 2 \) is also solvable via Mayer-Vietoris)
+has the CW-complex structure with \( 1 \times 0 \)-cell, \( n \times 1 \)-cells, \( \dots \) and \( 1 \times n\)-cell.
+The cell complex is
+\( 0 \to \mathbb{Z}^\binom{n}{n} \to \mathbb{Z}^\binom{n}{n-1} \to \dots \to \mathbb{Z}^\binom{n}{1} \to \mathbb{Z}^\binom{n}{0} \to 0\)
+with all \( \partial_k = 0 \) one can then see the pattern
+\( H_k(T_n) \simeq \mathbb{Z}^\binom{n}{k}\)
+
+For the Mobius strip one can even derive just with simplicial homology
+\[ H_k(M) = 
+\begin{cases} 
+\mathbb{Z} & \text{if } k = 0,1 \\
+0 & \text{otherwise}
+\end{cases} \]
+
+For the Klein Bottle we have
+\[ H_k(K) = 
+\begin{cases} 
+\mathbb{Z} \oplus \mathbb{Z}/2\mathbb{Z} & \text{if } k = 1 \\
+\mathbb{Z} & \text{if } k = 0 \\
+0 & \text{otherwise}
+\end{cases} \]
+
+In general the homology of a nonorientable closed surface \( N_g \) of genus \( g \) can be found via cellular homology
+and is
+
+\[ H_k(N_g) = 
+\begin{cases} 
+\mathbb{Z}^{g-1} \oplus \mathbb{Z}/2\mathbb{Z} & \text{if } k = 1 \\
+\mathbb{Z} & \text{if } k = 0 \\
+0 & \text{otherwise}
+\end{cases} \]
+
+
+
+Derive the homology of (non-)orientable surfaces
+
+Let \(M_g\) be the closed orientable surface of genus \(g\) with its usual CW structure consisting of one 0-cell, \(2g\) 1-cells, 
+and one 2-cell attached by the product of commutators \([a_1, b_1] \dotsm [a_g, b_g]\). The associated cellular chain complex is
+
+\(0 \longrightarrow \mathbb{Z} \xrightarrow{d_2} \mathbb{Z}^{2g} \xrightarrow{d_1} \mathbb{Z} \longrightarrow 0\)
+
+As observed above, \(d_1\) must be 0 since there is only one 0-cell. 
+Also, \(d_2\) is 0 because each \(a_i\) or \(b_i\) appears with its inverse in \([a_1, b_1] \dotsm [a_g, b_g]\), so the maps \(\Delta_{\beta}^\alpha\) are homotopic to constant maps. 
+Since \(d_1\) and \(d_2\) are both zero, the homology groups of \(M_g\) are the same as the cellular chain groups, namely, 
+\(\mathbb{Z}\) in dimensions 0 and 2, and \(\mathbb{Z}^{2g}\) in dimension 1.
+
+
+The closed nonorientable surface \(N_g\) of genus \(g\) has a cell structure
+with one 0-cell, \(g\) 1-cells, and one 2-cell attached by the word \(a_1^2 a_2^2 \dotsm a_g^2\). Again
+\(d_1 = 0\), and \(d_2 : \mathbb{Z} \to \mathbb{Z}^g\) is specified by the equation \(d_2(1) = (2, \dotsc , 2)\) since each \(a_i\)
+appears in the attaching word of the 2-cell with total exponent 2, which means that
+each \(\Delta_{\beta}^\alpha\) is homotopic to the map \(z \mapsto z^2\), of degree 2. Since \(d_2(1) = (2, \dotsc , 2)\), we
+have \(d_2\) injective and hence \(H_2(N_g) = 0\). If we change the basis for \(\mathbb{Z}^g\) by replacing
+the last standard basis element \((0, \dotsc, 0, 1)\) by \((1, \dotsc , 1)\), we see that \(H_1(N_g) \cong 
+\mathbb{Z}^{g-1} \oplus \mathbb{Z}_2\).
+
+
+Derive the homology of the projective space, both real and complex. 
+
+The cell complex of the real projective space  is one \( k \)-cell for all \( k \leq n \)
+The attaching maps are the 2-fold covering maps \( \phi_k : S^{k-1} \to \mathbb{P}_{k-1}(\mathbb{R}) \),
+to find the degree of the map
+
+\( \mathcal{x}_k : S^{k-1} \xrightarrow{\phi_k} \mathbb{P}_{k-1}(\mathbb{R}) \xrightarrow{q_k} \mathbb{P}_{k-1}(\mathbb{R})/(\mathbb{P}_{k-1}(\mathbb{R}) \setminus e_{k-2}) \simeq S^{k-1}\),
+where we can simplify \( \mathbb{P}_{k-1}(\mathbb{R})/(\mathbb{P}_{k-1}(\mathbb{R}) \setminus e_{k-2}) \simeq \mathbb{P}_{k-1}(\mathbb{R})/(\mathbb{P}_{k-2}(\mathbb{R}) \).
+
+This can be done, by noticing that \( \phi_{k-1}^{-1}(\mathbb{P}_{k-2}(\mathbb{R}) \simeq S^{k-2} \) and removing this from \( S^{k-1} \) leaves two connected components,
+w.l.o.g. on one component \( \mathcal{x}_k \) acts like a homeomorphism while on the other antipodal, thus  \( \text{deg}(\mathcal{x}_k) = 1 + (-1)^k \) which is \( 2 \) if 
+\( k \) is even and otherwise \( 0 \). Inserting this into
+
+\(0 \longrightarrow \mathbb{Z} \xrightarrow{\partial_n} \dots \xrightarrow{2} \mathbb{Z} \xrightarrow{0} \mathbb{Z} \longrightarrow \dots \)
+gives everything necessary to finish the proof.
+
+The complex projective space can be done without cellular boundary formula 
+To this end note that \( \mathbb{P}_1(\mathbb{C}) \simeq S^2, \mathbb{P}_0(\mathbb{C}) \simeq \{p\} \) which shall serve as a basis for induction,
+since \( \mathbb{P}_{n+1}(\mathbb{C}) \) is obtained from \( \mathbb{P}_{n}(\mathbb{C}) \) by attaching a \( 2(n+1) \)-cell, we can then use that
+for cell complexes \( H_p(X^{(n)}) \simeq H_p(X^{(p)}) \) for \( n \geq p \), 
+(note that this not completely correct since \( p \) goes in \( 2(n+1) \) intervals, but makes it easier to understand what theorem is meant).
+
+By induction hypothesis we can then assert that the left side is only nonzero for even \( p \). For \( p = n, n+1 \) (actually \( p = 2n + 2, 2n + 1 \)
+we have the exact sequence
+
+\( 0 \longrightarrow H_{p+1}(\mathbb{P}_n(\mathbb{C})) \longrightarrow H_{p+1}(\mathbb{P}_{n+1}(\mathbb{C})) \longrightarrow \mathbb{Z}\)
+\( \longrightarrow H_{p}(\mathbb{P}_n(\mathbb{C})) \longrightarrow H_{p}(\mathbb{P}_{n+1}(\mathbb{C})) \longrightarrow 0\)
+
+Since \(H_{p+1}(\mathbb{P}_n(\mathbb{C})) = 0 =  H_{p+1}(\mathbb{P}_n(\mathbb{C})) \) by induction it follows that
+\( H_{p+1}(\mathbb{P}_{n+1}(\mathbb{C})) \simeq \mathbb{Z} \) and \( H_{p}(\mathbb{P}_{n+1}(\mathbb{C})) = 0 \) as desired.
+
+
+

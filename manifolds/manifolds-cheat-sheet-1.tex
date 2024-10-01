@@ -213,6 +213,8 @@ Thus the topology of \( S \) is not necessarily the subspace topology of \( M \)
 Thus two different looking \( \iota \) may define conceptually the same manifold (such as the Lemniscate given as an example in the lecture), but do not so
 topologically speaking.
 
+The lemniscate is also a good counter example of an immersed but not embedded manifold, namely its given by the map \(\beta: (-\pi, \pi) \to \mathbb{R}^2, \beta(t) = (\sin(2t), \sin(t))\), whose domain is non compact but the image is, thus it can't be homeomorphism onto its image.
+
 Naturally immersed submanifolds are easier to obtain as embeddings, nevertheless the two are related.
 E.g.
 Let \( \iota(\bar{S}) = S \subseteq M \) be an immersed submanifold, then for each \( p \in \bar{S} \) exists some open neighborhood \( U \)
@@ -232,6 +234,13 @@ The most powerful related statement is the Whitney embedding theorem,
 Any smooth \( m \)-manifold \( M \) can be immersed into \( \mathbb{R}^{2m-1} \)
 Any smooth \( m \)-manifold \( M \) can be embedded into \( \mathbb{R}^{2m} \)
 this is in fact the best lower bound without further restrictions.
+
+The Ansatz of the Whitney embedding theorem (without achieving best bound) for the compact case
+is the a finite cover, say of size \( n \), via charts \( (U_i, \psi_i) \) of the \( m \)-manifold (exists due to compactness)
+and a partition of unity \( f_i \) subordinate to it, to define the map \( F : M \to \mathbb{R}^{mn + n} \)
+\( F(p) = (f_1(p)\psi_1, \dots, f_n(p)\psi_n, f_1(p), \dots, f_n(p))\).
+The general version requires more preliminaries and an ingenious argument with Sard's theorem.
+
 
 There are however some 
 
