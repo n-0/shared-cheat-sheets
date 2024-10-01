@@ -121,3 +121,95 @@ and thus factors through a map \(\alpha = \widetilde{\psi \circ d} \colon B_{n+1
 It holds then \(\delta^\vee([\varphi]) = [\alpha]\).
 
 (INSERT DIAGRAM 2 (9.3) from page 77 Theorem 9.1.13)
+
+
+Define singular cohomology and compute it for a point
+
+Singular cohomology is constructed from the singular cochains \( C^\bullet(X;G) = \text{Hom}(C_n(X);G) \) and the codifferentials
+\( \delta^n : C^n(X;G) \to C^{n+1}(X;G) \) are given by \( \delta^n = \partial_n^\vee \) in particular
+\( \delta^n(\phi)(\sigma) = \phi(\partial \sigma) = \sum_{i=0}^{n+1} (-1)^i\varphi(\sigma_{|\langle, e_0, \dots, \hat{e}_i, \dots, e_{n=1} \rangle}\).
+
+Let \( X = \{p\} \) be a point. From Example 1.4.7 the singular complex \( C_{\bullet}(\{p\}) \) is isomorphic to
+\(\cdots \xrightarrow{0} \mathbb{Z} \xrightarrow{\text{id}} \mathbb{Z} \xrightarrow{0} \mathbb{Z} \xrightarrow{\text{id}} \mathbb{Z} \xrightarrow{0} \mathbb{Z} \xrightarrow{0} 0, \)
+where the last \(\mathbb{Z}\) is in degree \( 0 \). The singular cochain complex with coefficients in \(G\) is then isomorphic to
+
+\(0 \longrightarrow \operatorname{Hom}(\mathbb{Z}, G) \xrightarrow{0} \operatorname{Hom}(\mathbb{Z}, G) \xrightarrow{\text{id}} \operatorname{Hom}(\mathbb{Z}, G) \xrightarrow{0} \operatorname{Hom}(\mathbb{Z}, G) \longrightarrow \dotsb .\).
+
+Since the identities are isomorphisms, the only non-trivial cohomology group occurs at the first $\operatorname{Hom}(\mathbb{Z}, G)$, where both incoming and leaving codifferentials are 0. Hence
+
+\[H^n(\{p\}; G) \cong 
+\begin{cases}
+\operatorname{Hom}(\mathbb{Z}, G) \cong G & \text{if } n = 0, \\
+0 & \text{otherwise.}
+\end{cases}\]
+
+As for the reduced cohomology groups, the augmented singular complex is isomorphic to
+
+\(\cdots \xrightarrow{0} \mathbb{Z} \xrightarrow{\text{id}} \mathbb{Z} \xrightarrow{0} \mathbb{Z} \xrightarrow{\text{id}} \mathbb{Z} \xrightarrow{0} \mathbb{Z} \xrightarrow{\epsilon = \text{id}} \mathbb{Z} \longrightarrow 0,\)
+
+where the last \(\mathbb{Z}\) is now in degree -1. The augmented singular cochain complex with coefficients in \(G\) is then isomorphic to
+
+\[0 \longrightarrow \operatorname{Hom}(\mathbb{Z}, G) \xrightarrow{0} \operatorname{Hom}(\mathbb{Z}, G) \xrightarrow{\text{id}} \operatorname{Hom}(\mathbb{Z}, G) \xrightarrow{0} \operatorname{Hom}(\mathbb{Z}, G) \longrightarrow \dotsb \]
+
+which is exact, hence \(\tilde{H}^k(\{p\}; G) = 0\) for all \(k \in \mathbb{Z}\).
+
+State the Eilenberg-Steenrod Axioms for cohomology theories
+
+A cohomology theory is a sequence of contravariant functors \(H^n \colon \textbf{Top}^{(2)} \to \textbf{AbGrp}\) 
+with the following properties (in order to lighten notation, we write \(H^n(X, \emptyset) =: H^n(X)\)): 
+
+1.  Homotopic invariance: If \(f, g \colon (X, A) \to (Y, B)\) are homotopic continuous maps of pairs, then \(H^n(f) = H^n(g) \colon H^n(Y, B) \to H^n(X, A)\) 
+    for every \(n \in \mathbb{Z}\).
+
+2.  Long exact sequence: The inclusions 
+    \((A, \emptyset) \hookrightarrow (X, \emptyset) \hookrightarrow (X, A)\)
+    induce a long exact sequence
+    \(\cdots \longrightarrow H^n(X, A) \longrightarrow H^n(X) \longrightarrow H^n(A) \xrightarrow{\delta^n} H^{n+1}(X, A) \longrightarrow \cdots, \)
+    where the connecting homomorphisms \(\delta^n\) are also functorial, in the sense that for any continuous map of pairs \(f \colon (X, A) \to (Y, B)\) 
+    the following diagram is commutative:
+\[\begin{array}{ccc}
+H^n(B) & \longrightarrow & H^{n+1}(Y, B) \\
+\downarrow H^n(f) & & \downarrow H^{n+1}(f) \\
+H^n(A) & \xrightarrow{\delta^n} & H^{n+1}(X, A)
+\end{array}\]
+
+3.  Excision: If \(Z \subseteq A \subseteq X\) satisfy \(\overline{Z} \subseteq \text{int} A\) then the inclusion \((X \backslash Z, A \backslash Z) \hookrightarrow (X, A)\) 
+    induces isomorphisms \(H^n(X, A) \cong H^n(X \backslash Z, A \backslash Z)\) for every \(n \in \mathbb{Z}\).
+4.  Sum: If \(X = \bigsqcup_{i \in I} X_i\) is a disjoint union (with the disjoint union topology), then the 
+    inclusions \(X_i \hookrightarrow X\) induce \(\prod_{i \in I} H^n(X_i) \cong H^n(X)\) for every \(n \in \mathbb{Z}\). 
+    As for homology theories, this follows from the previous axioms if \(I\) is finite.
+
+
+
+State some properties of the \( \text{Hom} \) functor
+
+1. \( \text{Hom}(\mathbb{Z}, G) \simeq G\)
+2. \( \text{Hom}(\mathbb{Z}/m\mathbb{Z}, G) \simeq G \simeq G[m] = \{x \in G: mx = 0\} \)
+3. \( \text{Hom}(\mathbb{Z}/m\mathbb{Z}, \mathbb{Z}/n\mathbb{Z}) \simeq \mathbb{Z}/\text{gcd}(n,m)\mathbb{Z} \)
+
+The first isomorphism is given by \( f : \text{Hom}(\mathbb{Z}, G) \to G, f(\phi) = \phi(1) \)
+
+For the second apply \(\operatorname{Hom}(-, G)\) to the exact sequence 
+
+\(
+0 \longrightarrow \mathbb{Z} \xrightarrow{m} \mathbb{Z} \xrightarrow{p} \mathbb{Z}/m\mathbb{Z} \longrightarrow 0,
+\)
+
+where the first map is multiplication by \( m \), and the second map \( p \) is the natural projection. There is an exact sequence
+\(
+0 \longrightarrow \operatorname{Hom}(\mathbb{Z}/m\mathbb{Z}, G) \xrightarrow{p^*} \operatorname{Hom}(\mathbb{Z}, G) \xrightarrow{m^*} \operatorname{Hom}(\mathbb{Z}, G).
+\)
+Hence \(\operatorname{Hom}(\mathbb{Z}/m\mathbb{Z}, G) \cong \operatorname{im} p^* = \ker m^*\). But \(m^\ast\) is also multiplication by 
+\( m \), and so the result follows from the commutative diagram.
+3. Consequence of \( 2 \) and \( \mathbb{Z}/m\mathbb{Z}[n] \simeq \mathbb{Z}/\text{gcd}(n,m)\mathbb{Z} \) (which is not trivial).
+
+Further
+\( \text{Hom}(\bigoplus_i M_i, G) \simeq \Pi_i \text{Hom}(M_i, G) \)
+
+It is left exact, that is if 
+\( 0 \to A \to B \to C \to 0 \) is an SES of abelian groups then 
+\( 0 → \text{Hom}(C, G) → \text{Hom}(B, G) → \text{Hom}(A, G) \)
+is exact.  (Note: the last map may not be surjective, so just adding \( 0 \) in the last step
+wouldn't be an exact sequence)
+
+The interactions between \( \text{Hom} \) and \( \otimes \) deserve their own flash card.
