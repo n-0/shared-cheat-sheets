@@ -302,6 +302,28 @@ boundary as topological n-manifold. Then the homology class of identity \(\text{
 \([\text{id}_{\Delta_n}] \in H_n(\Delta^n , \partial \Delta^n )\) of the n-th relative homology group.
 More generally, any homeomorphism \(\sigma : \Delta^n \to D\) 
 (which must map the boundary \(\partial \Delta^n\) homeomorphically to \(\partial D\)) gives generators \([\sigma] \in H_n(D, \partial D)\), and 
-\([\partial \sigma] \in \tilde{H}_{n−1}(\partialD)\)
+\([\partial \sigma] \in \tilde{H}_{n−1}(\partial D)\)
 
-Note that this in turn implies a natural generator of the \(H_n(D^n_\alpha, \partial D^n_\alpha)\) since \(D^n \simeq \Delta_n\).
+Note that this in turn implies a natural generator of the \(H_n(D^n_\alpha, \partial D^n_\alpha)\) since \(D^n \simeq \Delta_n\)
+and even more since, each simplex is a CW complex, where the \( n \)-cells are the interiors of the \( n \)-simplices and the \( \Phi_\alpha \)
+just the inclusions into the overall simplex \( |\mathcal{S}| \). 
+
+So we can define a canonical isomorphism 
+\( \Psi_n : C_n(\mathcal{S}) = \sum_{\Delta \in \mathcal{S}_n} \mathbb{Z}\Delta \to H_n(X^n, X^{n-1}) \).
+To show that cellular homology coincides with simplicial homology, it then suffices to show
+\( \Phi_{n-1}(\partial_n(\Delta)) = d_n(\Phi_n(\Delta)) \). 
+Since \( d_n = \pi_{n-1} \circ \partial_n \), where \( \partial_n \) 
+is the singular homology differential and \( \pi_{n-1} : H_{n-1}(X^{n-1}) \to H_{n-1}(X^{n-1}, X^{n-2}) \) the usual quotient,
+evaluating
+\[
+d_n (\Psi_n (\Delta)) = d_n ([p_0, \ldots , p_n]) 
+= \left[ \sum_{i=0}^n (-1)^i [p_0, \ldots, \hat{p_i}, \ldots , p_n] \right]
+\]
+\[
+= \sum_{i=0}^n (-1)^i \Psi_{n-1} ( \langle p_0, \ldots, \hat{p_i}, \ldots , p_n \rangle )
+= \Psi_{n-1} (\partial_n \Delta)
+\]
+yields the result.
+
+Obverse that this also shows the equivalence between simplicial and singular homology, via the common bridge of cellular homology.
+

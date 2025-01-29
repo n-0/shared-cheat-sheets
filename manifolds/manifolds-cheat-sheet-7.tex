@@ -38,13 +38,13 @@ subbundle of \( TM \).
 Define (integrable,involutivity) distributions and 
 prove the easier direction of Frobenius theorem
 
-A distribution \( D \) is a subbundle of rank \( k \) of the tangent bundle \( TN \).
+A distribution \( E \) is a subbundle of rank \( k \) of the tangent bundle \( TN \).
 
-A distribution is involutive if \( \Gamma(D) \) is a Lie-subalgebra of \( TN \),
-thus for all smooth sections \( V,W \in \Gamma(D) \implies [V, W] \in \Gamma(D)\).
+A distribution is involutive if \( \Gamma(E) \) is a Lie-subalgebra of \( TN \),
+thus for all smooth sections \( V,W \in \Gamma(E) \implies [V, W] \in \Gamma(D)\).
 
 A distribution is integrable, if for each \( q \in N \) there is a smooth immersion 
-\( F : M \to N\) with \( q \in F(N) \) and \( DF|_p(T_pM) = D_{F(p)}, \forall p \in M \).
+\( F : M \to N\) with \( q \in F(M) \) and \( dF|_p(T_pM) = E_{F(p)}, \forall p \in M \).
 Such submanifolds \( M \) are referred to as integral manifolds.
 
 We have the theorem
@@ -57,14 +57,14 @@ so that \(F|_U: U \to F(U)\) is even an embedding.
 Because for every \(p \in U\) the differential \(DF|_p\) maps the tangent space \(T_pM\) isomorphically onto \(E_{F(p)}\), 
 there exist smooth vector fields \(\tilde{V}, \tilde{W} \in \mathfrak{X}(U)\), so that on \(U\) the equations
 
-\(DF(\tilde{V}) = V \circ F\) 
-\(DF(\tilde{W}) = W \circ F\)
+\(dF(\tilde{V}) = V \circ F\) 
+\(dF(\tilde{W}) = W \circ F\)
 
 are satisfied. Because thus \(\tilde{V}, V\) or \(\tilde{W}, W\) are each \(F\)-related, this also holds for their Lie bracket, that is,
 
-\(DF([\tilde{V}, \tilde{W}]) = [V, W] \circ F.\)
+\(dF([\tilde{V}, \tilde{W}]) = [V, W] \circ F.\)
 
-But this means, because of \(DF(T_pM) = E_{F(p)}\), that \([V, W]_{F(U)} \subset TF(E|_{F(U)})\). 
+But this means, because of \(dF(T_pM) = E_{F(p)}\), that \([V, W]_{F(U)} \subset TF(E|_{F(U)})\). 
 Because this is possible for every \(q \in N\), it finally follows that \([V, W] \in \Gamma(E)\). This was to be shown.
 
 

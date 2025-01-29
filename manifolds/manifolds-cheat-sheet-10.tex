@@ -120,3 +120,144 @@ that for cont. diff. \( f : U \to \mathbb{R}^{m} \)
 The implicit function theorem and the inverse function theorem are completely equivalent to each other.
 
 
+State the theorem of commuting flows
+
+Let \( V, W \in \mathfrak{X}(M) \) be complete.
+Then tfoa equivalent
+1. \( [V, W] = 0 \)
+2. The flows \( \Phi^V_s, \Phi^W_t \) are commuting, meaning \( \Phi^V_s \circ \Phi^W_t = \Phi^W_t \circ \Phi^V_s \).
+
+Proof:
+
+Define \( \delta_s(t) = F(s, t) = \Phi^V_s \circ \Phi^W_t \)
+then \( V, W \) to commute is equivalent to \( \delta_s \) being an integral curve of \( W \)
+for all \( s \in \mathbb{R} \), (since this implies that \( \Phi^V_s \) does not change the direction/tangent vector of the flow)
+that is
+\( \dot{\delta}(t)_s = W(\delta_s(t)) \).
+Define
+\( X(s) = (d\Phi^V_s)^{-1}\mid_{\Phi^W_t}(\dot{\delta}(t)_s - W(\delta_s(t)) \)
+then \( X(s) = 0 \iff \dot{\delta}(t)_s = W(\delta_s(t)) \).
+Observe that \( \delta_0(t) = \Phi^W_t \), so that
+
+\( \dot{\delta}(t) = \frac{d}{dt} \Phi^V_s \circ \Phi^W_t = d\Phi^V_s(W(\Phi^W_t)) = d\Phi^V_s((\dot{\delta}_0(t))\)
+so
+\( (d\Phi^V_s)^{-1}\dot{\delta}(t) = \dot{\delta}_0(t)\).
+Rewriting our original expression
+\[
+\begin{align}
+X(s) = (D\Phi^V_{\Phi^V(p)})^{-1} (\dot{\delta}(t) - W(\delta(t))) \\
+= \dot{\delta}(t) (D\Phi^V_{\Phi^V(p)})^{-1} (W(\delta(t)))^{-1} \\
+= \dot{\delta}(t) (D\Phi^V_{\Phi^V(p)})^{-1} (W \circ \Phi^V (p))) \\
+= \dot{\delta}(t) ((\Phi^V)^* W) (\Phi^V (p)) \\
+= ((W - (\Phi^V_s)^* W) (\delta_0(t)))
+\end{align}
+\]
+
+Because \(\Phi^V_{s + s_0} = \Phi^V_{s_0} \circ \Phi^V_s$ is $(\Phi^V_{s + s_0})^* W = (\Phi^V_{s_0})^* ((\Phi^V_s)^* W)\) and therefore
+
+\[
+\begin{align}
+X'(s_0) = \frac{d}{ds} \bigg|_{s=0} X(s + s_0) 
+= \frac{d}{ds} \bigg|_{s=0} ((W - (\Phi^V_{s + s_0})^* W) (\delta_0(t))) \\
+= \frac{d}{ds} \bigg|_{s=0} ((\Phi^V_{s_0})^* ((\Phi^V_s)^* W) (\delta_0(t))) \\
+= ((\Phi^V_{s_0})^*( \frac{d}{ds} \bigg|_{s=0} (\Phi^V_s)^* W) (\delta_0(t))) \\
+= ((\Phi^V_{s_0})^*(L_V W)) (\delta_0 (t)) \\
+= - ((\Phi^V_{s_0})^*[V, W]) (\delta_0(t)).
+\end{align}
+\]
+
+Since the differential of a diffeomorphism is an isomorphism, it holds
+\[
+(\Phi^V_{s_0})^* \circ L_V W = L_W \circ (\Phi^V_{s_0})^* \iff X = 0 \iff [V, W] = 0.
+\]
+
+Use a partition of unity to ensure existence of bump functions and extend a function defined on a closed subset.
+
+A bump function for (closed) \( A \) supported in (open) \( U \) is some \( \psi : M \to \mathbb{R} \), s.t. \( \psi|_A = 1 \)
+and \( \text{supp }\psi \subseteq U \) and \(0 \leq \psi \leq 1 \).
+The theorem is then that such a \( \psi \) exists for some closed \( A \subseteq M \) of a smooth manifold.
+Proof.
+Let \( U_0 = U, U_1 = M \setminus A \)and let \( \{\psi_0, \psi_1\} \) be a smooth partition of
+unity subordinate to the open cover \( \{U_0, U_1\} \). Because \( \psi_1 = 0 \) on \( A \), thus \( \psi_0 = \sum_i \psi_i = 1 \),
+\( \psi_0 \) has the required properties.
+
+
+
+Smooth in the extension lemma actually requires something more than usual, namely
+that for each point \( p \in A \), there is some open \( W_p \subseteq M \)
+and \( F : W_p \to \mathbb{R}^k \) s.t. \( F|_A = f \).
+
+Extension Lemma for Smooth Functions:
+Suppose \(M\) is a smooth manifold with or without boundary, \(A \subseteq M\) is a closed subset, and \(f : A \rightarrow \mathbb{R}^k\) is a smooth function. 
+For any open subset \(U\) containing \(A\), there exists a smooth function \(\tilde{f} : M \rightarrow \mathbb{R}^k\) such that \(\tilde{f}|_A = f\) and \(\text{supp} \, \tilde{f} \subseteq U\).
+
+Proof: 
+For each \(p \in A\), choose a neighborhood \(W_p\) of \(p\) and a smooth function \(\tilde{f}_p : W_p \rightarrow \mathbb{R}^k\) that agrees with \(f\) on \(W_p \cap A\). 
+Replacing \(W_p\) by \(W_p \cap U\), we may assume that \(W_p \subseteq U\). The family of sets \(\{W_p : p \in A\} \cup \{M \backslash A\}\) is an open cover of \(M\). 
+Let \(\{\psi_p : p \in A\} \cup \{\psi_0\}\) be a smooth partition of unity subordinate to this cover, 
+with \(\text{supp} \, \psi_p \subseteq W_p\) and \(\text{supp} \, \psi_0 \subseteq M \backslash A\).
+
+For each \(p \in A\), the product \(\psi_p \tilde{f}_p\) is smooth on \(W_p\) and has a smooth extension to all of \(M\) if we interpret it to be zero on \(M \backslash \text{supp} \, \psi_p\). 
+(The extended function is smooth because the two definitions agree on the open subset \(W_p \cap \text{supp} \, \psi_p\) where they overlap.) 
+Thus we can define \(\tilde{f} : M \rightarrow \mathbb{R}^k\) by
+
+\(\tilde{f}(x) = \sum_{p \in A} \psi_p(x) \tilde{f}_p(x).\)
+
+Because the collection of supports \(\{\text{supp} \, \psi_p\}\) is locally finite, this sum actually has only a finite number of nonzero terms in a neighborhood of any point of \(M\), 
+and therefore defines a smooth function. If \(x \in A\), then \(\psi_0(x) = 0\) and \(\tilde{f}_p(x) = f(x)\) for each \(p\) such that \(\psi_p(x) \neq 0\), so
+
+\(\tilde{f}(x) = \sum_{p \in A} \psi_p(x) f(x) = \left( \psi_0(x) + \sum_{p \in A} \psi_p(x) \right) f(x) = f(x),\)
+
+so \(\tilde{f}\) is indeed an extension of \(f\). It follows from Lemma 1.13(b) that 
+
+\(\text{supp} \, \tilde{f} = \bigcup_{p \in A} \text{supp} \, (\psi_p \tilde{f}_p) = \bigcup_{p \in A} (\text{supp} \, \psi_p \cap \text{supp} \, \tilde{f}_p) \subseteq U.\)
+
+
+
+Manifolds with boundaries have some tooling unique to them,
+provide some examples.
+
+Per definition a manifold \( M \) with boundary is the same as a manifold except that the charts
+\( \phi_i : U_i \to \mathbb{H}^m \) instead of \( \mathbb{R}^m \). The boundary \( \partial M \)
+are those points for which \( \phi_i(p) \in \partial \mathbb{H}^m \). In particular this means
+that in local coordinates such \( p \) has the shape \( \phi_i(p) = (x_1, x_2, \dots, x_{m-1}, 0) \).
+
+Let \( S \) be embedded in \( M \), then the tangent space satisfies
+
+\( T_p S = \{v \in T_pM: vf = 0, \text{ whenever } f \in C^\infty(M) \text{ and } f|_S = 0\}\)
+(this is proven with the help of the local slice condition for \( S \)).
+
+Since boundaries \( \partial M \) are embedded \((m-1)\)-submanifolds, 
+this completely describes their tangent space.
+
+If \( p \in \partial M \), a vector \( v \in T_p M \setminus T_p S \) is called inward pointing
+if there is some smooth \( \gamma : [0, \varepsilon) \to M \), with \( \gamma(0) = p,\ \gamma'(0) = v \)
+and is outward pointing if the domain is \( (-\varepsilon, 0] \). 
+A useful proposition states that it suffices to check if in local coordinates of \( v \), 
+\( x_m > 0\) if \( v \) is inward pointing,
+\( x_m < 0\) if \( v \) is outward pointing,
+\( x_m = 0\) if \( v \in T_p S\).
+
+Most generally one can find for any hypersurface (such as boundaries) normals (outward pointing tangent vectors),
+with the help of a (boundary) defining function, that is a  \( F : M \to [0, \infty) \) with \( F^{-1}(0) = \partial M \) (or the hypersurface in question),
+and \( dF|_{\partial M} \neq 0\), then the negative gradient \( -\nabla F \) is nowhere tangent to \( \partial M \), so we set \( n = -\frac{1}{\|\nabla F\|}\nabla F \).
+(usual the norm here refers to a Riemmanian metric).
+
+Such defining functions always exist, via the following insight: Take any cover via smooth charts \( (U_i, \phi_i) \) of \( M \)
+and define \( f_i : U_i \to [0, \infty) \) as \( f_i = 1 \) if \( U_i \) is purely in the interior of \( M \) and otherwise \( f(x_1, \dots, x_m) = x_m \).
+Take a partition of unity \( \psi_i \) subordinate to \( U_i \) and set \( F = \sum_i \psi_i f_i \).
+Let \( v_p \) be inward pointing then \( f(p) = 0 \) since we are on the boundary and
+\( dF(v) = \sum_i \psi_i df_i(v) + f_i(v)d\psi_i(v) = \sum_i \psi_i df_i(v) = \sum_i \psi_i dx_m(v) \)
+and since \( dx_m(v) > 0 \) we are done.
+
+An example for such \( F \), would be \( F = 1 - |x|^2 \) for the closed unit ball.
+
+Recall from the definition of the hypersurface orientation induced by an orientation form \( \omega \) on \( M \)
+and on the boundary vanishing section \( \sigma \in \Gamma(TM) \), local frame \( E_1, \dots, E_{m-1} \)
+\( \omega(\sigma, E_1, \dots, E_{m-1}) \) is an orientation for \( M \) if and only if \( \omega(E_1, \dots, E_{m-1}) \) is an orientation for \( \partial M \).
+A natural choice would be \( \sigma = \frac{d}{dx^m} \), and \( E_i = \frac{d}{dx^i} \), thus we would assert \( [\frac{d}{dx^1}, \dots, \frac{d}{dx^{m-1}}] \)
+as a positive orientation for \( \partial M \). If inserting this as \(\sigma\) into \( \omega \) and reordering coordinates this would give 
+\( [\frac{d}{dx^m},\frac{d}{dx^1}, \dots, \frac{d}{dx^{m-1}}] = (-1)^m [\frac{d}{dx^1}, \dots, \frac{d}{dx^{m-1}}, \frac{d}{dx^m}]\) as the orientation on \( M \),
+since we want it to be the other way around (\( M \)'s orientation should define \( \partial M \)), we see that for even \( m \), \( \partial M \) has the same sign
+as \( M \) and for odd an opposite one.
+
