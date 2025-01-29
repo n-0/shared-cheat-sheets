@@ -1,0 +1,168 @@
+Define the necessary structures/spaces for Dirichlets unit theorem
+
+
+Let \( j : K \to \mathbb{K}_\mathbb{R} \) be the usual embedding into the Minkowski space.
+Let \( S = \{z \in K^{\times}_{\mathbb{R}}|N(z) = \pm 1 \} \).
+Let \( l : K^{\times}_{\mathbb{R}} \to \mathbb{R}^{r + s} \), where \( r,s \) are the number of real 
+and complex embeddings (note this time we only consider half the complex)
+and \( l(z_\tau) \mapsto (\log|z_{\rho_1}|, \dots, \log|z_{\rho_r}|, \log|z_{\sigma_1}|^2, \dots, \log|z_{\sigma_s}|^2\)
+note that \(|z_{\sigma_s}|^2 = z_{\sigma_i}z_{\bar{\sigma}_i}\) (which explains why just \( s \)).
+Let \( H \coloneqq \text{ker}(Tr) = \{ x \in \mathbb{R}^{r+s}| \text{Tr}(x) = 0\} \),
+where \( \text{Tr} \) is defined as \( \text{Tr}(x) = \sum_{\tau} x_\tau \) in \(\mathbb{R}^{r + s}\)
+
+We can then create the following commutative diagram.
+
+The composite map \( \lambda = l \circ j : \mathcal{O}_K \to H \)
+transports the group of units into the vector space \( H \), let \( \Gamma \coloneqq \lambda(\mathcal{O}^{\times}_K) \)
+then it can be shown that \( \Gamma \) is a complete lattice in \( H \).
+
+INSERT DIAGRAM FROM PAGE 40
+
+
+Prove the SES of \( \mathcal{O}_K, \mu(\mathcal{O}_K), \Gamma \)
+
+(i) We have the following short exact sequence:
+\( 1 \longrightarrow \mu(K) \longrightarrow \mathcal{O}^{\times}_K \xrightarrow{\lambda} \Gamma \to 0 \)
+(ii) \(\mu(K)\) is a finite abelian group.
+
+Proof.  Clearly \(\mu(K)\) is a subgroup of \(\mathcal{O}_K^{\times}\) \(\zeta \in \mu(K)\) is a root of \(X^n - 1\) for some \(n\)
+and \(\Gamma\) is \(\lambda(\mathcal{O}_K^\times\) by definition.
+
+Remains: \(\mu(K) = \ker(\lambda)\)
+
+\("\subset"\): \ Let \(\zeta \in \mu(K)\) and \(\tau \in G\), then
+
+\( \vert \gamma(\zeta) \vert^n = \vert \gamma(\zeta^n) \vert = 1 \implies \vert \gamma(\zeta) \vert = 1 \implies \log \vert \gamma(\zeta) \vert = 0 \)
+
+This shows that \(\lambda(\zeta) = l(j(\zeta)) = l((\tau(\zeta))_\tau) = \left( \log \vert \tau(\zeta) \vert \right)_\tau = 0 \in H\)
+
+\("\supset"\): Let \(\alpha \in \mathcal{O}_K^\tau in \mu(K)\), hence \(\log \vert r(\alpha) \vert = 0\), \(\forall \tau \in G\), so 
+\(\vert \tau(\alpha) \vert = 1\), \( \forall \tau \in G\).
+This shows that
+
+\(j(\alpha) \in \{ z \in K_\mathbb{R} \mid \vert z_\gamma \vert \le 1 \ \forall \ \gamma \in G \} = M\)
+
+a bounded subset of \(K_\mathbb{R}\). As \(j(a) \in j(\mathcal{O}_K)\) is a lattice in \(K_\mathbb{R}\), we have
+
+\(j(\ker(\lambda)) \subset j(\mathcal{O}_K) \cap M\)
+where \( M \) is bounded, and \(j(\mathcal{O}_K)\) is a lattice,
+so \(\text{ker}(\lambda)\) is a finite subgroup of \(K^\times\). 
+This means that each element has finite order, thus they are roots of unity. 
+
+
+Prove that \( \mathcal{O}_K^{\times} \) forms under \( \lambda \) a complete lattice \( H \).
+
+An important implication of this statement is that \( \Gamma \simeq \mathbb{Z}^{r+s-1} \)
+
+Claim: \(\Gamma\) is discrete, hence a lattice in H (by Thm. 4.3).
+Concretely, for each \(c > 0\), the set
+\[
+N = \left\{ (x_\tau)_\tau \in \mathbb{R}^{r+s} \ \middle| \ 
+|x_\rho| < c \ \forall \rho \ \text{real} \\ 
+|x_\sigma| < 2c \ \forall \sigma \ \text{complex} \right\}
+\]
+contains only finitely many elements of \(\Gamma\).
+
+Proof: The preimage of \(N\) under \(\ell\) is
+
+\(\ell^{-1}(N) = \{ (z_\tau) \in K_\mathbb{R} \subset \mathbb{C}^n \mid e^{-c} < |z_\tau| < e^c \}\),
+
+this is clearly a bounded set and therefore contains only finitely many elements of the lattice \(j(\mathcal{O}_K)\), hence only finitely many elements of \(j(\mathcal{O}_K^{\times})\).
+
+Claim: The lattice \(\Gamma \subset H\) is complete.
+
+By Lemma 4.4 it is enough to find a bounded set \(M \subset H\) so that \(H = \bigcup_{\tau \in \Gamma} \tau + H\).
+
+Since \(\ell : S \to H\) is surjective, it is enough to show: There is a bounded set \(T \subset S\)
+such that 
+\(S = \bigcup_{\epsilon \in \mathcal{O}_K^{\times}} T \cdot j(\epsilon)\) "multiplicative translation"
+Choose \(c_\tau \in \mathbb{R}_{>0}\) with \(c_\sigma = c_{\overline{\sigma}} \ \forall (\sigma, \overline{\sigma})\) complex, such that 
+\[C := \prod_{\tau \in G} c_\tau > \left( \frac{2}{\pi} \right)^s \sqrt{\det d}.\]
+
+Let \(X := \{ (z_\tau) \in K_\mathbb{R} \mid |z_\tau| < c_\tau \}\). For \(y = (y_\tau)_\tau \in S (\text{i.e.} |y_\tau| = \pm 1)\) we have
+\(X \cdot y = \{ (z_\tau) \in K_\mathbb{R} \mid |z_\tau| < c_\tau' \}\), where \(c_\tau' = c_\tau \cdot |y_\tau|; c_\sigma' = c_{\overline{\sigma}}\) 
+since \(|y_\sigma| = |y_{\overline{\sigma}}|\).
+
+We also have 
+\(\prod_{\tau \in G} c_\tau' = \prod_{\tau \in G} c_\tau \prod_{\tau \in G} |y_\tau| = C\).
+
+This shows that all \(X \cdot y\) are as in Thm. 5.4, hence by said theorem there exists
+\(0 \neq a \in \mathcal{O}_K\) with \(j(a) \in X \cdot y\) i.e. \(|\tau(a)| < c'_\tau \ \forall \tau \in G)\) (*)
+By Lemma 7.3 there are finitely many \(\alpha_1, \ldots, \alpha_N \in \mathcal{O}_K \setminus \{0\}\) such that every \(0 \neq a \in \mathcal{O}_K\) 
+with \(|N_{K/\mathbb{Q}}(a)| \leq C\) is up to multiplication by \(\mathcal{O}_K^{\times}\) one of the \(\alpha_i\). (**)
+
+Now define 
+\(T := S \cap \left( \bigcup_{i=1}^N X \cdot j(\alpha_i)^{-1} \right) \subset S\). 
+\(T\) is bounded, since each of the \(X \cdot j(\alpha_i)^{-1}\) is bounded.
+
+Claim: \(S = \bigcup_{\epsilon \in \mathcal{O}_K^{\times}} T \cdot j(\epsilon)\).
+Proof: For any \(y \in S\), by (*) the set \( X \cdot y^{-1} \) contains a \(j(a)\) for some \( 0 \neq a \in \mathcal{O}_K \), 
+hence \( j(a) = xy^{-1} \) for some \( x \in X \). Its norm is
+\( |N_{K/\mathbb{Q}}(a)| = |N(j(a))| = |N(xy^{-1})| = |N(x)| < \prod_{\tau \in G} c_\tau = C.\)
+(as \( y \in S \) so \( |N(y)| = 1 \).
+By (**), there exists \(a \in \mathcal{O}_K^{\times}\) such that \( \epsilon a = \alpha_i \) for some \( i \in \{1, \ldots, N\} \). 
+In total: 
+\(S \ni y = x \cdot j(\alpha_i^{-1} = xj(\alpha_i)^{-1} \cdot j(\epsilon) \in S\).
+
+where \(x j(\alpha_i)^{-1} \in S \cap X j(\alpha_i)^{-1} \subset T\), hence \(y \in T \cdot j(\epsilon)\). 
+Why is \(M := \ell(T)\) bounded? If \(z \in T\), so \(|z_\tau| < c'_\tau\), then \(\log|z_\tau| < \log c'_\tau\) and 
+\(|z_\tau| = \prod_{T \subset S} \prod_{\tau' \neq \tau} |z_{\tau'}|^{-1} > \prod_{\tau' \neq \tau} c_{\tau'}'^{-1}\),
+hence \(\log|z_\tau| > -\sum_{\tau' \neq \tau} \log c'_{\tau'}\), so \( M \) is bounded.
+
+Conclude from the completeness of the unit lattice in \( H \) Dirichlet's unit theorem.
+
+Theorem 7.5 (Dirichlet's unit theorem).
+The unit group \( O_K^\times \) is a finitely generated abelian group:
+
+\(\mathcal{O}_K^{\times} = \mu(K) \times \{ \varepsilon_1^{a_1} \cdots \varepsilon_{r+s-1}^{a_{r+s-1}} \mid a_i \in \mathbb{Z} \}\),
+
+where \(\varepsilon_1, \ldots, \varepsilon_{r+s-1} \in \mathcal{O}_K^{\times}\) is a system of fundamental units.
+
+Proof. Consider again the sequence
+
+\(1 \longrightarrow \mu(K) \longrightarrow O_K^\times \xrightarrow{\lambda} \Gamma \longrightarrow 0\),
+
+it is exact by Thm. 7.2. By 7.4, \(\Gamma\) is a complete lattice in \(H \cong \mathbb{R}^{r+s-1}\), so \(\Gamma\) has a \(\mathbb{Z}\)-basis 
+\(v_1, \ldots, v_{r+s-1}\). Choose preimages \(\varepsilon_1, \ldots, \varepsilon_{r+s-1}\) under \(\lambda\), 
+this is a system of fundamental units, as the above sequence splits (as \(\Gamma\) is a free \(\mathbb{Z}\)-module).
+
+
+
+Define the regulator of a number field and state its relation to units
+
+Let \( \{\lambda(\varepsilon_i)\}_{i \leq r+s-1} \) be a basis of \( \Gamma \) in \( H \) with associated fundamental mesh \( \Phi \)
+
+The vector \(\lambda_0 = (1, \ldots, 1) \cdot \frac{1}{\sqrt{r+s}}\) is orthogonal to \( H \) of length \( 1 \). Hence,
+\[
+\text{Vol} \Gamma = \text{Vol} \Phi = \text{Vol} \Phi' = \det \begin{vmatrix}
+\frac{1}{\sqrt{r+s}} & \log|\tau_1(\varepsilon_1)|^{(2)} & \cdots & \log|\tau_1(\varepsilon_{r+s-1})|^{(2)} \\
+\vdots & \vdots & & \vdots \\
+\frac{1}{\sqrt{r+s}} & \log|\tau_{r+s}(\varepsilon_1)|^{(2)} & \cdots & \log|\tau_{r+s}(\varepsilon_{r+s-1})|^{(2)}
+\end{vmatrix}
+\]
+
+If we add all rows to an arbitrary row i (leaving the determinant unchanged), we get a new matrix. Using
+
+\(\sum_{\tau} \log|\tau(\varepsilon_i)|^{(2)} = 0 \quad (\text{since }\lambda(\varepsilon_i) \in H)\),
+
+the new row \( i \) is of the form \(\left(\frac{r+s}{\sqrt{r+s}}, 0, \ldots, 0\right)\). 
+Developing this matrix by the i-th row, we yields the regulator.
+
+Thus \( R_K \coloneqq \text{Vol}(\Gamma) \) and it measures the "density" of the units: 
+if the regulator is small, this means that there are "lots" of units.
+
+
+
+
+Suppose that \( K \) is a number field and \( u_1, \dots, u_r \) are a set of generators for the unit group of \( K \) modulo roots of unity. 
+There will be \( r+1 \) Archimedean places of \( K \), either real or complex. For \(u \in K\), write \(u^{(1)},\dots,u^{(r+1)}\) for the 
+different embeddings into \(\mathbb{R}\) or \(\mathbb{C}\) and set \(N_j\) to \( 1 \) or \( 2 \) if the corresponding embedding is 
+real or complex respectively. 
+
+Then the \( r \times (r+1) \) matrix \(\left(N_j\log \left|u_i^{(j)}\right|\right)_{i=1,\dots,r,\; j=1,\dots,r+1}\) has the property 
+that the sum of any row is zero (because all units have norm 1, and the log of the norm is the sum of the entries in a row). 
+This implies that the absolute value \( |R| \) of the determinant of the submatrix formed by deleting one column is independent of the column. 
+
+The number \( R \) is called the regulator of the algebraic number field (it does not depend on the choice of generators). 
+
+

@@ -1,0 +1,195 @@
+Analyze the ARCH(1) model
+An ARCH(1) process \(\varepsilon\) satisfies the following equations:
+
+\(\varepsilon_t = \sigma_t Z_t\)
+\(\sigma_t^2 = \alpha_0 + \alpha_1 \varepsilon_{t - 1}^2\)
+
+Weak stationarity requires \(\alpha_1 < 1\).
+
+Unconditional variance: The unconditional variance is
+\(\text{Var}(\varepsilon_t) = \sigma^2 = \frac{\alpha_0}{1 - \alpha_1}\)
+Leptokurtic distribution: Suppose that \(Z_t \sim N(0, 1)\). Then for \(3 \alpha_1^2 < 1\):
+\(\text{Kurt}(\varepsilon_t) = \frac{E(\varepsilon_t^4)}{E(\varepsilon_t^2)} = 3 \cdot \frac{1 - \alpha_1^2}{1 - 3 \alpha_1^2} \ge 3,\)
+which is larger than \( \text{Kurt}(N) \) with \( N \sim \mathcal{N}(0, 1) \), so we have fat tails.
+
+
+Consider an ARCH(1) process \(\varepsilon\) with finite fourth moments and \(Z_t \sim N(0, 1)\).
+
+1. The process admits the following representation convergent in \(L^2\):
+\(\varepsilon_t = \alpha_0 \sum_{k = 0}^\infty \alpha_1^k \prod_{j = 0}^k Z_{t - j}^2\)
+2. \(\varepsilon^2\) is an AR(1) process with
+\(\varepsilon_t^2 = \alpha_0 + \alpha_1 \varepsilon_{t - 1}^2 + \eta_t\)
+and white noise \(\eta_t = \sigma_t^2 (Z_t^2 - 1)\).
+
+Some sufficient conditions strict stationarity of an ARCH(1) are
+\( \mathbb{E}[\log(α_1 Z_t^2 )]< 0\), which gives
+\( α_1 < 3.5622 \) for \( Z_t \sim \mathcal{N}(0, 1) \).
+Covariance stationarity, i.e., the \( L^2 \)-condition, requires \( \alpha_1 < 1\)
+
+
+Define GARCH processes and state their representation
+
+
+Let \((Z_t)_{t \in \mathbb{Z}}\) be SWN(0, 1). 
+A process \((\varepsilon_t)_{t \in \mathbb{Z}}\) is called GARCH(\(p, q\)) process 
+(generalized autoregressive conditionally heteroscedastic), if:
+
+1. \((\varepsilon_t)_{t \in \mathbb{Z}}\) is strictly stationary.
+2. For some strictly positive process \((\sigma_t)_{t \in \mathbb{Z}}\) the following identities hold:
+with
+\(\varepsilon_t = \sigma_t Z_t\)
+\(\sigma_t^2 = \alpha_0 + \sum_{i = 1}^p \alpha_i \varepsilon_{t - i}^2 + \sum_{j = 1}^q \beta_j \sigma_{t - j}^2\)
+with constants \(\alpha_0 > 0, \alpha_1, ..., \alpha_p, \beta_1, ..., \beta_q \ge 0\).
+
+Similar to the ARCH process we can derive
+
+Conditional expectation \( \mathbb{E}[\varepsilon_t\mid \mathcal{F}_{t-1}] = 0 \)
+so \( \varepsilon \) is a martingale difference sequence,
+however for the volatility
+\( \sqrt{\text{Var}[\varepsilon_t \mid \mathcal{F}_{t-1}} = \sigma_t \)
+which implies
+Heteroscedacity: Volatility / conditional variance vary randomly over time.
+Volatility clusters: Periods of high volatility are more persistent than for ARCH as \( \sigma^2_t \) 
+depends on \( \sigma^2_s \) for \( s \leq t \).
+
+
+Let \(\epsilon\) be a strong GARCH(\(p, q\)) process with finite fourth moments. 
+Then the stochastic process \(\epsilon^2\) can be represented as an ARMA(\(m, q\)) process with \(m = \max(p, q)\):
+
+\(\epsilon_t^2 = \alpha_0 + \sum_{i = 1}^m \gamma_i \epsilon_{t - i}^2 - \sum_{j = 1}^p \beta_j \eta_{t - j} + \eta_t\)
+
+with white noise \(\eta_t = \sigma_t^2 (Z_t^2 - 1)\) and \(\gamma_i = \alpha_i + \beta_i\).
+
+The white noise \(\eta\) is conditionally heteroscedastic, i.e., it is not strict white noise.
+The methods available for ARMA processes can be exploited for the analysis of GARCH processes.
+Beyond our previous discussion on estimation, we will also discuss likelihood methods.
+
+
+Define copulas
+
+
+A d-dimensional copula \(C : [0, 1]^d \rightarrow [0, 1]\) is the distribution function of a d-dimensional random vector 
+with uniform one-dimensional marginal distributions \(U([0,1])\).
+
+A copula \(C\) can equivalently be characterized by the following properties:
+a) \(C(u_1, \ldots, u_d)\) is increasing in each component \(u_i\).
+b) For all \(i \in \{1, \ldots, d\}\), \(u_i \in [0, 1]\): \(C(1, \ldots, 1, u_i, 1, \ldots, 1) = u_i\).
+c) For all \((a_1, \ldots, a_d), (b_1, \ldots, b_d) \in [0, 1]^d\) with \(a_i \leq b_i, u_{j,1} = a_j, u_{j,2} = b_j, j = 1, 2, \ldots, d\), the following inequality holds:
+\(
+\sum_{i_1=1}^2 \cdots \sum_{i_d=1}^2 (-1)^{i_1 + \cdots + i_d} C(u_{1, i_1}, \ldots, u_{d, i_d}) \geq 0.
+\)
+
+
+(a) This property must hold, since a copula is a multivariate distribution function.
+(b) Marginal distributions are uniform — implying this property.
+(c) This condition is less obvious, but can be motivated as follows:
+Let \((U_1, \ldots, U_n)^\top\) be a random vector with distribution function \(C\). Then
+\(
+\mathbb{P}[U_1 \in (a_1, b_1], \ldots, U_d \in (a_d, b_d]] \geq 0.
+\)
+Computing this probability in terms of the distribution function \(C\) implies condition c).
+
+
+State Sklar's Theorem
+
+1. 
+For any \(d\)-dimensional distribution function \(F\) with margins \(F_1, \ldots, F_d\) there exists a copula \(C\) with
+\(
+F(x_1, \ldots, x_d) = C(F_1(x_1), \ldots, F_d(x_d)) \quad \text{für alle } x_1, \ldots, x_d \in [-\infty, \infty].
+\)
+2.
+Are the marginal distribution functions \(F_1, \ldots, F_d\) continuous, then the copula is uniquely given by
+\(
+C(u_1, \ldots, u_d) = F(F_1^{-1}(u_1), \ldots, F_d^{-1}(u_d)).
+\)
+Otherwise the copula is uniquely specified on \(\operatorname{Ran} F_1 \times \ldots \times \operatorname{Ran} F_d\), where 
+\(\operatorname{Ran} F_i\) denotes the range of \(F_i\), \(i = 1, 2, \ldots, d\)
+3.
+Conversely, for a given copula \(C\) and given one-dimensional distribution functions \(F_1, \ldots, F_d\), 
+the function \(F\) in (1) a \(d\)-dimensional distribution function with copula \(C\) and marginal distribution functions \(F_1, \ldots, F_d\).
+
+The interpretationas of each statement are:
+(1)
+The marginal distributions describe the univariate risks.
+Stochastic dependencies between risks are encoded by the copula.
+(2)
+\(F_i^{(-1)}(u_i)\) signifies the \(u_i\)-quantile of \(X_i\) or, equivalently, the distribution function \(F_i\).
+\(C(u_1, \ldots, u_d)\) is the probability that the random variables \(X_1, \ldots, X_d\) do not exceed their quantiles at levels \(u_1, \ldots, u_d\).
+A copula expresses dependencies on the level of quantiles.
+Application: Using 2. we can construct implicit copulas on the basis of multivariate distributions with continuous margins.
+(3)
+Multivariate distributions may be specified on the basis of marginal distributions and a copula.
+In practice, marginal distributions are often better understood than dependence structures. 
+Copulas and Sklar's characterization of multivariate distributions admits a combination of marginal distributions and different copulas; 
+the influence of different types of dependence can be analyzed in these models.
+
+Describe the basic construction to create copulas (specializations come later)
+
+
+Specify the marginal distributions \(F_1, \ldots, F_d\).
+Choose a copula \(C\) and set \(F(x_1, \ldots, x_d) = C(F_1(x_1), \ldots, F_d(x_d)).\)
+
+For each choice of \(C\) the multivariate distribution function \(F\) defines a distribution with the same univariate margins.
+A given set of different copulas defines a class of such multivariate distributions.
+
+For a detailed analysis of the problem, select appropriate copulas \(C\) that reflect the available information on dependence.
+
+Another step is the monotonic transformations of the margins
+We focus on continuous marginal distributions \(F_1, \ldots, F_d\)
+
+The unique copula associated with a random vector \(\mathbf{X} = (X_1, \ldots, X_d)^\top\) with distribution function \(F\) is 
+\(C(u_1, \ldots, u_d) = F(F_1^{(-1)}(u_1), \ldots, F_d^{(-1)}(u_d)) = \mathbb{P}[F(X_1) \leq u_1, \ldots, F(X_d) \leq u_d].\)
+
+The copula \( C \) is invariant under strictly monotonic transformations of the margins, i.e., 
+suppose that \(T_1, \ldots T_d\) are strictly increasing, then the random vector \( (T_1(X_1), \ldots, T_d(X_d))^\top \) 
+has the same copula \( C \) as the random vector \( (X_1, \ldots, X_d)^\top \).
+
+
+State the Frechet bounds for Copula's
+
+Any copula \(C\) is bounded from above and below by the Fréchet bounds:
+\(\max \left( \sum_{i = 1}^d u_i + 1 - d, 0 \right) \le C(u) \le \min(u_1, u_2, ..., u_d)\)
+
+with \(u = (u_1, u_2, ..., u_d)\).
+* The lower bound is a copula only in the case \(d = 2\), and is called countermonotonic copula in this case.
+* The upper bound is the comonotonic copula.
+
+In fact this holds for any multivariate distribution \( F \) with margins \( F_i \) (replace \( C(u) \) by \( F \) and \( u_i \) by \( F_i \)).
+
+
+Give the heuristic categories of Copula's and describe the fundamental ones.
+
+Fundamental Copulas:
+Copulas associated with simple and important types of dependence
+Independence, Comonotonicity, Countermonotonicity
+
+Implicit Copulas:
+Copulas extracted from common multivariate distributions; if the multivariate distributions are tractable, 
+this might facilitate the simulation of the copulas
+Special case: Gaussian copula, t copula, elliptical copula
+
+Explicit copulas:
+Copulas defined in terms of simple formulas
+A prominent class are Archimedian Copulas.
+
+
+Independence copula:
+\(C(u_1, ..., u_d) = \prod_{i = 1}^d u_i \quad (u_1, ..., u_d) \in [0, 1]\)
+Independence of the components of a random vector \(X = (X_1, ..., X_d)^\top\) corresponds to this copula.
+
+Comonotonic copula:
+\(C(u_1, ..., u_d) = \min \{u_1, ..., u_d\} \quad (u_1, ..., u_d) \in [0, 1]\)
+
+* \(C\) is the joint distribution function of \((U, ..., U)^\top\) with \(U \sim U([0, 1])\)
+* An intuitive characterization is the following: The random vector \(X = (X_1, ..., X_d)^\top\) is associated to the comonotonic copula, 
+if \(X_i = T_i(X_1)\) for increasing functions \(T_i, i = 2, 3, ..., d\).
+
+Countermonotonic copula (only for \(d = 2\)):
+\(C(u_1, u_2) = \max \{u_1 + u_2 - 1, 0\} \quad (u_1, u_2) \in [0, 1]\)
+
+The copula \(C\) is the distribution function of \((U, 1 - U)^\top\) with \(U \sim U([0, 1])\).
+The bivariate random vector \(X = (X_1, X_2)^\top\) is associated to the countermonotonic copula, 
+if \(X_2 = T(X_1)\) for some decreasing function \(T\).
+
+These examples of fundamental copulas are associated with very particular 
+and extreme forms of dependence.

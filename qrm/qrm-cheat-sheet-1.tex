@@ -1,0 +1,338 @@
+Explain the general challenge for which the classical linear
+model provides an example
+
+
+Key goal:
+The key goal is to understand a relationship between a response variable \( y \) of primary interest and a set of regressors/covariates or explanatory variables \( x_1, x_2, \ldots, x_k \), i.e.,
+\[
+ y = f(x_1, x_2, \ldots, x_k)
+\]
+with some unknown deterministic function \( f \)
+In practice, it is often reasonable that the relationship involves some error due to some noise.
+
+Specific classes of models:
+
+Specific models (or classes of models) impose restriction on the class of admissible functions, the way errors enter, and the structure of the error.
+Within classes of models, due to their particular properties, statistical tools can often be developed.
+A key initial question is, of course, if a particular model is appropriate and how we can test this.
+Classical Linear Models are one particular class of models.
+
+What is the special case of the linear model?
+
+Classical Linear Model
+
+\[ y = f(x_1, x_2, \ldots, x_k) + \epsilon \]
+
+Systematic component:
+- The unknown function \( f \) is called systematic component.
+- This is assumed to be a linear combination of the covariates:
+
+\[ f(x_1, x_2, \ldots, x_k) = \beta_0 + \beta_1 x_1 + \cdots + \beta_k x_k \]
+
+for unknown parameters \( \beta_0, \beta_1, \ldots, \beta_k \).
+
+The model is conveniently expressed in vector notation:
+
+\[ f(\mathbf{x}) = \mathbf{x}^\top \boldsymbol{\beta}, \quad \mathbf{x} = (1, x_1, \ldots, x_k)^\top, \quad \boldsymbol{\beta} = (\beta_0, \ldots, \beta_k)^\top. \]
+
+Additive errors:
+In the linear model it is assumed that errors are additive:
+
+\[ y = \mathbf{x}^\top \boldsymbol{\beta} + \epsilon \]
+
+
+
+For a fixed number of covariate vectors, state the linear model in vector notation
+(include terms like design matrix, normal regression)
+
+
+In order to determine the unknown parameters \(\beta\), we collect data
+\[ y_i, \; \mathbf{x}_i = (1, x_{i1}, \ldots, x_{ik})^\top, \]
+with error observations according to
+\[ y_i = \mathbf{x}_i^\top \boldsymbol{\beta} + \epsilon_i, \quad i = 1, 2, \ldots, n. \]
+Vector notation is appropriate:
+
+\[ 
+\mathbf{y} = \begin{pmatrix}
+y_1 \\
+\vdots \\
+y_n
+\end{pmatrix}, \quad \boldsymbol{\epsilon} = \begin{pmatrix}
+\epsilon_1 \\
+\vdots \\
+\epsilon_n
+\end{pmatrix}, \quad \mathbf{X} = \begin{pmatrix}
+\mathbf{x}_1^\top \\
+\vdots \\
+\mathbf{x}_n^\top
+\end{pmatrix} = \begin{pmatrix}
+1 & x_{11} & \cdots & x_{1k} \\
+\vdots & \vdots & \ddots & \vdots \\
+1 & x_{n1} & \cdots & x_{nk}
+\end{pmatrix}.
+\]
+
+\(\mathbf{X}\) is the design matrix. One assumes that \(\text{rk} \mathbf{X} = k + 1 = p \leq n\).
+
+
+The model
+
+\[ y = X \boldsymbol{\beta} + \epsilon \]
+
+is called the classical linear regression model, if the following assumptions hold:
+
+\[ \mathbb{E}(\epsilon) = 0 \]
+\[ \text{Cov}(\epsilon) = \sigma^2 I \]
+this correlation structure is also referred to as homoscedastic
+while different variances would be heteroscedastic.
+One says that these assumptions about \( \epsilon \) are conditionally on \( X \).
+\[ \text{rk}(X) = k + 1 = p \leq n \]
+
+If additionally errors are Gaussian, the model is called the classical normal regression model.
+For stochastic covariates all properties are understood conditionally on the design matrix \(X\).
+
+
+Discuss the estimation problem and issues related to misspecification.
+
+
+Linearity of Covariate Effects
+Linear models are linear in their parameters, but covariates can be modified non-linearly.
+
+An example is 
+\[ y_i = \beta_0 + \beta_1 \log(z_i) + \epsilon_i, \quad x_i = \log(z_i). \]
+
+Homoscedastic Error Variances
+Residuals can be used to detect heteroscedasticity.
+If this is ignored, variances of \(\hat{\beta}\) are incorrectly estimated, causing trouble with hypothesis tests and confidence intervals.
+
+Uncorrelated Errors
+Autocorrelation can also be detected by inspecting the residuals.
+It indicates that the model is incorrectly specified, e.g., covariates are missing or should enter nonlinearly. 
+E.g. we include \( x_i \) linearly but the relation is actually \( y_i = \sin(x_i) + \epsilon_i \).
+or \( y_i = x_{1_{i}} + x_{2_{i}} + c + \epsilon_i \), but we only specify \( y_i = x_{1_{i}} + \epsilon_i \).
+The statistical analysis should be adjusted in the presence of autocorrelation.
+
+Additivity of Errors
+Many different ways can be imagined how errors enter the model.
+Most common, are additive and multiplicative errors. Multiplicative errors may be transformed into additive errors by taking logarithms:
+
+\[ y_i = \exp(\boldsymbol{\beta}^\top \mathbf{x}_i + \epsilon_i) \quad \Longleftrightarrow \quad \log y_i = \boldsymbol{\beta}^\top \mathbf{x}_i + \epsilon_i \]
+
+iNCLUDE IMAGES FROM PAGE 104-109
+
+
+How can categorial variables/Continuous Covariates be captured?
+
+If a continuous covariate has approximately a nonlinear effect \(\beta_1 f(z)\) with known function \(f\), then the model
+\[ y_i = \beta_0 + \beta_1 f(z_i) + \cdots + \epsilon_i \]
+can be replaced by the linear regression model
+\[ y_i = \beta_0 + \beta_1 x_i + \cdots + \epsilon_i, \quad x_i = f(z_i). \]
+If covariates of the new models should be centered around zero, alternatively one may set
+\[ x_i = f(z_i) - \bar{f}, \quad \bar{f} = \frac{1}{n} \sum_{i=1}^n f(z_i) \]
+with new \(\beta_0, \beta_1, \ldots,\) and the multiple of \(\bar{f}\) is absorbed into the new \(\beta_0\).
+E.g. the covariate enters polynomially as \( \beta_1 z + \beta_2 z^2 + \dots \)
+then we would transform this into a linear form by setting \( x_{i,j} = z^j \) e.g.
+\( y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} \dots \)
+
+
+Dummy Coding for Categorial Covariates
+
+Suppose that \( x_i \) are observations of a categorial covariate with categories \(\{1, 2, \ldots, c\}\). Dummy coding sets
+
+\[
+x_{ik} =
+\begin{cases} 
+1 & x_i = k \\
+0 & \text{else} 
+\end{cases} \quad k = 1, 2, \ldots, c - 1, \quad i = 1, 2, \ldots, n.
+\]
+
+This means that \( x_{ik} = 1 \), iff \( x_i \) is of category \( k \), and otherwise zero. Dummies are indicators that display the category. 
+Category \( c \) is omitted, since this \( c \) can already be identified by verifying that all dummies are zero. 
+Dummies allow to include the categorial variable into the regression model:
+
+\[
+y_i = \beta_0 + \beta_{i1} x_{i1} + \cdots + \beta_{i, c-1} x_{i, c-1} + \cdots + \epsilon_i, \quad i = 1, 2, \ldots, n.
+\]
+
+Remark: Other codings for categorial variables, such as effect coding, are also sometimes used. Effect coding refers to
+
+\[
+x_{ik} =
+\begin{cases} 
+1 & x_i = k \\
+-1 & x_i = c \\
+0 & \text{else} 
+\end{cases} \quad k = 1, 2, \ldots, c - 1, \quad i = 1, 2, \ldots, n.
+\]
+
+
+What is the method of least squares? What is median regression? Derive the LSE
+of β?
+
+The classical method to estimate the unknown regression coefficients \(\beta\) consists in minimizing the sum of the squared deviations
+
+\[
+LS(\beta) = \sum_{i=1}^{n} (y_i - \mathbf{x}_i^\top \beta)^2 = \mathbf{\varepsilon}^\top \mathbf{\varepsilon}
+\]
+
+with respect to \(\beta \in \mathbb{R}^p\).
+
+The solution is the same as the maximum likelihood estimator with Gaussian error terms.
+
+The estimator, commonly called least squares estimator (LSE), has the disadvantage to depend heavily on outliers. 
+But it is easy to compute, and its statistical properties have long been understood.
+
+An alternative is, e.g., median regression, a special case of quantile regression, that minimizes with respect to \(\beta \in \mathbb{R}^p\) the sum of absolute deviations
+
+\[
+SM(\beta) = \sum_{i=1}^{n} |y_i - \mathbf{x}_i^\top \beta| = \sum_{i=1}^{n} |\varepsilon_i|.
+\]
+
+
+Show how LSE is related to MLE in the Gaussian case.
+
+Minimization of \(LS\) can be achieved by inspecting the first-order conditions:
+\[
+\frac{\partial LS(\beta)}{\partial \beta} \bigg|_{\beta = \hat{\beta}} = -2\mathbf{X}^\top \mathbf{y} + 2 \mathbf{X}^\top \mathbf{X} \hat{\beta} \stackrel{!}{=} 0.
+\]
+
+This is equivalent to the normal equations:
+\[
+\mathbf{X}^\top \mathbf{X} \hat{\beta} = \mathbf{X}^\top \mathbf{y}.
+\]
+
+Due to the condition of full rank, the normal equations possess a unique solution, the least squares estimator,
+\[
+\hat{\beta} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}.
+\]
+
+
+Under the condition of normally distributed errors, i.e., \(\varepsilon \sim N(0, \sigma^2 I)\), 
+the maximum likelihood estimator (MLE) equals the LSE.
+This can be verified by minimizing the likelihood
+
+\[
+L(\beta, \sigma^2) = \frac{1}{(2\pi\sigma^2)^{n/2}} \exp \left( -\frac{1}{2\sigma^2} (y - \mathbf{X}\beta)^\top (y - \mathbf{X}\beta) \right),
+\]
+
+or, equivalently, the log-likelihood
+
+\[
+l(\beta, \sigma^2) = (\text{terms independent of } \beta) - \frac{1}{2\sigma^2} (y - \mathbf{X}\beta)^\top (y - \mathbf{X}\beta).
+\]
+
+
+How is the prediction/hat matrix \( H \) defined? State its properties and relation to residuals and mean.
+
+
+The estimated (conditional) mean of \(y\) is
+
+\[
+\hat{y} = \mathbb{E}(\hat{y}) = \mathbf{X} \hat{\beta} = \mathbf{H}y, \quad \mathbf{H} = \mathbf{X} (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top.
+\]
+
+The matrix \(\mathbf{H}\) is called the prediction matrix or hat matrix.
+The residuals can be computed as \(\hat{\varepsilon} = (\mathbf{I} - \mathbf{H})y\).
+Properties of the prediction matrix:
+The prediction matrix \(\mathbf{H} = \mathbf{X} (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top\) is symmetric and idempotent with \(\text{rk}(\mathbf{H}) = p\).
+
+The matrix \(\mathbf{I} - \mathbf{H}\) is symmetric and idempotent, with \(\text{rk}(\mathbf{I} - \mathbf{H}) = n - p\).
+
+Since \( \hat{\mathbf{y}} \in \text{im}(\mathbf{X}), \hat{\mathbf{\epsilon}} \bot \text{im}(\mathbf{X}) \implies \hat{\mathbf{y}} \bot \hat{\mathbf{\epsilon}} \)
+it follows \( \text{proj}_{\text{im}(\mathbf{X})}(\mathbf{y})= \hat{\mathbf{y}} \). In particular \( \text{proj}_{\text{im}(\mathbf{X})} = H \)
+
+\( \hat{\mathbf{\epsilon}} = \mathbf{y} - \hat{\mathbf{y}} = y - \mathbf{X}\hat{\beta} = (\mathbf{I} - \mathbf{X} (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top\mathbf{X})\mathbf{y} = (\mathbf{I} - \mathbf{H})\mathbf{y} \).
+
+
+Which variance estimator is usually used? How does it differ from the MLE obtained in the Gaussian case?
+
+A heuristics for finding an estimator of the error variance can be constructed in the setting with Gaussian errors.
+Maximum Likelihood
+
+From the log-likelihood we can find an ML-estimator
+
+\[
+\hat{\sigma}^2_{ML} = \frac{\hat{\varepsilon}^\top \hat{\varepsilon}}{n}
+\]
+
+But this estimator is biased, i.e., \(\mathbb{E}(\hat{\sigma}^2_{ML}) = \frac{n-p}{n} \cdot \sigma^2\).
+This suggests the commonly used estimator
+
+\[
+\hat{\sigma}^2 = \frac{1}{n-p} \hat{\varepsilon}^\top \hat{\varepsilon}
+\]
+
+Restricted Maximum Likelihood
+In the Gaussian framework, \(\hat{\sigma}^2\) is a restricted maximum likelihood estimator (RMLE) that minimizes the marginal likelihood
+
+
+What are expectation and variance of \( \hat{β} \)? 
+State the corresponding Gauss-Markov Theorem. What do we obtain in the Gaussian case?
+
+\[
+L(\sigma^2) = \int L(\beta, \sigma^2) d\beta
+\]
+
+The following properties hold if the model is correctly specified, but without any specific distributional assumptions:
+
+\(\mathbb{E}(\hat{\beta}) = \beta\) (unbiased)
+
+\(
+\text{Cov}(\hat{\beta}) = \sigma^2 (\mathbf{X}^\top \mathbf{X})^{-1} \quad \text{with estimator} \quad \widehat{\text{Cov}}(\hat{\beta}) = \hat{\sigma}^2 (\mathbf{X}^\top \mathbf{X})^{-1}, \quad \hat{\sigma}^2 = \frac{1}{n-p} \hat{\varepsilon}^\top \hat{\varepsilon}
+\)
+
+Gauss-Markov-Theorem: The LSE has the smallest variance among all linear and unbiased estimators of \(\beta\).
+
+The following properties hold if additionally \(\varepsilon \sim N(0, \sigma^2 \mathbf{I})\):
+Distribution of the response variable: \(y \sim N(\mathbf{X}\beta, \sigma^2 \mathbf{I})\)
+Distribution of LSE: \(\hat{\beta} \sim N(\beta, \sigma^2 (\mathbf{X}^\top \mathbf{X})^{-1})\)
+Distribution of weighted distance:
+
+\[
+\frac{(\hat{\beta} - \beta)^\top (\mathbf{X}^\top \mathbf{X})(\hat{\beta} - \beta)}{\sigma^2} \sim \chi^2_p
+\]
+
+Proof of unbiasedness
+
+\((\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top\) is constant 
+
+\[
+\mathbb{E} \left[ \hat{\beta} \right] = \mathbb{E} \left[ (\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top \mathbf{y} \right] = (\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top \mathbb{E}[\mathbf{y}].
+\]
+
+Substituting in \(\mathbf{X}\beta + \epsilon \text{ for } \mathbf{y}\)
+
+\[
+\mathbb{E} \left[ \hat{\beta} \right] = (\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top \mathbb{E}[\mathbf{X}\beta + \epsilon]
+= (\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top (\mathbf{X}\beta + \mathbb{E}[\epsilon])
+= (\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top (\mathbf{X}\beta + 0)
+= I_p \beta
+= \beta.
+\]
+
+Derivation of variance:
+
+Since for a constant matrix \( \mathbf{A} \), we have that \( \text{Var}(\mathbf{AY}) = \mathbf{A} \text{Var}(\mathbf{Y}) \mathbf{A}^\top \), 
+it follows that
+
+\[
+\text{Var}(\hat{\beta}) = \text{Var} \left( (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y} \right)
+= (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \text{Var}(\mathbf{y}) \left( (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \right)^\top
+\]
+
+Substituting in \( \mathbf{X}\beta + \epsilon \text{ for } \mathbf{y} \) and noting that \( \mathbf{X}\beta \) is a constant, we have that
+
+\[
+\text{Var}(\hat{\beta}) = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \text{Var}(\mathbf{X}\beta + \epsilon) \mathbf{X} (\mathbf{X}^\top \mathbf{X})^{-1}
+= (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \text{Var}(\epsilon) \mathbf{X} (\mathbf{X}^\top \mathbf{X})^{-1}
+\]
+\[
+= (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \sigma^2 \mathbf{I}_n \mathbf{X} (\mathbf{X}^\top \mathbf{X})^{-1}
+= \sigma^2 (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{X} (\mathbf{X}^\top \mathbf{X})^{-1}
+= \sigma^2 (\mathbf{X}^\top \mathbf{X})^{-1}.
+\]
+
+
+Are there limit theorems available in the general case that admit an approximation?
+Can you state details?

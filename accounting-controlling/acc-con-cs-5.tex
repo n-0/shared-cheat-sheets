@@ -1,0 +1,172 @@
+Erklären sie die wesentlichen Kerngrößen der ersten Säule von Solvency II
+
+
+Zu den wesentlichen Kerngrößen der ersten Säule zählt der Risikokapitalbedarf, dieser wird differenziert in 
+- Solvabilitätskapitalanforderung (SCR)
+- Mindestkapitalanforderung (MCR)
+
+Das SCR enspricht dem VaR der Basiseigenmittel über den Zeitraum eines Jahres des VU ,
+zu einem Konfidenzniveau von 99,5\%.
+Das bedeutet, dass die Verluste der Eigenmittel
+diesen VaR-Wert mit einer Wahrscheinlichkeit von 99,5\% innerhalb eines Jahres nicht übersteigen.
+
+Das MCR stellt die Untergrenze der anrechnungsfähigen
+Eigenmittel dar, bei deren Unterschreitung die Aufsichtsbehörde einen kurzfristigen und
+realistischen Finanzierungsplan einfordert (oder sogar die Geschäftserlaubnis entziehen kann).
+
+Die Solvabilitätskapitalanforderung kann zum einen mit der Standardformel bewertet
+werden, bei der nur bestimmte Parameter unternehmensspezifisch gesetzt werden können.
+Zum anderen kann ein (partielles) internes Modell gewählt werden.
+
+Die Bewertung der Bilanz verläuft anders als nach HGB und wird auch Solvenzbilanz gennant:
+
+Den größten Posten auf der Passivseite bilden die versicherungstechnischen Rückstellungen. 
+Diese bestehen aus der Summe des besten Schätzwerts der versicherungstechnischen Verpflichtungen und einer
+Risikomarge, die jeweils unter Einhaltung der zugrundeliegenden Vorschriften gesondert
+ermittelt werden.
+
+Die Bewertung der Kapitalanlagen auf der Aktivseite der Solvabilitäts-
+übersicht erfolgt zu Marktwerten.
+
+INSERT IMAGE PAGE 86
+
+
+Erläutern sie die ökonomische Bewertungsmethoden in der Solvenzbilanz
+
+für die Bewertung die Positionen der Solvenzbilanz unter dem Solvency
+II-Regime folgende Bewertungsansätze:
+• Aktiva: Fair Value/Mark to Market
+• Passiva: Fair Value/Mark to Model
+• Versicherungstechnische Rückstellungen:
++ Best Estimate
++ Risk Margin
+
+Grundsätzlich gibt es zwei unterschiedliche Arten von Verbindlichkeiten:
+1. Die absicherbaren (hedgebaren) und
+2. die nicht absicherbaren (nicht hedgebaren) Verbindlichkeiten
+
+Absicherbare Verbindlichkeiten sind jene, die im Zusammenhang mit Versicherungsverträgen zu
+berechenbaren Zahlungsströmen führen. Es lässt sich die Mark to Market-Methode anwenden.
+
+Für nicht absicherbare (nicht hedgebare) Verbindlichkeiten, wie die versicherungstechnischen
+Rückstellungen, liegt kein Marktwert vor.
+Sie werden mithilfe mathematischer Modelle (Mark to Model) geschätzt (bester Schätzwert = Best Estimate, Mark to Model).
+Für die Unsicherheit des besten Schätzwertes ist zusätzlich noch eine Risikomarge zu ermitteln.
+
+Im Allgemeinen werden Cashflow-Projektionen eingesetzt, also gibt es keine Abgrenzungen/Beitragsüberträge.
+
+
+Erklären sie anhand des Beispiels von Schaden/Unfallversicherungen die Best Estimate Methode
+
+\(\text{Best Estimate} = \text{Schadenrückstellung} + \text{Prämienrückstellungen} \)
+
+Schadenrückstellungen(IBNR) sind für bereits entstandene aber noch nicht eindeutiv evaluierte Schäden,
+es wird differenziert in:
+BNYR = Incurred but not yet reported
+IBNER = Incurred but not enough reported
+IBNR = Incurred but not reported = IBNYR + IBNER
+
+für diese werden Techniken wie Chain Ladder, additive Methoden genutzt.
+
+Prämienrückstellungen sind für etwaige Schäden aus bereits
+eingegangenen vertraglichen Verpflichtungen zu bilden.
+Für jedes einzelne Risiko (Versicherungsvertrag) ist sowohl das
+Auftreten, als auch die Höhe des auftretenden Schadens zu bewerten.
+
+Für die Prämienrückstellungen wird als Näherungsformel von EIOPA empfohlen
+
+\( \text{BE} = \text{CR}\cdot\text{VM} + (\text{CR} -1)\cdot \text{PVFP} + \text{ARE}\cdot \text{PVFP} \)
+BE := bester Schätzwert der Prämienrückstellung.
+CR := Combined Ratio d.h. (Schäden + schadenbezogene Kosten) / (verdiente Prämien)
+VM := Beitragsübertrag: Prämien für laufende Verträge, abzüglich der Prämien, die bei diesen Verträgen
+PVFP := Barwert künftiger Prämien.
+ARE := Schätzung der Abschlusskostenquote.
+
+
+Was ist die Risikomarge (risk margin) und wie wird Sie berechnet?
+
+Für hedgebare Risiken ist keine Risikomarge vorzuhalten.
+
+Für nicht hedgebare Risiken ist eine Risikomarge zu ermitteln. Diese Risikomarge ergibt sich aus
+der Unsicherheit des besten Schätzwertes (Best Estimate) für die nicht hedgebar Risiken.
+Sie ist der Betrag, den ein anderes (risikoaverses) Versicherungsunternehmen (Referenz) über den Best Estimate 
+der versicherungstechnischen Rückstellungen hinaus fordern
+würde, um die Versicherungsverpflichtungen zu übernehmen (exit value). Für die Berechnung
+der Risikomarge wird das Kapitalkostenverfahren (Cost of Captial = CoC) angewendet
+
+Die Schritte zur Rechnung sind:
+1. Projektion der Solvenzkapitalanforderung (SCR) für die Zukunft bis zum Auslaufen
+   der jetzigen Verpflichtung in \( t = 0 \) je Sparte \( \text{SCR}_i \):
+2. Ermittlung der Kapitalkosten (CoC), die für das Vorhalten der im 1. Schritt ermittelten
+   zukünftigen Solvenzkapitalanforderungen notwendig sind. Darauf ist der CoC/Kapitalkostensatz als Risikomarge
+   einzurechnen (typischerweise 6\%).
+3. Diskontierung der Zahlungsreihe
+
+\( \text{RM} = \text{COC}\cdot \sum_{i=1}^m\sum_{t=0}^n \frac{1}{(1 + r_{t+1})^{t+1}}\cdot \text{SCR}_i(t) \)
+
+es ist 
+\(r_t\) := risikoneutraler Zinssatz im Abwicklungsjahr t
+\( n \) := letztes Abwicklungsjahr
+\( m \) := Anzahl der Sparten
+
+Was ist Kapitalallokation und welche Rolle nimmt sie bezüglich der SCR Kalkulation ein?
+
+Werden unterschiedliche Risiken auf übergeordneter Ebene zusammengefasst, so addieren sich die benötigten Risikokapitalien nicht, 
+sondern müssen entsprechend der Abhängigkeitsstruktur aggregiert werden.
+
+In der Regel entsteht ein Diversifikationseffekt, d.h. das aggregierte benötigte Risikokapital auf übergeordneter Ebene ist geringer 
+als die Summe der einzelnen Kapitalien. Dies spiegelt sich in der subadditivität von Risikomaßen wieder
+\( \rho(\sum_i X_i) \leq \sum_i \rho(X_i) \)
+
+
+Definition: Kapitalallokation 
+Seien \( X_{1}, ..., X_{m} \) Zufallsgrößen, die \( m \) Portfolios beschreiben und \( X = \Sigma_{i =1}^{m} X_{i} \) das Gesamtrisiko.
+Eine Kapitalallokation \( K = (K_{1}, ..., K_{m} \) heißt Zuteilung für das Risikomaß \( \rho \), wenn das gesamte Kapital allokiert wird,d.h. 
+\( \rho(X) = K_{1} + K_{m} \) und das allokierte Kapital nicht höher als das entsprechende Einzelkapital ist, d.h. 
+\( K_{i} \leqslant \rho(X_{i}), i = 1, ..., m \).
+
+
+Geben Sie Beispiele von Kapitalallokationsprinzipien
+
+
+Das Verfahren der proportionalen Aufteilung ist einfach, hat jedoch den Nachteil, 
+die Korrelationen der Einzelportfolios nicht zu berücksichtigen.
+
+\( K_{i} = \frac{\rho(X_{i})}{\Sigma^{m}_{i = 1}\rho(x_{i})} \cdot \rho(X) \).
+
+
+Definition: Inkrementelle Allokation
+Nach dem diskreten Marginalprinzip von Merton / Perolderfolgt(???) die Aufteilung proportional zum Beitrag des Geschäftsbereichs zum Gesamtrisiko. 
+Ziel ist es für die bestehende Aufteilung in Geschäftsbereiche das Kapital möglichst gerecht zuzuordnen.
+
+\( K_{i} = \frac{\rho(X) - \rho(X - X_{i})}{\Sigma^{m}_{i = 1}(\rho(X) - \rho(X - X_{i}))} \cdot \rho(X) \)
+
+
+Definition: Kovarianzbasierte Allokation 
+Im Spezialfall, dass das Risikomaß  \( \rho = \beta\sigma \) ein Vielfaches der Standardabweichung  \( \sigma \) ist, 
+erhalten wir das Kovarianzprinzip.
+
+\( K_{i} = \beta \cdot \frac{Cov(X_{i}, X)}{\sigma} \)
+
+Rechnen Sie ein konkretes Beispiel zur Kapitalallokation vor mit einer Methode ihrer Wahl
+
+VU mit drei Sparten (Hausrat \( X_{1} \), Haftpflicht \( X_{2} \) und Wohngebäude \( X_{3} \)).
+\( X_i \sim \mathcal{N}(0, \sigma_i^2) \), \( \sigma_i \), \( \sigma^{2}_{1} = 100 \), \( \sigma^{2}_{2} = 49 \),  \( \sigma^{2}_{3} = 25 \)
+und Korrelationsmatrix  \( \left(\begin{array}{ccc}1 & 0 & 0,6 \\0 & 1 & 0 \\0,6 & 0 & 1\end{array}\right) \)
+
+\( \sigma_{X} = \sqrt{\sigma^{2}_{1} + \sigma^{2}_{2} + \sigma^{2}_{3} + 2\cdot0,6\cdot\sigma_{1}\cdot\sigma_{3}} = \sqrt{100 + 49 + 25 + 2\cdot0,6\cdot\sqrt{100}\cdot\sqrt{25}} = \sqrt{234} = 15,3 \)
+
+
+Wir nutzen das proportionale Prinzip mit \( \rho = 1,25\cdot\sigma(x) \)
+
+\( \rho(X) = 1,25 \cdot 15,3 = 19,1 \quad \rho(X_{1}) = 1.25\cdot\sqrt{100} = 12,5 \quad \rho(X_{2}) = 8,75 \quad \rho(X_{3}) = 6,25 \)
+\( K_{i} = \frac{\rho(X_{i})}{\Sigma^{m}_{i = 1}\rho(x_{i})} \cdot \rho(X) \).
+
+
+\( K_{1} = \frac{\rho(X_{1}}{\rho(X_{1}) + \rho(X_{2}) + \rho(X_{3})} \cdot \rho(X) = \frac{12,5}{12,5 + 8,75 + 6,25} \cdot 19,1 = 8,69 \)
+\(K_{2} = \frac{8,75}{27,5} \cdot 19,1 = 6,085 \)
+\(K_{3} = \frac{6,25}{27,5} \cdot 19,1 = 4,35 \)
+
+
+
+

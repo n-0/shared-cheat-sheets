@@ -1,0 +1,349 @@
+Define the Legrende symbol and state some important properties
+
+Definition 8.10.
+The \( \textit{Legendre symbol} \) for \( a \in \mathbb{Z} \) and a prime \( p \in \mathbb{Z} \) is
+
+\[
+\left( \frac{a}{p} \right) := 
+\begin{cases} 
++1 & \text{if } a \text{ is a quadratic residue mod } p \\ 
+-1 & \text{otherwise} \\
+0 & \text{if } p \mid a.
+\end{cases}
+\]
+
+\textbf{Remark/Properties.} 
+
+(i) The Legendre symbol is multiplicative, i.e.
+
+\[
+\left( \frac{ab}{p} \right) = \left( \frac{a}{p} \right) \left( \frac{b}{p} \right) \quad \forall a, b \in \mathbb{Z}.
+\]
+(ii) We have the useful Euler’s criterion:
+\[
+\left( \frac{a}{p} \right) \equiv a^{\frac{p-1}{2}} \pmod{p} \quad \forall a \in \mathbb{Z}.
+\]
+(iii) The Legendre symbol obeys the quadratic reciprocity law, which we will prove later:
+\[
+\left( \frac{l}{p} \right) = \left( \frac{p}{l} \right) \cdot (-1)^{\frac{p-1}{2} \cdot \frac{l-1}{2}} \quad \text{for } p \neq l \text{ primes } \neq 2.
+\]
+(iv) In addition to quadratic reciprocity we have the two supplement theorems:
+\[
+\left( \frac{-1}{p} \right) = (-1)^{\frac{p-1}{2}}, \quad \left( \frac{2}{p} \right) = (-1)^{\frac{p^2-1}{8}}.
+\]
+\textbf{Proof.} For \( a \in \mathbb{F}_p^* \) choose \( y \in \overline{\mathbb{F}}_p \) (alg. closure) with \( y^2 = a \). Then
+
+\[
+y^{p-1} = (y^2)^{\frac{p-1}{2}} = a^{\frac{p-1}{2}} = \pm 1 \quad \text{(Fermat)}.
+\]
+
+In other words:
+\[
+\left( \frac{a}{p} \right) = 1 \quad \iff \quad y \in \mathbb{F}_p^* \quad \iff \quad y^{p-1} = 1 \quad \iff \quad a^{\frac{p-1}{2}} = 1 \in \mathbb{F}_p
+\]
+The second equivalence is due to the fact that the elements \( x \in \mathbb{F}_p^* \) are precisely the solutions to \( x^{p-1} = 1 \). 
+This shows Euler’s criterion (ii) from which (i) follows.
+
+
+State and show when a prime completely splits in \( \mathbb{Q}(\sqrt{a}) \) with the help of Legrende's symbol
+
+Theorem 8.11. 
+For \( a \in \mathbb{Z} \) squarefree and a prime \( p \mid 2a \) we have
+
+\[
+\left( \frac{a}{p} \right) = +1 \iff p \text{ is completely split in } \mathbb{Q}(\sqrt{a}),
+\]
+i.e. \( (p) = \mathfrak{p}_1 \cdot \mathfrak{p}_2 \) for prime ideals \( \mathfrak{p}_1 \neq \mathfrak{p}_2 \) (with \( e_i = f_i = 1 \)).
+
+Proof: 
+Consider \( \mathbb{Z}[\sqrt{a}] \), the conductor is \( \mathcal{F} \mid 2 \) (depending on \( a \equiv \pm1 \mod 4 \)). 
+Thus, theorem 8.8 applies for all \( p \neq 2 \), and
+\[
+\left( \frac{a}{p} \right) = +1 \iff \exists y \in \mathbb{Z} : a \equiv y^2 \mod p \iff X^2 \equiv (X-y)(X+y) \mod p
+\]
+(\( (X-y) \neq (X+y) \) different since \( y \neq -y \mod p \quad (p \neq 2) \))
+\[
+\left( \frac{a}{p} \right) = -1 \iff X^2-a \text{ is irreducible mod } p \iff (p) \text{ is prime}
+\]
+\[
+\left( \frac{a}{p} \right) = 0 \iff p \mid a \iff X^2-a = X^2 \mod p \iff (p) = p^2
+\]
+
+
+Show that the Galois Group acts transitively on the prime ideals above \( p \).
+
+Proposition. 
+The Galois group \( G \) acts transitively on the set of all prime ideals \(\mathfrak{B}\) of \(\mathcal{O}\) lying above \( p \), i.e., 
+these prime ideals are all conjugates of each other.
+
+Proof.
+Let \(\mathfrak{B}\) and \(\mathfrak{B}'\) be two prime ideals above \( p \). Assume \(\mathfrak{B}' \neq \sigma \mathfrak{B}\) 
+for any \(\sigma \in G\). By the Chinese remainder theorem there exists \( x \in \mathcal{O} \) such that 
+
+\[
+x \equiv 0 \pmod{\mathfrak{B}'} \quad \text{and} \quad x \equiv 1 \pmod{\sigma \mathfrak{B}} \quad \text{for all } \sigma \in G.
+\]
+
+Then the norm \( N_{L|K}(x) = \prod_{\sigma \in G} \sigma x \) belongs to \(\mathfrak{B}' \cap \mathcal{O} = p\). 
+On the other hand, \( x \not\in \sigma \mathfrak{B} \) for any \(\sigma \in G\), hence \(\sigma x \not\in \mathfrak{B}\) 
+for any \(\sigma \in G\). Consequently \(\prod_{\sigma \in G} \sigma x \not\in \mathfrak{B} \cap \mathcal{O} = p\), a contradiction.
+
+
+
+Define the decomposition group \& field and explain some implications 
+
+If \(\mathfrak{B}\) is a prime ideal of \(\mathcal{O}\), then the subgroup 
+\[
+G_{\mathfrak{B}} = \{ \sigma \in G \mid \sigma \mathfrak{B} = \mathfrak{B} \}
+\]
+
+is called the decomposition group of \(\mathfrak{B}\) over \(K\). The fixed field
+\[
+Z_{\mathfrak{B}} = \{ x \in L \mid \sigma x = x \quad \text{for all } \sigma \in G_{\mathfrak{B}} \}
+\]
+
+is called the decomposition field of \(\mathfrak{B}\) over \(K\).
+
+The decomposition group encodes in group-theoretic language the number of different prime ideals into which a prime ideal \(\mathfrak{p}\) of 
+\(\mathcal{O}\) decomposes in \(\mathcal{O}\). 
+For if \(\mathfrak{B}\) is one of them and \(\sigma\) varies over a system of representatives of the cosets in \(G / G_{\mathfrak{B}}\), 
+then \(\sigma \mathfrak{B}\) varies over the different prime ideals above \(\mathfrak{p}\), each one occurring precisely once, 
+i.e., their number equals the index \((G : G_{\mathfrak{B}})\). In particular, one has
+
+\[
+G_{\mathfrak{B}} = 1 \iff Z_{\mathfrak{B}} = L \iff \mathfrak{p} \text{ is totally split},
+\]
+\[
+G_{\mathfrak{B}} = G \iff Z_{\mathfrak{B}} = K \iff \mathfrak{p} \text{ is nonsplit}.
+\]
+
+The decomposition group of a prime ideal \(\sigma \mathfrak{B}\) conjugate to \(\mathfrak{B}\) is the conjugate subgroup
+\[
+G_{\sigma \mathfrak{B}} = \sigma G_{\mathfrak{B}} \sigma^{-1}.
+\]
+
+In fact, for \(\tau \in G\), one has the equivalences
+\[
+\tau \in G_{\sigma \mathfrak{B}} \iff \tau \sigma \mathfrak{B} = \sigma \mathfrak{B} \iff \sigma^{-1} \tau \sigma \mathfrak{B} = \mathfrak{B}
+\]
+\[
+\iff \sigma^{-1} \tau \sigma \in G_{\mathfrak{B}} \iff \tau \in \sigma G_{\mathfrak{B}} \sigma^{-1}.
+\]
+
+Show how prime splitting simplifies in Galois extensions
+
+
+In the Galois case, the inertia degrees \( f_1, \ldots, f_r \) and the ramification indices \( e_1, \ldots, e_r \) in the prime decomposition
+\[
+\mathfrak{p} = \mathfrak{B}_1^{e_1} \cdots \mathfrak{B}_r^{e_r}
+\]
+
+of a prime ideal \(\mathfrak{p}\) of \(K\) are both independent of \(i\),
+\[
+f_1 = \cdots = f_r = f, \quad e_1 = \cdots = e_r = e.
+\]
+
+In fact, writing \(\mathfrak{B} = \mathfrak{B}_1\), we find \(\mathfrak{B}_i = \sigma_i \mathfrak{B}\) for suitable \(\sigma_i \in G\), 
+and the isomorphism \(\sigma_i : \mathcal{O} \to \mathcal{O}\) induces an isomorphism
+\[
+\mathcal{O}/\mathfrak{B} \xrightarrow{\sim} \mathcal{O}/\sigma_i \mathfrak{B}, \quad a \mod \mathfrak{B} \mapsto \sigma_i a \mod \sigma_i \mathfrak{B},
+\]
+
+so that
+\[
+f_i = [\mathcal{O}/\sigma_i \mathfrak{B} : o/\mathfrak{p}] = [\mathcal{O}/\mathfrak{B} : o/\mathfrak{p}], \quad i = 1, \ldots, r.
+\]
+
+Furthermore, since \(\sigma_i (p \mathcal{O}) = p \mathcal{O}\), we deduce from
+\[
+\mathfrak{B}^e \mid p \mathcal{O} \iff \sigma_i (\mathfrak{B}^e) \mid \sigma_i (p \mathcal{O}) \iff (\sigma_i \mathfrak{B})^e \mid p \mathcal{O}
+\]
+the equality of the \( e_i, \, i = 1, \ldots, r \). 
+Thus the prime decomposition of \(\mathfrak{p}\) in \(\mathcal{O}\) takes on the following simple form in the Galois case:
+\[
+\mathfrak{p} = \left( \prod_{\sigma} \sigma \mathfrak{B} \right)^e,
+\]
+where \(\sigma\) varies over a system of representatives of \(G/G_{\mathfrak{B}}\). 
+
+
+
+State the significance of the decomposition field in regard to the ramification and inertia degree:
+
+Let \( \mathfrak{B}_Z = \mathfrak{B} \cap Z_\mathfrak{B} \) be the prime ideal of \( Z_\mathfrak{B} \) below \( \mathfrak{B} \).
+Then we have:
+(i) \( \mathfrak{B}_Z \) is nonsplit in \( L \), i.e., \( \mathfrak{B} \) is the only prime ideal of \( L \) above \( \mathfrak{B}_Z \).
+(ii) \( \mathfrak{B} \) over \( Z_\mathfrak{B} \) has ramification index \( e \) and inertia degree \( f \).
+(iii) The ramification index and the inertia degree of \( \mathfrak{B}_Z \) over \( K \) both equal 1.
+
+Proof.
+(i) 
+Since \( G(L | \mathbb{Z}_{\mathfrak{p}}) = G_{\mathfrak{P}} \), the prime ideals above \(\mathfrak{P}_{\mathbb{Z}}\) 
+are the \(\sigma \mathfrak{P}\), for \(\sigma \in G(L | \mathbb{Z}_{\mathfrak{p}})\), and they are all equal to \(\mathfrak{P}\).
+(ii) 
+Since in the Galois case, ramification indices and inertia degrees are independent of the prime divisor, 
+the fundamental identity in this case reads
+\[
+n = efr,
+\]
+where \( n := \# G, \, r := (G : G_{\mathfrak{p}}) \). 
+We see therefore that \( \# G_{\mathfrak{p}} = [L : \mathbb{Z}_{\mathfrak{p}}] = ef \). 
+Let \( e', \) resp. \( e'' \), be the ramification index of \(\mathfrak{B}\) over 
+\(\mathbb{Z}_{\mathfrak{p}},\) resp. of \(\mathfrak{B}_Z\) over \(K\).
+
+Then \(\mathfrak{p} = \mathfrak{B}^{e'}_Z \cdots \) in \( \mathbb{Z}_{\mathfrak{p}} \) and \(\mathfrak{B}_Z = \mathfrak{B}^{e'} \) in \( L \), 
+so that \(\mathfrak{p} = \mathfrak{B}^{e' e''} \cdots\), i.e., \( e = e' e'' \). 
+
+One also obviously gets the analogous identity for the inertia degrees \( f = f' f'' \). 
+The fundamental identity for the decomposition of \(\mathfrak{B}_Z\) in \(L\) then reads 
+\([L : \mathbb{Z}_{\mathfrak{p}}] = e' f'\), i.e., we have \( e' f' = ef\), and therefore \( e' = e, \, f' = f, \, e'' = f'' = 1 \).
+
+
+Elaborate on the homomorphism defining the inertia group:
+
+The ramification index \( e \) and the inertia degree \( f \) admit a further interesting group-theoretic interpretation. 
+Since \( \sigma \mathcal{O} = \mathcal{O} \) and \( \sigma \mathfrak{B} = \mathfrak{B} \), 
+every \( \sigma \in G_{\mathfrak{p}} \) induces an automorphism
+\[
+\overline{\sigma} : \mathcal{O}/\mathfrak{B} \longrightarrow \mathcal{O}/\mathfrak{B}, \quad a \mod \mathfrak{B} \mapsto \sigma a \mod \mathfrak{B},
+\]
+of the residue class field \(\mathcal{O}/\mathfrak{B}\). 
+Putting \(\kappa(\mathfrak{B}) = \mathcal{O}/\mathfrak{B}\) and \(\kappa(\mathfrak{p}) = o/\mathfrak{p}\), we obtain the
+\( \textbf{(9.4) Proposition.} \)
+The extension \(\kappa(\mathfrak{B})|\kappa(\mathfrak{p})\) is normal and admits a surjective homomorphism
+\[
+G_{\mathfrak{p}} \longrightarrow G(\kappa(\mathfrak{B})|\kappa(\mathfrak{p})).
+\]
+
+
+Define the inertia group/field and the SES combining it with the decomposition group
+
+\( \textbf{(9.5) Definition.} \) 
+The kernel \( I_{\mathfrak{p}} \subseteq G_{\mathfrak{p}} \) of the homomorphism
+
+\[
+G_{\mathfrak{p}} \longrightarrow G(\kappa(\mathfrak{B})|\kappa(\mathfrak{p}))
+\]
+is called the inertia group of \(\mathfrak{B}\) over \( K \). The fixed field
+\[
+T_{\mathfrak{p}} = \{ x \in L \mid \sigma x = x \text{ for all } \sigma \in I_{\mathfrak{p}} \}
+\]
+is called the inertia field of \(\mathfrak{B}\) over \( K \).
+
+This inertia field \( T_{\mathfrak{p}} \) appears in the tower of fields
+\[
+K \subseteq Z_{\mathfrak{p}} \subseteq T_{\mathfrak{p}} \subseteq L,
+\]
+
+and we have the exact sequence
+
+\[
+1 \longrightarrow I_{\mathfrak{p}} \longrightarrow G_{\mathfrak{p}} \longrightarrow G(\kappa(\mathfrak{B})|\kappa(\mathfrak{p})) \longrightarrow 1.
+\]
+
+
+Prove the special relations of the prime splittings for the decomposition/inertia field
+
+\( \textbf{(9.6) Proposition.} \) 
+The extension \( T_{\mathfrak{p}} | Z_{\mathfrak{p}} \) is normal, and one has
+\[
+G(T_{\mathfrak{p}} | Z_{\mathfrak{p}}) \cong G(\kappa(\mathfrak{B})|\kappa(\mathfrak{p})), \quad G(L|T_{\mathfrak{p}}) = I_{\mathfrak{B}}.
+\]
+
+If the residue field extension \(\kappa(\mathfrak{B})|\kappa(\mathfrak{p})\) is separable, then one has
+\[
+\#I_{\mathfrak{B}} = [L : T_{\mathfrak{p}}] = e, \quad (G_{\mathfrak{p}} : I_{\mathfrak{B}}) = [T_{\mathfrak{p}} : Z_{\mathfrak{p}}] = f.
+\]
+
+In this case one finds for the prime ideal \(\mathfrak{B}_T\) of \( T_{\mathfrak{p}} \) below \(\mathfrak{B}\):
+(i) The ramification index of \(\mathfrak{B}\) over \(\mathfrak{B}_T\) is \( e \) and the inertia degree is \( 1 \).
+(ii) The ramification index of \(\mathfrak{B}_T\) over \(\mathfrak{B}_Z\) is \( 1 \), and the inertia degree is \( f \).
+
+Put differently
+
+\( K \xrightarrow[1]{1} Z_\mathfrak{B} \xrightarrow[1]{f} T_\mathfrak{B} \xrightarrow[e]{f} L \).
+
+Proof. The first two claims follow from the identity \( \#G_{\mathfrak{p}} = ef \). So we only have to show statements (i) and (ii). Using the fundamental identity, they all follow from \(\kappa(\mathfrak{B}) = \kappa(\mathfrak{B}_Z)\). As the inertia group \( I_{\mathfrak{B}} \) of \(\mathfrak{B}\) over \( K \) is also the inertia group of \(\mathfrak{B}\) over \( T_{\mathfrak{p}} \), it follows from an application of proposition (9.4) to the extension \( L|T_{\mathfrak{p}} \) that \( G(\kappa(\mathfrak{B})|\kappa(\mathfrak{B}_T)) = 1 \), hence \(\kappa(\mathfrak{B}) = \kappa(\mathfrak{B}_T)\). 
+
+
+State the related results for the integral basis of \( \mathcal{O}_{\mathbb{Q}(\zeta_n)} \).
+
+\( \textbf{(10.1) Lemma.} \) 
+Let \( n \) be a prime power \(\ell^\nu\) and put \(\lambda = 1 - \zeta\). 
+Then the principal ideal \((\lambda)\) in the ring \(\mathfrak{o}\) of integers of \(\mathbb{Q}(\zeta)\) is a prime ideal of degree 1, and we have
+\[
+\ell \, \mathfrak{o} = (\lambda)^d, \quad \text{where} \quad d = \varphi(\ell^\nu) = [\mathbb{Q}(\zeta) : \mathbb{Q}].
+\]
+Furthermore, the basis \(1, \zeta, \ldots, \zeta^{d-1}\) of \(\mathbb{Q}(\zeta)|\mathbb{Q}\) has the discriminant
+\[
+d(1, \zeta, \ldots, \zeta^{d-1}) = \pm \ell^s, \quad s = \ell^{\nu-1}(\nu \ell - \nu - 1).
+\]
+
+\( \textbf{(10.2) Proposition.} \) 
+A \(\mathbb{Z}\)-basis of the ring \(\mathfrak{o}\) of integers of \(\mathbb{Q}(\zeta)\) is given by \(1, \zeta, \ldots, \zeta^{d-1}\), 
+with \(d = \varphi(n)\), in other words,
+\[
+\mathfrak{o} = \mathbb{Z} + \mathbb{Z}\zeta + \cdots + \mathbb{Z}\zeta^{d-1} = \mathbb{Z}[\zeta].
+\]
+
+
+State how primes decompose in \( \mathcal{O}_{\mathbb{Q}(\zeta_n)} \) and extend this to ramified primes
+and totally split ones.
+
+Let \( n = \prod_p p^{\nu_p} \) be the prime factorization of \( n \) and, for every prime number \( p \), 
+let \( f_p \) be the smallest positive integer such that
+
+\[
+p^{f_p} \equiv 1 \pmod{n/p^{\nu_p}}.
+\]
+
+Then one has in \(\mathbb{Q}(\zeta)\) the factorization
+
+\[
+p = (\mathfrak{p}_1 \cdots \mathfrak{p}_r)^{\varphi(p^{\nu_p})},
+\]
+
+where \(\mathfrak{p}_1, \ldots, \mathfrak{p}_r\) are distinct prime ideals, all of degree \( f_p \).
+
+\( \textbf{(10.4) Corollary.} \) 
+A prime number \( p \) is ramified in \(\mathbb{Q}(\zeta)\) if and only if
+\[
+n \equiv 0 \pmod{p},
+\]
+except in the case where \( p = 2 = (4, n) \). A prime number \( p \neq 2 \) is totally split in \(\mathbb{Q}(\zeta)\) if and only if
+\[
+p \equiv 1 \pmod{n}.
+\]
+
+
+
+Derive Gauss reciprocity law with the help of cyclotomic fields
+
+\( \textbf{(10.5) Proposition.} \). 
+
+Let \(\ell\) and \(p\) be odd prime numbers, \(\ell^* = (-1)^{\frac{\ell-1}{2}} \ell\), 
+and \(\zeta\) a primitive \(\ell\)-th root of unity. Then one has:
+
+\[
+p \text{ is totally split in } \mathbb{Q}(\sqrt{\ell^*}) \iff p \text{ splits in } \mathbb{Q}(\zeta) \text{ into an even number of prime ideals.}
+\]
+
+It suffices to show that
+\[
+\left( \frac{\ell^*}{p} \right) = \left( \frac{p}{\ell} \right).
+\]
+
+In fact, the completely elementary result \(\left( \frac{-1}{p} \right) = (-1)^{\frac{p-1}{2}}\) (see § 8, p. 51) then gives
+\[
+\left( \frac{p}{\ell} \right) = \left( \frac{\ell^*}{p} \right) = \left( \frac{-1}{p} \right)^{\frac{\ell-1}{2}} \left( \frac{\ell}{p} \right) 
+= \left( \frac{\ell}{p} \right)(-1)^{\frac{p-1}{2} \cdot \frac{\ell-1}{2}}.
+\]
+
+By (8.5) and (10.5), we know that \(\left( \frac{\ell^*}{p} \right) = 1\) if and only if \( p \) decomposes in the field \(\mathbb{Q}(\zeta)\) of 
+\(\ell\)-th roots of unity into an even number of prime ideals. 
+By (10.3), this number is \( r = \frac{\ell-1}{f} \), where \( f \) is the smallest positive integer such that \( p^f \equiv 1 \mod \ell \), 
+i.e., \( r \) is even if and only if \( f \) is a divisor of \(\frac{\ell-1}{2}\). 
+But this is tantamount to the condition \( p^{(\ell-1)/2} \equiv 1 \mod \ell \). 
+Since an element in the cyclic group \(\mathbb{F}_\ell^*\) has an order dividing \(\frac{\ell-1}{2}\) if and only if 
+it belongs to \(\mathbb{F}_\ell^{*2}\), the last congruence is equivalent to \(\left( \frac{p}{\ell} \right) = 1\). 
+
+So we do have \(\left( \frac{\ell^*}{p} \right) = \left( \frac{p}{\ell} \right)\) as claimed.

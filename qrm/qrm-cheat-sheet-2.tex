@@ -1,0 +1,214 @@
+Explain in the Gaussian case how to obtain the distribution of Student’ized resid-
+uals can be derived? What is the problem with a simple standardization?
+
+Under the assumptions on the residuals, namely
+
+1. Expectation: \(\mathbb{E}(\hat{\epsilon}) = 0\)
+2. Variance: \(\text{Var}(\hat{\epsilon}_i) = \sigma^2 (1 - h_{ii})\) where \(h_{ii}\) is the \(i\)-th diagonal entry of \(H = \mathbf{X}(\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top\).
+3. Covariance: \(\text{Cov}(\hat{\epsilon}) = \sigma^2 (I - H)\)
+
+With normally distributed errors
+
+1. Distribution of Residuals: \(\hat{\epsilon} \sim N(0, \sigma^2 (I - H))\)
+2. Distribution of Residual Sum of Squares: \(\frac{\hat{\epsilon}^\top \hat{\epsilon}}{\sigma^2} = (n - p) \frac{\hat{\sigma}^2}{\sigma^2} \sim \chi^2_{n - p}\)
+3. Independence: \(\hat{\epsilon}^\top \hat{\epsilon} = (n - p) \hat{\sigma}^2\) and \(\hat{\beta}\) are independent.
+
+In order to remove heteroscedasticity, residuals may be standardized (simple approach): 
+
+\( r_i = \frac{\hat{\epsilon}_i}{\hat{\sigma} \sqrt{1 - h_{ii}}} \).
+
+However, since numerator and denominator are dependent, an analysis of the distribution is not easy.
+
+An alternative are Student'ized residuals with a different estimator for \(\sigma\):
+
+Suppose that errors are all normally distributed.
+Removing the \(i\)-th response variable and covariate data, we obtain \(\mathbf{y}_{(i)}\) and \(\mathbf{X}_{(i)}\).
+The corresponding least squares estimator (LSE) and estimator for \(\sigma^2\) that neglect the \(i\)-th observation are
+
+\[
+\hat{\beta}_{(i)} = \left( \mathbf{X}_{(i)}^\top \mathbf{X}_{(i)} \right)^{-1} \mathbf{X}_{(i)}^\top \mathbf{y}_{(i)}
+\]
+\[
+\hat{\sigma}^2_{(i)} = \frac{1}{n - p - 1} \sum_{j = 1, 2, \ldots, n, \, j \neq i} \left( y_j - \mathbf{x}_j^\top \hat{\beta}_{(i)} \right)^2.
+\]
+
+In particular,
+\[
+\hat{\sigma}^2_{(i)} \quad \perp \quad \hat{\epsilon}_{(i)} := y_i - \mathbf{x}_i^\top \hat{\beta}_{(i)}.
+\]
+
+Using independence and 
+\(\hat{\epsilon}_{(i)} \sim N \left(0, \sigma^2 \left(1 + \mathbf{x}_i^\top \left( \mathbf{X}_{(i)}^\top \mathbf{X}_{(i)} \right)^{-1} \mathbf{x}_i \right)\right)\),
+
+\(
+\left( n - p - 1 \right) \frac{\hat{\sigma}^2_{(i)}}{\sigma^2} \sim \chi^2_{n - p - 1},
+\)
+we get the Student'ized residuals
+\[
+r_i^* = \frac{\hat{\epsilon}_{(i)}}{\hat{\sigma}_{(i)} \sqrt{1 + \mathbf{x}_i^\top \left( \mathbf{X}_{(i)}^\top \mathbf{X}_{(i)} \right)^{-1} \mathbf{x}_i}} \sim t_{n - p - 1}.
+\]
+
+
+In the context of hypothesis testing in the Gaussian linear model. 
+What are general linear hypotheses? 
+
+General linear hypotheses are specified as follows:
+\[ H_0: C\beta = d \quad \text{vs} \quad H_1: C\beta \neq d \]
+
+with \( \mathbf{C} \in \mathbb{R}^{r, p} \) with \( \text{rk}(\mathbf{C}) = r \leq p \), i.e., \( r \) linearly independent conditions are tested.
+
+Test of significance: 
+\( H_0: \beta_j = 0 \quad \text{vs} \quad H_1: \beta_j \neq 0 \),
+with corresponding
+\( \mathbf{C}^\top = (\delta_{i, j+1})_i \)
+
+Composite test:
+\( H_0: \beta_1 = 0 \quad \text{vs} \quad H_1: \beta_1 \neq 0, \, \beta_1 = (\beta_1, \beta_2, \ldots, \beta_r)^\top \)
+
+\[ \mathbf{C} = \begin{pmatrix}
+0 & 1 & 0 & \cdots & 0 & \cdots & 0 \\
+0 & 0 & 1 & \cdots & 0 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots & 0 \\
+0 & 0 & 0 & \cdots & 1 & 0 \\
+\end{pmatrix} \]
+
+Test of equality:
+\( H_0: \beta_j - \beta_r = 0 \quad \text{vs} \quad H_1: \beta_j - \beta_r \neq 0 \)
+
+\[ \mathbf{C}^\top = (\delta_{i, j+1} - \delta_{i, r+1})_i \]
+
+A general drawback is that the LSE error is larger.
+
+
+
+In the context of hypothesis testing in the Gaussian linear model.
+Describe statistics to construct tests, e.g. \( SSE \)
+and the corresponding distribution.
+
+The least squares estimator under the linear constraint \(C \beta = d\) is given by
+
+\(
+\hat{\beta}^R = \hat{\beta} - (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{C}^\top \left( \mathbf{C} (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{C}^\top \right)^{-1} ( \mathbf{C} \hat{\beta} - d )
+\)
+
+The unrestricted residual sum of squares is
+
+\(
+SSE = \hat{\epsilon}^\top \hat{\epsilon} = (n - p) \hat{\sigma}^2
+\)
+
+The residual sum of squares under the hypothesis \(H_0\) equals
+\(
+SSE + \Delta SSE
+\)
+with
+
+\(
+\Delta SSE = (\mathbf{C} \hat{\beta} - d)^\top \left( \mathbf{C} (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{C}^\top \right)^{-1} ( \mathbf{C} \hat{\beta} - d )
+\)
+the test statistic is then \( \frac{\delta \text{SSE}}{\text{SSE}} \)
+and under the null hypothesis \( H_0 \), it is additionally known that
+
+\(
+\frac{1}{\sigma^2} \Delta SSE \sim \chi^2_r
+\)
+
+We have already seen that, in any case, \(\frac{1}{\sigma^2} SSE \sim \chi^2_{n - p}\). 
+This implies, due to independence, that under the hypothesis \( H_0 \):
+
+\(
+F := \frac{n - p}{r} \cdot \frac{\Delta SSE}{SSE} \sim F_{r, n - p}
+\)
+called an \( F \)-distribution.
+
+
+The hypothesis \( H_0 \) is rejected, if \( F \) is large:
+Since the distribution of \( F \) under \( H_0 \) is known, we obtain a test of level \(\alpha \in (0, 1)\) by rejecting \( H_0 \), if
+\(
+F > F_{r, n - p}(1 - \alpha).
+\)
+Here, \( F_{r, n - p}(1 - \alpha) \) denotes the \((1 - \alpha)\)-quantile of an \( F \)-distribution with \( r \) and \( n - p \) degrees of freedom.
+
+
+In the context of hypothesis testing in the Gaussian linear model.
+How can one use \( \frac{\Delta \text{SSE}}{\text{SSE}} \) this to set up a test of a given size? 
+
+It simplifies under some assumptions,
+given the estimators 
+
+\( \hat{\text{Cov}(\mathbb{\beta})} = \hat{\sigma}^2 (\mathbb{X}^T\mathbb{X})^{-1}\)
+and \( \hat{\sigma}^2 = \frac{1}{n - p}\varepsilon^T\varepsilon \)
+
+denote as the diagonal entries of the covariance \( \text{se}_j \coloneqq \sqrt{\hat{\text{Cov}(\mathbb{\beta})}}\)
+
+Tests at level \(\alpha\) can be constructed then as follows:
+
+1. Test of significance \(H_0 : \beta_j = 0\) vs \(H_1 : \beta_j \neq 0\)
+
+Under \(H_0\), the test statistic \(t_j = \frac{\hat{\beta}_j}{se_j}\) is \(t_{n - p}\)-distributed, and the null hypothesis \(H_0\) is rejected, if \(|t_j| > t_{n - p}(1 - \alpha/2)\) where \(t_{n - p}(1 - \alpha/2)\) denotes the \((1 - \alpha/2)\)-quantile of the \(t\)-distribution with \(n - p\) degrees of freedom.
+
+2. Composite test \(H_0 : \beta_1 = 0\) vs \(H_1 : \beta_1 \neq 0\)
+
+Under \(H_0\), the test statistic \(F = \frac{1}{r} \hat{\beta}_1^\top \text{Cov}(\hat{\beta}_1)^{-1} \hat{\beta}_1\) is \(F_{r, n - p}\)-distributed, and the null hypothesis \(H_0\) is rejected, if \(F > F_{r, n - p}(1 - \alpha)\) where \(F_{r, n - p}(1 - \alpha)\) denotes the \((1 - \alpha)\)-quantile of the \(F\)-distribution with \(r\) and \(n - p\) degrees of freedom.
+
+3. Test of equality \(H_0 : \beta_1 = \beta_2 = \cdots = \beta_k = 0\) vs \(H_1 : \text{at least one} \ \beta_1, \ldots, \beta_k \neq 0\)
+
+Under \(H_0\), the test statistic \(F = \frac{n - p}{k} \cdot \frac{R^2}{1 - R^2}\) is \(F_{k, n - p}\)-distributed, and the null hypothesis \(H_0\) is rejected, if \(F > F_{k, n - p}(1 - \alpha)\) where \(F_{k, n - p}(1 - \alpha)\) denotes the \((1 - \alpha)\)-quantile of the \(F\)-distribution with \(k\) and \(n - p\) degrees of freedom.
+
+
+Applicable distributions are the Gamma, \(\chi^2\), Beta, Fisher and Student's t-distribution
+
+
+The following results hold for normally distributed errors and asymptotically for large sample sizes.
+
+1. Confidence interval for \(\beta_j\)
+A confidence interval for \(\beta_j\) of level \(1 - \alpha\) is given by
+
+\(
+[\hat{\beta}_j - t_{n - p}(1 - \alpha/2) \cdot se_j, \hat{\beta}_j + t_{n - p}(1 - \alpha/2) \cdot se_j]
+\)
+
+2. Confidence ellipsoid for subvector \(\beta_1\)
+A confidence ellipsoid for \(\beta_1 = (\beta_1, \beta_2, \ldots, \beta_r)^\top\) of level \(1 - \alpha\) is given by
+
+\(
+\left\{ \beta_1 : \frac{1}{r} (\hat{\beta}_1 - \beta_1)^\top \widehat{\text{Cov}}(\hat{\beta}_1)^{-1} (\hat{\beta}_1 - \beta_1) \leq F_{r, n - p}(1 - \alpha) \right\}
+\)
+
+In the context of hypothesis testing in the Gaussian linear model.
+What are the prediction/confidence intervals for the future observation \( \hat{y}_0 \)
+
+Assuming Gaussian errors, a confidence interval for \(\mu_0 = \mathbb{E}(y_0)\) of a future observation \(y_0\) 
+at location \(\mathbf{x}_0\) at level \(1 - \alpha\) is given by
+
+\[
+\mathbf{x}_0^\top \hat{\beta} \pm t_{n - p}(1 - \alpha/2) \hat{\sigma} \sqrt{\mathbf{x}_0^\top (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{x}_0}
+\]
+
+derived from \( \mathbb{x}^T_0\hat{\mathbb{\beta}} \sim \mathcal{N}(\mathbb{x}^T_0\hat{\mathbb{\beta}} = \mu_0, \sigma^2 \mathbb{x}_0^T(\mathbb{X}^T\mathbb{X})^{-1}\mathbb{x}_0 \)
+where \( \hat{\sigma} \sim \chi^2\) is used for \( \sigma \).
+
+
+Closely related is the issue of a prediction interval for \( y_0 \), i.e., an estimated interval such that (independently of the true value of the parameters \(\beta\)) the realization of \( y_0 \) falls into this interval with probability at least \( 1 - \alpha \).
+This question can be solved as follows:
+
+The prediction error 
+\[ \hat{\epsilon}_0 = y_0 - \mathbf{x}_0^\top \hat{\beta} = \mathbf{x}_0^\top \beta + \epsilon_0 - \mathbf{x}_0^\top \hat{\beta} = \mu_0 + \epsilon_0 - \mathbf{x}_0^\top \hat{\beta}\] 
+has mean 0, and the summands \( \epsilon_0 \) and \( \mathbf{x}_0^\top \hat{\beta} \) are normally distributed and independent. Thus,
+
+\(
+\hat{\epsilon}_0 \sim N \left( 0, \sigma^2 + \sigma^2 \mathbf{x}_0^\top (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{x}_0 \right)
+\)
+
+Since \( \hat{\sigma}^2 \) is both independent of \( \epsilon_0 \) and \(\hat{\beta}\), it is independent of \( \hat{\epsilon}_0 \), implying that
+
+\(
+T := \frac{\hat{\epsilon}_0}{\hat{\sigma} \sqrt{1 + \mathbf{x}_0^\top (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{x}_0}} \sim t_{n-p}
+\)
+
+Obviously, \( P(|T| \leq t_{n-p}(1 - \alpha/2)) = 1 - \alpha \). Solving for bounds on \( y_0 \) produces the sought prediction interval,
+wich is
+\[
+\mathbf{x}_0^\top \hat{\beta} \pm t_{n-p} \cdot \hat{\sigma} \sqrt{1 + \mathbf{x}_0^\top (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{x}_0}
+\]
+for a future observation \( y_0 \) at location \( \mathbf{x}_0 \) at level \( 1 - \alpha \)

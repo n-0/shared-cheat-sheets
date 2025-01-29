@@ -1,0 +1,397 @@
+What is the Eisenberg Noe Model for financial networks
+
+Financial institutions \( N = \{ 1, 2, \ldots, n \} \)
+Society is additional node \( 0 \)
+Nominal liability matrix: \( (\bar{p}_{ij})_{i,j=0,1,2,\ldots,n} \)
+\(
+\bar{p}_i = \sum_{j=0}^{n} \bar{p}_{ij}
+\)
+
+Relative liabilities:
+\[
+a_{ij} = 
+\begin{cases} 
+\frac{\bar{p}_{ij}}{\bar{p}_i}, & \bar{p}_i > 0, \\ 
+0, & \bar{p}_i = 0.
+\end{cases}
+\]
+
+Fixed point / equilibrium:
+Liability payments
+=
+minimum of promised payments and
+available resources
+
+INCLUDE IMAGE FROM 472
+
+Call the promised payments of entity \( i \), \( \bar{p}_i \), and \( p_j(x) \) the amount of capital \( i \) received by \( j \)
+then \( a_{ji} \) is the fractional amount of wealth that should be paid in case that not all promises are kept.
+Additionally \( x_i \) represents the initial capital of \( i \).
+\(p_i(x) = \bar{p}_i \wedge \left( \sum_{j=0}^n p_j(x) a_{ji} + x_i \right), \quad i = 1, 2, \ldots, n \)
+\( p_0(x) = \bar{p}_0 \)
+
+Denote the own founds of \( i \) by \( e_i \) then
+\( e_i(x) = \sum_{j \neq i} p_j(x) a_{ji} + x_i - \bar{p}_i, \quad i = 0, 1, 2, \ldots, n \)
+
+Let \( X \in L^0(\mathbb{R}^n) \) be the random endowment of the financial institutions at time \( t = 1 \) before market clearing.
+If we focus on the wealth of the society, then the relevant stochastic outcome is provided by the random field
+\( Y_k := e_0(X + k), \quad k \in \mathbb{R}^n. \)
+
+
+What is a set-valued systemic risk measure? State elementary properties. How are
+cash-invariant allocation rules related to regulatory prices of capital for different
+entities?
+
+Systemic risk is measured by the set of allocations of additional capital that lead to acceptable outcomes.
+
+Letting \(\mathcal{P}(\mathbb{R}^n; \mathbb{R}_+) := \{ B \subseteq \mathbb{R}^n \mid B = B + \mathbb{R}^n_+ \}\) 
+be the collection of upper sets with ordering cone \(\mathbb{R}_+\), we call the function 
+
+\(R: \mathcal{Y} \times \mathbb{R}^n \to \mathcal{P}(\mathbb{R}^n; \mathbb{R}_+^n)\)
+a systemic risk measure, if for some acceptance set \(\mathcal{A} \subseteq \mathcal{X}\) of a scalar monetary risk measure:
+
+\[ R(Y; k) = \{ m \in \mathbb{R}^n \mid Y_{k+m} \in \mathcal{A} \}. \]
+
+Elementary Properties:
+1. Cash-invariance:  \( R(Y; k) + m = R(Y; k - m) \)
+2. Monotonicity:  \( Y \geq Z \implies (\forall k \in \mathbb{R}^n: R(Y; k) \supseteq R(Z; k)) \)
+
+
+What are factor models? Provide examples.
+
+The value \( V_t \) of a financial position at time \( t \) is explained by the values 
+\( Z_t^1, Z_t^2, \ldots, Z_t^m \) of \( m \) risk factors at time \( t \):
+
+\[
+V_t = v(Z_t^1, Z_t^2, \ldots, Z_t^m)
+\]
+
+for a deterministic function \( v = v(z^1, \ldots, z^m) \).
+
+Factor models are a common approach in practice:
+- They are often a consequence of pricing formulas in market models.
+- Or, they are approximations of market values in multivariate regression models.
+
+They can be used for simplified calculations based on the distributions of risk factors.
+
+Examples are 
+
+Value of a call option in the Black-Scholes model:
+
+Option with maturity \( T \) and strike \( K \)
+Stock with price process \( (S_t)_{t \geq 0} \)
+\(
+C_t = v(S_t, T - t) \quad \text{with} \quad v(x, \tau) = x \Phi(d_+(x, \tau)) - e^{-r \tau} K \Phi(d_-(x, \tau))
+\)
+
+Value of a fixed-rate coupon bond:
+Coupon payments \( c_1, \ldots, c_m \) at dates \( T_1, \ldots, T_m \), \( N \) face value
+\( P(t, T_i) \) price of a zero bond with face value 1 and maturity \( T_i \) at time \( t \)
+\(
+V_t = v(P(t, T_1), \ldots, P(t, T_m)) \quad \text{for} \quad v(z^1, \ldots, z^m) = N \cdot z^m + \sum_{i: T_i \geq t} c_i \cdot z^i
+\)
+
+Present value of a cashflow stream:
+Compounded Spot Rates \( r_t^c(s), s \ge t \)
+Deterministic payments \( A_1, \ldots, A_m \) at dates \( T_1, \ldots, T_m \)
+\(
+V_t = v(r_t^c(T_1), \ldots, r_t^c(T_m)) \quad \text{for} \quad v(z^1, \ldots, z^m) = \sum_{i: T_i \geq t} A_i (1 + z^i)^{-(T_i - t)}
+\)
+
+Explain the Delta-normal approximation.
+AV@R?
+
+Assumption:
+\((\Delta Z^1, \Delta Z^2)^\top \sim \mathcal{N}_2(h\mu, h\Sigma)\)
+
+Conclusions:
+\(\mathbb{E}[\Delta Z^i] = h\mu_i, \, \text{Var}[\Delta Z^i] = h\sigma_i^2, \, i = 1, 2, \, \text{Cov}[\Delta Z^1, \Delta Z^2] = h\sigma_{1,2}\)
+\(\Delta V\) is approximately normally distributed:
+\(\mathbb{E}[\Delta V] \approx h(d_1\mu_1 + d_2\mu_2), \, \text{Var}[\Delta V] \approx h(d_1^2\sigma_1^2 + d_2^2\sigma_2^2 + 2d_1d_2\sigma_{1,2}).\)
+
+Value at Risk of the profit and loss \(\Delta V\):
+\(
+\text{V@R}_\lambda(\Delta V) = \mathbb{E}[-\Delta V] - \Phi^{-1}(\lambda)\sqrt{\text{Var}(\Delta V)}
+\)
+Here \(\Phi\) denotes the cumulative distribution function of the standard normal distribution.
+
+Similar formula for Average Value at Risk:
+\(
+\text{AV@R}_\lambda(\Delta V) = \mathbb{E}[-\Delta V] + \frac{1}{\lambda}\varphi(\Phi^{-1}(\lambda))\sqrt{\text{Var}(\Delta V)}
+\)
+Here \(\varphi\) denotes the density of the standard normal distribution.
+
+This method is called Delta-Normal approximation:
+
+
+Explain that distribution-based risk measures define both functionals on measur-
+able functions (or elements of the equivalence classes in L0 ) and on probability
+measures.
+
+Recall that a risk measure \(\rho : \mathcal{X} \to \mathbb{R}\) is called distribution-based, if
+\(
+\rho(X) = \rho(Y),
+\)
+whenever \(\mathbb{P}^X = \mathbb{P}^Y\) with respect to a reference measure \(\mathbb{P}\).
+In this case, the risk measure defines a map
+\(
+\mathcal{R}_{\rho}(\mu) := \rho(X) \text{ with } \mathbb{P}^X = \mu
+\)
+on Borel probability measures \(\mathcal{M}\).
+This motivates to consider risk measures at the level of distributions as statistical functionals 
+\(\mathcal{R}_{\rho} : \mathcal{M} \to \mathbb{R}\).
+
+
+Motivate in the iid-setting that backtesting might be formulated in terms of em-
+pirical scores. This motivates a focus on elicitable functionals.
+
+
+Background
+Validation of quantitative risk models requires backtesting in order to assess the accuracy of the forecasting methodology.
+Backtesting is the activity of comparing periodically the point predictions of a risk measure with the realized value of the variable under interest.
+
+A canonical implementation of backtesting
+Consider a statistical functional \( T = \mathcal{R}_{\rho} \), and let \( x_1, \ldots, x_n \) be a time series of point forecasts of \( T \).
+Let \( y_1, \ldots, y_n \) denote the corresponding time series of the variable of interest \( Y \) with distribution \( \mu \in \mathcal{M} \).
+The performance is assessed 'good' if - for a given scoring function \( S \) - the average score is 'small':
+
+\(
+\hat{s} = \frac{1}{n} \sum_{i=1}^{n} S(x_i, y_i)
+\)
+
+Note that for fixed \( x \) and large \( n \), the average score equals approximately the expectation
+
+\(
+\int S(x, y) \mu(dy).
+\)
+
+This criterium is only meaningful if the statistical functional \( T = \mathcal{R}_{\rho} \) is elicitable, i.e., 
+defined in a way that is consistent with the scoring function.
+
+
+Define the notion of elicitable functionals.
+
+A scoring function \( S : \mathbb{R}^2 \to [0, \infty) \) satisfies:
+
+\( S(x, y) \geq 0 \), and \( S(x, y) = 0 \iff x = y \),
+\( x \mapsto S(x, y) \) increasing for \( x > y \) and decreasing for \( x < y \),
+\( x \mapsto S(x, y) \) continuous.
+
+Elicitable Statistical Functional
+A statistical functional \( T : \mathcal{M} \to \mathbb{R} \) is elicitable on \( \mathcal{M} \), 
+if there exists a scoring function \( S \) such that for each \( \mu \in \mathcal{M} \):
+
+\(
+\int S(x, y) \mu(dy) < \infty,
+\)
+
+\(
+T(\mu) = \arg \min_{x \in \mathbb{R}} \int S(x, y) \mu(dy).
+\)
+
+(Elicitability)
+The expectation \( T(\mu) = \int y \mu(dy) \) is elicitable with respect to the scoring function \( S(x, y) = (y - x)^2 \).
+
+
+What is the \( ψ \)-weak topology?
+Let \(\psi : \mathbb{R} \to [1, \infty)\) be a continuous function which serves as gauge function, and define
+\(
+\mathcal{M}_1^\psi := \left\{ \mu \in \mathcal{M}_1 : \int \psi \, d\mu < \infty \right\}.
+\)
+
+Denote by \(C^\psi(\mathbb{R})\) the space of all continuous functions \(f\) such that \(|f| \leq c|\psi|\).
+The \(\psi\)-weak topology on a subset \(\mathcal{M} \subset \mathcal{M}_1^\psi\) is the initial topology generated by
+
+\(
+\mathcal{M} \ni \mu \mapsto \int f(y) \mu(dy) \text{ with } f \in C^\psi.
+\)
+While the weak topology is insensitive to the tails, for unbounded \(\psi\) the \(\psi\)-weak topology is finer 
+and does not neglect deviations of measures in the tails.
+
+
+Provide characterization results for distribution-based risk measures under conditions
+such as convex acceptance sets and elicitable functionals
+
+Explain heuristically that the latter characterization b) 
+follows (modulo technical details) essentially from a) and Osband’s
+observation of convex level sets.
+
+Let \(\rho\) a distribution-based risk measure.
+The acceptance set \(\mathcal{A}\) on the level of distributions is defined as:
+
+\(
+\mathcal{A} := \{\mu : \mathcal{R}_{\rho}(\mu) \leq 0\}.
+\)
+The rejection set \(\mathcal{A}^c\) on the level of distributions is given by:
+\(
+\mathcal{A}^c = \{\mu : \mathcal{R}_{\rho}(\mu) > 0\}.
+\)
+
+Observation:
+- If \(\rho\) is elicitable, then \(\mathcal{A}\) and \(\mathcal{A}^c\) are convex.
+- This follows due to convex level sets on the level of measures, see Osband (1985).
+
+Explain in more detail the methodology of conditional risk measurement in time.
+
+Distortion risk measures are an important class of risk measures that includes VaR, AVaR, RVaR, Wang premium principles, and many other examples as special cases
+Distortion risk measures are a subclass of comonotonic monetary risk measures
+
+We denote in this section by \(X\) a random variable which models losses as its positive part and wealth or gains as its negative part. 
+(This convention differs from other sections!)
+
+1. A non-decreasing function \(g : [0, 1] \to [0, 1]\) with \(g(0) = 0\) and \(g(1) = 1\) is called a distortion function
+2. On a given probability space \((\Omega, \mathcal{F}, \mathbb{P})\) we define for a distortion function \(g\) a capacity \(c := g \circ \mathbb{P}\)
+3. Provided it exists, the Choquet integral
+\(
+\rho_g(X) := \int X \, dc := \int_{-\infty}^0 (c(X > x) - 1) \, dx + \int_0^{\infty} c(X > x) \, dx
+\)
+for measurable \(X : \Omega \to \mathbb{R}\) is called the distortion risk measure of \(X\) with distortion function \(g\).
+
+
+Describe the setup for multinomial backtests.
+
+
+True loss process:
+Stochastic process \(L = (L_t)_{t=1, \ldots, n}\), whose law is unknown
+Model process:
+
+Stochastic process \(M = (M_t)_{t=1, \ldots, n}\) with known law
+Conditional distribution function \(F_{M_t \mid M_{t-1}, \ldots, M_1}\)
+
+Conditional risk measurement at \(t-1\)
+Risk measurements are computed from the model conditionally on \(M_{t-1} = L_{t-1}, \ldots, M_1 = L_1\), i.e., 
+the risk measure \(\rho_g\) is applied to the conditional distribution \(F_{M_t \mid L_{t-1}, \ldots, L_1}\)
+The result is a function of \(L_{t-1}, \ldots, L_1\) denoted by \(\rho_g^{t-1}(M_t)\)
+
+
+How can in this situation an AV@R-backtest be reduced to a joint backtest of
+multiple V@Rs?
+
+This also includes the question (TODO check if the first question is really this topic):
+How does a backtest of multiple V@R lead to a mutinomial test? Describe the
+following random variables: number of breached levels at individual time points,
+cell counts (by aggregating over time), and the resulting test statistic.
+
+A multinomial backtest for AV@R was developed by Kratz, Lok & McNeil (2018)
+Taking an equidistant partition \(\alpha_j := \frac{j}{m+1}\alpha, j = 0, 1, \ldots, m+1\), 
+of the interval \([0, \alpha]\), approximate the conditional AV@R as follows:
+
+\(
+AV@R_{\alpha}^{t-1}(M_t) = \frac{1}{\alpha} \int_0^{\alpha} V@R_{\lambda}^{t-1}(M_t) d\lambda
+\approx \frac{1}{m+1} \left( V@R_{\alpha_1}^{t-1}(M_t) + \cdots + V@R_{\alpha_{m+1}}^{t-1}(M_t) \right)
+\)
+
+The backtest considers the random number of breached levels
+\(
+X_t := \sum_{j=1}^{m+1} \mathbb{1} \left\{ L_t > V@R_{\alpha_j}^{t-1}(M_t) \right\}
+\)
+and cell counts
+\(
+O_i = \sum_{t=1}^{n} \mathbb{1} \{ X_t = i \}, \quad i = 0, 1, \ldots, m+1
+\)
+
+Compare the methods of Pearon and Nass to estimate the distribution for the null hypothesis 
+of multinomial backtests.
+
+Under the assumption that \( L \overset{d}{\equiv} M \), Kratz & al. (2018) show that
+\((O_0, O_1, \ldots, O_{m+1})\)
+possesses a multinomial distribution with \( n \) trials
+
+This is used as the null hypothesis for the backtest
+Multinomial tests are reviewed in detail in Cai & Krishnamoorthy (2006) and compared numerically:
+
+Very famous is Pearson's \(\chi^2\)-test published in 1900
+The cumulated relative squared deviations of the observations from the mean
+
+\(
+S_{m+1} := \sum_{k=0}^{m+1} \frac{(O_k - np_k)^2}{np_k},
+\)
+
+are for large \( n \) approximately \(\chi^2_{m+1}\)-distributed
+The asymptotic test rejects the null hypothesis when \( S_{m+1} \) is too large
+
+Nass (1959) suggests a finite sample correction of Pearson's \(\chi^2\)-test
+Instead of approximating the distribution of \(S_{m+1}\) with a \(\chi^2_{m+1}\)-distribution, he proposes to use a distribution that depends on \(n\), namely the distribution of \(\frac{1}{c}Z\) with \(Z \sim \chi^2_{\nu}\) where
+
+\(
+c = \frac{2E[S_{m+1}]}{\text{Var}(S_{m+1})}, \quad \nu = cE[S_{m+1}], \quad E[S_{m+1}] = m+1,
+\)
+
+\(
+\text{Var}(S_{m+1}) = 2(m+1) - \frac{m^2 + 6m + 6}{n} + \sum_{k=0}^{m+1} \frac{1}{n \cdot p_k}
+\)
+
+Since \(c \to 1\) and \(\nu \to m+1\) as \(n \to \infty\), the distributions used in the finite sample approximation are asymptotically equal to the asymptotic distribution known from Pearson’s \(\chi^2\)-test
+But in Nass' \(\chi^2\)-test the distribution of the approximating \(\frac{1}{c}Z\) matches for each \(n\) the first two moments of the distribution of \(S_{m+1}\), while \(\chi^2_{m+1}\) matches only the first moment
+
+
+Describe Multinomial Backtest for DRMs
+
+If \(g\) is left-continuous, the DRM can be expressed as
+\(
+\rho_g^{t-1}(M_t) = \int_{[0,1]} q_{M_t}^{t-1}(u) d\bar{g}(u), \quad \bar{g}(u) = 1 - g(1-u)
+\)
+for a right-continuous distribution function \(\bar{g}\) on the interval \([0, 1]\).
+
+Let \(\bar{G} \sim \bar{g}\) be an independent random variable, \(G = 1 - \bar{G}\), then conditionally on \(M_{t-1} = L_{t-1}, \ldots, M_1 = L_1\):
+\(
+\rho_g^{t-1}(M_t) = \mathbb{E} \left[ q_{M_t}^{t-1}(\bar{G}) \right] = \mathbb{E} \left[ q_{M_t}^{t-1}(1 - G) \right]
+\)
+Exception indicators are now obtained by sampling quantile levels from \(\bar{G} = 1 - G\).
+Let \(0 = \alpha_0 < \alpha_1 < \cdots < \alpha_m < \alpha_{m+1} = 1\) be a partition of \( [0,1] \) with \( g(\alpha_j) - g(\alpha_{j-1}) \neq 0 \) 
+for all \( j = 1, \ldots, m+1 \).
+For \( t, j \) we let \( G_{t,j} \) be independent random variables with distribution \( \mathcal{L}(G \mid G \in [\alpha_{j-1}, \alpha_j)) \)
+The exception indicators that can be used for backtesting are
+\[
+\mathbf{1}_{t,j} = 
+\begin{cases} 
+1 & \text{if } L_t > q_{M_t}^{t-1}(1 - G_{t,j}) \\
+0 & \text{else} 
+\end{cases}
+, \quad j = 1, \ldots, m+1
+\]
+
+Theorem:
+If M and L possess the same law, then
+\(
+\mathbb{E}[\mathbf{1}_{t,j}] = \frac{\mathbb{E}\left[G \mathbf{1}_{\{G \in [\alpha_{j-1}, \alpha_j)\}}\right]}{g(\alpha_j) - g(\alpha_{j-1})}
+\)
+
+for all \( t = 1, \ldots, n \) and the random vectors \(\mathbf{1}_{t,i})_{i=1,...,m+1}, t = 1, \ldots, n\), are independent.
+
+The numbers of breached randomized levels are \( X_t := \sum_{j=1}^{m+1} \mathbf{1}_{t,j} \), \( t \in \{1, \ldots, n\} \)
+The observed cell counts
+\[
+O_k := \sum_{t=1}^n \mathbf{1}_{\{X_t = k\}}, \quad k = 0, 1, \ldots, m+1
+\]
+
+are the key statistics of the multinomial backtest.
+
+
+Desribe explicitely how to run a backtest for DRMs
+
+Null hypothesis \( H_0 \)
+Components of \( L = (L_t)_{t=1,2,\ldots,n} \) are independent random variables with standard normal distribution \( \mathcal{N} \)
+This is also the basis for the risk computation within the model
+
+Alternative \( H_1 \)
+Alternative distributions, but always scaled and shifted such that they possess expectation 0 and unit variance as in the standard normal model, i.e.,
+
+    \[
+    L_t = (\tilde{L}_t - E[\tilde{L}_t]) / \sqrt{\text{Var}(\tilde{L}_t)}, \quad t = 1, 2, \ldots, n
+    \]
+
+T3: student-t with three degrees of freedom
+T5: student-t with five degrees of freedom
+ST: skewed-t-distribution of Fernández and Steel (1998)
+
+Size and power of the asymptotic tests are obtained by simulating the stochastic process for the null hypothesis and the alternatives. 
+This is repeated \( N \) times to obtain the estimator
+\[
+\frac{1}{N} \sum_{i=1}^{N} \mathbf{1}_{\{H_0 \text{ is rejected}\}} (L_{1,i}, \ldots, L_{n,i})
+\]
+
+A larger number of samples n leads to improved power
+3Power in our method does not monotonously increase in the stratification parameter m
+In particular, too many strata, i.e., large m, is not the best choice - randomization of levels is more
+successful than discritization!

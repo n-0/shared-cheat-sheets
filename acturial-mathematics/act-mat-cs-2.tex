@@ -1,0 +1,263 @@
+\documentclass[11pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{actuarialangle, actuarialsymbol}
+
+
+\begin{document}
+
+Define the Cramer-Lundberg model
+
+If one would like to consider instead \(t \in \mathbb{N}_0\) (discrete time)
+continuous time (i.e. \(t \in \mathbb{R}_+ = [0, \infty)\)),
+one can use the Cramér-Lundberg model.
+
+First step: 
+Let \((N_t)_{t \in \mathbb{R}_+}\) be Poisson process with intensity \(\lambda v > 0\)
+\(N_t \coloneqq \) total number of claims incurred up to time \(t\)
+
+Definition (Poisson Process):
+Counting process \((N_t)_{t \in \mathbb{R}_+}\) is Poisson process with intensity \(\lambda v > 0\) if
+\(N_0 = 0\)
+independent and stationary increments
+\( \mathbb{P}_{N_t}(n) = e^{-\lambda vt} \frac{(\lambda v t)^n}{n!}, n \in \mathbb{N}_0\) 
+(Poisson-distribution)
+
+Second step:
+Total premia up to \( t \in \mathbb{R}_{+}\) is \( \beta vt \) for (\( \beta > 0 \) fixed constant)
+Assume that \( (S_n)_{n \in \mathbb{N}} \) is a seq. of i.i.d random variables
+and \( \sigma(S_n \mid n \in \mathbb{N}) \) is independent of \( \sigma(N_t \mid t \in \mathbb{R}_{+}) \),
+then we define the total claim size up to time \( t \) to be \( \sum_{n=1}^{N_t} S_n \).
+
+Summarizing
+The Cramer-Lundberg surplus process for initial capital \( c_0 \geq 0 \) is
+\( \tilde{C}_t = c_0 + \beta vt - \sum_{n=1}^{N_t} S_n \) for \( t \in \mathbb{R}_{+} \)
+Its ruin time is
+\( \tilde{\tau} = \inf\{t \in \mathbb{R}_{+}\mid \tilde{C}_t < 0\}\)
+
+
+
+Make some observations in regard to the Cramer-Lundberg model 
+
+\(\tilde{\tau}\) can only occur at "jump times" of \(N\)
+
+Define
+\(W_u := \inf \{t \in \mathbb{R}_+ | N_t = u\} - \inf \{t \in \mathbb{R}_+ | N_t = u - 1\}, u \in \mathbb{N}\)
+\(W_u \hat{=}\) time \(N\) spends at value \(u - 1\)
+
+\(N\) Poisson process of intensity \(\lambda v \implies (W_u)_{u \in \mathbb{N}}\) i.i.d. Exp(\(\lambda v\))-random variables
+\(N\) ind. of \((S_n)_{n \in \mathbb{N}} \implies (W_u)_{u \in \mathbb{N}}\) ind. of \((S_n)_{n \in \mathbb{N}}\)
+\(V_n := \sum_{u = 1}^n W_u, n \in \mathbb{N}\)
+\(\rightarrow\) in order to study \(\tilde{\tau}\), suffices to study the sequence
+\(C_n := \tilde{C}_{V_n} = c_0 + \beta v V_n - \sum_{u = 1}^n S_u = c_0 + \sum_{u = 1}^n (\beta v W_u - S_u), n \in \mathbb{N}\)
+
+
+Explain the idea behind premium principles
+
+Paradigm: 
+The premium should depend on random claim size \( S \)
+and the NPC.
+
+Let \( S \in L^1 \) be a random claim
+\( \mathbb{E}[S] \) is called the pure risk premium
+The difference
+\( \pi(S) - \mathbb{E}[S] \) is called the safety margin.
+Hence
+\( \text{Premium} = \text{pure risk premium} + \text{safety margin} \).
+
+There are different principles to determine the safety margin, for example
+
+Let \( S \geq 0 \) be a random claim with finite first moment and \( \alpha > 0 \). 
+Then \( \pi(S) \coloneqq (1 + \alpha)\mathbb{E}[S] \)
+is called expected value principle.
+
+The (NPC) is satisfied \(S ≥ 0\) in this case,
+nevertheless it is problematic because insensitive to randomness of \( S \).
+For example \( k > 0, S \geq 0 \) any random variable with \( \mathbb{E}[S] = k \implies \pi(S) = (1 + \alpha)k \)
+In particular: \( S < \pi(S) \) possible! (e.g. S ≡ k)
+
+Define the variance loading principle for premia
+
+Suppose the claim \( S \geq 0 \) satisfies \( \mathbb{E}[S^2] < \infty\). Let \( \alpha > 0 \)
+then \( \pi(S) \coloneqq \mathbb{E}[S] + \alpha \text{Var}[S] \)
+is called variance loading principle.
+As an example consider,
+\(\Omega = (0, 1), \mathcal{F} = \mathbb{B}((0, 1)), \mathbb{P} =\) Lebesgue measure
+\(A := (0, \frac{1}{2}), k > 0, 0 < \beta < \gamma < k\)
+\(S_1 := k, S_2 := (k - \beta)\mathbf{1}_A + (k + \beta)\mathbf{1}_{A^c}, S_3 := (k - \gamma)\mathbf{1}_A + (k + \gamma)\mathbf{1}_{A^c}\)
+\(\implies \pi(S_1) = k < \pi(S_2) = k + \alpha \beta^2 < \pi(S_3) = k + \alpha \gamma^2\)
+
+This is however tricky to use directly in reality, namely that \( \text{Var}[S] \) usually involves some kind
+of square term and the square of € has no direct meaning.
+
+
+Suppose claim \(S \ge 0\) satisfies \(\mathbb{E}[S^2] < \infty\). Let \(\alpha > 0\).
+\(\pi(S) := \mathbb{E}[S] + \alpha \sqrt{\text{var}(S)} = \mathbb{E}[S] + \alpha \cdot sd(S)\)
+is called standard deviation loading principle (sd)-loading principle.
+
+Remark:
+If \(\mathbb{E}[S] > 0, \pi =\) sd-loading principle, then
+\(\pi(S) = \mathbb{E}[S] \left( 1 + \frac{\sqrt{\text{var}(S)}}{\mathbb{E}[S]} \right).\)
+
+The previous examples then becomes:
+\( π(S1) = k < π(S2) = k + αβ < π(S3) = k + αγ \).
+Quantity \(Vco(S) := \frac{\sqrt{\text{var}(S)}}{\mathbb{E}[S]}\) called coefficient of variation. Sd-loading clearly risk based.
+Sd-loading principle is positively homogeneous in S.
+
+
+Roughly summarize Utility Theory
+
+
+Key idea (in a nutshell): Premia are derived from preferences of financial agents
+Leads to utility theory
+UT measures "happiness index" of economic agents with (random) endowment
+\(\Omega, \mathcal{F}, \mathbb{P})\): probability space
+\(L^1 = L^1(\Omega, \mathcal{F}, \mathbb{P}):\) space of (equivalence classes of) integrable random variables
+\(\mathcal{X} \subset L^1, I \subset \mathbb{R}\) interval s.t.
+\(\forall X \in \mathcal{X}: \mathbb{P}(X \in I) = 1\)
+Preferences of agent captured by binary relation \(\succeq \text{ on } \mathcal{X}\)
+\(X \succeq Y \equiv\), "\(Y\) is weakly preferred to \( X \)"
+\(X \sim Y : \iff X \succeq Y\) and \(Y \succeq X \equiv\) "indifference between \(X\) and \(Y\)"
+
+Numerical representation: Function 
+\(\mathcal{U}: \mathcal{X} \rightarrow [-\infty, \infty] = \mathbb{R} \cup \{\pm \infty\}\) s.t. 
+\(X \preceq Y \iff \mathcal{U}(X) \le \mathcal{U}(Y)\)
+
+Expected utility: We will focus on "von Neumann-Morgenstern preferences"
+i.e., \(\exists u: I \rightarrow \mathbb{R}\) such that \(\mathcal{U}(X) := \mathbb{E}[u(X)], X \in \mathcal{X}\) 
+represents \(\preceq\).
+
+Some further assumptions are:
+\( I^{°} \) (interior of \(I\)) is nonempty
+Utility function \(u: I \rightarrow \mathbb{R}\) has the following properties:
+
+1. strict monotonicity: \(x, y \in I, x < y \implies u(x) < u(y)\) ("more is better than less")
+2. risk aversion: \(u\) is strictly concave, i.e., 
+    \(x, y \in I, x \ne y, \lambda \in (0, 1) \implies u(\lambda x + (1 - \lambda) y) > \lambda u(x) + (1 - \lambda) u(y)\)
+
+Interpret \(X \in \mathcal{X}\) as gain
+
+\(X, Y \in \mathcal{X}, X \preceq Y\) & \(X \ne Y \implies \mathbb{E}[u(X)] < \mathbb{E}[u(Y)]\) (\(u\) strictly increasing!)
+\(\implies Y\) strictly preferred to \(X\)
+\(u\) strictly concave
+Jensen inequality \(\implies \mathbb{E}[u(X)] \le u(\mathbb{E}[X]) = \mathbb{E}[u(\mathbb{E}[X])]\)
+Preceding inequality strict if \(X\) not deterministic
+\(\implies\) agent risk averse in that certainty (deterministic \(\mathbb{E}[X]\)) always preferred to randomness (\(X\)).
+
+
+Define utility indifference prices and state their uniqueness
+
+\( c_0 \in I \) initial capital
+\( S \in L^1 \)
+Any number \( \pi \in \mathbb{R} \), s.t. \(\mathbb{P}(c_0 + \pi - S \in I) = 1\) is called a \(\textbf{price}\) of \( S \).
+The \(\textbf{utility indifference price}\) of  \(S\) is a price \(\pi(S)\) of \(S\) s.t.
+\(u(c_0) = \mathbb{E}[u(c_0 + \pi(S) - S)]\)
+(provided such a solution exists).
+
+From a utility theory perspective this is equivalent to \( c_0 \preceq c_0 - Y + \pi \).
+
+Proposition:
+Suppose \( S \in L^1 \) is such that utility indifference price \( π(S) \) exists.
+1. \( π(S) \) is unique.
+2. If \( S \) is not deterministic and \( \mathbb{E}[S] \) is a price of \( S \), then \( π(S) > E[S] \) (the (NPC)).
+Proof:
+1. \( u \) is strictly increasing, thus \( u(c_0) = \mathbb{E}[u(c_0 + \pi_1 - S)] = \mathbb{E}[u(c_0 + \pi_0 - S)] \)
+is not possible for \( \pi_1 \neq \pi_0 \).
+
+
+Define CARA utilities and state their universal property
+
+\(I = \mathbb{R}\)
+\(\alpha > 0\) fixed constant
+\(u: \mathbb{R} \rightarrow \mathbb{R}\) defined by \(u(x) = 1 - \frac{1}{\alpha} e^{-\alpha x}\)
+\(u\) called CARA utility function (CARA = "constant absolute risk aversion")
+
+As an example:
+Suppose \(S \sim N(\mu, \sigma^2)\)
+Need to solve:
+
+\(1 - \frac{1}{\alpha} e^{-\alpha c_0} = \mathbb{E} \left[ 1 - \frac{1}{\alpha} e^{-\alpha (c_0 + \pi(S) - S)} \right]\)
+\(1 = e^{-\alpha \pi(S)} \mathbb{E} \left[ e^{\alpha S} \right]\)
+\(e^{\alpha \pi(S)} = \exp \left( \alpha \mu + \frac{1}{2} \alpha^2 \sigma^2 \right)\)
+\(\pi(S) = \mu + \frac{1}{2} \alpha \sigma^2 = \mathbb{E}[S] + \frac{1}{2} \alpha \text{var}(S).\)
+
+Observe: \(\pi(S)\) not dependent on \(c_0\)!
+
+The universal property of CARA utilities is 
+Suppose:
+* \(I = \mathbb{R}\)
+* \(u \in C^2(\mathbb{R})\)
+* \(\forall p \in (0, 1), \exists A_p \in \mathcal{F}: \mathbb{P}(A_p) = p.\)
+(atomless spaces satisfy this for example).
+
+Then the following are equivalent:
+For all \(S \in L^1\) such that \(\pi(S)\) exists, the latter does not depend on \(c_0 \in \mathbb{R}\).
+\(\exists a \in \mathbb{R}, b, c > 0\): \(u(x) = a - be^{-cx}, x \in \mathbb{R}\).
+As one can see CARA utilities can be transformed into this shape and vice versa.
+
+
+Define absolute/relative risk aversion of utility functions
+and relate it to CARA
+
+\(u \in C^2(\mathbb{R})\) utility function. Absolute/relative risk aversion of \(u\):
+\(\rho_{ARA}, \rho_{RRA}: \mathbb{R} \rightarrow \mathbb{R}\)
+\(\rho_{ARA}(x) := -\frac{u''(x)}{u'(x)}, \rho_{RRA}(x) := -\frac{xu''(x)}{u'(x)}.\)
+
+Example:
+\(\alpha > 0, u_\alpha(x) := 1 - \frac{1}{\alpha} e^{-\alpha x}, x \in \mathbb{R}\)
+\(u_\alpha'(x) := e^{-\alpha x}, u_\alpha''(x) := -\alpha e^{-\alpha x}, x \in \mathbb{R}\)
+
+Hence
+\(\rho_{ARA}(x) = -\frac{-\alpha e^{-\alpha x}}{e^{-\alpha x}} = \alpha\)
+Explains "CARA = constant absolute risk aversion"
+
+This motivatives also the following family
+Let \( u_\gamma(x) = (1 - \gamma)^{-1}x^{1 - \gamma} \) for \( \gamma \neq 1 \) and otherwise \( u_\gamma(x) = \log(x) \),
+then \( \rho^{RRA}(x) = - \frac{x(-\gamma x^{-\gamma - 1}}{x^{-\gamma}} = \gamma\),
+which are called CRRA utilities (constant relative risk aversion).
+
+
+Define risk aversion and its relation to premia
+
+\(I \subset \mathbb{R}\) open interval
+\(u, v: I \rightarrow \mathbb{R}\) utility functions
+\(u\) more risk averse than \(v\) if
+\(\forall X \in L^1: \mathbb{P}(X \in I) = 1, \mathbb{E}[u(X)], \mathbb{E}[v(X)] \in \mathbb{R}\)
+implies
+\(u^{-1}(\mathbb{E}[u(X)]) \le v^{-1}(\mathbb{E}[v(X)]).\)
+
+\(u^{-1}(\mathbb{E}[u(X)])\) and \(v^{-1}(\mathbb{E}[v(X)])\) are the respective certainty equivalents of \(X\):
+\(c := u^{-1}(\mathbb{E}[u(X)])\) satisfies \(u(c) = \mathbb{E}[u(X)]\)
+and similarly for \(v\).
+
+If \(u\) more risk averse than \(v\) and
+\(c_0 \in I, S \in L^1\) s.t. \(\pi^u(S)\) and \(\pi^v(S)\) exist then \(\pi^v(S) \le \pi^u(S)\).
+
+Motivate and define the Esscher premium principle
+
+Assume \(S \in L^1\) and \(\mathbb{E}[e^{\alpha S}] < \infty\) for some \(\alpha > 0\)
+and let \(F \hat{=}\) be the CDF of \(S\).
+Classical actuarial reasoning: "bad events" (loss events) should count more than good events,
+so they need more weight. This can be done by modifying \( F \), which is precisely what the
+Escher premium does.
+
+
+Fix \(\alpha > 0\) s.t. \(M_S(\alpha) := \int_{\mathbb{R}} e^{\alpha x} dF(x) = \mathbb{E}[e^{\alpha S}] < \infty\). 
+The CDF
+\(F_\alpha: \begin{cases} \mathbb{R} \rightarrow [0, 1], \\ x \mapsto M_S(\alpha)^{-1} \int_{-\infty}^x e^{\alpha s} dF(s) \end{cases}\)
+is the Esscher transform of \(F\).
+Assume there is \(r_0 > 0\) s.t. \(M_S(r) < \infty, r \in (-r_0, r_0)\). For \(\alpha \in (0, r_0)\)
+\(\pi_\alpha(S) := \int_{\mathbb{R}} s dF_\alpha(s) = \frac{\mathbb{E}[Se^{\alpha S}]}{\mathbb{E}[e^{\alpha S}]}\)
+is called Esscher premium of \(S\).
+
+We see that \( \pi_\alpha(S) \) emphasises losses exponentially
+and it can be shown that \( \pi_\alpha(S) \) is finite.
+
+In particular, the Esscher premium satisfies the NPC: 
+\( \mathbb{E}[S] \leq \pi_\alpha(S) \)
+with more effort the strict inequality holds for non deterministic \( S \in L^1 \).
+Though the Esscher premium can only be computed for light-tailed claims!
+
+In the proofs of these results, one requires the function \( h : (-r_0, r_{0}) \to \mathbb{R}, r \mapsto \log(M_S(r)) = \mathbb{E}[e^{\alpha S}]\),
+which is convex and the modified version \( \frac{1}{\alpha}h(\alpha) \) is referred to as entropic risk measure.
+\end{document}

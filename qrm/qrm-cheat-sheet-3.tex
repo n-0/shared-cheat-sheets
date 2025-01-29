@@ -1,0 +1,500 @@
+How is the general linear model defined with heteroscedacity?
+
+
+The model \( y = X \beta + \varepsilon \) 
+is called the general linear model if the following assumptions hold:
+
+\( \mathbb{E}(\varepsilon) = 0 \)
+\( \operatorname{Cov}(\varepsilon) = \sigma^2 \mathbf{W}^{-1} \)
+for some known positive definite matrix \( \mathbf{W} \) 
+\( \operatorname{rk} \left( \mathbf{X} \right) = k + 1 = p \leq n \)
+If additionally errors are Gaussian, the model is called the general normal regression.
+For stochastic covariates all properties are understood conditionally on the design matrix \(\mathbf{X} \).
+
+
+Explain the significance of the GLS? How are estimators and their properties ad-
+justed in comparison to the classical case?
+
+
+1. Aitken estimator
+The weighted least squares estimator can easily be computed by diagonalization:
+\( \hat{\beta} = (X^{\top}WX)^{-1}X^{\top}Wy \) 
+2. Properties
+\( \mathbb{E}(\hat{\beta}) = \beta \)
+\( \operatorname{Cov}(\hat{\beta}) = \sigma^2 (X^{\top}WX)^{-1} \)
+
+Gauß-Markov Theorem:
+Among all unbiased and linear estimators of \( \beta \) the Aitken estimator has minimal variance.
+3. REML-Estimator for \( \sigma^2 \)
+The REML-estimator is unbiased:
+\( \hat{\sigma}^2 = \frac{1}{n - p} \hat{\varepsilon}^{\top} W \hat{\varepsilon} \)
+Remark
+All properties do, of course, only hold under the condition that the model is correctly specified.
+In particular \(W\) is known, while \( \beta \) and \( \sigma^2 \) are non-random, but unknown model parameters.
+
+
+
+Illustrate the GLS for data from groups of entities.
+
+So far, estimation relied on observations \((y_i, x_i)\) with distinct covariate vectors \(x_i, i = 1, 2, \dots, n\).
+Suppose now only \( G \) different covariate vectors occur. Then the data can be separated into \( G \) groups with \( n_g \) observations 
+and average response \( \bar{y}_g \), \( g = 1, 2, \dots, G \), respectively:
+
+\[
+\begin{array}{cccc}
+\text{Group 1} & \begin{bmatrix} n_1 \\ \end{bmatrix} & \begin{pmatrix} \bar{y}_1 \\ \end{pmatrix} & \begin{pmatrix} 1 & x_{1,1} & \dots & x_{1,k} \\ \end{pmatrix} \\
+\text{Group 2} & \begin{bmatrix} n_2 \\ \end{bmatrix} & \begin{pmatrix} \bar{y}_2 \\ \end{pmatrix} & \begin{pmatrix} 1 & x_{2,1} & \dots & x_{2,k} \\ \end{pmatrix} \\
+\vdots & \vdots & \vdots & \vdots \\
+\text{Group G} & \begin{bmatrix} n_G \\ \end{bmatrix} & \begin{pmatrix} \bar{y}_G \\ \end{pmatrix} & \begin{pmatrix} 1 & x_{G,1} & \dots & x_{G,k} \\ \end{pmatrix}
+\end{array}
+\]
+
+This situation can be handled by taking 
+
+\[W = \text{diag} \left( \frac{1}{n_1}, \frac{1}{n_2}, \dots, \frac{1}{n_G} \right)\]
+
+
+
+Explain briefly regularization techniques like Ridge regression and LASSO.
+
+Least squares estimation might be unstable.
+Possible reasons are:
+
+Design matrix includes columns that are almost collinear.
+Number of regression effects \(p\) is large, but \(n\) is comparably small.
+
+Regularization techniques stabilize numerical estimation procedures and may be employed for variable selection.
+These are also applicable in the general linear model, but for simplicity we focus on the classical linear model.
+We will consider the following techniques:
+
+- Penalized Least Squares Criteria
+- Ridge Regression
+- LASSO
+
+
+Ridge regression refers to a regularization that uses the squared \(l^2\)-norm of the estimator as penalty:
+
+\(\text{pen}(\beta) = \beta^\top \beta\)
+
+The minimization problem 
+\(\text{PLS}(\beta) = (y - X \beta)^\top (y - X \beta) + \lambda \cdot \beta^\top \beta\)
+has the solution
+\(\hat{\beta}_{\text{PLS}} = (X^\top X + \lambda I_p)^{-1} X^\top y\)
+
+Properties
+If \(\lambda\) is close to zero, the solution \(\hat{\beta}_{\text{PLS}}\) will be close to the classical least squares estimator.
+If \(\lambda\) is large, the penalty term dominates strongly and the solution \(\hat{\beta}_{\text{PLS}}\) will be close to 0.
+
+Penalization of \(\beta_0\) is often not desired. This can be avoided by setting
+\(\text{pen}(\beta) = \beta^\top K \beta\)
+with \(K = \text{diag}(0, 1, 1, \dots, 1)\).
+This approach can be generalized be choosing \(K\) as some other positive semidefinite matrix.
+
+The solution is
+\(\hat{\beta}_{\text{PLS}} = (X^\top X + \lambda K)^{-1} X^\top y\)
+with expectation vector and covariance matrix
+\(\mathbb{E}(\hat{\beta}_{\text{PLS}}) = (X^\top X + \lambda K)^{-1} X^\top X \beta\)
+\(\text{Cov}(\hat{\beta}_{\text{PLS}}) = \hat{\sigma}^2 (X^\top X + \lambda K)^{-1} X^\top X (X^\top X + \lambda K)^{-1}\)
+
+Ridge regression is associated with bias and variance reduction in comparison to classical least squares. 
+An appropriate choice of \(\lambda\) is key when seek a good balance. For this purpose, e.g. cross validation methods may be used.
+
+
+LASSO = least absolute shrinkage and selection operator
+
+Motivation
+Ridge regression hardly penalizes small values, but penalizing and setting small values to zero would reduce complexity.
+This would conveniently combine estimation and variable selection.
+
+Leaving out the intercept \(\beta_0\), LASSO uses as penalty the absolute values:
+\(\text{pen}(\beta) = \sum_{j = 1}^k |\beta_j|.\)
+
+The LASSO estimator \(\hat{\beta}_{\text{LASSO}}\) minimizes
+\((y - X \beta)^\top (y - X \beta) + \lambda \cdot \sum_{j = 1}^k |\beta_j|.\)
+
+
+
+Define time series and their applications
+
+Time series play an important role in many application domains:
+Price evolutions in financial markets, e.g., prices of stocks, bond, indices,...
+- Unemployment rates
+- Supply and demand of products
+- Insurance losses over time
+- Temperatures and other weather data
+
+A time series describes the evolution of variables over time, e.g., oberservations \( x_1, x_2, \dots, x_t \) at discrete
+time points \( 1, 2, \dots, t \), which could be modelled as r.v. and/or a discrete stochastic process.
+
+
+
+Describe the basic building blocks of time series and stationarity
+
+For a discrete stochastic process \( (X_t)_{t \in \mathbb{Z}} \) in \( (\Omega, \Sigma, \mathbb{P}) \)
+we have the marginal distributions
+
+\( F_{t_1, \dots, t_n}(x_1, \dots, x_n) = \mathbb{P}(X_{t_{1}} \leq x_1, \dots, X_{t_{n}} \leq x_n) \)
+\( F_{t_n \mid t_{n-1}, \dots, t_1}(x_n \mid x_{n-1}, \dots, x_1) = \mathbb{P}(X_{t_{n}} \leq x_n \mid X_{t_{n-1}} \leq x_{n-1}, \dots X_1 \leq x_{1}) \)
+
+which induces the associated mean and autocovariance functions
+
+\( \mu_t = \mathbb{E}[X_t] = \int xdF_t(x), t \in \mathbb{Z} \)
+\( \gamma(t, \tau) = \mathbb{E}[(X_t - \mu_t)(X_{t-\tau} - \mu_{t-\tau}] = \int (x - \mu_t)(y - \mu_{t-\tau})dF_{t,t-\tau}(x,y), t \in \mathbb{Z} \)
+
+For a stochastic process \(X = (X_t)_{t \in \mathbb{Z}}\) two different notions of stationarity are most important in the context of time series:
+
+Covariance stationarity: The mean and covariance function do not depend on time, i.e.,
+    \(\forall t, \tau: \mu_t = \mu\)
+    \(\forall t, \tau: \gamma(t, t + \tau) = \gamma_\tau\)
+Strict stationarity: \(\forall n, \forall t_1, t_2, \dots, t_n, s: (X_{t_1}, X_{t_2}, \dots, X_{t_n}) \stackrel{d}{=} (X_{t_1 + s}, X_{t_2 + s}, \dots, X_{t_n + s})\)
+
+Remark
+Covariance stationarity is often called weak stationarity.
+However, strict stationarity implies weak stationarity, iff the covariance exists, i.e., if the stochastic process lives in \(L^2\).
+
+The autocorrelation function (ACF) of a weakly stationary process is then \( \rho(\tau) = \frac{\gamma(t)}{\gamma(0)} \in [−1, 1]\).
+
+White noise: A weakly stationary process is called white noise, if the following properties hold:
+\(\forall t: \mu_t = 0\)
+\(\forall t: \gamma_t = \sigma^2 \cdot \delta_0\)
+Independent white noise: White noise \(X\) is called strict white noise, if \(X_1, X_2, \dots\) are iid.
+Random walk: A stochastic process \(X\) that can be represented by 
+\(X_t = c + X_{t - 1} + \epsilon_t\) with a constant \(c\) and white noise \(\epsilon\) is called a random walk. The constant \(c\) is called the drift.
+
+Example
+
+The random walk \(X_t = \epsilon_t + \epsilon_{t - 1} + \dots + \epsilon_1\) has mean function \(\mu_t = 0\) 
+and autocovariance function \(\gamma(t, \tau) = (t - \tau) \sigma^2\) with \(\tau \le t\). 
+The autocorrelation function is \(\rho(t, \tau) = \sqrt{1 - \frac{\tau}{t}}\). The random walk is not stationary.
+
+
+Define an \( AR(1) \) model
+
+The stochastic process \(X\) is an autoregressive process of first order, i.e., an AR(1) process, if
+\(X_t = c + \alpha X_{t - 1} + \epsilon_t\)
+with a constant parameter \(\alpha, |\alpha| < 1\).
+The process is indexed by time \(t \in \mathbb{Z}\). For each \(t\), one assumes that the processes comes from \(-\infty\). This creates a strictly stationary process for strict white noise \((\epsilon_t)_t\).
+Exploiting the recursive structure of autoregressive processes, one can write
+
+\(X_t = c \cdot \frac{1 - \alpha^k}{1 - \alpha} + \alpha^k \cdot X_{t - k} + \sum_{i = 0}^{k - 1} \alpha^i \cdot \epsilon_{t - i}\)
+
+If \(X\) is strictly stationary, \(\alpha^k \cdot X_{t - k} \rightarrow 0\) if \(k \rightarrow \infty\). Setting \(\mu_t = c / (1 - \alpha)\), \(\gamma_\tau = \sigma_\epsilon^2 \alpha^2 / (1 - \alpha^2)\) and \(\rho_\tau = \alpha^\tau\) this leads to the solution
+
+\(X_t = c \cdot \frac{1}{1 - \alpha} + \sum_{i = 0}^\infty \alpha^i \cdot \epsilon_{t - i}\)
+
+
+Give methods to estimate the trend
+
+Linear models of the trend:
+Linear trend: \(T_t = \alpha_0 + \alpha_1 t\)
+Polynomial trend: \(T_t = \alpha_0 + \alpha_1 t + \alpha_2 t^2 + \dots + \alpha_k t^k\)
+Nonlinear models of the trend:
+Exponential trend: \(T_t = \alpha \exp(\beta t)\)
+Saturation model: \(T_t = \frac{\alpha}{1 + \beta \exp(-\gamma t)}\)
+
+Moving windows:
+Let \(w_j \ge 0, j = -q, \dots, q, q \in \mathbb{N}\) be positive weights with \(\sum_j w_j = 1\).
+We consider for observations \(x_1, \dots, x_n\) (\(n\) large) the moving window estimator of length \(2q + 1\):
+
+\(\hat{T}_t := \sum_{j = -q}^q w_j x_{t - j}\)
+
+
+We consider a linear trend
+\(T_t = \alpha_0 + \alpha_1 t\)
+
+The corresponding least squares optimization problem with controls \(\alpha_0, \alpha_1\) is given by:
+\[\sum_{t = 1}^n (x_t - \alpha_0 - \alpha_1 t)^2 = \min_{\alpha_0, \alpha_1}\]
+The explicit solution is
+\[\hat{\alpha}_1 = \frac{\sum_{t = 1}^n (x_t - \bar{x})(t - \bar{t})}{\sum_{t = 1}^n (t - \bar{t})^2}, \quad \hat{\alpha}_0 = \bar{x} - \hat{\alpha}_1 \bar{t}\]
+with \(\bar{x} = \frac{1}{n} \sum_{t = 1}^n x_t, \bar{t} = \frac{1}{n} \sum_{t = 1}^n t\).
+
+This provides the plug-in estimator of the trend:
+\[\hat{T}_t = \hat{\alpha}_0 + \hat{\alpha}_1 t\]
+
+
+Define linear processes and state Wold's theorem
+
+A linear process admits a representation of the following form:
+\(X_t = \mu + \sum_{i = -\infty}^\infty a_i \epsilon_{t - i}\)
+
+with white noise \(\epsilon\) with variance \(\sigma^2\) and \(\sum_{i = -\infty}^\infty |a_i| < \infty\).
+
+A linear process is weakly in \(L^2\) stationary with \(\mu_t = \mu\) and \(\gamma(t, \tau) = \sigma^2 \sum_{i = -\infty}^\infty a_i a_{i - \tau}\)
+In fact, by Wold's Decomposition Theorem, any weakly stationary time series that is purely non deterministic can be represented as a linear process of the form
+
+\(X_t = \mu + \sum_{i = 0}^\infty a_i \epsilon_{t - i}\)
+\(a_0 = 1, \sum_{i = 1}^\infty a_i^2 < \infty\)
+
+While stationary processes are key building blocks, many processes are non-stationary. Like a random walk they may be sums of stationary processes. Generalizing this idea leads to integrated processes.
+
+
+Theorem (Wold's Decomposition Theorem): 
+Any zero-mean nondeterministic covariance-stationary process \(\{x_t; t \in \mathbb{Z}\}\) can be decomposed as
+\(x_t = \sum_{j = 0}^\infty b_j \varepsilon{t - j} + d_t\)
+where
+\(b_0 = 1, \sum_{j = 1}^\infty b_j^2 < \infty\),
+\(\varepsilon_t \sim WN(0, \sigma_u^2)\), (white noise)
+\(\{b_j\}\) and \(\{\varepsilon_t\}\) are unique,
+\(\{d_t; t \in \mathbb{Z}\}\) is deterministic,
+\(\varepsilon_t\) is the limit of linear combinations of \(X_s, s \le t\)
+\(E(d_t \varepsilons_s) = 0 \forall t, s\)
+
+
+Define integrated processes
+
+
+The lag operator \(L\) shifts the process in time, i.e.,
+\(LX_t := (LX)_t := X_{t - 1}\)
+
+The difference operator is defined as
+\(\Delta := \text{id} - L, \Delta^k = (\text{id} - L)^k\)
+
+Integrated process
+A process \(X\) is integrated of order \(d\), \(I(d)\), if
+
+\(\Delta^{d - 1} X\) is non-stationary, and
+\(\Delta^d X\) is stationary.
+
+White noise and an AR(1) process are examples of \(I(0)\) processes, a random walk is \(I(1)\). In practice, \(I(d)\) processes for \(d > 1\) are less frequently used.
+In the following, we observe that the observed process \(Y\) is \(I(d)\), but we analyze the transformed stationary process \(X = \Delta^d Y\).
+
+Define general \( \text{MA}(q) \) processes and prove their stationarity
+
+A moving average process of order \(q\), \(MA(q)\), is a process of the following form
+\(X_t = \beta_1 \epsilon_{t - 1} + ... + \beta_q \epsilon_{t - q} + \epsilon_t\)
+
+with white noise \(\epsilon\).
+An \(MA(q)\) process can conveniently be rewritten using the Lag operator:
+
+\(X_t = \beta(L) \epsilon_t\)
+\(\beta(L) = 1 + \beta_1 L + ... + \beta_q L^q\)
+
+Interpretation
+White noise models shocks at different points in time \(t\).
+The \(MA(q)\) process is a weighted average of shocks at different times. 
+When considering the processes at a different point in time, the averaging window is moved to the new position.
+
+\(X_t = \beta(L) \epsilon_t,\)
+\(\beta(L) = 1 + \beta_1 L + ... + \beta_q L^q, \beta_0 = 1, \text{Var}(\epsilon_t) = \sigma^2\)
+
+is stationary with
+\(\mu_t = 0, \gamma_\tau := \gamma(t, \tau) = \begin{cases} \sum_{i = 0}^{q - |\tau|} \beta_i \beta_{i + |\tau|} \cdot \sigma^2; & |\tau| \le q \\ 0 & |\tau| > q \end{cases}\)
+\(\rho_\tau = \begin{cases} \frac{\sum_{i = 0}^{q - |\tau|} \beta_i \beta_{i + |\tau|}}{\sum_{i = 0}^q \beta_i^2} & |\tau| \le q \\ 0 & |\tau| > q \end{cases}\)
+
+Example
+For the MA(1) process
+\(X_t = \beta \epsilon_{t - 1} + \epsilon_t\)
+one obtains that \(\rho_\tau = 0\) for \(|\tau| > 1\) and \(\rho_1 = \frac{\beta}{1 + \beta^2}\).
+
+
+Define the general \( \text{AR}(p) \) process and show its stationarity
+The linear autoregressive process of order \(p\), \( \text{AR}(p) \), is defined as
+
+\(X_t = \nu + \alpha_1 X_{t - 1} + ... + \alpha_p X_{t - p} + \epsilon_t\)
+with white noise \(\epsilon\).
+
+An AR(\(p\)) process can conveniently be rewritten using the Lag operator:
+\(\alpha(L)X_t = \nu + \epsilon_t\)
+\(\alpha(L) = 1 - \alpha_1 L + ... - \alpha_p L^p\)
+
+Interpretation
+The defining equation is formally a multiple regression.
+The explanatory variables are the historic realisations of the process.
+
+
+The AR(p) process
+
+\(\alpha(L)X_t = \nu + \epsilon_t\)
+\(\alpha(L) = 1 - \alpha_1 L + ... - \alpha_p L^p\)
+
+is stationary iff.
+
+\(\forall z \in \mathbb{C}, |z| \le 1: \alpha(z) \ne 0\) with \(\alpha(z) = 1 - \alpha_1 z + ... - \alpha_p z^p\),
+i.e., all complex roots of \(\alpha\) lie strictly outside the unit circle.
+
+Representation as MA(\(\infty\)) process
+In the stationary case of the AR(\(p\)) process one determines the series \(\frac{1}{\alpha(z)} = \sum_{i = 0}^\infty a_i z^i\) which leads to the representation
+
+\(X_t = \sum_{i = 0}^\infty a_i \nu + \sum_{i = 0}^\infty a_i L^i \epsilon_t\)
+
+
+State and derive the Yule-Walker equations
+
+Consider a stationary AR(\(p\)) process with \(\nu = 0: \alpha(L)X_t = \epsilon_t, \alpha(L) = 1 - \alpha_1 L + ... - \alpha_p L^p\). 
+The Yule-Walker equations describe a simple correspondence between \(\alpha = (\alpha_1, \alpha_2, ..., \alpha_p)\) 
+and the autocorrelations \(\rho = (\rho_1, \rho_2, ..., \rho_p)\).
+
+These can be derived by observing for \(\tau = 1, 2, ..., p\) 
+that \(E(X_t X_{t - \tau}) = \alpha_1 E(X_{t - 1} X_{t - \tau}) + \dots + \alpha_p E(X_{t - p} X_{t - \tau}), \tau = \gamma_{-\tau}\)
+Define the matrix, which is Toepelitz
+
+\(R = \begin{pmatrix} 1 & \rho_1 & \rho_2 & \rho_3 & ... & \rho_{p - 1} \\ \rho_1 & 1 & \rho_1 & \rho_2 & ... & \rho_{p - 2} \\ \rho_2 & \rho_1 & 1 & \rho_1 & ... & \rho_{p - 3} \\ ... & ... & ... & ... & ... & ... \\ \rho_{p - 1} & \rho_{p - 2} & \rho_{p - 3} & \rho_{p - 4} & ... & 1 \end{pmatrix}\)
+
+Yule-Walker equations
+The coefficients \(\alpha\) and autocorrelations \(\rho\) can be transformed into each other by the Yule-Walker equations:
+
+\(\rho = R \alpha\)
+Moreover, if \(\tau > p\), then \(\rho_\tau = \alpha_1 \rho_{\tau - 1} + \alpha_2 \rho_{\tau - 2} + ... + \alpha_p \rho_{\tau - p}\).
+
+
+Define ARMA processes and state the requirements for stationarity
+
+
+Centered ARMA
+A stochastic process \(X\) is a centered ARMA(\(p, q\)) process, if it satisfied the following equation:
+
+\(X_t - \alpha_1 X_{t - 1} - \dots - \alpha_p X_{t - p} = \epsilon_t + \beta_1 \epsilon_{t - 1} + \dots + \beta_q \epsilon_{t - q}\)
+
+The terms \(\alpha_1, \dots, \alpha_p, \beta_1, \dots, \beta_q\) are real parameters and \((\epsilon_t)\) is white noise.
+ARMA with mean \(\mu\)
+
+The process \(X\) is an ARMA(\(p, q\)) process with mean \(\mu\) if \((X_t - \mu)\) is a centered ARMA(\(p, q\)) process.
+Characteristic polynomials
+
+We define the characteristic polynomials of the process by
+\(\beta(z) = 1 + \beta_1 z + \dots + \beta_q z^q\)
+\(\alpha(z) = 1 - \alpha_1 z - \dots - \alpha_p z^p\)
+
+The centered ARMA(\(p, q\)) can then be represented by
+
+\(\alpha(L)X_t = \beta(L) \epsilon_t\)
+
+Common roots of \(\alpha\) and \(\beta\) are excluded for technical reasons.
+ARMA(\(p, q\)): \(\alpha(L)X_t = \beta(L) \epsilon_t\)
+Stationarity:
+The process is stationary, iff the roots of \(z \rightarrow \alpha(z)\) lie strictly outside the unit circle.
+In this case, the centered ARMA process possesses an MA(\(\infty\))-representation:
+
+\(X_t = \alpha(L)^{-1} \beta(L) \epsilon_t\)
+
+Invertibility:
+The process is called invertible, iff the roots of \(z \rightarrow \beta(z)\) lie strictly outside the unit circle.
+In this case, the centered ARMA process possesses an AR(\(\infty\))-representation:
+\(\beta^{-1}(L) \alpha(L) X_t = \epsilon_t\)
+
+Approximation:
+Every stationary, invertible ARMA(\(p, q\)) process can be represented as both an MA(\(\infty\)) process and an AR(\(\infty\)).
+This implies that it can be approximated by both a pure MA and AR process of sufficiently high order.
+Methods for AR and MA are thus always applicable.
+In addition, Wold's theorem shows that ARMA processes with arbitrary mean, 
+provide approximate representations of all weakly stationary processes that are purely non deterministic.
+
+
+Define ARIMA processes
+
+
+Difference operator:
+\(\Delta Y_t = Y_t - Y_{t - 1}\) with \(\Delta^d Y_t = \begin{cases} \Delta Y_t, & d = 1, \\ \Delta^{d - 1} (\Delta Y_t), & d > 1. \end{cases}\)
+
+ARMA(\(p, q\))
+A time series \(Y\) is called ARIMA(\(p, q, d\)) process (autoregressive integrated moving average), if the differenced process \(X = \Delta^d (Y)\) is an ARMA(\(p, q\)) process.
+Non stationarity
+For \(d \ge 1\) ARIMA processes are non stationary.
+
+Application to Time Series Data
+
+Differencing (once or multiple time) may transform a non-stationary data set into one that may be described or modeled by an ARMA(\(p, q\)) process.
+An example are log-returns modeled by an ARMA(\(p, q\)) process that lead to ARIMA(\(p, q, 1\)) time series for the corresponding log prices (\(S_t\)).
+
+
+
+State the estimators for the statistical properties of time series
+
+Estimator of the mean µ = E (Xt ) is the arithmetic sample mean
+\( \bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i \)
+its unbiased and has variance, where \( \tau \) is the covariance function
+\( \text{Var}(\bar{X}_n) = \frac{1}{n}\sum_{\tau=-(n-1)}^{n-1} \frac{n - \tau}{n}\gamma_\tau < \infty \)
+which is in the limit
+\( \lim_{n \to \infty} n \text{Var}(\bar{X}_n) = \gamma_0 + 2\sum_{\tau = 1}^\infty \gamma_\tau \coloneqq f(0) \)
+and we have the asymptotic result
+\( \sqrt{n}(\bar{X}_n - \mu) \xrightarrow{d} N(0, f(0)) \)
+
+The estimator for the covariance function is
+\( \hat{\gamma}_{\tau,n} = \frac{1}{n}\sum_{t=1}^{n-\tau} (X_t - \bar{X}_n)(X_{t + \tau} - \bar{X}_n)\)
+this estimator is not unbiased, nevertheless asymptotically it holds 
+\( \sqrt{n}(\bar{\gamma}_{\tau,n} - \gamma_\tau) \xrightarrow{d} N(0, \sigma^2_{\tau, \infty}) \)
+where \( \sigma^2_{\tau, \infty} = \sum^{\infty}_{-\infty} (\gamma^2_j + \gamma_{j - \tau}\gamma_{j + \tau}\).
+
+For the autocorrelation function we have the estimator
+
+\( \hat{\rho}_{\tau,n} = \frac{\hat{\gamma}_{\tau,n}}{\hat{\gamma}_{0,n}} \)
+which again has bias, namely \( \mathbb{E}[\hat{\rho}_{\tau,n}] = \rho_\tau + \mathcal{O}(n^{-1}) \)
+the corresponding variance contains a rather garstly term which we shorten to \( \Sigma_{\rho,\tau \tau} \) 
+and get \( \text{Var}(\hat{\rho}_{\tau, n} = \frac{1}{n} \Sigma_{\rho,\tau \tau} + \mathcal{O}(n^{-2})\)
+and asymptotically it holds 
+\( \sqrt{n}(\rho_{(m),n} - \rho_{(m)}) \xrightarrow{d} N(0, \Sigma_\rho) \)
+
+
+We recall that \(\sqrt{n} (\hat{\rho}_{\tau, n} - \rho_\tau) \stackrel{d}{\longrightarrow} N(0, \Sigma_{\rho, \tau \tau})\).
+Since \(\rho_\tau = 0\) for all \(\tau > q\), the formula for the asymptotic variance may be simplified
+
+\(\Sigma_{\rho, \tau \tau} = 1 + 2 \sum_{i = 1}^q \rho_i^2\)
+
+White noise:
+If \(X\) is white noise, then \(E[\hat{\rho}_{\tau, n}] = -n^{-1} + (n - 2)\) and \(\Sigma_\rho\) is the identity matrix.
+This asymptotic results may be exploited to construct asymptotic confidence intervals.
+
+
+Describe the estimation of \( \text{AR}(p) \) processes
+
+The AR(\(p\))-model satisfies the following equation
+\(X_t = \alpha_1 X_{t - 1} + ... + \alpha_p X_{t - p} + \epsilon_t\)
+with Var(\(\epsilon_t\)) \(= \sigma^2\).
+
+We already know and analyzed a method to estimate the ACF.
+The Yule-Walker estimator is a plug-in estimator that computes the estimated parameters \(\hat{\alpha}_1, \hat{\alpha}_2, ..., \hat{\alpha}_p\) from the Yule-Walker equations:
+
+\(\begin{pmatrix} 1 & \hat{\rho}_1 & \hat{\rho}_2 & \hat{\rho}_3 & ... & \hat{\rho}_{p - 1} \\ \hat{\rho}_1 & 1 & \hat{\rho}_1 & \hat{\rho}_2 & ... & \hat{\rho}_{p - 2} \\ \hat{\rho}_2 & \hat{\rho}_1 & 1 & \hat{\rho}_1 & ... & \hat{\rho}_{p - 3} \\ ... & ... & ... & ... & ... & ... \\ \hat{\rho}_{p - 1} & \hat{\rho}_{p - 2} & \hat{\rho}_{p - 3} & \hat{\rho}_{p - 4} & ... & 1 \end{pmatrix} \begin{pmatrix} \hat{\alpha}_1 \\ \hat{\alpha}_2 \\ \hat{\alpha}_3 \\ ... \\ \hat{\alpha}_p \end{pmatrix} = \begin{pmatrix} \hat{\rho}_1 \\ \hat{\rho}_2 \\ \hat{\rho}_3 \\ ... \\ \hat{\rho}_p \end{pmatrix}\)
+
+Alternatively, the model may also be interpreted as a linear model, and the estimated parameters
+\( \hat{\alpha}_1, \hat{\alpha}_2, \dots, \hat{\alpha}_p \) may be obtained from least squares estimation.
+
+The Yule-Walker estimator and the Least Squares estimator are asymptotically equivalent for Gaussian error terms.
+In this case, the estimators are consistent and asymptotically normal with covariance matrix
+
+\(\sigma^2 \Gamma^{-1}\) with \(\Gamma = \begin{pmatrix} 1 & \gamma_1 & \gamma_2 & \gamma_3 & ... & \gamma_{p - 1} \\ \gamma_1 & 1 & \gamma_1 & \gamma_2 & ... & \gamma_{p - 2} \\ \gamma_2 & \gamma_1 & 1 & \gamma_1 & ... & \gamma_{p - 3} \\ ... & ... & ... & ... & ... & ... \\ \gamma_{p - 1} & \gamma_{p - 2} & \gamma_{p - 3} & \gamma_{p - 4} & ... & 1 \end{pmatrix}\)
+
+
+Define ARCH processes
+
+Suppose that \((Z_t)_{t \in \mathbb{Z}}\) is strict white noise with variance 1, i.e., SWN(0, 1). 
+The process \((\epsilon_t)_{t \in \mathbb{Z}}\) is called an ARCH(\(p\)) process (autoregressive conditionally heteroscedastic), if:
+
+\((\epsilon_t)_{t \in \mathbb{Z}}\) is strictly stationary.
+For some strictly positive process \((\sigma_t)_{t \in \mathbb{Z}}\) the following identities hold:
+
+\(\epsilon_t = \sigma_t Z_t\)
+\(\sigma_t^2 = \alpha_0 + \sum_{i = 1}^p \alpha_i \epsilon_{t - i}^2\)
+
+with constants \(\alpha_0 > 0, \alpha_1, ..., \alpha_p \ge 0\).
+Stationarity and martingale difference sequence
+
+An ARCH(\(p\)) process is a martingale difference sequence with respect to its natural filtration:
+\(E(\epsilon_t | F_{t - 1}) = E(\sigma_t Z_t | F_{t - 1}) = \sigma_t E(Z_t | F_{t - 1}) = \sigma_t E(Z_t) = 0\)
+
+If an ARCH(\(p\)) process is in \(L^2\), it is weakly stationary. This requires \(\alpha_1 + ... + \alpha_p < 1\).
+A covariance stationary ARCH(\(p\)) process is white noise.
+
+
+Stochastic Recursion
+\(\epsilon_t = \sqrt{\alpha_0 + \sum_{i = 1}^p \alpha_i \epsilon_{t - i}^2} \cdot Z_t\)
+Typical examples for \((Z_t)_{t \in \mathbb{Z}}\):
+
+a) \(Z_t \sim N(0, 1)\) (normal distribution)
+b) \(Z_t \sim t_\nu\) (\(t\)-distribution)
+
+Distribution:
+The distribution of \(\epsilon_t\) is typically not characterized by simple standard distributions.
+In case a), one obtains a normal variance mixture.
+
+
+Conditional expectation and volatility:
+
+Letting \(\mathcal{F}_t = \sigma(\epsilon_s: s \le t)\) be the \(\sigma\)-algebra of the past up to time \(t\), 
+\(t \in \mathbb{Z}\), we obtain the natural filtration of the process \(\epsilon\).
+
+Conditional expection: \(E[\epsilon_t | \mathcal{F}_{t - 1}] = 0\), i.e., \(\epsilon\) is a martingale difference sequence. 
+If \(\epsilon\) models return, the expected return conditional on the available information is 0.
+Volatility: \(\sqrt{\text{Var}(\epsilon_t | \mathcal{F}_{t - 1})} = \sigma_t\)
+- Heteroscedasticity: Volatility/conditional variance vary randomly over time.
+- Volatility cluster: If \(\epsilon_{t - 1}^2, \epsilon_{t - 2}^2, ...\) are large, then \(\sigma_t^2\) is large.

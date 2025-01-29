@@ -1,0 +1,75 @@
+\documentclass[11pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{actuarialangle, actuarialsymbol}
+
+
+\begin{document}
+
+Motivate, Define Choquet capacities and give examples
+
+Bad events have small probability as they're usually tail events 
+\( \lim_{x \to \infty} 1 - F_S(x) = \lim_{x \to \infty} \bar{F}_S(x) = 0\)
+but an unproportional impact, thus they should be given more weight.
+\( F \) could however stop being a probability measure under such modifications.
+A framework which maintains a reasonable amount of previous properties
+are Choquet properties
+
+A Choquet capacity is a function \(\mu: \mathcal{F} \rightarrow [0, 1]\) such that
+
+1. \(\mu(\emptyset) = 1 - \mu(\Omega) = 0\)
+2. \(A, B \in \mathcal{F}, A \subset B \implies \mu(A) \le \mu(B)\)
+
+(so its missing the \( \sigma \)-additivity of probability measures).
+Examples are
+
+Distorted probabilities: 
+\(\mathbb{P}\) probability measure on \((\Omega, \mathcal{F})\), 
+\(h: [0, 1] \rightarrow [0, 1]\) nondecreasing function with \(h(0) = 1 - h(1) = 0\)
+\(\implies \mu := h \circ \mathbb{P}\) Choquet capacity
+
+Upper/lower probabilities: 
+\(\mathcal{P}\) set of probability measures on \((\Omega, \mathcal{F})\), define
+\(\mu^*(A) = \sup_{\mathbb{P} \in \mathcal{P}} \mathbb{P}(A)\)
+\(\mu_*(A) = \inf_{\mathbb{P} \in \mathcal{P}} \mathbb{P}(A)\),
+both are Choquet capacities.
+\(\mathcal{P}\) set of probability measures, \(\mu^*, \mu_*\) as before, 
+\(\alpha \in [0, 1]\), then \(\mu := \alpha \mu^* + (1 - \alpha) \mu_*\) is a Choquet capacity.
+
+
+Define Choque integrals and state some necessary lemma's
+
+Lemma:
+\(S \ge 0\) random variable on probability space \((\Omega, \mathcal{F}, \mathbb{P})\). Then
+\(\mathbb{E}[S] = \int_{\mathbb{R}_{+}} \mathbb{P}(S > x) dx.\)
+
+Proof.
+Using Fubini's Theorem
+\(\mathbb{E}[S] = \int_{\mathbb{R}_+} s \mathbb{P}_S(ds)\)
+\(= \int_{\mathbb{R}_+} \int_{\mathbb{R}_+} \mathbf{1}_{(0, s)}(x) dx \mathbb{P}_S(ds)\)
+\(= \int_{\mathbb{R}_+} \int_{\mathbb{R}_+} \mathbf{1}_{(0, s)}(x) \mathbb{P}_S(ds) dx \)
+\(= \int_{\mathbb{R}_+} \int_{\mathbb{R}_+} \mathbf{1}_{(x, \infty)}(s) \mathbb{P}_S(ds) dx\)
+\(= \int_{\mathbb{R}_+} \mathbb{P}(S > x) dx.\)
+
+Lemma:
+\( \mathbb{E}[S] = \int_{0}^\infty \mathbb{P}(S > x)dx + \int_{-\infty}^0 \mathbb{P}(S > x) - 1 dx \)
+
+Let \( \mu : \mathcal{F} \to [0, 1] \) be a Choquet capacity and \( f \in \mathcal{L}^\infty \).
+The Choquet integral of \( f \) with respect to \( \mu \) is:
+
+\( \int f d\mu = \int_{0}^\infty \mu(f > x)dx + \int_{-\infty}^0 \mu(f > x) - 1 dx \)
+\(x \ge |f|_\infty \implies \{f > x\} = \emptyset \implies \mu(f > x) = 0 \implies 0 \le \int_0^\infty \mu(f > x) dx \le |f|_\infty\)
+\(x \le -|f|_\infty \implies \{f > x\} = \Omega \implies \mu(f > x) = 1 \implies 0 \ge \int_{-\infty}^0 (\mu(f > x) - 1) dx \ge -|f|_\infty\)
+
+The Choquet integral w.r.t. a Choquet capacity \(\mu\) on \((\Omega, \mathcal{F})\) has the following properties:
+1. Monotonicity: Suppose \(f, g \in L^\infty\) satisfy \(f(w) \le g(w), w \in \Omega\). Then
+\(\int f d \mu \le \int g d \mu\)
+2. Cash-additivity: For all \(f \in L^\infty\) and \(c \in \mathbb{R}\):
+\(\int (f + c) d \mu = \int f d \mu + c.\)
+3. Lipschitz continuity: For all \(f, g \in L^\infty\):
+\(|\int f d \mu - \int g d \mu| \le \sup_{w \in \Omega} |f(w) - g(w)|\)
+It does however not satisfy
+\( \int fd\mu + \int g d\mu \neq \int (f + g) d\mu \)
+however for comonotone functions, that is \( (f(s) - f(s'))(g(s) - g(s')) \geq 0 \) for all \( s, s' \in S \),
+or that \( \mu \) is \( \sigma \)-additive, this becomes an equality.
+\end{document}

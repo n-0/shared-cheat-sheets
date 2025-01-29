@@ -1,0 +1,290 @@
+\documentclass[11pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{actuarialangle, actuarialsymbol}
+
+
+\begin{document}
+
+Define a discount function and state some immediate properties
+
+
+A discount function is a positive valued function v, of two nonnegative
+variables, satisfying 
+\( v(s, t)v(t, u) = v(s, u) \)
+for all values of \( s, t, u \).
+Some immediate Corollaries from the Definition are:
+
+\( v(s, s) = 1 \) so
+\( v(s, t)v(t, s) = v(s, s) = 1 \)
+so
+\( v(s, t) = v(t, s)^{-1} \)
+In particular for discrete time units, the recursive relation 
+\( v(n) = v(n-1)v(n-1, n), v(0) = 1\), should hold.
+Although we have called \( v \) a ‘discount’ function, the common English usage of the word
+really applies to the case where \( s < t \). In that case, \( v(s, t) \) will be normally less than \( 1 \), 
+and the function is returning the discounted amount of \( 1 \) unit paid at a later date.
+Some like therefore to refer to the case \( t < s \) as accumulation function.
+Typically \( v \) is expressed with respect to one variable, that is \( v(t) = v(0, t) \),
+which can be bootstraped from the original values via 
+\( v(s, t) = \frac{v(t)}{v(s)} \) and the recursion formula.
+In the course it was mostly assumed that \( v(s, t) = v^{t-s} \), for all \( t \).
+
+
+Define the related components 
+involved in future/present value calculations
+to the discount function
+
+The rate of interest for the time interval \( k \) to \( k + 1 \) is the quantity
+\( i_k = v(k+1, k) - 1 \)
+The rate of discount for the time interval \( k \) to \( k + 1 \) is the quantity
+\( d_k = 1 - v(k, k+1) \)
+
+which are related to the discount function via 
+
+\( d_k = i_kv(k, k+1) = \frac{i_k}{1 + i_k} \)
+\( i_k = d_kv(k+1, k) = \frac{d_k}{1 - d_k} \)
+\( v(k+1, k) = \frac{1}{1 + i_k} \)
+\( \frac{1}{d_k} - \frac{1}{i_k} = 1 \)
+
+If the unit of time is continuous one speaks instead of the force of interest,
+given by
+\( \delta_t = \frac{v'(t)}{v(t)} = \frac{d}{dt}\ln{v(t)} \),
+with the assumption that \( v(t) = e^{\int_0^t \delta_\tau d\tau}\)
+under a constant force of interest this simplifies to
+\( e^{\delta} = 1 + i \), with \( \delta = \ln{1 + i} \)
+
+In case that on is interested in the intra-annually/nominal rates, one has
+\(\left( 1 + \frac{i^{(m)}}{m} \right)^m = 1 + i \left( 1 - \frac{d^{(m)}}{m} \right)^m = 1 - d\)
+\(i^{(m)} = m \left[ (1 + i)^{\frac{1}{m}} - 1 \right] d^{(m)} = m \left[ 1 - (1 - d)^{\frac{1}{m}} \right]\)
+and the modified discount factor is
+\( (\frac{1}{(1 + i)})^{\frac{1}{m}} = v^{\frac{1}{m}} \)
+
+
+State the future/present values of different forms of annuities
+
+The future value was also called terminal value in the lecture
+
+The basic formula's are \\
+PV of $ 1 $ Due in $ t $ Years: \\
+$ PV = \frac{1}{a(t)} = (1 + i)^{-t} = v^t = e^{-\delta t} = (1 - d)^t $ \\
+$ = \left( 1 + \frac{i^{(m)}}{m} \right)^{-mt} = \left( 1 - \frac{d^{(m)}}{m} \right)^{mt} $ \\
+$ FV = a(t) = (1 + i)^t = e^{\delta t} = (1 - d)^{-t} = \left( 1 + \frac{i^{(m)}}{m} \right)^{mt}$ \\
+$\left( 1 - \frac{d^{(m)}}{m} \right)^{-mt}$ \\
+
+Annuity-Immediate (in advance) \\
+(PV one period before first payment, FV at time of last payment) \\
+
+$ PV = \ax{\angl n} = \sum_{i=1}^n v^i = \frac{1 - v^n}{i} $ \\
+$ FV = \sx{\angl n} = \sum_{j=0}^{n-1} (1 + i)^j = \frac{(1 + i)^n - 1}{i} = \ax{\angl n}(1 + i)^n$ \\
+Annuity-Due (in arrears) \\
+(PV at time of first payment, FV one period after last payment) \\
+$PV = \ax**{\angl n} = \sum_{j=0}^{n-1} v^j = \frac{1-v^n}{d} = (1 + i)\ax{\angl n}$ \\
+$ = (\frac{i}{d}\ax{\angl n} = 1 + a{\angl{n -1}}$ \\
+
+$ FV = \sx**{\angl n} = \sum_{j=0}^{n} (1 + i)^j = \frac{(1 + i)^n - 1}{d}$ \\
+$ = (1+i)\sx{\angl n} = (\frac{i}{d})\sx{\angln} = \sx{\angl{n+1}} - 1 $ \\
+
+and the intra monthly versions are
+
+in advance \\
+$ \ax**{\angl n}[(m)] = \sum^{nm-1}_{t = 0} \frac{1}{m}v^{\frac{t}{m}} = \frac{1}{m}\frac{(1 - v^n)}{1 - v^{\frac{1}{m}}}$ \\
+in arrears \\
+$\ax{\angl n}[(m)] = \sum^{nm}_{t = 1} \frac{1}{m}v^{\frac{t}{m}} = \frac{1}{m}v^{\frac{1}{m}}\frac{(1 - v^n)}{1 - v^{\frac{1}{m}}}$ \\
+
+In case of a deferred annuity \\
+
+Annuity-Immediate (in advance) \\
+$ \ax**[m|]{\angl n} = \sum_{t=m}^{n + m -1} v^t = v^m\frac{1 - v^n}{1 - v}$ \\
+
+Annuity-Due (in arrears) \\
+$\ax[m|]{\angl n} = \sum_{t=m+1}^{n + m} v^t = v^m \frac{1 - v^n}{i}$ \\
+$= \ax**[m+1|]{\angl n} = v^m \ax{\angl n} = \ax{\angl{m+n}} - a{\angl{m}}$ \\
+
+
+
+State the expressions for perpetuities
+
+in advance\\
+$ \ax**{\angl \infty} = \sum_{t=0}^\infty v^t = \lim_{n \to \infty} \ax**{\angl n} = \frac{1}{1 - v} = \frac{1}{d}$
+in arrears\\
+$ \ax{\angl \infty} = \sum_{t=1}^\infty v^t = v\ax**{\angl \infty} = \frac{1}{i}$
+
+
+
+
+Give a few real-life examples to calculate annuities
+
+A pensioner wants to receive for the next $20$ years a yearly annuity,
+paid in advance, with $R = 12 000$ What is the capital
+requirement $A$ if $i = 0.035$? \\
+$ A = R\ax**{\angl{20}}$
+
+A married couple won $100 000$ Euros in the lottery. They decide to
+buy a yearly immediate annuity in arrears for the next $10$ years.
+How high is $R$, if the yearly interest rate is $i = 0.04$? \\
+$R = \frac{10^5}{\ax{\angl{10}}}$
+
+
+Answer in a nutshell why insurance
+
+Insurance is an agreement to transfer costs associated with an uncertain event.
+- Rachel Z. Friedman
+that is exchanging something uncertain (loss, damage, litigation) with sth. certain (premium payments).
+And it collectivises risks (law of large numbers)
+Mutual and social insurance assume that if enough individuals combine together, paying into
+the common pool an amount determined by their risks, they can equitably share the burdens
+of a misfortune that happens to strike any one of them. The fairness of this agreement hinges
+on the parties’ mathematical equality.
+
+
+
+Define the discrete time surplus process
+The (discrete-time) surplus process of the insurer with initial capital \(c_0 \ge 0\) is defined as
+\(C_t = C_t^{c_0} := c_0 + \sum_{u = 1}^t (\pi_u - S_u), t \in \mathbb{N}_0 \left( \sum_{u = 1}^0 \cdot \cdot \cdot := 0 \right)\).
+
+Here, \(\{(\pi_u, S_u)|u \in \mathbb{N}\}\) is a family of random variables with the following properties:
+
+\(\{(\pi_u, S_u)|u \in \mathbb{N}\}\) independent
+\((\pi_u, S_u) \stackrel{d}{=} (\pi_1, S_1), u \in \mathbb{N}\)
+\(\mathbb{P}(S_1 \ge 0) = 1\)
+\(\mathbb{P}(\pi_1 > 0) = 1\) and there is \(r > 0\) such that \(M_{\pi_1}(s) := \mathbb{E}[e^{s \pi_1}] < \infty s \in (-r, r)\)
+
+The last equation depends on a moment-generating function for \( \pi_1 \) which has positive radius of convergence.
+and is equivalent to \( \mathbb{P}(\pi_1 > 0) \) and \( \exists r > 0: \mathbb{E}[e^{r\pi_1}] < \infty \).
+
+
+Some remarks
+\( C_t \) models equity/net asset value at time \( t \in \mathbb{N}_0 \)
+As long as \( C_t \geq 0 \) the insurer is solvent; otherwise, if \( C_t < 0 \), the insurer cannot cover its
+liabilities \( \implies \) bankruptcy/ruin!
+
+Thus \( \mathbb{P}(C_t < 0) \) should be kept as small as possible.
+
+\( \mathbb{P}\circ(\pi_t - S_t)^{-1} \) (distribution of \( \pi_t - S_t \) under \( \mathbb{P} \)) 
+independent of \( t \in \mathbb{N}_0 \), which means time homogeneity.
+The argument comes form \( \mathbb{P} \circ (\pi_t, S_t)^{-1} \) not depending on 
+\( t \) and \( \mathbb{R}^2 \ni (x, y) \mapsto x - y \) is measurable.
+
+The family \( (\pi_t - S_t),\ t \in \mathbb{N}_0 \) is i.i.d.
+\( (C_t)_{t \in \mathbb{N}_0} \) is a random walk starting in \( c_0 \geq 0 \).
+
+
+
+Give the definition of ruin time
+
+Let \(C = (C_t)_{t \in \mathbb{N}_0}\) be the surplus process.
+
+\(\tau: \Omega \rightarrow \mathbb{N}_0 \cup \{\infty\},\)
+\(w \mapsto \inf \{s \in \mathbb{N}_0 | C_s(w) < 0\} \)
+is the ruin time of \(C\), with (\inf \theta = \infty).
+
+Remark
+Classical concept from probability theory: stopping times
+\(\tau\) is stopping time w.r.t. filtration
+\(\mathbb{F} := (\sigma(C_u|0 \le u \le t))_{t \in \mathbb{N}_0}\) 
+canonical filtration of \(C\))
+
+In particular: \(\tau\) is an \(\mathbb{F}\)-mb. random variable
+The associated probabilities are
+
+Ruin probability up to time \(t \in \mathbb{N}\):
+\(\psi_t(c_0) := \mathbb{P}(\tau \le t) = \mathbb{P}(\exists s \in \{0, 1, ..., t\}: C_s < 0)\)
+
+Ultimate ruin probability:
+\(\psi(c_0) = \mathbb{P}(\tau < \infty)\)
+
+Some intuitive propositions then are
+Let \( c_0 \geq 0 \)
+1. \( 0 ≤ s ≤ t \implies 0 \leq \psi_s(c_0) \leq \psi_t(c_0) \leq 1\)
+2. \( \psi(c_0) = \mathbb{P}(\exists t \in \mathbb{N}_0) : C_t^{c_0} < 0) = \lim_{t \to \infty} \psi_t(c_0)\).
+and for
+\( 0 \leq c_0 \leq \tilde{c}_0 \), \( \psi_t(\tilde{c}_0) \leq \psi_t(c_0), t \in \mathbb{N}_0, \psi(\tilde{c}_0) \leq \psi(c_0) \).
+
+
+State the Net Profit Condition (NPC) and the motivating Proposition.
+
+
+The Proposition is:
+\(S_1\) integrable (\(\pi_1\) integrable by definition)
+\(\mathbb{P}(S_1 \ne \pi_1) > 0\)
+
+Then the following assertions hold:
+\(\mathbb{E}[S_1] < \mathbb{E}[\pi_1] \implies \lim_{t \rightarrow \infty} C_t = \infty\) \(\mathbb{P}\)-a.s. 
+due to (law of large numbers)
+\(\mathbb{E}[S_1] > \mathbb{E}[\pi_1] \implies \lim_{t \rightarrow \infty} C_t = -\infty\) \(\mathbb{P}\)-a.s. 
+due to (law of large numbers)
+\(\mathbb{E}[S_1] = \mathbb{E}[\pi_1] \implies \mathbb{P}(\lim \sup_{t \rightarrow \infty} C_t = -\lim \inf_{t \rightarrow \infty} C_t = \infty) = 1\) 
+(Borel-Cantelli Lemma)
+
+from which the NPC follows, namely
+\( \mathbb{E}[\pi_1] > \mathbb{E}[S_1] \),
+note that this does not guarantee no bankruptcy, it just ensures the absence of certain bankruptcy.
+
+
+State the recursive formula's for ruin probabilities
+
+Let \(c_0 \ge 0\).
+\(\forall t \in \mathbb{N}_0: \psi_{t + 1}(c_0) = 1 - F(c_0) + \int_{-\infty}^{c_0} \psi_t(c_0 - y) dF(y)\)
+\(\psi(c_0) = 1 - F(c_0) + \int_{-\infty}^{c_0} \psi(c_0 - y)dF(y)\)
+where \( F \) is the cumulant distribution function of \( S_1 - \pi_1 \).
+
+
+Define Lundberg coefficients and state their key properties
+
+Suppose \( \exists R > 0 \), s.t. \( \mathbb{E}[e^{S_1 - \pi_1)R}] = 1 \),
+then \( R \) is called the Lundberg coefficient.
+Lemma:
+If Lundberg coefficient exists, then it is unique.
+Theorem:
+Suppose the NPC holds and there exists a Lundberg coefficient, then \( \psi(c_0) \leq e^{-Rc_0}, c_0 \geq 0 \).
+
+
+Motivate what makes a Lundberg coefficients powerful in the context of insurance.
+
+\(\psi(c_0) \le e^{-R c_0} \rightarrow 0, c_0 \rightarrow \infty\), exponentially fast!
+\(\forall \epsilon > 0 \exists c_0 > 0\) s.t. \(\psi(c_0) \le \epsilon\) "too large"
+Don't have to choose \(c_0\)
+Ultimate ruin probability made arbitrarily small by choosing sufficient initial capital
+
+If \(S_j\) and \(\pi_1\) ind. (e.g. \(\pi_1 \in \mathbb{R}_+\)), then \(S_1 \wedge k\) and \(\pi_1\) ind., \(k \in \mathbb{N}\)
+Assume Lundberg coefficient \(R\) exists
+
+\(\implies \mathbb{E}[e^{R(S_1 \wedge k)}] \mathbb{E}[e^{-R \pi_1}] = \mathbb{E}[e^{R(S_1 \wedge k - \pi_1)}] \le \mathbb{E}[e^{R(S_1 - \pi_1)}] = 1\)
+
+Monotone conv. \(\implies \mathbb{E}[e^{R S_1}] = \lim_{k \rightarrow \infty} \mathbb{E}[e^{R(S_1 \wedge k)}] \le \mathbb{E}[e^{-R \pi_1}]^{-1} < \infty\)
+\(\implies\) claim size distribution \(\mathbb{P}_{S_1}\) is light-tailed, i.e., survival function \(\mathbb{P}(S_1 > x)\) decays exponentially fast in \(x\):
+\(\mathbb{P}(S_1 > x) \le \text{const.} \cdot e^{-Rx}\)
+Markov ineq.
+
+However this is a problematic assumption about many distributions in insurance applications.
+
+
+Define subexponentiality and state how it relates the Lundberg bounds
+
+\(H: \mathbb{R} \rightarrow [0, 1]\) cdf such that \(H(0) = 0\). \(H\) is subexponential if
+\[\lim_{x \rightarrow \infty} \frac{1 - H^{*2}(x)}{1 - H(x)} = 2.\]
+\(H^{*2}\) cdf of self-convolution of \(H\), i.e., cdf of \(Z = X + Y\) for two i.i.d. random variables \(X, Y\) with \(F_X = F_Y = H\)
+
+An easier condition to verify this is regular variation, namely a function \( f : \mathbb{R}_{+} \to \mathbb{R}_{+} \)
+is regularly varying if for all \( a \in \mathbb{R}_{+} \) it holds
+\( \lim{x \to \infty} \frac{f(ax)}{f(x)} = a^\gamma \), for some \( \gamma \geq 0 \).
+
+Suppose \( H \) is subexponential. Then
+\( \forall r > 0 : \lim_{x \to \infty} e^{rx}(1 - H(x)) = \infty \), 
+then one can deduce with Choquets representation of the expectation
+\( \mathbb{E}[X] = \int_{0}^\infty \mathbb{P}(X > x)dx \),
+that
+\( \mathbb{E}[e^{r(S_1 - \pi_1)}] = \mathbb{E}[e^{r\pi_1} r\int_{\mathbb{R}} e^{rk}(1 - H(k)) dk = \infty\),
+where \( k = \frac{\log(x)}{r}, dk = \frac{dx}{rx} \),
+thus Lundberg coefficients can't exists.
+
+Famous examples that caught by this are 
+- many Weibull distributions
+- log-normal distributions
+- log-gamma distributions
+- Pareto distributions
+
+which do not satisfy this
+
+\end{document}

@@ -1,0 +1,50 @@
+Define a germ
+
+Germs are an equivalence relation with respect to some restriction function.
+For example a germ of functions \( X \to Y \), are all functions which coincide, when restricted 
+to some subset \( U \) of \( X \). Typically one takes a point \( x \in X \), and says
+that \( f \sim g \) (are germ equivalent), iff. \( \exists U, x \in U, f(u) = g(u), \forall u \in U \).
+
+In particular a local properties would be shared by such functions, such as being continuous or analytic.
+
+In complex analysis, the subject of analytic continuation deals with germs.
+Namely let \( f \) be some analytic function in the disc \( D_r(z_0) \), so 
+\( f(z)=\sum_{k=0}^\infty \alpha_k (z-z_0)^k \)
+converges. We call the vector \( g = (z_0, \alpha_0, \alpha_1, \alpha_2, \ldots) \) a germ.
+
+
+Define a presheafs and sheafs 
+
+Let \(X\) be a topological space. A presheaf \(\mathcal{F}\) of sets on \(X\) consists of the following data:
+1.For each open set \(U\subseteq X\), there exists a set \(\mathcal{F}(U)\). This set is also denoted \(\Gamma(U, \mathcal{F})\). 
+  The elements in this set are called the sections of \(\mathcal{F}\) over \(U\). 
+  The sections of \(\mathcal{F}\) over \(X\) are called the global sections of \(\mathcal{F}\).
+
+2. For each inclusion of open sets \(V \subseteq U\), a function \(\operatorname{res}^{U}_{V} \colon \mathcal{F}(U) \rightarrow \mathcal{F}(V)\) exists. 
+   In view of many of the examples below, the morphisms \(\text{res}^{U}_{V}\) are called restriction morphisms. 
+   If \(s \in \mathcal{F}(U)\), then its restriction \(\text{res}^{U}_{V}(s)\) is often denoted \(s|_V\) by analogy with restriction of functions.
+   The restriction morphisms are required to satisfy two additional functorial properties:
+
+For every open set \(U\) of \(X\), the restriction morphism 
+\(\operatorname{res}^{U}_{U} \colon \mathcal{F}(U) \rightarrow \mathcal{F}(U)\)
+is the identity morphism on \(\mathcal{F}(U)\).
+If we have three open sets \(W \subseteq V \subseteq U\), then the function composition \(\text{res}^{V}_{W}\circ\text{res}^{U}_{V}=\text{res}^{U}_{W}\).
+
+Axiomatically, a sheaf is a presheaf that satisfies both of the following axioms:
+1. (Locality) Suppose \(U\) is an open set, \(\{ U_i \}_{i \in I}\) is an open cover of \(U\) with \( U_i \subseteq U\) for all \( i \in I\), and \(s, t \in \mathcal{F}(U)\) 
+    are sections. If \(s|_{ U_i} = t|_{ U_i}\) for all \(i \in I\), then \(s = t\).
+2. (Gluing axiom) Suppose \(U\) is an open set, \(\{ U_i \}_{i \in I}\) is an open cover of \(U\) with \( U_i \subseteq U\) for all \( i \in I\), and 
+    \(\{ s_i \in \mathcal{F}(U_i) \}_{i \in I}\) is a family of sections. If all pairs of sections agree on the overlap of their domains, that is, 
+    if \(s_i|_{U_i\cap U_j} = s_j|_{U_i \cap U_j}\) for all \(i, j \in I\), then there exists a section \(s \in \mathcal{F}(U)\) such that \(s|_{U_i} = s_i\) for all \(i \in I\).
+
+An example of a presheaf, which is not a sheaf: Let \( X = \mathbb{R} \) and \( \mathcal{F}(U) \) all cont. function which are constant on \( U \).
+An example of a sheaf: Let \( X = \mathbb{R} \) and \( \mathcal{F}(U) \) all cont. function on \( U \).
+Another example of a sheaf: A ringed space \( (X, \mathcal{O}_X) \) is a top. space \( X \) with a sheaf of rings \( \mathcal{O}_X \) on \( X \).
+The sheaf is called the structure sheaf.
+A locally ringed space is ringed space s.t. all stalks of \( \mathcal{O}_X \) are local rings.
+
+More generally 
+
+is defined to 
+
+generalization of

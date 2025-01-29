@@ -1,0 +1,604 @@
+Define monetary risk measures and relate them to acceptance sets
+
+Monetary Risk Measure
+A mapping \(\rho : \mathcal{X} \to \mathbb{R}\) is called a monetary risk measure if it satisfies the following properties:  
+1. Inverse monotonicity: If \(\mathcal{X}(\omega) \leq \mathcal{Y}(\omega)\) for all \(\omega \in \Omega\), then 
+   \(\rho(\mathcal{X}) \geq \rho(\mathcal{Y})\).  
+2. Cash invariance: For any \(m \in \mathbb{R}\), \(\rho(\mathcal{X} + m) = \rho(\mathcal{X}) - m\).
+
+Interpretation:  
+1. Property 1 states that the risk of a position \(\mathcal{Y}\) is smaller than the risk of a position \(\mathcal{X}\), 
+   if the future value of \(\mathcal{Y}\) is at least as large as \(\mathcal{X}\) for any scenario.  
+2. Property 2 states that risk is measured on a monetary scale: if \(m\) are added to \(\mathcal{X}\), 
+   then the risk of \(\mathcal{X}\) is exactly reduced by this amount.
+
+Acceptability:  
+- A financial position \(X \in \mathcal{X}\) is said to be acceptable with respect to a given monetary risk measure \(\rho\) if \(\rho(X) \leq 0\).  
+- The set \(\mathcal{A} = \mathcal{A}_{\rho}\) of all acceptable positions is called the acceptance set:  
+  \( \mathcal{A} := \{X \in \mathcal{X} \mid \rho(X) \leq 0\} \)
+
+The acceptance set is non-empty and satisfies the following two conditions:  
+1. \(\inf \{m \in \mathbb{R} \mid m \in \mathcal{A}\} > -\infty\)  
+2. \(X \in \mathcal{A}, Y \in \mathcal{X}, Y \geq X \Rightarrow Y \in \mathcal{A}\)
+
+The monetary risk measure \(\rho\) can be recovered from its acceptance set  
+\(\rho(X) = \inf \{m \in \mathbb{R} \mid X + m \in \mathcal{A}\}\),
+
+i.e., \(\rho\) is indeed a capital requirement.
+
+
+State how properties of the risk measure can be translated into properties of the acceptance set
+
+Properties of Acceptance Sets
+
+Let \(\rho\) be a monetary risk measure with acceptance set \(\mathcal{A}\).
+
+- \(\rho\) is a convex risk measure if and only if \(\mathcal{A}\) is convex.
+- \(\rho\) is positively homogeneous if and only if \(\mathcal{A}\) is a cone.
+- \(\rho\) is coherent if and only if \(\mathcal{A}\) is a convex cone.
+
+Acceptance sets as a starting point for regulation:
+
+- Acceptance sets divide the universe of all positions into those that are acceptable and those that are unacceptable.
+- They correspond to risk measures which possess an operational interpretation as capital requirements.
+- Thus, acceptance sets are a good starting point to formulate the normative standards of a regulator.
+
+Define measures of dispersion and show how their
+deficiencies can be fixed by the coefficient of variation
+
+Measures of dispersion:
+Variance:  
+\(
+\text{Var}(X) = \mathbb{E}[(X - \mathbb{E}[X])^2]
+\)
+- The variance quantifies the expected quadratic deviation between a random variable and its expectation.
+- In the sense of the two-sided definition of risk deviations of \(X\) from \(\mathbb{E}[X]\) in both directions are taken into account.
+
+Standard deviation (volatility): \(\sigma(X)\) quantifies risk in the same unit as \(X\) itself.
+\(
+\sigma(X) = \sqrt{\text{Var}(X)} = \sqrt{\mathbb{E}[(X - \mathbb{E}[X])^2]}
+\)
+
+One-sided standard deviation (semi-standard deviation):
+\(
+\sigma_{+}(X) = \sqrt{\mathbb{E}[(\mathbb{E}[X] - X)_{+}^2]}
+\)
+\(\sigma_{+}(L) = \sqrt{\mathbb{E}[(L - \mathbb{E}[L])_{+}^2]}\)
+In contrast to the variance or the standard deviation, the one-side standard deviation only accounts for shortfalls \(X < \mathbb{E}[X]\) 
+in case of a financial position \(X\) and for exceedances \(L > \mathbb{E}[L]\) in case of loss variables respectively.
+
+
+Random variables with a higher expectation typically show a higher variance in comparison to
+random variables with smaller expectation.
+Conclusion: The interpretation of the variance or standard deviation is only meaningful in standardized terms.
+Coefficient of variation:
+\(
+\text{cv}(X) = \frac{\sigma(X)}{\mathbb{E}[X]}
+\)
+
+Define shortfall measures
+Shortfall measures quantify the risk of exceeding a given loss threshold \( a \).
+
+
+Example 4.1.3 (Upper and Lower Partial Moments)
+
+- The upper partial moments refer to loss variables and weight the exceedances by a power function:
+\[
+\text{UPM}_{k,a}(L) :=
+\begin{cases} 
+\mathbb{E}[(L - a)^+]^k & \text{for } k > 0, \\
+\mathbb{P}[L \ge a] & \text{for } k = 0.
+\end{cases}
+\]
+
+- In the same manner, the lower partial moments are defined with respect to financial positions:
+\[
+\text{LPM}_{k,a}(X) :=
+\begin{cases} 
+\mathbb{E}[(a - X)^+]^k & \text{for } k > 0, \\
+\mathbb{P}[X < a] & \text{for } k = 0.
+\end{cases}
+\]
+
+Special cases:
+- \( k = 0 \): Shortfall probability with respect to the loss threshold \( a \),
+- \( k = 1 \): expected exceedance of the loss threshold \( a \),
+- \( k = 2 \): shortfall variance.
+
+
+Explain scenario based risk measures
+
+Scenario-Based Risk Measures for Stress Testing
+
+Philosophy: Risk is measured as maximum (weighted) loss under certain scenarios.
+
+- Scenarios typically correspond to risk factor changes, e.g., 
+  yield curve shift by 50 basis points, increase of credit spreads, increase of mortality rates etc.
+- In practice, it is a common approach to consider cross scenarios, i.e., simultaneous changes of risk factors.
+
+Notation:
+- Set of hypothetical scenarios \( S = \{s_1, \ldots, s_n\} \) with corresponding weights \((w_1, \ldots, w_n)\)
+- \( L(s_i) \) portfolio loss for scenario \( s_i \), \( i = 1, \dots, n\)
+
+Definition: Scenario based risk measure
+
+\( \rho_S \coloneqq \text{max}_{i} \{w_i L(s_i)\}\)
+
+Assume that \( L(0) = 0 \) (normalization) and \( w_i \in [0, 1] \)
+Consider \( S \sim \mathbb{P}_i \) for the probability measure \( \mathbb{P} \) with \(\mathbb{P}_i[S = si ] = wi\) and 
+\(\mathbb{P}_i[S = 0] = 1 - wi\)
+\( w_iL(s_i) = w_iL(s_i) + (1 − w_i)L(0) = E_{\mathbb{P}_i}[L(S)] \).
+Then, \( \rho_S = \text{max}_{\mathbb{P} \in \{\mathbb{P}_1, \dots, \mathbb{P}_n\} E_{\mathbb{P}}[L(S)]\), 
+which corresponds to the general robust representation of a coherent risk measure.
+
+Define V@R and MV@R
+
+Value at Risk at level \(\lambda \in (0,1)\) of a financial position \(X\):
+\( \text{V@R}_\lambda(X) := \inf\{m \in \mathbb{R} : \mathbb{P}[X + m < 0] \leq \lambda\} \)
+
+Properties:
+- The parameter \(\lambda \in (0,1)\) is chosen close to 0, e.g., \(\lambda = 0.01\) or \(\lambda = 0.005\).
+- \(\text{V@R}_\lambda(X)\) is the smallest monetary amount that needs to be added to \(X\) such that the probability 
+  of a loss becomes smaller than \(\lambda\) (capital requirement).
+- Value at Risk thus allows for a very simple interpretation and can at the same time be easily implemented in practice.
+
+Hint: Value at Risk of the associated loss variable \(L := -X\):
+
+\(
+\mathbb{P}[X + m < 0] \leq \lambda \quad \Leftrightarrow \quad F_L(m) := \mathbb{P}[L \leq m] \geq 1 - \lambda
+\)
+
+We write (if focussing on losses) 
+(ATTENTION: \(\text{V@R}_{1-\lambda}(L) \neq \text{V@R}_{1-\lambda}(X)\)):
+
+\(
+\text{V@R}_{1-\lambda}(L) := \inf\{m \in \mathbb{R} : F_L(m) \geq 1 - \lambda\}
+\)
+
+V@R neglects extreme events that occur with small probability.
+V@R does not generally reward diversification, but charges a larger risk amount for a diversified position in many
+cases (no sub-additivity).
+
+In practice, it is a common approach (e.g., for credit risk and underwriting risk) 
+to quantify risk in terms of the Mean Value at Risk:
+
+\(\text{MV@R}_\lambda(X) := \text{V@R}_\lambda(X - \mathbb{E}[X]) \quad \text{and} \quad \text{MV@R}_{1-\lambda}(L) := \text{V@R}_{1-\lambda}(L - \mathbb{E}[L])\).
+
+Using cash-invariance this is equivalent to
+
+\(\text{MV@R}_\lambda(X) := \text{V@R}_\lambda(X) - \mathbb{E}[-X] \quad \text{and} \quad \text{MV@R}_{1-\lambda}(L) := \text{V@R}_{1-\lambda}(L) - \mathbb{E}[L]\),
+
+i.e., expected losses are subtracted.
+In this case, the capital requirement is only a buffer for ‘unexpected losses’.
+
+The definition of the Solvency Capital Requirement (SCR) in the regulation scheme Solvency II 
+for insurance firms is interpreted in the sense of Mean Value at Risk (although the legal framework is self-contradictory).
+
+
+Give 2 examples highlighting defficiences of V@R 
+
+Which of the following two financial positions is more ‘risky’?
+\[
+X_1 = \begin{cases} 
+1 & \text{with probability } 0.99 \\ 
+-1 & \text{with probability } 0.01 
+\end{cases}
+\]
+
+\[
+X_2 = \begin{cases} 
+1 & \text{with probability } 0.99 \\ 
+-10^{10} & \text{with probability } 0.01 
+\end{cases}
+\]
+The V@R at level 0.01 of both financial positions is -1. However, it is obvious that \(X_2\) is more risky than \(X_1\).
+
+Let \(X_1, X_2\) be two independent financial positions:
+
+\[X_i =
+\begin{cases} 
+1 & \text{with probability } 0.5 \\ 
+-1 & \text{with probability } 0.5 
+\end{cases} \quad (i = 1, 2)\]
+
+For both \(X_1\) and \(X_2\), the Value at Risk at level 0.5 amounts to \(-1\).
+Consider now the diversified portfolio
+
+\[X_1 + X_2 = 
+\begin{cases} 
+2 & \text{with probability } 0.25, \\ 
+0 & \text{with probability } 0.5, \\ 
+-2 & \text{with probability } 0.25 
+\end{cases}\]
+
+The Value at Risk at level 0.5 is 0.
+Conclusion: In this example, Value at Risk is not sub-additive, i.e.,
+\(\text{V@R}_{0.5}(X_1 + X_2) > \text{V@R}_{0.5}(X_1) + \text{V@R}_{0.5}(X_2),\)
+and it thus penalizes economically meaningful diversification.
+
+
+Define convex and coherent risk measures
+
+Definition 4.1.7 (Convex and Coherent Risk Measures)
+
+A monetary risk measure \(\rho\) on \(\mathcal{X}\) is called a convex risk measure 
+if it is a convex functional and thus does not penalize diversification.
+
+A convex risk measure is called coherent if it satisfies in addition positive homogeneity, i.e.,
+\(
+\rho(\lambda X) = \lambda \rho(X) \quad \text{for all } X \in \mathcal{X} \text{ and } \lambda \geq 0.
+\)
+
+Remarks:
+Each coherent risk measure \(\rho\) is sub-additive, i.e.,
+
+\(
+\rho(X + Y) \leq \rho(X) + \rho(Y) \quad \text{for all } X, Y \in \mathcal{X}.
+\)
+
+Positive Homogeneity is a scaling property.
+- Note that this property might be inappropriate for risk measurement, due to concentration and liquidity risk.
+- This criticism motivated the notion of convex risk measures, introduced by Föllmer and Schied (2002).
+
+Define robust representation and elaborate on their construction
+
+Let us denote by \(\mathcal{M}_1 := \mathcal{M}_1(\Omega, \mathcal{F})\) the set of all probability measures on \((\Omega, \mathcal{F})\).
+Definition 4.1.8 (Robust Representation)
+We say that a convex risk measure \(\rho\) has a robust representation if
+\(
+\rho(X) = \sup_{Q \in \mathcal{M}_1} \{ \mathbb{E}_Q[-X] - \alpha(Q) \} = \sup_{Q \in \mathcal{Q}_\rho} \{ \mathbb{E}_Q[-X] - \alpha(Q) \}
+\)
+
+with some penalty function \(\alpha : \mathcal{M}_1 \to \mathbb{R} \cup \{\infty\}\). Here, the family
+\(
+\mathcal{Q}_\rho := \{ Q \in \mathcal{M}_1 \mid \alpha(Q) < \infty \}
+\)
+
+collects the measures \(Q \in \mathcal{M}_1\) with finite penalty; 
+in particular, for \(Q \in \mathcal{Q}_\rho\) one requires that \(\mathbb{E}_Q[-X]\) is well-defined for all \(X \in \mathcal{X}\).
+
+Interpretation:
+- The measures in \(\mathcal{Q}_\rho\) can be interpreted as plausible probabilistic models that are taken more or less seriously 
+  as specified by the penalty function \(\alpha\).
+- The capital requirement \(\rho(X)\) is computed as the worst case of the penalized expected loss \(\mathbb{E}_Q[-X]\), 
+  taken over all models \(Q \in \mathcal{Q}_\rho\).
+
+Existence of a robust representation:  
+- Under mild conditions, a convex risk measure admits a robust representation, due to the Fenchel-Moreau Theorem.  
+- If \(\rho\) admits a robust representation in terms of some penalty function \(\alpha\), 
+  then the representation also holds for the minimal penalty function \(\alpha^{\text{min}}\) defined by  
+\(
+\alpha^{\text{min}}(Q) := \sup_{X \in \mathcal{X}} \{ \mathbb{E}_Q[-X] - \rho(X) \} = \sup_{X \in \mathcal{A}_\rho} \mathbb{E}_Q[-X].
+\)
+
+Special case – coherent risk measures:  
+- In the coherent case we have \(\alpha^{\text{min}}(Q) \in [0, \infty)\), since the acceptance set \(\mathcal{A}_\rho\) is a convex cone.  
+- A coherent risk measure \(\rho\) with robust representation thus takes the form \(\rho(X) = \sup_{Q \in \mathcal{Q}_\rho} \mathbb{E}_Q[-X]\) with  
+\(
+\mathcal{Q}_\rho = \{ Q \in \mathcal{M}_1 \mid \alpha^{\text{min}}(Q) = 0 \}.
+\)
+
+Construction principle:  
+- Let \(\alpha : \mathcal{M}_1 \to (-\infty, \infty]\) be a penalty function, and let \(\mathcal{Q}_\rho\) 
+  be a subset of probability measures on \((\Omega, \mathcal{F})\).  
+- Then a convex risk measure \(\rho\) is given by  
+\(
+    \rho(X) := \sup_{Q \in \mathcal{Q}_\rho} \{ \mathbb{E}_Q[-X] - \alpha(Q) \}.
+\)
+
+
+Define AV@R and T@VR
+
+Average Value at Risk at level \(\lambda \in (0, 1]\) for a financial position \(X\):
+
+\[ \text{AV@R}_\lambda(X) = \frac{1}{\lambda} \int_0^\lambda \text{V@R}_\alpha(X) \, d\alpha \]
+
+Important properties:
+
+1. By construction, AV@R accounts for extreme losses, in contrast to V@R.
+
+2. \(\text{AV@R}\(_\lambda\)\) is a coherent risk measure with robust representation
+
+\(
+\text{AV@R}_\lambda(X) = \max_{Q \in \mathcal{Q}_\lambda} \mathbb{E}_Q[-X] 
+\)
+for \(\mathcal{Q}_\lambda := \left\{ Q \ll \mathbb{P} \mid \frac{dQ}{d\mathbb{P}} \leq \frac{1}{\lambda} \right\} \),
+cf. Föllmer and Schied (2016), Theorem 4.52.
+
+3. By monotonicity of \(\alpha \mapsto \text{V@R}_\alpha(X)\),
+\(
+\text{AV@R}_\lambda(X) \geq \text{V@R}_\lambda(X).
+\)
+
+More precisely, AV@R\(_\lambda\) is the smallest convex risk measure which is distribution-based and which dominates 
+\(\text{V@R}_\lambda\).
+
+For \(\lambda = 1\), AV@R corresponds to the expected loss \(\mathbb{E}_{\mathbb{P}}[-X]\).
+
+Alternative representation for each \(\lambda\)-quantile \(q_X(\lambda)\) of \(X\):
+\(
+\text{AV@R}_\lambda(X) = \frac{1}{\lambda} \mathbb{E}[(q_X(\lambda) - X)^+] - q_X(\lambda) = \frac{1}{\lambda} \inf_{l \in \mathbb{R}} \{\mathbb{E}[(l - X)^+] - \lambda l\}
+\)
+
+The minimization problem allows to calculate \(\text{AV@R}\) 
+without knowledge of \(\text{V@R}\).
+Special case:
+\(
+\text{AV@R}_\lambda(X) = \text{V@R}_\lambda(X) + \frac{1}{\lambda} \mathbb{E}[(-X - \text{V@R}_\lambda(X))^+]
+\)
+
+Interpretation: The risk measured in terms of \(\text{AV@R}_\lambda\) consists of \(\text{V@R}_\lambda\) 
+and an additional 'excess reserve' which quantifies the expected exceedance of \(\text{V@R}_\lambda\). 
+This motivates the alternative name Expected Shortfall.
+
+Tail Value at Risk at level \(\lambda \in (0,1)\):
+
+\(
+\text{TV@R}_\lambda(X) := \mathbb{E}_{\mathbb{P}}[-X \mid -X > \text{V@R}_\lambda(X)]
+\)
+
+Economic interpretation:
+\(\text{TV@R}_\lambda(X)\) is the conditional expected loss given that the loss \(-X\) exceeds the Value at Risk \(\text{V@R}_\lambda(X)\).
+
+Remarks:
+- Conditional expectation for events \(A\) with \(\mathbb{P}[A] > 0\):
+  \(
+  \mathbb{E}_{\mathbb{P}}[X \mid A] = \frac{1}{\mathbb{P}[A]} \mathbb{E}_{\mathbb{P}}[X 1_A]
+  \)
+- The Tail Value at Risk is in general not a convex risk measure.
+
+Relation between TV@R and AV@R
+With \(\gamma_\lambda := \mathbb{P}[-X > \text{V@R}_\lambda(X)]/\lambda\), we obtain
+
+\(
+\text{AV@R}_\lambda(X) = \gamma_\lambda \cdot \text{TV@R}_\lambda(X) + (1 - \gamma_\lambda) \cdot \text{V@R}_\lambda(X)
+\)
+
+Conclusions:
+
+\(\text{AV@R}_\lambda(X) = \text{TV@R}_\lambda(X)\) for all \(\lambda \in (0,1)\) 
+such that \(\mathbb{P}[-X = \text{V@R}_\lambda(X)] = 0\)
+For all random variables with continuous distribution, 
+the risk measures Average Value at Risk and Tail Value at Risk coincide.
+Thus, TV@R is coherent on the set of continuous random variables.
+
+Problem:
+For modeling purposes, continuous random variables are typically not sufficient.
+
+Define Choquet integrals 
+A Choquet capacity is a function \(\mu: \mathcal{F} \rightarrow [0, 1]\) such that
+
+1. \(\mu(\emptyset) = 1 - \mu(\Omega) = 0\)
+2. \(A, B \in \mathcal{F}, A \subset B \implies \mu(A) \le \mu(B)\)
+
+(so its missing the \( \sigma \)-additivity of probability measures).
+Let \( f \in \mathcal{L}^\infty \),
+the Choquet integral of \( f \) with respect to \( \mu \) is:
+
+\( \int f d\mu = \int_{0}^\infty \mu(f > x)dx + \int_{-\infty}^0 \mu(f > x) - 1 dx \)
+\(x \ge |f|_\infty \implies \{f > x\} = \emptyset \implies \mu(f > x) = 0 \implies 0 \le \int_0^\infty \mu(f > x) dx \le |f|_\infty\)
+\(x \le -|f|_\infty \implies \{f > x\} = \Omega \implies \mu(f > x) = 1 \implies 0 \ge \int_{-\infty}^0 (\mu(f > x) - 1) dx \ge -|f|_\infty\)
+1. \(\mu(\emptyset) = 1 - \mu(\Omega) = 0\)
+2. \(A, B \in \mathcal{F}, A \subset B \implies \mu(A) \le \mu(B)\)
+
+Define comonotonicity of functions and risk measures.
+
+Two measurable functions \( X, Y \) on \((\Omega, \mathcal{F})\) are comonotonic if
+\(
+(X(\omega) - X(\omega'))(Y(\omega) - Y(\omega')) \geq 0 \quad \forall(\omega, \omega') \in \Omega \times \Omega.
+\)
+
+A risk measure \(\rho : \mathcal{X} \to \mathbb{R}\) is comonotonic if
+\(
+\rho(X + Y) = \rho(X) + \rho(Y)
+\)
+for comonotonic \(X, Y \in \mathcal{X}\).
+
+Theorem 4.2.5 (Comonotonic Risk Measures)
+A monetary risk measure \(\rho : \mathcal{X} \to \mathbb{R}\) is comonotonic, if and only if there exists a capacity \(c\) on \((\Omega, \mathcal{F})\) such that
+\(
+\rho(X) = \int (-X) \, dc
+\)
+
+Define distortion risk measures and relate them to the V@R family
+
+An increasing function \(\psi : [0, 1] \rightarrow [0, 1]\) with \(\psi(0) = 0\) and \(\psi(1) = 1\) is called a distortion function. 
+If \(\mathbb{P}\) is a probability measure on \((\Omega, \mathcal{F})\), then 
+
+\(c^{\psi}(A) := \psi(\mathbb{P}[A]), \quad A \in \mathcal{F}\),
+defines a capacity. The risk measure 
+
+\(\rho^{\psi}(X) := \int (-X) \, dc^{\psi}\)
+is called a distortion risk measure.
+
+Remark:
+If \(\psi\) is left-continuous, then \(\rho^{\psi}(X) = \int (-X) \, dc^{\psi} = \int_{[0,1]} \text{V@R}_{\lambda}(X) \psi'(d\lambda)\). 
+For the general case, we refer to Dhaene, Kukush, Linders & Tang (2012).
+
+The distortion risk measure \(\rho^{\psi}(X)\) is coherent, if and only if \(\psi\) is concave.
+
+
+Example 4.2.7 (Value at Risk, Average Value at Risk, Range Value at Risk)
+
+Let \(\alpha, \beta > 0\).
+1. Value at Risk: \(\text{V@R}_{\alpha}(X) = \inf\{m \in \mathbb{R} : \mathbb{P}[m + X < 0] \leq \alpha\}\)
+2. Average Value at Risk: \(\text{AV@R}_{\beta}(X) = \frac{1}{\beta} \int_{0}^{\beta} \text{V@R}_{\gamma}(X) \, d\gamma\)
+3. Range Value at Risk: \(\text{RV@R}_{\alpha, \beta}(X) = \frac{1}{\beta} \int_{\alpha}^{\alpha + \beta} \text{V@R}_{\gamma}(X) \, d\gamma\)
+
+Risk Measure
+\(\text{V@R}_{\alpha}\)
+\[
+    \psi(x) = 
+    \begin{cases} 
+    0, & 0 \leq x \leq \alpha \\ 
+    1, & \alpha < x 
+    \end{cases}
+\]
+\(\text{AV@R}_{\beta}\)
+\[
+    \psi(x) = 
+    \begin{cases} 
+    \frac{x}{\beta}, & 0 \leq x \leq \beta \\ 
+    1, & \beta < x 
+    \end{cases}
+\]
+\(\text{RV@R}_{\alpha, \beta}\)
+\[
+    \psi(x) = 
+    \begin{cases} 
+    0, & 0 \leq x \leq \alpha \\ 
+    \frac{x - \alpha}{\beta}, & \alpha < x \leq \alpha + \beta \\ 
+    1, & \alpha + \beta < x 
+    \end{cases}
+\]
+
+
+Define the MINVAR
+
+For a positive integer \(n\) consider the concave distortion \(c = \psi \circ \mathbb{P}\), 
+where \(\psi(x) = 1 - (1 - x)^n\).
+
+The corresponding risk measure \(\rho\), defined as the Choquet integral of the loss, is sometimes called MINVAR.
+For independent copies \(X_1, \ldots, X_n\) of \(X\) we get
+
+\(
+\rho(X) = \mathbb{E}_{\mathbb{P}}[\max\{-X_1, \ldots, -X_n\}] = -\mathbb{E}_{\mathbb{P}}[\min\{X_1, \ldots, X_n\}],
+\)
+
+i.e., \(\rho(X)\) can be described as the expectation under \(\mathbb{P}\) 
+of the maximal loss occurring in the portfolio \(X_1, \ldots, X_n\).
+
+Derive Utility-Based Shortfall Risk
+
+Construction:
+
+Let \( l : \mathbb{R} \to \mathbb{R} \) be a convex and increasing loss function.
+Let \( r_0 > \inf l \) be a given upper bound for the expected loss \(\mathbb{E}_{\mathbb{P}}[l(-X)]\) of financial positions \( X \in \mathcal{X} \).
+Convex acceptance set: \(\mathcal{A} := \{X \in \mathcal{X} | \mathbb{E}_{\mathbb{P}}[l(-X)] \leq r_0 \}\).
+
+Shortfall Risk Measure: 
+\(\rho^{SR}(X) = \inf \{m | X + m \in \mathcal{A}\}\)
+
+In terms of the utility function \( u(x) := -l(x) \), the acceptance set can be rewritten as
+\(\mathcal{A} = \{X \in \mathcal{X} | \mathbb{E}_{\mathbb{P}}[u(X)] \geq -r_0 \}\).
+Therefore, \(\rho^{SR}\) is also called Utility-Based Shortfall Risk (UBSR) measure.
+
+Numerical aspects:
+\( m = \rho^{SR}(X) \) is the unique solution of the equation \(\mathbb{E}_{\mathbb{P}}[l(-X - m)] = r_0\).
+Stochastic root finding methods (Robbins-Monro algorithm, Polyak-Ruppert algorithm) can be used for the explicit calculation.
+
+Robust representation: (see, e.g., Föllmer and Schied (2016), Proposition 4.113 and Theorem 4.115)
+\(
+\rho(X) = \max_{Q \in \mathcal{M}_1(\mathbb{P})} \{\mathbb{E}_{Q}[-X] - \alpha^{\min}(Q)\}
+\)
+
+with minimal penalty function
+\(
+\alpha^{\min}(Q) = \inf_{\lambda > 0} \frac{1}{\lambda} \{r_0 + \mathbb{E}_{\mathbb{P}}[l^*(\lambda \frac{dQ}{d\mathbb{P}})]\},
+\)
+where \( l^*(z) := \sup_{x \in \mathbb{R}} \{zx - l(x)\} \) is the Fenchel-Legendre transform of \( l \).
+
+
+Define Expectiles and Expectile Value at Risk
+For a random variable \(X\), the lower and the upper quantile \(q_{X}(\lambda)_{-}\) and \(q_X(\lambda)_{+}\) 
+at level \(\lambda \in (0,1)\) can be defined by the minimization of an asymmetric, piecewise linear loss function in the following sense:
+
+\[
+[q_{X}(\lambda)_{-}, q_X(\lambda)_{+}] = \argmin_{x \in \mathbb{R}} \left(\lambda \mathbb{E}[(X-x)_{+}] + (1-\lambda) \mathbb{E}[(X-x)_{-}]\right).
+\]
+
+In a similar manner, an expectile is the minimizer of the asymmetric quadratic expected loss
+\(
+E_\lambda(X) := \argmin_{x \in \mathbb{R}} \left(\lambda \mathbb{E}[(X-x)_{+}]^2 + (1-\lambda) \mathbb{E}[(X-x)_{-}]^2\right).
+\)
+
+For \(\lambda=1/2\), we obtain \(E_{1/2}(X) = \mathbb{E}[X]\).
+Thus, expectiles can be viewed as asymmetric generalizations of the expectation value.
+The word 'expectile' combines 'expectation' and 'quantile'.
+
+
+Define the entropic risk measure
+
+Convex Entropic Risk Measure with parameter \(\gamma > 0\):
+
+\(e_{\gamma}(X) := \sup_{Q \in \mathcal{M}_1} \left\{\mathbb{E}_{Q}[-X] - \frac{1}{\gamma} H(Q|P)\right\}\)
+
+Construction:
+This definition is based on the robust representation of convex risk measures and 
+the specification of a penalty function \(\alpha(Q) := \frac{1}{\gamma} H(Q|P)\), defined in terms of the relative entropy
+
+\[H(Q|P) := \begin{cases} 
+\mathbb{E}_{Q}[\log \frac{dQ}{dP}] & \text{if } Q \ll P, \\
++\infty & \text{else.}
+\end{cases}\]
+
+The relative entropy satisfies \(H(P|P) = 0\), and it is often interpreted as 'distance' between two probability measures. 
+However, \(H(\cdot|\cdot)\) is not a metric.
+
+Explicit representation:
+The relative entropy satisfies a variational principle (see Föllmer and Schied 2016, Lemma 3.29):
+
+\(H(Q|P) = \sup_{X \in L^{\infty}(\Omega, \mathcal{F}, P)} \left\{\mathbb{E}_{Q}[-X] - \log \mathbb{E}_{P}[e^{-X}]\right\}.\)
+
+This implies \(\mathbb{E}_{Q}[-X] - \frac{1}{\gamma} H(Q|P) \leq \frac{1}{\gamma} \log \mathbb{E}_{P}[e^{-\gamma X}]\), and this upper bound is attained for the measure \(Q\) with density \(e^{-\gamma X}/\mathbb{E}_{P}[e^{-\gamma X}]\).
+
+This yields the explicit representation
+
+\(e_{\gamma}(X) = \frac{1}{\gamma} \log \mathbb{E}_{P}[e^{-\gamma X}]\).
+
+
+Relationship to the Exponential Premium Principle in actuarial mathematics:  
+\(S\) claims amount \(\Rightarrow\) insurance premium 
+\(\pi(S) = \frac{1}{\gamma} \log \mathbb{E}_{\mathbb{P}}[e^{\gamma S}] = e_{\gamma}(-S)\)  
+
+Acceptance set:  
+\(\mathcal{A} = \{X | e_{\gamma}(X) \leq 0\}\)  
+\(= \{X | \mathbb{E}_{\mathbb{P}}[l(-X)] \leq 1\} = \{X | \mathbb{E}_{\mathbb{P}}[u(X)] \geq 0\}\)  
+
+for \(l(x) = e^{\gamma x}\) (loss function) and \(u(x) = 1 - e^{-\gamma x}\) (exponential utility function)  
+
+Conclusion: The Entropic Risk Measure is a special case of the Utility-Based Shortfall Risk.
+
+Define divergence risk measures
+
+Let \( g : \mathbb{R}_+ \to \mathbb{R} \cup \{\infty\} \) be a lower semicontinuous and convex function with \( g(1) < \infty \) 
+and superlinear growth \( g(x)/x \to \infty \) as \( x \to \infty \)
+For \(\mathbb{Q}, \mathbb{P} \in \mathcal{M}_1\) define the \( g \)-divergence of \(\mathbb{Q}\) w.r.t. \(\mathbb{P}\) by
+\[
+D_g(\mathbb{Q} | \mathbb{P}) := \begin{cases} 
+\mathbb{E}_{\mathbb{Q}} \left[ g \left( \frac{d\mathbb{Q}}{d\mathbb{P}} \right) \right] & \text{if } \mathbb{Q} \ll \mathbb{P}, \\
++\infty & \text{else.}
+\end{cases}
+\]
+
+Definition 4.2.9 (Divergence Risk Measure)
+If \(\mathbb{P}\) is a benchmark model, the resulting convex risk measure \(\rho_g\) defined by
+\(
+\rho_g(X) = \sup_{\mathbb{Q} \in \mathcal{M}_1(\mathbb{P})} \{\mathbb{E}_{\mathbb{Q}}[-X] - D_g(\mathbb{Q} | \mathbb{P})\}
+\)
+
+is called divergence risk measure.
+\( g^*(y) = \sup_{x > 0} \{xy - g(x)\} \) convex conjugate of \( g \)
+The divergence risk measure can be represented by the variational identity:
+
+\(
+\rho_g(X) = \inf_{y \in \mathbb{R}} \{\mathbb{E}_{\mathbb{P}}[g^*(y - X)] - y\}
+\)
+
+AV@R: 
+For \(\lambda \in (0,1]\) let \(g(x) = 0\) for \(x \leq \lambda^{-1}\) and \(g(x) = \infty\) otherwise, 
+then \(\rho_g(X) = \text{AV@R}_{\lambda}(X)\).
+
+Entropic risk measure: If \(g(x) = x \log x\), the g-divergence is the relative entropy \(H(\mathbb{Q}|\mathbb{P})\) of \(\mathbb{Q}\) 
+w.r.t. \(\mathbb{P}\), and \(\rho_g(X) = \log \mathbb{E}_{\mathbb{P}} [e^{-X}]\).
+
+Optimized Certainty Equivalent:
+For a utility function \(u: \mathbb{R} \to \mathbb{R} \cup \{-\infty\}\) with \(u(0) = 0\), 
+the optimized certainty equivalent of a financial position \(X \in \mathcal{X}\) is defined as
+\(S_u(X) := \sup_{\eta \in \mathbb{R}} \{\eta + \mathbb{E}_{\mathbb{P}} [u(X - \eta)]\).
+
+This can be interpreted as the present value of an optimal allocation of the uncertain future income \(X\) 
+between a certain present amount \(\eta\) and the uncertain future amount \(X - \eta\).
+Denote by \(g(z) := \sup_{x \in \mathbb{R}} \{xz - l(x)\}\) the convex conjugate function of the loss function \(l\) associated to 
+\(u\) via \(l(x) = -u(-x)\). Then the variational identity yields \(S_u(X) = -\rho_g(X)\),
+i.e., the optimized certainty equivalent coincides, up to a change of sign, with the divergence risk measure \(\rho_g\).

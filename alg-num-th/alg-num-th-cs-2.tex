@@ -1,0 +1,178 @@
+Define the discriminant and state some essential facts
+
+Let \(L \supset K\) be a finite separable field extension of degree \(n\), \(G := \text{Hom}_K(L, K) = \{\sigma_1, \ldots, \sigma_n\}\). 
+The discriminant of \(\alpha_1, \ldots, \alpha_n \in L\) is
+\(
+d(\alpha_1, \ldots, \alpha_n) := \det \left( \left[ \sigma_i(\alpha_j) \right]_{i,j=1}^n \right)^2
+\)
+
+Example. 
+The quadratic number field \(\mathbb{Q}(\sqrt{5}) \supset \mathbb{Q}\) has the two embeddings
+\(
+\sigma_1 : a + b\sqrt{5} \to a + b\sqrt{5}
+\)
+\(
+\sigma_1 : a + b\sqrt{5} \to a - b\sqrt{5}
+\)
+
+\(
+d(1, \sqrt{5}) = \det \begin{bmatrix} 1 & \sqrt{5} \\ 1 & -\sqrt{5} \end{bmatrix}^2 = (-\sqrt{5} - \sqrt{5})^2 = 20.
+\)
+
+Lemma 2.15.
+(i) \(d(\alpha_1, \ldots, \alpha_n) = \det \left( [\text{Tr}_{L/K}(\alpha_i\alpha_j)]_{i,j=1} \right) \in K.\)
+(ii) If \(L = K(\beta)\) is a simple extension, we have
+\(
+d(1, \beta, \beta^2, \ldots, \beta^{n-1}) = \prod (\beta_i - \beta_j)^2
+\)
+where \(\beta_i = \sigma_i(\beta), \, i = 1, \ldots, n.\)
+
+The first is shown by realizing that
+
+\(\left([\sigma_k(\alpha_i)]_{k,i=1}^n\right)^\top \cdot [\sigma_k(\alpha_j)]_{k,j=1}^n= \left[ \sum_{k=1}^n \sigma_k(\alpha_i)\sigma_k(\alpha_j)\right]_{i,j=1}^n\),
+
+where the first product comes from the \( i \)-th row \( \sigma_1(\alpha_i), \dots \sigma_n(\alpha_i)\)
+and the \( j \)-th column \( \sigma_1(\alpha_j), \dots \sigma_n(\alpha_j)\) and due to \( \sigma_k(\alpha_i)\sigma_k(\alpha_j) = \sigma_k(\alpha_i \alpha_j)\) the last is just \( \text{Tr}(\alpha_i\alpha_j) \). The second is the insight that the corresponding matrix
+is the Vandermonde matrix which has a particular nice determinant.
+
+Show that the discriminant does not vanish on bases and that the trace defines
+a nondegenerate bilinear form 
+
+Let \(L \supset K\) be separable of degree \(n\), \(\alpha_1, \ldots, \alpha_n \in L\).
+(i) \(\alpha_1, \ldots, \alpha_n\) is a basis of \(L\) over \(K\) \(\iff d(\alpha_1, \ldots, \alpha_n) \neq 0\).
+(ii) \(L \times L \to K, (x, y) \mapsto \text{Tr}_{L/K}(x \cdot y)\)
+is a nondegenerate bilinear form on \( L \) over \( K \),
+meaning \(\text{Tr}_{L/K}(xy) = 0 \, \forall y \in L\) then \( x = 0 \).
+Let \( \{e_i\}_{i \leq n}\) be a basis of \( L \) over \(K\).
+Our \( αj = \sum^n_{i=1} a_{ij}e_i \) (with \( a_{ij} \in K \)) for \( j \in 1, \dots, n \) are also a basis if and only if
+\(A = [a_{ij}]^n_{i,j=1} ∈ \text{Mat}(n×n, K)\) has \( \text{det}(G) \neq 0 \) (and then A is the base change matrix).
+
+\(\left[ \text{Tr}_{L/K} (\alpha_i \alpha_j) \right] = A^\top \left[ \text{Tr}_{L/K} (e_i e_j) \right] A\)
+and since \( \text{det} \) is multiplicative and the same for transposes,
+\(d(\alpha_1, \ldots, \alpha_n) = \det(A)^2 \cdot d(e_1, \ldots, e_n)\)
+where the latter is non-zero, since its the discriminant of a simple extension \(\beta, \dots, \beta^{n-1}\) which was non-trivial.. 
+
+State and prove how the discriminant acts on integral closures and how it allows
+to determine (inefficiently) the integral closure.
+
+Let \(\alpha_1, \ldots, \alpha_n \in B\) be a basis of \(L\) over \(K\). Let 
+\(d := d(\alpha_1, \ldots, \alpha_n) (\in A \setminus \{0\})\). Then
+
+\(dB \subseteq A\alpha_1 + \ldots + A\alpha_n \subseteq B.\)
+
+Proof. 
+Every \(\alpha \in B\) has the form \(\alpha = \lambda_1 \alpha_1 + \ldots + \lambda_n \alpha_n with \lambda_i \in K\). 
+By linearity and 2.9(ii),
+\(\text{Tr}_{L/K}(\alpha_i \alpha) = \sum_{j=1}^{n} \text{Tr}_{L/K}(\alpha_i \alpha_j)\)
+for \(i = 1, \ldots, n\).
+
+Thus, \(\lambda = (\lambda_1, \ldots, \lambda_n)^\top\) is the unique solution of the system of linear equations
+
+\(G \cdot \lambda = \left[ \text{Tr}_{L/K}(\alpha_i \alpha_j) \right]_{i,j=1}^{n} \cdot \lambda = \left( \text{Tr}_{L/K}(\alpha_i \alpha) \right)_{i=1}^{n}. \in A^n\)
+
+
+By Cramer’s rule, \(\lambda_i = \frac{\det(G_i)}{\det(G)}\), with the nominator in \( A \) and the denominator being the discrimant \( d \),
+where \(G_i\) is \(G\) with the \(i\)-th column 
+replaced by the right hand side. This shows that \(d \cdot \lambda_i \in A\), so \(d\alpha \in A\alpha_1 + \ldots + A\alpha_n\).
+
+Example. Returning to our previous example, \(d(1, \sqrt{5}) = 20\), so by Lemma 2.17
+
+\(20 \cdot \mathcal{O}_{\mathbb{Q}(\sqrt{5})} \subseteq \mathbb{Z} + \mathbb{Z}\sqrt{5} \subseteq \mathcal{O}_{\mathbb{Q}(\sqrt{5})}\).
+
+Which of the 400 linear combinations \(\lambda_1 + \lambda_2 \sqrt{5}\) with 
+\(\lambda_1, \lambda_2 \in \{0, \frac{1}{20}, \ldots, \frac{19}{20}\}\) lie in \(\mathcal{O}_{\mathbb{Q}(\sqrt{5})}\)? 
+One has to check if the monic minimal polynomial is in \(\mathbb{Z}[X]\) for at least several of these linear combinations and 
+would eventually find that \(\frac{10}{20} + \frac{10}{20} \sqrt{5}\) (with minimal polynomial \(X^2 - X - 1 \in \mathbb{Z}[X]\)) 
+is a generator for \(\mathcal{O}_{\mathbb{Q}(\sqrt{5})}\).
+
+
+Define integral bases for the ring of integers and state some
+important theorems
+
+
+Let \(L\) be a number field. If 
+\(\omega_1, \ldots, \omega_n\) is a basis of \(\mathcal{O}_L\) as a \(\mathbb{Z}\)-module, then \(\omega_1, \ldots, \omega_n\) 
+is called an integral basis of \(L\).
+
+Example. 
+\(L = \mathbb{Q}(\sqrt{d})\), d squarefree integer, then
+\[
+\mathcal{O}_L = 
+\begin{cases} 
+\mathbb{Z}[\sqrt{d}] & d \equiv 2, 3 \pmod{4} \\
+\mathbb{Z}\left[\frac{1+\sqrt{d}}{2}\right] & d \equiv 1 \pmod{4} 
+\end{cases}
+\]
+integral basis:
+\[
+\begin{cases} 
+1, \sqrt{d} & d \equiv 2, 3 \pmod{4} \\
+1, \frac{1+\sqrt{d}}{2} & d \equiv 1 \pmod{4} 
+\end{cases}
+\]
+
+Lemma: Any integral basis of a number field L is also a \(\mathbb{Q}\)-basis of L.
+
+Proof. Immediately from Corollary 2.7(i) (\( L = \text{Quot(B)} \), as denominators from \(\mathbb{Z}\) suffice.
+
+Theorem:
+Let A be a PID, \(K = \text{Quot}(A)\), \(L \supset K\) separable extension of degree \(n\), 
+\(B\) the integral closure of \(A\) in \(L\).
+(i) \(B\) is a free \(A\)-module of rank \(n\).
+(ii) Every finitely generated \(B\)-submodule \(M \neq \{0\}\) of L is a free \(A\)-module of rank \( n \).
+
+The directly useful Corollaries for the case \( \mathcal{O}_L \) are: 
+(i) \(L\) admits an integral basis (i.e. \(\mathcal{O}_L\) has a \(\mathbb{Z}\)-basis with \(n\) elements).
+(ii) Every finitely generated \(\mathcal{O}_L\)-submodule \(a \neq \{0\}\) is a free \(\mathbb{Z}\)-module of rank \(n\).
+(iii) Every ideal \(a \neq (0)\) in \(\mathcal{O}_L\) is a free \(\mathbb{Z}\)-module of rank \(n\).
+
+(i-ii) Are just the previous theorems and (iii) follows because each ideal is just a \( \mathcal{O}_L \) submodule.
+
+
+Elaborate on the relation between the discrimant and \( \mathcal{O}_L \)-submodules.
+
+
+Definition.
+The discriminant of a finitely generated \(\mathcal{O}_L\)-submodule \(\{0\} \neq a \subset L\) is 
+\(\text{d}(a) := \text{d}(\omega_1, \ldots, \omega_n)\), 
+where \(\omega_1, \ldots, \omega_n\) is a \(\mathbb{Z}\)-basis of \(a\). 
+In particular: The discriminant of \(L\) is \(d_L := \text{d}(\mathcal{O}_L) = \text{d}(\omega_1, \ldots, \omega_n)\).
+
+Remark. 
+\(\text{d}(a) = \det G\) (with \(G = [\text{Tr}_{L/\mathbb{Q}}(\omega_i\omega_j)]^n_{i,j=1}\)) 
+is independent of the choice of a basis: 
+If \(\omega_1', \ldots, \omega_n'\) is a different \(\mathbb{Z}\)-basis of \(a\), then \(\omega_j' = \sum_{i=1}^n a_{ij}\omega_i\) 
+with the base change matrix \(S = [a_{ij}] \in \text{GL}_n(\mathbb{Z})\). In particular, \(\det S = \pm 1\), so
+
+\(
+\text{d}(\omega_1', \ldots, \omega_n') = \det(S^T G S) = \det(S)^2 \det(G) = \text{d}(a).
+\)
+
+Theorem 2.23. 
+Let \(\{0\} \neq a \subset a'\) be finitely generated \(\mathcal{O}_L\)-submodules of a number field \(L\). 
+Then the index \((a' : a) := \#\left(\frac{a'}{a}\right)\) is finite, and we have
+
+\(
+\text{d}(a) = (a' : a)^2 \cdot \text{d}(a').
+\)
+
+Proof. 
+The elementary divisors theorem for \(a \subset a'\) yields a \(\mathbb{Z}\)-basis \(\omega_1, \ldots, \omega_n\) of \(a'\) and elementary divisors 
+\(a_1, \ldots, a_n \in \mathbb{Z}\) with \(a = \mathbb{Z}a_1\omega_1 + \ldots + \mathbb{Z}a_n\omega_n\). 
+As both \(\mathbb{Z}\)-modules have rank \(n\), all \(a_i\) are nonzero. Thus,
+
+\[
+\text{d}(a) = \text{d}(a_1\omega_1, \ldots, a_n\omega_n) = \det\left(\begin{bmatrix} a_1 \\ \vdots \\ a_n \end{bmatrix}^T G \begin{bmatrix} a_1 \\ \vdots \\ a_n \end{bmatrix}\right)
+\]
+\(
+= (a_1 \cdots a_n)^2 \cdot \text{d}(\omega_1, \ldots, \omega_n) = (a' : a)^2 \cdot \text{d}(a').
+\)
+
+State the integral basis of the composite for two disjoint (aside from the ground field) field extensions 
+and their discriminant
+
+Let \( A \) be the ground ring, \( K = \text{Quot}(A) \) and \( L, L' \) the field extensions
+of degree \( n, n' \) with ring of integers \( B, B' \) respectively s.t. \( L \cap L' = K \) and \( d, d' \) (discriminants)
+are coprime in \( A \) (meaning there are \( x, x' \in A\) with \( xd + x'd' = 1 \)).
+Then \( \{\omega_i\omega_j'\}_{i\leq n,j\leq n'} \) is a \( A \)-basis for the integral closure of \( A \) in \( LL' \)
+with discriminant \( d^{n'}(d')^{n} \).

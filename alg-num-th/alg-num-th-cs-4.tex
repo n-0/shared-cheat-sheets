@@ -1,0 +1,260 @@
+Define lattices and state some important results
+
+Let \(V\) be a \(n\)-dimensional \(\mathbb{R}\)-vector space. 
+A lattice (there is also a more general definition) in \( V \) is a subgroup of the form
+
+\(
+\Gamma = \mathbb{Z}v_1 + \ldots + \mathbb{Z}v_m, \quad v_1, \ldots, v_m \in V,
+\)
+where the \( v_i \) are linearly independent.
+Then \(v_1, \ldots, v_m\) forms a basis of \(\Gamma\), and
+
+\(
+\Phi = \{ x_1v_1 + \ldots + x_mv_m \mid x_i \in \mathbb{R}, \ 0 \leq x_i < 1 \}
+\)
+
+is a fundamental domain (there are other choices) of \(\Gamma\). If \(m = n\), then \(\Gamma\) is said to be complete.
+
+A lattice is complete if and only if the sets \( γ + Φ \), \( γ ∈ Γ \) cover V.
+
+Theorem:
+A lattice \( Γ ⊂ V \) is complete if and only if there is a bounded set
+\( M \subset V \) such that \( V \) is covered by the sets \( \gamma + M \) for \( \gamma \in \Gamma \).
+
+Define discrete sets with examples and state the important theorems in relation to lattices
+
+A set \( M \subset V \) is called discrete, if for each \( x \in M \) there is an open neighborhood \( V \supset U \ni x \) 
+with \( U \cap M = \{x\} \).
+
+Examples:
+\(\left\{ \frac{1}{n} \mid n \in \mathbb{N} \right\} \subset \mathbb{R}\) 
+is discrete,
+but \(\left\{ \frac{1}{n} \mid n \in \mathbb{N} \right\} \cup \{0\}\) is not discrete (any neighborhood of 0 contains a \(\frac{1}{n}\)).
+
+Every lattice \(\Gamma\) is a discrete set: For \(\gamma = \sum_{i=1}^{m} a_i v_i\) (with \(a_i \in \mathbb{Z}\)) the neighborhood
+\(
+U = \left\{ \sum_{i=1}^{n} x_i v_i \,\middle|\, |x_i - a_i| < 1 \, \forall i = 1, \ldots, m \right\} \subset V
+\)
+satisfies \(U \cap \Gamma = \{\gamma\}\).
+
+Theorem 4.3. A subgroup \( Γ ⊂ V \) is a lattice if and only if it is discrete.
+Idea of proof: Let \( \Gamma_0 \) be a lattice and \( \Gamma \) a discrete subgroup, one direction is easy, 
+for the other one shows that
+\(q := (\Gamma : \Gamma_0) = \# \left(\frac{\Gamma}{\Gamma_0}\right) < \infty\),
+because then
+\[q \cdot \Gamma \subset \Gamma_0 \implies \Gamma \subset \frac{1}{q} \Gamma_0 = \mathbb{Z} \frac{u_1}{q} + \ldots + \mathbb{Z} \frac{u_m}{q},\]
+since \( \Gamma \) has also a basis of rank \( r \) this must imply that \( m = r \).
+
+Explain how volumes can be calculated in euclidean vector spaces, in particular for lattices.
+
+Let \( V \) be an euclidean vector space (over \( \mathbb{R} \), with symmetric, positive definite \( \mathbb{R} \)-bilinear form (scalar product) 
+\( \langle \cdot, \cdot \rangle : V \times V \to \mathbb{R} \).
+
+Let \( e_1, \ldots, e_n \) be an orthogonal basis of \( V \) (\(\to\) Gram-Schmidt), then the \( n \)-dim. cube
+\( Q = \left\{ \sum_{i=1}^{n} x_i e_i \, \middle| \, 0 \leq x_i \leq 1 \right\} \), \quad \(\text{Vol}(Q) = 1 \quad (\text{by def.})\)
+
+For linearly independent \( v_1, \ldots, v_n \in V \), the parallellepiped 
+\( \left\{ \sum_{i=1}^{n} x_i v_i \, \middle| \, 0 \leq x_i \leq 1 \right\} \) has volume \( |\det A| \), where
+\( A = [a_{ij}]_{i,j=1}^{n} \), \quad \( v_j = \sum_{i=1}^{n} a_{ij} e_i \)
+
+(this is just a special case of the transformation formula from analysis). We have
+\( \langle v_i, v_j \rangle = \sum_{k,l=1}^{n} a_{ki} a_{lj} \langle e_k, e_l \rangle = \sum_{k=1}^{n} a_{ki} a_{kj} = (A^T A)_{i,j} \),
+so the volume is \( |\det A| = \sqrt{\det \left( \langle v_i, v_j \rangle \right)_{i,j=1}^{n}} \).
+
+Let \( Γ ⊂ V \) be a complete lattice. The volume of \( \Gamma \) is defined as
+\( \text{Vol} \Gamma \coloneqq \text{Vol} \Phi \) for some fundamental domain \( \Phi \) 
+(dependent on a choice of basis \( v_1, \dots, v_n \in \Gamma \)
+
+Remark. This is independent of a choice of basis / fundamental domain: 
+A different basis \( w_1, \ldots, w_n \) leads to a base change matrix \( B \in \text{GL}_n(\mathbb{Z}) \).
+\(
+\implies \quad \left[ \langle w_i, w_j \rangle \right]_{i,j=1}^{n} = B^T \cdot \left[ \langle v_i, v_j \rangle \right]_{i,j=1}^{n} \cdot B
+\)
+
+\(
+\implies \quad \det \left[ \langle w_i, w_j \rangle \right]_{i,j=1}^{n} = (\det B)^2 \cdot \det \left[ \langle v_i, v_j \rangle \right]_{i,j=1}^{n} = ( \pm 1)^2
+\)
+Thus, any other basis yields the same value for \(\text{Vol}(\Gamma)\).
+
+
+State and prove Minkowski's lattice theorem
+
+\( \textbf{Theorem 4.6} \) (Minkowski).
+Let \(\Gamma \subset V\) be a complete lattice and \(X\) a central-symmetric and \underline{convex} subset of \(V\).
+If \(\text{Vol}(X) > 2^{\dim V} \cdot \text{Vol}(\Gamma)\), then \(\Gamma \cap X \supsetneq \{0\}\).
+
+Proof: 
+Consider \(\frac{1}{2} X := \{ x \in V \mid 2x \in X \}\), then
+\[
+\text{Vol}\left(\frac{1}{2} X\right) = \frac{\text{Vol}(X)}{2^{\dim V}} > \text{Vol}(\Gamma).
+\]
+Consider all \(\gamma + \frac{1}{2} X\) for \(\gamma \in \Gamma\). If these sets are all pairwise disjoint, then (after intersecting with \(\Phi\))
+\[
+\text{Vol}(\Phi) \geq \sum_{\gamma \in \Gamma} \Phi \cap \left(\gamma + \frac{1}{2} X\right) \overset{\text{disjoint}}{=} \sum_{\gamma \in \Gamma} \text{Vol} \left((-\gamma + \Phi) \cap \frac{1}{2} X\right) = \text{Vol}\left(\frac{1}{2} X\right)
+\]
+contradicting the above inequality. Thus, the sets \(\gamma + \frac{1}{2} X\) are not pairwise disjoint, i.e. there are 
+\(\gamma_1 \neq \gamma_2 \in \Gamma\) with
+\[
+\left(\gamma_1 + \frac{1}{2} X\right) \cap \left(\gamma_2 + \frac{1}{2} X\right) \neq \emptyset,
+\]
+i.e. there is an element \( x = \gamma_1 + \frac{1}{2} x_1 = \gamma_2 + \frac{1}{2} x_2 \quad (x_1, x_2 \in X)\). 
+Reordering the terms and using central-symmetry \(-x_2 \in X\) and convexity, we find a lattice point,
+since \( \gamma_1 - \gamma_2 \in \Gamma \) and
+\[
+0 \neq \gamma_1 - \gamma_2 = x_1 - x_2 = \frac{1}{2} x_1 + \frac{1}{2} (-x_2) \in \Gamma \cap X.
+\].
+
+Define the Minkowski space and its scalar product as well as the isometry into \( \mathbb{R}^n \)
+
+Let \( K \) be a number field, \( n \coloneqq [K:\mathbb{Q}] \) and \( G \coloneqq \text{Hom}_{\mathbb{Q}}(K, \mathbb{C}) \). 
+It holds \( |G| = n = r + 2s\) where \( r \) is the number of real embeddings and \( 2s \) of the number of complex embeddings.
+
+Definition 5.1. The Minkowski space of a number field \(K\) is
+
+\[
+K_{\mathbb{R}} := \left\{ z = (z_{\tau}) \in \prod_{\tau \in G} \mathbb{C} \ \bigg| \ 
+\begin{align*}
+z_{\varrho} & \in \mathbb{R} \quad \forall \tau = \varrho \text{ real embeddings} \\
+z_{\sigma} & = \overline{z_{\overline{\sigma}}} \quad \forall \tau = \sigma \text{ complex embeddings} 
+\end{align*} 
+\right\},
+\]
+it is a \((r + 2s) = n\) dimensional \(\mathbb{R}\)-vector space. We have a \(\mathbb{Q}\)-linear map
+\[
+j: K \to K_{\mathbb{R}}, \quad x \mapsto (\tau(x))_{\tau \in G}.
+\]
+and the scalar product
+\[ \sum_{\tau \in G} x_\tau \bar{y}_\tau = \sum_{\rho} x_\rho y_\rho + \sum_{(\sigma, \bar{\sigma}} x_\sigma \bar{y}_\sigma + x_{\bar{\sigma}} \bar{y}_{\bar{\sigma}} = \sum_{\rho} x_\rho y_\rho + \sum_{(\sigma, \bar{\sigma}} 2\text{Re}(x_\sigma \bar{y}_\sigma)\]
+where \( \rho \) are the real embeddings and \( \sigma \) the complex ones.
+
+Theorem:
+\(f: K_{\mathbb{R}} \to \prod_{\tau \in G} \mathbb{R} = \mathbb{R}^{r+2s}\)
+\(z = (z_{\tau}) \mapsto (x_{\tau})\)
+with
+\(x_{\rho} = z_{\rho}\) for all \( \rho \) real
+and for complex \( \sigma \)
+\(x_{\sigma} = \text{Re } z_{\sigma}\)
+\(x_{\overline{\sigma}} = \text{Im } z_{\sigma}\)
+
+defines an isometry between the euclidean spaces \((K_{\mathbb{R}}, \langle \cdot, \cdot \rangle)\) and 
+\((\mathbb{R}^n, \langle \cdot, \cdot \rangle)\), where the latter scalar product is defined as
+\[
+\langle x, x' \rangle = \sum_{\rho \text{ real}} x_{\rho} x'_{\rho} + 2 \sum_{(\sigma, \overline{\sigma})} (x_{\sigma} x'_{\sigma} + x_{\overline{\sigma}} x'_{\overline{\sigma}}).
+\]
+
+Proof. 
+Preimage of \(x = (x_{\tau}) \in \mathbb{R}^n\) is \(z = (z_{\tau}) \in K_{\mathbb{R}}\), where
+\(z_{\rho} = x_{\rho}, \quad z_{\sigma} = x_{\sigma} + ix_{\overline{\sigma}}, \quad z_{\overline{\sigma}} = x_{\sigma} - ix_{\overline{\sigma}}.\)
+We have
+\[
+\langle z, z' \rangle = \sum_{\tau \in G} z_{\tau} \overline{z'_{\tau}} = \sum_{\rho} z_{\rho} \overline{z'_{\rho}} + \sum_{(\sigma, \overline{\sigma})} (z_{\sigma} \overline{z'_{\sigma}} + z_{\overline{\sigma}} \overline{z'_{\overline{\sigma}}}) = \langle x, x' \rangle,
+\]
+using the identity
+\[
+z_{\sigma} \overline{z'_{\sigma}} + z_{\overline{\sigma}} \overline{z'_{\overline{\sigma}}} = (x_{\sigma} + ix_{\overline{\sigma}})(x'_{\sigma} - ix'_{\overline{\sigma}}) + (x_{\sigma} - ix_{\overline{\sigma}})(x'_{\sigma} + ix'_{\overline{\sigma}})
+\]
+\[
+= x_{\sigma} x'_{\sigma} + x_{\overline{\sigma}} x'_{\overline{\sigma}} + x_{\sigma} x'_{\sigma} + x_{\overline{\sigma}} x'_{\overline{\sigma}} + i(x_{\sigma} x'_{\overline{\sigma}} - x_{\sigma} x'_{\overline{\sigma}} - x_{\overline{\sigma}} x'_{\sigma} + x_{\overline{\sigma}} x'_{\sigma}) = 0. 
+\]
+since 
+\((x_{\sigma} x'_{\overline{\sigma}} - x_{\sigma} x'_{\overline{\sigma}} - x_{\overline{\sigma}} x'_{\sigma} + x_{\overline{\sigma}} x'_{\sigma}) = 0\)
+
+
+Prove the formula for volumes of ideals as lattices
+The map \( j : K → K_{\mathbb{R}} \simeq \mathbb{R}^n \) maps ideals \( \mathfrak{a} \subset \mathcal{O}_K \) onto lattices in the Minkowsi space:
+
+Theorem 5.3. 
+Let \( a \neq (0) \) be an ideal in \( \mathcal{O}_K \). 
+Then \( \Gamma = j(a) \) is a complete lattice in \( K_{\mathbb{R}} \) with volume (of a fundamental domain)
+
+\(
+\text{Vol}(\Gamma) = \sqrt{|d_K|} \cdot (\mathcal{O}_K : a),
+\)
+where \( d_K := \text{d}(\mathcal{O}_K) \) is the discriminant of the number field \( K \).
+
+Proof. 
+As shown in 2.21, \( a \) admits a \(\mathbb{Z}\)-basis \( \alpha_1, \ldots, \alpha_n \). Since \( j \) is \(\mathbb{Q}\)-linear, we have
+\[
+\Gamma = j(a) = \mathbb{Z}j(\alpha_1) + \ldots + \mathbb{Z}j(\alpha_n).
+\]
+The \( j(\alpha_i) = (\tau(\alpha_i))_{\tau \in G} \) are \(\mathbb{R}\)-linearly independent, since
+\[
+\left| \det \begin{pmatrix} \left[ \tau(\alpha_i) \right]_{i=1,\ldots,n}^{\tau \in G} \end{pmatrix} \right| = \sqrt{|d(a)|} \neq 0.
+\]
+\[
+A \in \text{Mat}(n \times n, \mathbb{C}) \quad \text{with } j(\alpha_i) \text{ in column } i
+\]
+To obtain the volume of \( \Gamma \) we calculate
+\[
+\text{Vol}(\Gamma) = \sqrt{\left| \det \left( \langle j(\alpha_i), j(\alpha_j) \rangle \right)_{i,j} \right|}
+\]
+\[
+= \sqrt{\left| \det \left( \sum_{\tau \in G} \tau(\alpha_i) \cdot \overline{\tau(\alpha_j)} \right)_{i,j} \right|}
+\]
+\[
+= \sqrt{\left| \det A \cdot \overline{\det A} \right|}
+\]
+\[
+= \sqrt{\left| \det A \cdot \det \overline{A} \right|}
+\]
+\[
+= \sqrt{\left| \det A \right|^2}
+\]
+\[
+= |\det A| \quad = \left| \det A \right| \quad \text{}
+\]
+and by Def. 4.5 as well as Thm. 2.23
+\[
+= \sqrt{|d(a)|} = (\mathcal{O}_K : a) \cdot \sqrt{|d_K|}
+\]
+
+
+
+State and prove the theorem that allows to find an element in an ideal 
+whose image under the embeddings is bounded by constants of choice.
+
+Theorem 5.4. 
+Let \(\mathfrak{a} \neq 0\) be an (integral) ideal in the number field \(K\). 
+For each \(\tau \in G\) let there be \(c_\tau \in \mathbb{R}_{>0}\) with \(c_\tau = c_{\bar{\tau}}\) for each pair \(\sigma, \bar{\sigma}\) 
+of complex embeddings. 
+If
+\(
+\prod_{\tau \in G} c_\tau > \left(\frac{2}{\pi}\right)^s \cdot \sqrt{\vert d_K \vert} \cdot (\mathcal{O}_K : \mathfrak{a}),
+\)
+then there exists \(0 \neq a \in \mathfrak{a}\) satisfying \(\vert \tau(a) \vert < c_\tau\) for all \(\tau \in G\).
+
+Proof. 
+The set 
+\( X := \{ (z_\tau) \in K_\mathbb{R} \mid \vert z_\tau \vert < c_\tau \ \forall \tau \in G \} \)
+is central-symmetric and convex, as it is the cartesian product of intervals \([-c_\varrho, c_\varrho]\) in \(\mathbb{R}\) and 
+circles of radius \(c_\sigma\) in \(\mathbb{C}\).
+
+\[
+\text{Vol}(X) = \text{Vol}(f(X))= 2^s \cdot \text{Vol}(f(X))
+\]
+where the volumes are taken in \(K_\mathbb{R}\), \(\mathbb{R}^n\) respectively so the last comes from the Lebesgue measure.
+For \(\sigma\) complex we have
+\[
+\vert z_\sigma \vert = \vert x_\sigma + ix_{\bar{\sigma}} \vert < c_\sigma \iff x_\sigma^2 + x_{\bar{\sigma}}^2 = z_\sigma \bar{z}_\sigma = c_\sigma \bar{c}_\sigma = c_\sigma^2,
+\]
+so we can decompose the image of \(X\) under \(f\) as follows:
+\(f(X) = (x_\varrho) \in \mathbb{R}^n\)
+with
+\[
+\begin{cases}
+    \vert x_\varrho \vert{2c_\varrho} < 1 \ \forall \varrho \text{ real} \\
+    x_\sigma^2 + x_{\bar{\sigma}}^2 < c_\sigma^2 < 1 \ \forall (\sigma, \bar{\sigma}) \text{ complex}
+\end{cases}
+\]
+which is equivalent to an \(r\)-dim. cuboid with side length \( 2c_\varrho \) times a disk of radius \( c_{\sigma_1} \) and another of radius \( c_{\sigma_2} \) etc.
+Thus, the volume of this set is
+\[
+\text{Vol}(X) = 2^s \cdot \prod_\varrho 2c_\varrho \cdot \prod_{(\sigma, \bar{\sigma})} \pi c_\sigma^2 = 2^{r+s} \cdot \pi^s \cdot \prod_{\tau \in G} c_\tau
+\]
+which by assumption
+\[
+> 2^n \sqrt{\vert d_K \vert} \cdot ( \mathcal{O}_K : a ) = \text{Vol} \Gamma
+\]
+
+Minkowski's Lattce theorem 4.6 then guarantees a lattice point \(0 \neq j(a) \in \Gamma \cap X\), i.e. \(0 \neq a \in a\) with 
+\(\vert \tau(a) \vert < c_\tau, \forall \tau \in G\).

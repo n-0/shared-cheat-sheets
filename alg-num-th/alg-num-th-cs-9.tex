@@ -1,0 +1,171 @@
+Recall the formula for summation by parts
+
+If \(\{a_n\}\) and \(\{b_n\}\) are sequences of complex numbers, and if we let
+\[
+A_n = a_1 + \cdots + a_n \quad \text{and} \quad B_n = B_1 + \cdots + b_n
+\]
+be the partial sums, then
+\[
+\sum_{n=1}^N a_n b_n = A_N b_N + \sum_{n=1}^{N-1} A_n (b_n - b_{n+1}).
+\]
+
+
+Show the theorem for the convergence behavior of the Dirichlet series
+
+We shall consider series
+\[
+\sum_{n=1}^{\infty} \frac{a_n}{n^s},
+\]
+
+where \(\{a_n\}\) is a sequence of complex numbers, and \(s\) is a complex variable. 
+We write \(s = \sigma + it\) with \(\sigma, t\) real.
+
+\( \textbf{Theorem 1.}  \)
+If the Dirichlet series \(\sum a_n / n^s\) converges for some \(s = s_0\),
+then it converges for any \(s\) with \(\text{Re}(s) > \sigma_0 = \text{Re}(s_0)\), uniformly on any 
+compact subset of this region.
+
+\( \textit{Proof.} \) 
+
+Write \(n^s = n^{s_0} n^{(s-s_0)}\), and sum the following series by parts:
+\[
+\sum \frac{a_n}{n^{s_0}} \frac{1}{n^{(s-s_0)}}.
+\]
+
+If \(P_n(s_0) = \sum_{m=1}^{n} a_m / m^{s_0}\), then the tail ends of this Dirichlet series are 
+given for \(n > m\) by
+
+\[
+\sum_{k=m+1}^{n} \frac{a_k}{k^{s_0}} \frac{1}{k^{s-s_0}} = \frac{P_n(s_0)}{n^{s-s_0}} + 
+\sum_{k=m+1}^{n-1} P_k(s_0) \left[ \frac{1}{k^{s-s_0}} - \frac{1}{(k+1)^{s-s_0}} \right] 
+- \frac{P_m(s_0)}{(m+1)^{s-s_0}}.
+\]
+
+We have
+
+\[
+    \frac{1}{k^{s - s_0}} - \frac{1}{(k+1)^{s-s_0}} = (s - s_0)\int_{k}^{k+1} \frac{1}{x^{s - s_0 + 1}} dx
+\]
+
+which we estimate easily in absolute value. If \( \delta > O \) and \( \text{Re}(s) \geq \sigma_0 + \delta \),
+then we conclude that our tail end is small uniformly if \( |s - s_0|  \)is bounded.
+This proves the theorem.
+
+Define the abscissa of convergence and give the lower bound
+
+Assuming that the Dirichlet series converges for some \( s \), if \( \sigma_0 \) is the
+smallest real number such that the series converges for \( \text{Re}(s) > \sigma_0 \), then
+we call \( \sigma_0 \) the abscissa of convergence, and we see that the series converges 
+in the half plane to the right of the line \( \sigma = \sigma_0 \), but does not to the left.
+
+If the series converges for \( s_1 = \sigma_1 + i t_1 \) it holds
+\( a_n = \mathcal{O}(n^{\sigma_1}) \) because the n-th term of the series \( \frac{a_n}{n^{s_1}} \) tends to \( 0 \).
+
+\( \textit{Theorem 2.} \) 
+
+Assume that there exists a number \( C \) and \(\sigma_1 \geq 0 \) such that
+\[
+|A_n| = |a_1 + \cdots + a_n| \leq C n^{\sigma_1}
+\]
+
+for all \( n \). 
+Then the abscissa of convergence of \(\sum a_n / n^s\) is \(\leq \sigma_1\).
+\( \textit{Proof.} \) Summing by parts, we find for \( n \geq m \),
+
+\[
+P_n(s) - P_m(s) = A_n \frac{1}{n^s} + \sum_{k=m+1}^{n-1} A_k \left[ \frac{1}{k^s} - \frac{1}{(k+1)^s} \right]
+\]
+\[
+= A_n \frac{1}{n^s} + \sum_{k=m+1}^{n-1} A_k \int_k^{k+1} \frac{1}{x^{s+1}} \, dx.
+\]
+
+Let \( \delta > 0 \) and let \(\text{Re}(s) \geq \sigma_1 + \delta\). Then
+\[
+\left| A_k \int_k^{k+1} \frac{1}{x^{s+1}} \, dx \right| \leq C \int_k^{k+1} \frac{1}{x^{-\sigma_1+1+\delta}} \, dx.
+\]
+
+whence taking the sum from \( k = m + 1 \) to \( \infty \) we find
+\( |P_n(s) - P_m(s)| \leq \frac{C}{n^{\delta}} + C \frac{|s|}{\delta}\frac{1}{(m+1)^{\delta}} \)
+This proves our theorem.
+
+
+Derive the residual of the Riemann-Zeta function at \(s = 1\)
+
+
+\[
+\frac{1}{s-1} \leq \int_1^\infty \frac{1}{x^s} \, dx \leq \zeta(s) \leq 1 + \frac{1}{s-1}.
+\]
+
+This follows immediately by comparing the infinite sum with the integral. Hence for \( s > 1 \), we have
+
+\[
+1 \leq (s-1) \zeta(s) \leq s.
+\]
+
+
+Derive the analytic of the Riemann-Zeta function
+
+To get the analytic continuation, we use a simple trick, namely we consider the alternating zeta function
+
+\[
+\zeta_2(s) = 1 - \frac{1}{2^s} + \frac{1}{3^s} - \cdots.
+\]
+
+The partial sum of the coefficients of this Dirichlet series are equal to 0 or 1, and therefore are bounded. 
+Theorem 2 shows that \(\zeta_2(s)\) is analytic for \(\text{Re}(s) > 0\). But
+
+\[
+\frac{2}{2^s} \zeta(s) + \zeta_2(s) = \zeta(s),
+\]
+
+and therefore
+
+\[
+\zeta_2(s) = \left(1 - \frac{1}{2^{s-1}}\right) \zeta(s).
+\]
+
+By analytic continuation, this already gives an analytic continuation of \(\zeta\) to the line \(\sigma = 0\), 
+and we must still show that there are no poles except at
+
+\( s = 1\) This is easily done by considering
+
+\( \zeta_r(s) = \frac{1}{1^s} + \frac{1}{2^s} + \cdots + \frac{1}{(r-1)^s} - \frac{(r-1)}{r^s} + \frac{1}{(r+1)^s} + \cdots \)
+
+with \( r = 2, 3, \ldots\) . Then just as for \( r = 2 \), we see that the partial sums of the coefficients of \( \zeta_r \) are bounded by \( r \), 
+whence \( \zeta_r \) is analytic for \( \text{Re}(s) > 0 \). Furthermore, by a similar argument as before, we get
+
+\( \widetilde{\zeta}(s) = \frac{\zeta_r(s)}{1 - \frac{1}{r^{s-1}}} \).
+
+From the expression with \(\zeta_2\), we see that the only possible poles (other than at \(s = 1\)) occur when \(2^{s-1} = 1\), or equivalently, when
+\[ s = \frac{2\pi in}{\log 2} + 1 \]
+
+for some integer \(n\). Using \(\zeta_3\), we see in the same way that the only such poles occur at
+\[ s = \frac{2\pi im}{\log 3} + 1. \]
+
+At any such pole we have \(3^n = 2^m\) which shows \(m = n = 0\). This proves:
+
+\textbf{Theorem 3.} The zeta function \(\zeta(s)\) is analytic for \(\text{Re}(s) > 0\) except for a simple pole at \(s = 1\), with residue 1. 
+If \(\delta > 0\), the series \(\sum \frac{1}{n^s}\) converges uniformly on compacts and absolutely in the region \(\text{Re}(s) \geq 1 + \delta\).
+
+Prove the analytic continuation of the Dirichlet series
+
+\( \textbf{Theorem 4.} \). 
+
+Let \(\{a_n\}\) be a sequence of complex numbers, with partial sums \(A_n\). 
+Let \(0 \leq \sigma_1 \leq 1\), and assume that there is a complex number \(\rho\), and \(C > 0\) such that for all \(n\) we have
+
+\[
+|A_n - n\rho| \leq Cn^{\sigma_1},
+\]
+
+or in other words, \(A_n = n\rho + O(n^{\sigma_1})\). 
+Then the function
+\[
+f(s) = \sum a_n/n^s
+\]
+
+defined by the Dirichlet series for \(\text{Re}(s) > 1\) has an analytic continuation to \(\text{Re}(s) > \sigma_1\) where it is analytic 
+except for a simple pole with residue \(\rho\) at \(s = 1\).
+
+\( \textit{Proof.} \) 
+The proof is obtained by considering \(f(s) - \rho\zeta(s)\), and applying Theorems 2 and 3 directly.

@@ -1,0 +1,79 @@
+\documentclass[11pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{actuarialangle, actuarialsymbol}
+
+\begin{document}
+Define comonotonicity and Denneberg's equivalences
+
+Two random variable \( X, Y : \Omega \to \mathbb{R} \) are comonotone if
+\( \forall \omega, \omega' \in \Omega \),
+\( (X(\omega) - X(\omega'))(Y(\omega) - Y(\omega')) \geq 0\)
+
+The following assertions are equivalent for random variables \(X, Y\):
+
+\(X\) and \(Y\) are comonotone.
+\(\exists\) random variable \(Z\) and nondecreasing \(u, v: \mathbb{R} \rightarrow \mathbb{R}\) s.t. \(X = u(Z)\) and \(Y = v(Z)\).
+\(\exists\) nondecreasing \(u, v \in C(\mathbb{R}), u + v = id_{\mathbb{R}}\) s.t. for \(Z := X + Y, X = u(Z), Y = v(Z)\).
+
+Note that \(u, v\) in condition 3. are necessarily 1-Lipschitz-continuous, i.e. \(|u(x) - u(y)| \le |x - y|\) and similarly for \(v\).
+
+
+State Schmeidler's theorem
+
+Assume \(\varphi: L^\infty \rightarrow \mathbb{R}\) has the following properties:
+
+\(|\cdot|_\infty\)-continuity
+\(\varphi(1_\Omega) = 1\)
+monotone: \(X(w) \le Y(w)\) for all \(w \in \Omega \implies \varphi(X) \le \varphi(Y)\)
+
+Set \(\mu(A) := \varphi(1_A), A \in \mathcal{F}\) (see later: \(\mu\) Choquet capacity). Then the following are equivalent:
+
+1. \(\varphi\) is comonotonic additive: \(X, Y \in L^\infty\) comonotone \(\implies \varphi(X + Y) = \varphi(X) + \varphi(Y)\).
+2. \(\varphi = \int \cdot d \mu\) (meaning its a Choquet integral)
+
+
+State 4 axioms for premium principles (in the context of Choquet integrals)
+
+\(\mathcal{X} \hat{=}\) nonnegative r.v.s on probability space \((\Omega, \mathcal{F}, \mathbb{P})\)
+
+Authors posit four axioms for premium principle \(\pi: \mathcal{X} \rightarrow [0, \infty]\) with \(\pi(1_\Omega) = 1\):
+
+A1 Law-invariance: If \(X, Y \in \mathcal{X}\) satisfy \(\mathbb{P} \circ X^{-1} = \mathbb{P} \circ Y^{-1}\), then \(\pi(X) = \pi(Y)\)
+A2 Monotonicity: \(X(w) \le Y(w)\) for all \(w \in \Omega \implies \pi(X) \le \pi(Y)\)
+A3 Comonotonic additivity: \(X, Y \in \mathcal{X}\) comonotone \(\implies \pi(X + Y) = \pi(X) + \pi(Y)\)
+A4 Continuity: \(\forall X \in \mathcal{X}: \lim_{d \downarrow 0} \pi((X - d)^+) = \pi(X) = \lim_{d \uparrow \infty} \pi(X \wedge d)\)
+
+Technical condition on \((\Omega, \mathcal{F}, \mathbb{P}) \implies \exists_1\) concave distortion function \(h: [0, 1] \rightarrow [0, 1]\)
+
+s.t.
+\(\pi(X) = \int X d(h \circ \mathbb{P}), X \in \mathcal{X}\)
+
+
+Define distorted probability prices and the related proposition
+for their premiums
+
+Let \((\Omega, \mathcal{F}, \mathbb{P})\) be a probability space.
+
+A continuous (non-decreasing) concave function \(h:[0,1]\rightarrow[0,1]\) with \(h(0)=0\) and
+\(h(1)=1\) is a concave distortion function.
+The h-distorted probability price of claim \(S\ge0\) is
+\(\pi_{h}(S):=\int S~d(h\circ\mathbb{P})=\int_{0}^{\infty}h(\mathbb{P}(S>x))dx.\)
+
+Concavity \(\rightarrow\) more weight on events with small \(\mathbb{P}\)-probability
+
+\(h\) concave distortion function as above.
+\(S, S'\) nonnegative random variables.
+\(t > 0, 0 < \lambda < 1\).
+
+Then:
+
+\(h(p) \ge p, p \in [0, 1]\)
+\(\pi_h\) is positively homogeneous.
+\(\pi_h(S) \ge \mathbb{E}[S]\)
+If \(h(p) > p, 0 < p < 1\), and \(S\) not deterministic, then \(\pi_h(S) > \mathbb{E}[S]\)
+\((\Omega, \mathcal{F}, \mathbb{P})\) atomless, then \(\pi_h\) is convex:
+
+\(\pi_h(\lambda S + (1 - \lambda)S') \le \lambda \pi_h(S) + (1 - \lambda)\pi_h(S').\)
+
+\end{document}

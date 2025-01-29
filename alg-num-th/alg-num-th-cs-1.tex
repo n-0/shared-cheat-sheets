@@ -1,0 +1,215 @@
+Show that \( p = a^2 + b^2 \), \( a, b \in \mathbb{Z} \) iff. \( p \equiv 1 \text{mod} 4 \), for \( p \) prime.
+
+
+For perfect squares (\( x^2, x \in \mathbb{Z}\), it holds either \( x \equiv 0 \text{mod} 4 \)
+\( x \equiv 1 \text{mod} 4 \)), thus one direction follows. 
+For the converse, we leverage that the Gaussian integers \( \mathbb{Z}[i] \) are a UFD, and the norm.
+Since \( (a + ib)(a - ib) = a^2 + b^2 = p \) in \( \mathbb{Z}[i] \), it suffices to show that 
+\( p \) is not a prime in \( \mathbb{Z}[i] \), so there are non-units \( x, y \in \mathbb{Z}[i] \)
+with \( p = xy \).
+As \( p \) is of the form \( p = 1 + 4n \), we note that the congruence
+\( -1 \equiv x^2 \pmod{p} \)
+admits a solution, namely \( x = (2n)! \). Indeed, since \( -1 \equiv (p - 1)! \pmod{p} \) by Wilson's theorem, one has
+\(
+-1 \equiv (p - 1)! = [1 \cdot 2 \cdots (2n)] \, [(p - 1)(p - 2) \cdots (p - 2n)] \equiv [(2n)!] \, [(-1)^{2n} (2n)!] = [(2n)!]^2 \pmod{p}.
+\)
+
+Thus we have \( p \mid x^2 + 1 \equiv (x + i)(x - i) \). But \( \frac{x}{p} \pm \frac{i}{p} \notin \mathbb{Z}[i] \), \( p \) does not divide 
+any of the factors \( x + i, x - i \), and is therefore not a prime element in the factorial ring \( \mathbb{Z}[i] \).
+
+
+State the units, primes and ring of integers for \( \mathbb{Z}[i] \).
+
+The prime elements \(\pi\) of \(\mathbb{Z}[i]\), up to associated elements, are given as follows.
+
+\(\pi = 1 + i,\)
+\(\pi = a + bi \quad \text{with} \ a^2 + b^2 = p, \ p \equiv 1 \pmod{4}, \ a > |b| > 0,\)
+\(\pi = p, \quad p \equiv 3 \pmod{4}.\)
+
+Here, \(p\) denotes a prime number of \(\mathbb{Z}\).
+
+The group of units in \( \mathbb{Z}[i] \) are the fourth roots of unity
+\( \mathbb{Z}[i]^\ast = \{1, -1, i, -i\} \)
+
+\( \mathbb{Z}[i] \) consists precisely of those elements of the extension
+field \( \mathbb{Q}(i) \) of \( \mathbb{Q} \), which satisfy the monic polynomial equation
+\( x^2 + ax + b = 0 \), with coeffs. \( a, b \in \mathbb{Z} \).
+
+
+Namely we verify that, meaning there are 
+non-units \( a,b \in \mathbb{Z}[i]\) with \( ab = p \)
+
+
+Define integral elements in ring extensions, closures and algebraic number fields
+and sketch the proof why the integral closure is a ring.
+
+Let \( B \supset A \) be a ring extension (i.e. \( A \subset B \) subring with same 1).
+
+If \( b \in B \) is a root of a monic \( P \in A[X] \) of degree \(\geq 1\), then \( b \) is called integral over \( A \).
+If all \( b \in B \) are integral over \( A \), we say \( B \) is integral over \( A \).
+\( \overline{A} := \{ b \in B \mid b \text{ integral over } A \} \) is the integral closure of \( A \) in \( B \).
+
+An algebraic number field is a finite field extension \( K \) of \( \mathbb{Q} \). The elements of \( K \) are called algebraic numbers.
+the integral closure of \( \mathbb{Z} \) in \( K \) has a special notation, namely \( \mathcal{O}_K = \{a \in K \mid a \text{ is integral over } \mathbb{Z} \} \).
+
+With the help of Theorem 2.2:
+Let \( B \supset A \) be a ring extension. 
+Finitely many \( b_1, \ldots, b_n \in B \) are integral over \( A \) if and only if \( A[b_1, \ldots, b_n] \) (which is the smallest subring of \( B\) 
+continaing \( A, b_1, \ldots, b_n \)) is a finitely generated \( A \)-module.
+
+A notable part of Theorem 2.2 was the use of Laplace’s expansion theorem (aka determinant trick): 
+Over a commutative ring with 1 any matrix \(N \in \text{Mat}(r \times r, R) \) satisfies the identity
+\(
+N \cdot N^* = N^* \cdot N = \det(N) \cdot I_r
+\)
+where \( N^\ast = \left[(-1)^{i+j} \det N_{ij}\right]_{i,j=1}^{r} \) is the adjoint matrix to  \( N \), 
+(\(N_{ij}\) is obtained from \( N \) by removing the \( i \)th row and \( j \)th column).
+
+The proof for the ring structure of the integral closure then finishes with
+
+Let \( B \supset A \) be a ring extension. Then \( \overline{A} \) is a ring.
+Proof: 
+Let \( b_1, b_2 \in B \) be integral over \( A \). By Theorem 2.2, \( A[b_1, b_2] \) is a finitely generated \( A \)-module. 
+Clearly, \( A[b_1, b_2] = A[b_1, b_2, b_1 \pm b_2, b_1 \cdot b_2] \). 
+Thus again by Theorem 2.2, \( b_1 \pm b_2 \) and \( b_1 \cdot b_2 \) are integral over \( A \), i.e., in \( \overline{A} \). 
+Also, 1 is integral over \( A \) (root of \( X - 1 \)), i.e., 1 \( \in \overline{A} \). This shows that \( \overline{A} \) is a subring of \( B \).
+
+
+State some abstract examples of integrally closed rings.
+
+Let \( A \) be a factorial ring (i.e. every non-zero element \( a \in A \) can be written as a product of irreducible elements uniquely up to ordering and units, 
+(e.g. PIDs or polynomial rings in several variables over a factorial ring). Then \( A \) is integrally closed.
+
+Proof: 
+Let \( x = \frac{a}{b} \in \text{Quot}(A) \) be a root of \( X^n + a_{n-1}X^{n-1} + \dots + a_1X + a_0 \in A[X] \), i.e., we have
+\(
+\left( \frac{a}{b} \right)^n + a_{n-1} \cdot \left( \frac{a}{b} \right)^{n-1} + \dots + a_1 \cdot \frac{a}{b} + a_0 = 0
+\)
+multiplying by \( b^n \)
+\(
+a^n + a_{n-1} a^{n-1} b + \dots + a_1 a b^{n-1} + a_0 b^n = 0
+\)
+This equation shows that every irreducible factor of \( b \) also divides \( a^n \) and also \( a \). 
+This implies that if \( \frac{a}{b} \) is written in lowest terms, then \( b \) must be a unit, thus \( x = \frac{a}{b} \in A \).
+
+State how integral ring extensions can be inherited 
+Theorem:
+Let \( C \supset B \supset A \) be ring extensions. If \( C \supset B \) and \( B \supset A \) are integral ring extensions each, then \( C \supset A \) is also integral.
+
+Proof: 
+\( C \supset B \) is integral, so every \( c \in C \) is root of some \( X^n + b_{n-1}X^{n-1} + \dots + b_1X + b_0 \in B[X] \). 
+Let \( R := A[b_0, \dots, b_{n-1}] \), by Theorem 2.2 \( R \) is a finitely generated \( A \)-module. 
+By the same theorem, since \( c \) is integral over \( R \), \( R[c] \) is a finitely generated \( R \)-module.
+
+This shows that \( R[c] \) is a finitely generated \( A \)-module, so again by Th. 2.2 \( c \) is integral over over \( A \).
+
+State how the integral closure of a ring interacts with the surrounding field extension.
+
+Let \( A \) be an integral domain, \( K \) its quotient field, \( L \supset K \) an algebraic field extension, 
+\( B \) the integral closure of \( A \) in \( L \).
+
+\[
+\begin{array}{ccc}
+B = \overline{A} \subset L & & \mathcal{O}_L \subset L \\
+\cup & \quad \text{e.g.} & \cup \\
+A \subset K = \text{Quot}(A) & & \mathbb{Z} \subset \mathbb{Q}
+\end{array}
+\]
+
+Then 
+(i) \( L = \text{Quot}(B) = \left\{ \frac{b}{a} \mid b \in B, 0 \neq a \in A \right\} \).
+(ii) \( B \) is integrally closed.
+
+Proof: 
+(i) Every \( \alpha \in L \) is a root of some \( P = a_n X^n + a_{n-1} X^{n-1} + \ldots + a_0 \in K[X] \). Using \( K = \text{Quot}(A) \), we can multiply \( P \) by the product of all denominators, so we may as well assume \( P \in A[X] \). Multiply by \( a_n^{n-1} \) and plug in \( \alpha \) for \( X \) to get
+
+\[
+(a_n \alpha)^n + a_{n-1}(a_n \alpha)^{n-1} + a_{n-2} a_n (a_n \alpha)^{n-2} + \ldots + a_1 a_n^{n-2} (a_n \alpha) + a_0 a_n^{n-1} = 0.
+\]
+
+Thus, \( b := a_n \alpha \) is root of a monic polynomial \( \in A[X] \), so as an integral element over \( A \), \( b \in B \). Then \( \alpha = \frac{b}{a_n} \) yields the desired representation.
+
+(ii) Consider the ring extensions
+
+\(
+A \subset B \subset C := \left\{ b \in L \mid b \text{ int. over } B \right\} =: \overline{B} \text{ in } L \overset{(i)}{=} \text{Quot}(B).
+\)
+\(
+\left\{ b \in L \mid b \text{ int. over } A \right\}
+\)
+
+By definitions, \( B \supset A \) is integral, as well as \( C \supset B \). By Theorem 2.6, \( C \supset A \) is integral, which implies \( C \subseteq B \) (by definition of \( B \)). Thus, \( B = C \), so \( B \) is integrally closed in its quotient field \( L \).
+
+
+
+
+Define the Trace and Norm of elements in field extensions
+and state some essential identities.
+
+For a field extension \( K \subset L \), we can define for each \( a \in L \)
+a linear map \( m_a: L \to L, m_a(x) = ax \) which has a matrix \( M_a \) after choosing
+a \( K \)-basis.
+
+The trace of \( a ∈ L \) is \( \text{Tr}_{L/K}(a) \coloneqq \text{tr}(m_a) := (M_a) ∈ K\).
+The norm of \( a ∈ L\) is \( N_{L/K}(a) := \text{det}(m_a) := det(M_a) ∈ K \).
+
+Let \( K = \mathbb{Q} \), \( L = \mathbb{Q}(\sqrt[3]{2}) \), \( a = 1 - \sqrt[3]{3} \).
+We compute \( M_a \) with respect to the basis \( 1, \alpha, \alpha^2 \) of \( L \) over \( K \).
+\[
+(1 - \alpha) \cdot 1 = 1 - \alpha
+(1 - \alpha) \cdot \alpha = \alpha - \alpha^2
+(1 - \alpha) \cdot \alpha^2 = -2 + \alpha^2
+\]
+\[
+M_{1-\alpha} = \begin{bmatrix} 1 & 0 & -2 \\ -1 & 1 & 0 \\ 0 & -1 & 1 \end{bmatrix}
+\]
+Thus, by definition of trace and determinant we get
+\[
+\text{Tr}_{L/K}(1-\alpha) = 1 + 1 + 1 = 3 \quad \text{N}_{L/K}(1-\alpha) = 1 + (-2) = -1.
+\]
+
+
+(i) 
+Let \(\chi_a := \chi_{m_a} = \det(X \cdot \text{id}_L - m_a)\) be the characteristic polynomial. 
+Then 
+\(
+\chi_a = X^n - \text{Tr}_{L/K}(a)X^{n-1} + \ldots + (-1)^n \text{N}_{L/K}(a).
+\)
+(ii) \(\text{Tr}_{L/K} : L \to K\) is \(K\)-linear.
+(iii) \(\text{N}_{L/K} : L \to K\) is multiplicative.
+
+How can the trace and norm be expressed via the Galois/Automorphism Group?
+
+Let \(L \supset K\) be a finite separable field extension \( G \coloneqq \text{Hom}_K(L, \bar{K}) \). 
+Then
+(i) \(\chi_a(X) = \prod_{\sigma \in G} (X - \sigma(a))\)
+(ii) \(\text{Tr}_{L/K}(a) = \sum_{\sigma \in G} \sigma(a)\)
+(iii) \(\text{N}_{L/K}(a) = \prod_{\sigma \in G} \sigma(a)\).
+
+The basic idea of the proof, uses the insight that \( \chi_a = \mu_a^d \) for \( d = [L : K(a)] \)
+which is also a separable field extension and that \( m = [K(a): K] \). Combining their bases
+\( \{1, a, \dots, a^{m-1}\}, \{\alpha_1, \dots, \alpha_d\} \), we can assert how \( m_a \) acts
+INSERT PART 1 FROM PAGE 11
+and thus its matrix \( M_a \) consists of \( d \)-times the \( m\times m \)-matrix on the diagonal.
+Then the characteristic polynomial of this is given by:
+INSERT PART 2 FROM PAGE 11
+so \(\chi_a = \text{det}(X \cdot I_n - M_a) = \mu_a^d\)
+
+Afterwards one can use some insight how the Galois groups of \( \text{Gal}(L/K(a)), \text{Gal}(K(a)/K)\) 
+relate to each other.
+
+If multiple extensions are involved it can help to keep in mind that:
+For a tower \(M \supset L \supset K\) of finite separable field extensions, we have
+(i) \(\text{Tr}_{L/K} \circ \text{Tr}_{M/L} = \text{Tr}_{M/K}\)
+(ii) \(N_{L/K} \circ N_{M/L} = N_{M/K}\) 
+
+State the preservation of units under the norm and the image ring of trace/norm.
+
+Let \(A\) be an integrally closed domain, \(K = \text{Quot}(A)\), \(L \supset K\) a finite separable field extension, 
+\(B\) the integral closure of \(A\) in \(L\).
+(i) For \(b \in B\) we have \(\text{Tr}_{L/K}(b), N_{L/K}(b) \in A\).
+(ii) For \(b \in B\) we have \(b \in B^\times\) if and only if \(N_{L/K}(b) \in A^\times\).
+
+
+
+

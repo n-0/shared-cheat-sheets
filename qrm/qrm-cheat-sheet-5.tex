@@ -1,0 +1,287 @@
+Define Comonotonicity and describe the special
+case where they're additive
+    
+    
+The random variables \(X_1, X_2, ..., X_d\) are comonotonic, 
+iff there exists some random variable \(Z\) such that for increasing function \(V_1, V_2, ..., V_d\):
+    
+\((X_1, X_2, ..., X_d) \stackrel{d}{=} (V_1(Z), V_2(Z), ..., V_d(Z))\).
+    
+If the random variables \(X_1, X_2, ..., X_d\) are all continuous, 
+then any of these variables can be chosen as factor \(Z\). This can also be formulated in the following way:
+    
+Comonotonicity of continuous random variables
+Continuous random variables \(X_1, X_2, ..., X_d\) are comonotonic, 
+iff for each pair \(i, j\) there exists an increasing function \(T_{ji}\) 
+such that \(X_j = T_{ji}(X_i)\) almost surely.
+
+Comonotonicity is the notion of perfect positive dependence. 
+The corresponding copula coincides with the upper Fréchet bound:
+    
+\(M(u_1, u_2, ..., u_d) = \min(u_1, u_2, ..., u_d)\).
+
+
+
+Comonotonic Additivity of Quantiles
+Consider comonotonic random variables \(X_1, X_2, ..., X_d\) and their sum \(X_1 + X_2 + ... + X_d\). 
+For any \(0 < \alpha < 1\) we have additivity of the quantile functions:
+\(F_{\sum_{i = 1}^d X_i}^{-1}(\alpha) = \sum_{i = 1}^d F_{X_i}^{-1}(\alpha).\)
+
+Some risk measures are additive for comonotonic random variables.
+More precisely, this is the case for distortion risk measures. Special cases are value at risk and average value at risk.
+These risk measures admit an interesting representation in terms of capacities, 
+i.e., set functions that generalize probability measures beyond additivity.
+For value at risk, comonotonicity can be reformulated in terms of quantile functions.
+
+Define countermonotonicity
+
+
+The random variables \(X_1, X_2\) are countermonotonic with copula
+\(W(u_1, u_2) = \max(u_1 + u_2 - 1, 0)\);
+iff there exists some random variable \(Z\), and increasing function \(v_1\) and a decreasing function \(v_2\) such that
+\((X_1, X_2) = (v_1(Z), v_2(Z))\).
+
+The lower Fréchet bound is a copula iff \(d = 2\), the countermonotonic copula.
+Lower Fréchet bound for \(d > 2\)
+If the lower Fréchet bound \(W = \max(\sum_{i = 1}^d u_i + 1 - d, 0)\) was a copula, then \(W\) would be a distribution function on \([0, 1]^d\). 
+We could compute the corresponding probability of the cube \([\frac{1}{2}, 1]^d\) by applying the distribution function \(W\); 
+computation gives \(1 - \frac{d}{2}\) which is smaller than 0 for \(d > 2\). This implies that \(W\) is not a copula for \(d > 2\);
+
+
+Define rank correlations as well as concordance/disordance
+
+
+While linear correlation depends on both the marginal distributions and the dependence structure of two given variables, rank correlations depend only on the copula of the random pair.
+These statistical functionals are computed only from the ranks of the data, i.e., a strictly monotone transformation of the data that eliminates the marginal distributions.
+The most popular measures are Kendall's tau and Spearman's rho.
+These are often interpreted as measures of concordance and discordance for bivariate random vectors:
+    
+Concordance and discordance
+
+The points \((x_1, x_2), (\bar{x}_1, \bar{x}_2) \in \mathbb{R}^2\) are called concordant, if
+\((x_1 - \bar{x}_1)(x_2 - \bar{x}_2) > 0\),
+and discordant, if
+\((x_1 - \bar{x}_1)(x_2 - \bar{x}_2) < 0\).
+
+
+Define Kendall's tau
+
+Kendall's tau of two random variables is defined by
+\(\rho_\tau(X_1, X_2) = \mathbb{E}(\text{sign}\{(X_1 - \tilde{X}_1)(X_2 - \tilde{X}_2)\})\)
+with \((X_1, X_2)^\top, (\tilde{X}_1, \tilde{X}_2)^\top\) identically distributed and independent and
+
+Kendall's tau captures the dependence of the two components of a random vector \((X_1, X_2)^\top\) by computing the probability of concordance minus the probability of discordance with an independent copy \((\tilde{X}_1, \tilde{X}_2)^\top\):
+    
+If \(X_1\) tends to increase with \(X_2\) across samples, then concordance of \((X_1, X_2)^\top\) and \((\tilde{X}_1, \tilde{X}_2)^\top\) should occur with higher probability.
+    
+If \(X_1\) tends to decrease with \(X_2\) across samples, then discordance of \((X_1, X_2)^\top\) and \((\tilde{X}_1, \tilde{X}_2)^\top\) should occur with higher probability.
+    
+Kendall's tau matrix
+Let \(X\) a \(d\)-dimensional random vector. Kendall's tau can be generalized to this situation.
+Let \(\tilde{X}\) be an independent copy of \(X\). Setting \(Y = \text{sign}(X - \tilde{X})\), one defines the matrix
+\(\rho_\tau(X) = \text{Cov}(Y)\).
+
+Continuous marginal distributions
+If margins are continuous, the copula \(C\) is unique. Kendall's tau for two random variable \(X_1\) and \(X_2\) can directly be computed from this copula:
+
+\(\rho_\tau(X_1, X_2) = 4 \int_0^1 \int_0^1 C(u_1, u_2) dC(u_1, u_2) - 1\)
+
+
+Define Spearman’s rho
+
+
+Let \(X_1\) and \(X_2\) be random variables. For random variables \(\bar{X}_1, \bar{X}_2\) independent of \(X_1, X_2\) and \(\bar{X}_1\) 
+independent from \(\bar{X}_2\) with \(\bar{X}_1 \sim X_1, \bar{X}_2 \sim X_2\) we define Spearman's rho by
+\(\rho_S(X_1, X_2) = 3 \cdot \{\mathbb{P}((X_1 - \bar{X}_1)(X_2 - \bar{X}_2) > 0) - \mathbb{P}((X_1 - \bar{X}_1)(X_2 - \bar{X}_2) < 0)\}\)
+
+Spearman's rho is best motivated in the context of random vectors with continuous margins:
+Let \(X_1, X_2\) be random variables with distribution functions \(F_1, F_2\). Then the distributions function of
+\(U = (F_1(X_1), F_2(X_2))^\top\)
+is the copula \(C\) of \(X = (X_1, X_2)^\top\).
+Spearman's \(\rho\) is simply the linear correlation of \(U_1\) and \(U_2\), i.e., linear correlation on the level of the copula
+\(\rho_S(X_1, X_2) = \rho(F_1(X_1), F_2(X_2))\).
+
+
+Spearman's rho matrix
+Let \(X\) a \(d\)-dimensional random vector. Spearman's rho can be generalized to this situation.
+Denoting by \(\rho(Z)\) the correlation matrix of some random vector, 
+we get for \(U = (F_1(X_1), ..., F_d(X_d))^\top\), i.e., for \(U \sim C\) where \(C\) is the copula of \(X\):
+\(\rho_S(X) = \rho(U).\)
+
+Continuous marginal distributions
+If margins are continuous, the copula \(C\) is unique. Spearman's rho for two random variable 
+\(X_1\) and \(X_2\) can directly be computed from this copula:
+
+\[\rho_T(X_1, X_2) = 12 \int_0^1 \int_0^1 \{C(u_1, u_2) - u_1 u_2\} du_1 du_2.\]
+
+Define upper and lower tail dependence
+
+The coefficient of upper tail dependence is
+\(\lambda_U(X_1, X_2) = \lim_{q \nearrow 1} \mathbb{P}[X_2 > F_2^{-1}(q)|X_1 > F_1^{-1}(q)] \in [0, 1].\)
+This is for \(q \nearrow 1\) the probability that the random variable \(X_2\) 
+exceeds its \(q\)-quantile if \(X_1\) exceeds its \(q\)-quantile.
+
+Interpretation
+\(\lambda_U \in (0, 1]\): degree of upper tail dependence
+\(\lambda_U = 0\): asymptotic independence in the upper tail
+
+Upper tail dependence depends only on the copula:
+\(\lambda_U(X_1, X_2) = \lim_{q \nearrow 1} \frac{C(1 - q, 1 - q)}{1 - q} = \lim_{q \searrow 0} \frac{\bar{C}(q, q)}{q}\)
+
+Similarly the coefficient of lower tail dependence is
+\(\lambda_L(X_1, X_2) = \lim_{q \searrow 0} \mathbb{P}[X_2 \le F_2^{-1}(q)|X_1 \le F_1^{-1}(q)] \in [0, 1].\)
+
+This is for \(q \searrow 0\) the probability that the random variable \(X_2\) 
+lies below its \(q\)-quantile if \(X_1\) lies below its \(q\)-quantile.
+
+Interpretation
+\(\lambda_L \in (0, 1]\): degree of lower tail dependence
+\(\lambda_L = 0\): asymptotic independence in the lower tail
+
+Lower tail dependence depends only on the copula:
+\(\lambda_L(X_1, X_2) = \lim_{q \searrow 0} \frac{C(q, q)}{q}\)
+
+Define Normal Variance Mixtures and explain how to simulate them
+
+A \(d\)-dimensional random vector \(X\) possesses a normal variance mixture distribution, if
+\(X \stackrel{d}{=} \mu + \sqrt{W} AZ\)
+
+with
+1. \(Z \sim N_k(0, I_k)\)
+2. \(W \in [0, \infty)\) is a random variable independent of \(Z\)
+3. \(\mu \in \mathbb{R}^d, A \in \mathbb{R}^{d, k}\).
+
+In this case, \(X|W = w \sim N_d(\mu, w \Sigma)\), \(\Sigma = AA^\top\).
+Terminology
+Location vector \(\mu\)
+Dispersion matrix \(\Sigma\)
+
+The first and second moment, respectively, are \(\mathbb{E}(X) = \mu\), \(\text{Cov}(X) = \mathbb{E}(W) \cdot \Sigma\).
+
+
+Consider a random vector with normal variance mixture distribution with 
+location vector \(\mu\), dispersion matrix \(\Sigma\), and mixing variable \(W\) with distribution function \(H\).
+
+The Lebesgue-Stieltjes transform of \(H\) is
+\(\hat{H}(\theta) = \int_0^\infty e^{-\theta v} dH(v)\)
+    
+The characteristic function of \(X\) can now be computed:
+\(\phi_X(t) = \exp(i t^\top \mu) \hat{H} (\frac{1}{2} t^\top \Sigma t)\)
+    
+One writes: \(X \sim M_d(\hat{\mu}, \hat{\Sigma}, \hat{H})\).
+Linear transformations
+\(X \sim M_d(\hat{\mu}, \hat{\Sigma}, \hat{H}), B \in \mathbb{R}^{k \times d}, b \in \mathbb{R}^k\)
+which implies \(Y = BX + b \sim M_k(B \mu + b, B \Sigma B^\top, \hat{H})\)
+
+
+The simulation of a normal mixture distribution \(X \sim M_d(\hat{\mu}, \hat{\Sigma}, \hat{H})\) is straightforward:
+1. Generate \(Z \sim N_d(0, \Sigma)\).
+2. Generate independently the mixing variable \(W\) with distribution function \(H\) 
+   corresponding to the Laplace-Stieltje-transform \(\hat{H}\)
+3. Set \(X = \mu + \sqrt{W} Z\)
+
+Define Archimedian copula generators and give some examples
+An Archimedian copula generator is a decreasing, continuous, convex function \(\psi: [0, \infty) \mapsto [0, 1]\) 
+satisfying \(\psi(0) = 1\) and \(\lim_{t \rightarrow \infty} \psi(t) = 0\).
+
+Any Archimedian copula generator \(\psi\) defines a copula:
+\(C(u_1, u_2) = \psi(\psi^{-1}(u_1) + \psi^{-1}(u_2))\).
+
+INSERT IMAGE FROM SLIDE 263
+
+
+A copula generator \(\psi\) generates in dimension \(d > 2\) a copula, if we require an additional property, the complete monotonicity:
+\((-1)^k \frac{d^k}{dt^k} \psi \ge 0, k \in \mathbb{N}.\)
+In this case,
+\(\mathcal{C}(u_1, u_2, ..., u_d) = \psi(\psi^{-1}(u_1) + \psi^{-1}(u_2) + ... + \psi^{-1}(u_d))\)
+is a copula.
+
+For practical applications, it is useful to realize that completely monotonic copula generators correspond 
+to Laplace-Stieltjes transforms of distribution functions \(G\) on \([0, \infty)\) with \(G(0) = 0\):
+
+\(\hat{G}(t) = \int_0^\infty e^{-tx} dG(x) = \mathbb{E}(e^{-tx}), t \ge 0,\)
+
+for any random variable \(X \sim G\).
+A \(d\)-dimensional copula with generator \(\hat{G}\) is called LT-copula corresponding to distribution function \(G\).
+
+
+Define LT-copula's and how to simulate them
+
+Let \(\mathcal{C}\) be an LT-copula corresponding to \(G\) with \(\psi = \hat{G}\).
+
+Define the following random elements:
+\(V\) is a random variable with distribution function \(G\).
+\(Y_1, Y_2, ..., Y_d\) are independent, standard exponential random variables independent of \(V\).
+
+We construct the following random vectors:
+\(X = (\frac{Y_1}{V}, \frac{Y_2}{V}, ..., \frac{Y_d}{V})^\top, U = (\psi(X_1), \psi(X_2), ..., \psi(X_d))^\top\).
+
+Then the following holds:
+1. The copula \(\mathcal{C}\) is the survival copula of \(X\).
+2. The random vector \(U\) has distribution function \(\mathcal{C}\).
+3. The components of \(U\) are conditionally independent given \(V\) with conditional distribution function
+
+\(\mathbb{P}(U_i \le u | V = v) = \exp(-v \psi^{-1}(u))\)
+ 
+A simulation algorithm is:
+1. Generate \(V \sim G\).
+2. Generate independent
+    \(Z_1, Z_2, ..., Z_d \sim \text{unif}(0, 1)\)
+    and use the inverse transform method to produce exponential random variables:
+    \(Y_i = -\ln(Z_i), i = 1, 2, ..., d\)
+
+3. Return \(U \sim \mathcal{C}\):
+
+\(U = (\psi(\frac{Y_1}{V}), \psi(\frac{Y_2}{V}), ..., \psi(\frac{Y_d}{V}))^\top\)
+
+
+Explain the Method-of-moments using rank correlation for estimating copula parameters
+
+Ranks
+Ordering the data of each components according to their size (assuming no ties) from smallest to largest, 
+the position of each data point is the rank:
+rank(\(X_{t, i}\)) \(\in \{1, 2, ..., n\}\)
+
+Kendall's tau
+The matrix of rank correlations \(R^{\tau}=(r_{ij}^{\tau})\) can be estimated by
+\(r_{ij}^{\tau}=\frac{\sum_{1\le t<s\le n}sign((X_{t,i}-X_{s,i})(X_{t,j}-X_{s,j}))}{\binom{n}{2}}\)
+
+
+Spearman's rho
+The matrix of rank correlations \(R^{S}=(r_{ij}^{S})\) can be estimated by
+
+\(r_{ij}^{S}=\frac{12}{n(n^{2}-1)}\cdot\sum_{t=1}^{n} \left( rank(X_{t,i})-\frac{n+1}{2} \right) \left( rank(X_{t,j})-\frac{n+1}{2} \right)\)
+
+
+Explain how to use pseudo samples for MLE of copula's
+
+Assume that \(X \sim F\) with continuous marginal distribution functions. Then
+\(U = (F_1(X_1), F_2(X_2), ..., F_d(X_d))^\top\)
+is a random vector with distribution function \(C\), the copula of \(X\).
+Pseudo-samples of the copula are approximations of samples of \(U\) that are based on estimated marginal distribution functions 
+\(\hat{F}_1, \hat{F}_2, ..., \hat{F}_d\):
+
+\[\hat{U}_t = \begin{pmatrix} \hat{F}_1(X_{t, 1}) \\ \hat{F}_2(X_{t, 2}) \\ \vdots \\ \hat{F}_d(X_{t, d}) \end{pmatrix}\]
+
+These pseudo-samples can then be used as the basis for maximum likelihood estimation of the copula.
+
+
+How to estimate the marginal distributions in the context of copulas?
+
+Parametric estimation
+Use a specific parametric model for the marginal distributions function and estimate the parameters on the basis of data.
+
+Non-parametric estimation
+Instead of the empirical distribution function, it is often useful to modify this slightly to avoid problems on the boundary:
+\(\hat{F}_i(x) = \frac{1}{n + 1} \sum_{t = 1}^n 1_{\{X_{t, i} \le x\}}, i = 1, 2, ..., d\)
+
+Extreme value theory of the tails
+Empirical distribution functions cannot properly capture the tails, since they have bounded support. An idea is to use them for the central part of distributions and to use generalized Pareto distributions (GDP) for the tails; this is semi-parametric estimation.
+
+As the underlying data, pseudo-samples \(\hat{U}_t, t = 1, 2, ..., n\), are used.
+Given a parametric model for the copula with copula density \(c_\theta\) the log-likelihood is maximized:
+\(\ln L(\theta; \hat{U}_1, \hat{U}_2, ..., \hat{U}_n) = \sum_{t = 1}^n \ln c_\theta(\hat{U}_t)\)
+
+An Example Gaussian copula, 
+With \(f_\Sigma\) denoting the joint density of \(N_d(0, \Sigma)\), the log-likelihood for some correlation matrix \(P\) is
+\(\sum_{t = 1}^n \ln f_P(\Phi^{-1}(\hat{U}_{t, 1}), \Phi^{-1}(\hat{U}_{t, 2}), ..., \Phi^{-1}(\hat{U}_{t, d})) - \sum_{t = 1}^n \sum_{j = 1}^d \ln \phi(\Phi^{-1}(\hat{U}_{t, j}))\)

@@ -1,0 +1,320 @@
+Show that a prime ideal of an integral ring extension is a prime ideal in the underlying ring.
+
+\( \textbf{Lemma 8.1.} \) 
+Let \( B \supset A \) be an integral ring extension of domains. Let \( (0) \neq \mathfrak{P} \subset B \) be a prime ideal. 
+Then \(\mathfrak{P} \cap A \) is a prime ideal \(\neq (0) \) in \( A \).
+
+Proof. 
+The inclusion \( i : A \hookrightarrow B \) is a ring homomorphism, hence \( i^{-1}(\mathfrak{P}) = \mathfrak{P} \cap A \) is a prime ideal. 
+Choose \( 0 \neq \alpha \in \mathfrak{P} \), \(\alpha\) is the root of some \( X^n + a_{n-1}X^{n-1} + \ldots + a_1X + a_0 \in A[X] \). Then
+\[
+a_0 = -\underbrace{(\alpha^n + a_{n-1}\alpha^{n-1} + \ldots + a_1\alpha)}_{\in \mathfrak{P}} \in A,
+\]
+
+
+Define ramification indices, inertia degrees and give an example of prime splitting patterns.
+
+\( \textbf{Definition 8.5.} \) Write \( p\mathcal{O} = \mathfrak{P}_1^{e_1} \cdots \mathfrak{P}_r^{e_r} \) as in Lemma 8.4. We say:
+\begin{itemize}
+    \item Each \(\mathfrak{P}_i\) is a \textit{prime divisor} of \( p \), notation: \(\mathfrak{P}_i \mid p\).
+    \item \( e_i \) is the \textit{ramification index}\footnotemark[2] of \(\mathfrak{P}_i\).
+    \item \( f_i := \left[ \frac{\mathcal{O}_{\mathfrak{P}_i} : \mathcal{O}_{p}}{\text{ residue fields}^3} \right] \) is the \textit{inertia degree}\footnotemark[4] of \(\mathfrak{P}_i\).
+\end{itemize}
+
+Here are \(\mathcal{O}_p \subset \mathcal{O}_{\mathfrak{P}_i}\) both fields, so we have a (finite) field extension.
+
+Example. Consider the following extension:
+\[
+\begin{array}{c}
+    \mathbb{Z}[i] \subset \mathbb{Q}(i) \\
+    \cup \quad \quad \, \cup \\
+    \mathbb{Z} \quad \subset \quad \mathbb{Q}
+\end{array}
+\quad \quad
+p\mathbb{Z}[i] = 
+\begin{cases}
+    \mathfrak{P}_2^2 & \text{if } p = 2 \\
+    \mathfrak{P}_1 \mathfrak{P}_2 & \text{if } p \equiv 1 \pmod{4} \\
+    \mathfrak{P}_1 = (p) & \text{if } p \equiv 3 \pmod{4}.
+\end{cases}
+\]
+
+In the first and second case, we have \( \mathcal{O}_{\mathfrak{P}_i} \cong \frac{\mathbb{Z}}{p\mathbb{Z}} = \mathbb{F}_p \) (so \( f_i = 1 \)), while in the third case the residue field is \(\mathbb{F}_{p^2}\) (hence \( f_1 = 2 \)).
+
+
+Show the fundamental equation for prime splittings.
+
+\( \textbf{Theorem 8.6 (Fundamental equation).} \)
+
+\[
+\sum_{i=1}^r e_i f_i = n.
+\]
+
+\textit{Proof.} By the Chinese remainder theorem:
+
+\[
+\mathcal{O}/p\mathcal{O} \cong \bigoplus_{i=1}^r \mathcal{O}/\mathfrak{P}_i^{e_i}.
+\]
+
+Since \( p \subset p\mathcal{O} \subset \mathfrak{P}_i^{e_i} \), we can regard \(\mathcal{O}/p\mathcal{O}\) and each \(\mathcal{O}/\mathfrak{P}_i^{e_i}\) as \(\kappa = \mathcal{O}/\mathfrak{p}\)-vector spaces.
+
+\[
+\begin{aligned}
+    & \text{Claim 1:} \ \dim_\kappa \left( \mathcal{O}/p\mathcal{O} \right) = n \\
+    & \text{Claim 2:} \ \dim_\kappa \left( \mathcal{O}/\mathfrak{P}_i^{e_i} \right) = e_i f_i
+\end{aligned}
+\qquad
+\text{together these yield the theorem.}
+\]
+
+\textit{Proof of claim 2:} Consider
+
+\[
+\mathcal{O}/\mathfrak{P}_i^{e_i} \supset \mathfrak{P}_i/\mathfrak{P}_i^{e_i} \supset \mathfrak{P}_i^2/\mathfrak{P}_i^{e_i} \supset \cdots \supset \mathfrak{P}_i^{e_i-1}/\mathfrak{P}_i^{e_i} \supset (0)
+\]
+
+with successive quotients isomorphic to \(\mathfrak{P}_i^v/\mathfrak{P}_i^{v+1} \cong \mathcal{O}/\mathfrak{P}_i\).
+
+For \(\alpha \in \mathfrak{P}_i^v \setminus \mathfrak{P}_i^{v+1}\) consider
+
+\[
+\mathcal{O} \to \mathfrak{P}_i^v/\mathfrak{P}_i^{v+1}, \quad x \mapsto x \cdot \alpha + \mathfrak{P}_i^{v+1}.
+\]
+
+\begin{itemize}
+    \item The kernel is precisely \(\mathfrak{P}_i\).
+    \item It is surjective, since \(\alpha \cdot \mathfrak{P}_i^{v+1} = \mathfrak{P}_i^v\).
+\end{itemize}
+In this way, we obtain a \(\kappa\)-vector space isomorphism
+
+\[
+\dim_\kappa ( \frac{\mathfrak{P}_i^v}{\mathfrak{P}_i^{v+1}} ) = \dim_\kappa ( \frac{\mathcal{O}}{\mathfrak{P}_i} ) = [\mathcal{O}/\mathfrak{P}_i : \mathcal{O}/p] = f_i.
+\]
+
+As in the proof of Theorem 6.3 we obtain claim 2.
+
+\textit{Proof of claim 1:} As seen in the proof of 8.2, \(\mathcal{O}\) is a finitely generated \(\mathfrak{o}\)-module. (\(*\)) Thus, \(\frac{\mathcal{O}}{p\mathcal{O}}\) is a finitely generated \(\mathcal{O}/p\)-vector space, let \(\bar{\omega}_1, \ldots, \bar{\omega}_m \in \frac{\mathcal{O}}{p\mathcal{O}}\) be a basis.
+
+Claim: \(\omega_1, \ldots, \omega_m\) are a basis of \(L\) over \(K\), thus \(m = n\), proving claim 1.
+
+
+Define the conductor of a ring of integers polynomial
+
+Now choose a generator \(\theta\) of \(L\) over \(K\) (i.e. \(L = K(\theta)\), by the primitive element theorem), 
+we may assume \(\theta \in \mathcal{O}\) after multiplying by denominator \(\in \mathfrak{o} \subset K\).
+Let \(Q \in \mathfrak{o}[X]\) be the monic minimal polynomial of \(\theta\).
+
+Goal: For almost all \(\mathfrak{p} \subset \mathfrak{o}\), the factorization of \(Q\) mod \(\mathfrak{p}\) will tell us how \(p \mathcal{O}\) factorizes into prime ideals of \(\mathcal{O}\).
+
+The conductor\(\mathcal{F}\) of \(\mathfrak{o}[\theta]\) is
+
+\[
+\mathscr{F} := \{ \alpha \in \mathcal{O} \mid \alpha \mathcal{O} \subset \mathfrak{o}[\theta] \} \subset \mathcal{O}.
+\]
+
+
+State and prove the Dedekind-Kummer theorem for factoring prime ideals
+
+(Dedekind-Kummer). 
+Let \( (0) \neq p \subset \mathfrak{o} \) be a prime ideal coprime to the conductor \(\mathscr{F}\) of \(\mathfrak{o}[\theta]\) 
+(i.e. \( p\mathcal{O} + \mathscr{F} = \mathcal{O} \)).
+
+Let \(\overline{Q} = Q \mod p\) (the image of \(Q \in \mathfrak{o}[X]\) in \( (\mathfrak{o}/p)[X] = \kappa[X]\)) with factorization
+\[
+\overline{Q} = \overline{Q}_1^{e_1} \cdots \overline{Q}_r^{e_r} \quad \left( \text{where } e_i \in \mathbb{N}, \, \overline{Q}_i \text{ pairwise distinct monic irred. pol. in } \kappa[X]. \right)
+\]
+
+Choose \( Q_i \in \mathfrak{o}[X] \) with \(\overline{Q}_i = "Q_i \mod p"\) of the same degree. Then
+\[
+p = \mathfrak{P}_1^{e_1} \cdots \mathfrak{P}_r^{e_r}, \quad \text{where } \mathfrak{P}_i = p\mathcal{O} + Q_i(\theta) \cdot \underbrace{\mathcal{O}}_{\supset}
+\].
+are the pairwise distinct prime ideals above \( p \), with inertia degrees
+\[
+f_i = \left[ \frac{\mathcal{O}}{\mathfrak{P}_i} : \frac{\mathfrak{o}}{p} \right] = \deg \overline{Q}_i.
+\]
+
+\( \textit{Proof of 8.8.} \) 
+Let \(\mathcal{O}' := \mathcal{o}[\theta] \subset \mathcal{O}\) and \(\overline{o} := \kappa = \mathcal{o}/p\).
+\( \textbf{Claim:} \) 
+\(\frac{\mathcal{O}'}{p\mathcal{O}} \cong \frac{\mathcal{O}'}{p\mathcal{O}'} \cong \frac{\overline{o}[X]}{\overline{(Q)}}\)
+\[
+\underbrace{\frac{\mathcal{O}'}{p\mathcal{O}}}_{\text{I}} \cong \underbrace{\frac{\mathcal{O}'}{p\mathcal{O}'}}_{\text{II}} \cong \underbrace{\frac{\overline{o}[X]}{\overline{(Q)}}}_{\text{III}}
+\]
+
+\(\text{I} \cong \text{II}\): 
+Consider the ring homomorphism 
+\[
+\mathcal{O}' \rightarrow \frac{\mathcal{O}'}{p\mathcal{O}}, \quad x \mapsto x + p\mathcal{O}.
+\]
+Since \(p\mathcal{O} + \mathscr{F} = \mathcal{O}\) and \(\mathscr{F} \subset \mathcal{O}'\), we have
+\[
+\underbrace{p\mathcal{O} + \mathcal{O}'}_{\text{gcd}} = \mathcal{O} \quad \implies \quad \text{surjective}
+\]
+and, since these ideals are coprime,
+\[
+\underbrace{p\mathcal{O} \cap \mathcal{O}'}_{\text{lcm}} = p\mathcal{O} \cdot \mathcal{O}' = p\mathcal{O}' = \ker(\rightarrow),
+\]
+showing isomorphy.
+
+\(II \cong III\): Consider the surjective homomorphism
+
+\[
+o[X] \longrightarrow \overline{o}[X]/(\overline{Q}), \quad f \mapsto \overline{f} + (\overline{Q}).
+\]
+
+Since \( Q \in \ker(\rightarrow) \), we have the well-defined map
+
+\[
+\mathcal{O}' = o[\theta] \cong o[X]/(Q) \longrightarrow \overline{o}[X]/(\overline{Q})
+\]
+
+with the kernel generated by \( p \).
+
+Remark: If \( I \subset R \) is an ideal in an arbitrary ring, then the projection 
+\( R \overset{\pi}{\longrightarrow} R/I \)
+induces a bijection
+
+\[
+\{ \text{ Ideals } J \subset R \} \xleftrightarrow[]{1:1} \{ \text{ Ideals } \overline{J} \text{ in } R/I \}
+\]
+
+\[
+\pi^{-1}(\overline{J}) \longleftarrow \overline{J} 
+\]
+
+\[
+J \longrightarrow J/I
+\]
+
+that preserves the prime and maximal ideals.
+
+Now we apply the Chinese remainder theorem (3.11) to obtain
+
+\[
+R := \overline{o}[X]/(\overline{Q}) \cong \bigoplus_{i=1}^{r} \overline{o}[X]/(\overline{Q}_i^{e_i}).
+\]
+
+Prime ideals in \(III\): By the remark,
+
+prime ideals in \( R \leftrightarrow \) prime ideals in the PID \( \overline{o}[X] \) containing \( (\overline{Q}) \)
+
+\[
+\leftrightarrow \text{ irreducible factors of } \overline{Q}, \text{ i.e. } \overline{Q}_1, \ldots, \overline{Q}_r.
+\]
+
+Thus, the prime ideals in \( R \) are precisely the (principal) ideals generated by 
+
+\[
+\overline{Q}_i := (Q_i \mod (Q)) \in R = \overline{o}[X]/(Q) \quad (i = 1, \ldots, r).
+\]
+
+We note the following useful observations:
+
+\[
+\left[ \frac{R}{(\overline{Q}_i)} : \overline{o} \right]_{\text{Isom. thm.}} = \left[ \frac{\overline{o}[X]}{(\overline{Q}_i)} : \overline{o} \right] = \deg \overline{Q}_i \tag{*}
+\]
+
+and 
+
+\[
+R \supset (0) = (\overline{Q}) \overset{\text{pairw. coprime}}{\cong} \bigcap_{i=1}^{r} (\overline{Q}_i^{e_i}) \tag{**}
+\]
+
+Prime ideals in \(I\): We have already established
+
+\[
+R = \overline{o}[X]/(\overline{Q}) \xrightarrow{\sim} \mathcal{O}/p\mathcal{O} =: \overline{\mathcal{O}}
+\]
+
+\[
+A \mod (Q) \longmapsto A(\theta) \mod p\mathcal{O}
+\]
+
+prime ideals \( \overline{Q}_i = (Q_i \mod (Q)) \longmapsto \mathfrak{p}_i := (Q_i(\theta) \mod p\mathcal{O}) 
+\)
+
+These \(\mathfrak{P}_i\) are principal ideals with
+\[
+\left[\frac{\mathcal{O}}{\mathfrak{P}_i} : \overline{o}\right] = \deg Q_i \tag{*}
+\]
+
+and 
+\[
+\bigcap_{i=1}^{r} \mathfrak{P}_i^{e_i} = (0). \tag{**}
+\]
+
+In \(\mathcal{O}\): Consider \(\mathcal{O} \longrightarrow \mathcal{O}/p\mathcal{O} = \overline{o}\), the ideal correspondence yields
+\[
+\left\{ \text{Prime ideals in } \overline{o} \right\} \xleftrightarrow{1:1} \left\{ \text{Prime ideals in } \mathcal{O} \text{ containing } p\mathcal{O} \right\}
+\]
+\[
+\mathfrak{P}_i = (Q_i(\theta) \mod p\mathcal{O}) \longleftrightarrow \mathfrak{P}_i = Q_i(\theta)\mathcal{O} + p\mathcal{O}
+\]
+with inertia degrees
+\[
+f_i = \left[\frac{\mathcal{O}}{\mathfrak{P}_i} : \frac{\mathcal{O}}{p} \right] \overset{\text{Isom. thm.}}{=} \left[\frac{\mathcal{O}}{\mathfrak{P}_i} : \overline{o} \right] = \deg Q_i
+\]
+and 
+\[
+\bigcap_{i=1}^{r} \mathfrak{P}_i^{e_i} = \bigcap_{i=1}^{r} (p\mathcal{O} + Q_i(\theta)\mathcal{O})^{e_i} \subset p\mathcal{O} + \bigcap_{i=1}^{r} (Q_i(\theta)^{e_i}\mathcal{O}) = p\mathcal{O}.
+\]
+This shows that \( p\mathcal{O} \mid \prod_{i=1}^{r} \mathfrak{P}_i^{e_i} \) with equality because of the fundamental equation 8.6: Let 
+\[
+p\mathcal{O} = \prod_{i=1}^{r} \mathfrak{P}_i^{e_i'}, \quad e_i' \leq e_i
+\]
+be the prime ideal factorization of \( p\mathcal{O} \), then
+\[
+n = \sum_{i=1}^{r} e_i'f_i \leq \sum_{i=1}^{r} e_if_i = \sum_{i=1}^{r} e_i \deg Q_i = \deg Q = n,
+\]
+thus \( e_i = e_i' \).
+
+
+
+Define primes which are inert, unramified, totally ramified etc.
+
+\(r = n\): This is equivalent to \(e_i = f_i = 1 \; \forall i\). 
+In this case, \(\mathfrak{p}\) is called completely/totally split.
+\(r = 1\): \(\mathfrak{p}\) is called indecomposed.
+\(e_i = 1\) and \(\mathcal{O}_{\mathfrak{P}_i} \supset \mathcal{O}_{\mathfrak{p}}\) separable: Then, \(\mathfrak{P}_i\) is called unramified. 
+Otherwise (i.e. \(e_i > 1\) and/or inseparable extension): \(\mathfrak{P}_i\) is called ramified.
+
+In the case of a number field
+\[
+\begin{array}{ccc}
+\mathcal{O}_L & \subset & L \\
+\cup & & \cup \\
+\mathbb{Z} & \subset & \mathbb{Q}
+\end{array}
+\qquad \text{p = p} \mathbb{Z}
+\]
+
+the residue fields are finite fields, hence always separable.
+\(f_i = 1\): Then \(\mathfrak{P}_i\) is totally ramified.
+All \(\mathfrak{P}_i\) unramified: \(\mathfrak{p}\) is called unramified.
+All prime ideals \(\mathfrak{p} \subset \mathcal{O}\) unramified: \(L \supset K\) is called an unramified extension.
+
+
+Prove that only finitely many prime ideals are ramified in \( \mathcal{O}_K \)
+
+Proof. We use Theorem 8.8: 
+Choose a primitive element \(\theta \in \mathcal{O}\) with \(L = K(\theta)\). 
+Let \(Q \in \mathcal{O}[X]\) be its monic minimal polynomial and the discriminant
+
+\[
+d := d(1, \theta, \ldots, \theta^{n-1}) = \prod_{i<j} (\theta_i - \theta_j)^2 \in \mathcal{O}
+\]
+
+Let \(\mathcal{F}\) be the conductor of \(\mathcal{o}[\theta]\).
+Claim: If \(p\mathcal{O}\) is coprime to \(d \cdot \mathcal{F}\), then \( p \) is unramified.
+
+Proof:
+As \(p\mathcal{O} + \mathcal{F} = \mathcal{O}\), by Theorem 8.8 all \( e_i \) are \( 1 \) if \( \bar{Q} = Q \mod p \) has only irreducible factors 
+\( \bar{Q}_i \) of multiplicity \( e_i = 1\). 
+This is the case, if \( \bar{Q} \) has only simple roots in an algebraic closure \( \bar{\kappa} \). As \( p \nmid d \), we have
+\[
+\bar{d} := d \mod p \neq 0,
+\]
+which is a sufficient condition (!) for the above statement.
+\( Remains: \) All residue field extensions \(\mathcal{O}/\mathfrak{P}_i \supset \mathcal{O}/p\) are separable. 
+These extensions are generated over \(\kappa\) by \(\bar{\theta} = \theta \mod \mathfrak{P}_i\), and the minimal polynomial of 
+\(\bar{\theta}\) is a divisor of \( Q \) (since \(\bar{Q}(\bar{\theta}) = 0\)), thus separable.

@@ -1,0 +1,96 @@
+
+
+
+
+
+
+
+With our 
+Keeping in mind that \(w\) is \(m\) or \(2m\) according as \(m\) is even or odd in view of Lemma 8.30, we have proved the following theorem.
+
+Theorem 10.7 
+Let \(K = \mathbb{Q}(\zeta)\) where \(\zeta\) is a primitive \(m\)th root of unity, \(m \geq 3\). Let \(R\) denote the regulator of \(K\), then the class number \(h\) of \(K\) is given by
+
+\[
+h = \frac{w \sqrt{|d_K|}}{(2\pi)^{\frac{\phi(m)}{2}} R} F(1) \prod_{\chi \neq \chi_0} L(1, \chi).
+\]
+
+
+
+
+Let \(P_n\) be a sequence defined by \(P_n = \sum_{j=1}^{n} \chi(j).\) In view of the above remark, \(|P_n| \leq m - 1\) for each \(n \geq 1.\) 
+So \(P_n\) is a bounded sequence. It now follows from a Proposition that \(\sum_{n=1}^{\infty} \frac{\chi(n)}{n^s}\) converges uniformly on 
+compact subsets of \((0, \infty)\) and represents a continuous function of \(s\) in \((0, \infty).\) 
+Since the series \(\sum_{n=1}^{\infty} \frac{1}{n^s}\) converges for \(s > 1,\) we see that the series \(\sum_{n=1}^{\infty} \frac{\chi(n)}{n^s}\) 
+converges absolutely for \(s > 1.\).
+
+
+
+
+and use it to show that there are
+infinitely many prime ideals with inertia degree 1
+
+For a non-zero prime ideal \( \mathfrak{p} \) of \( \mathcal{O}_K \), let \( f_\mathbb{p} \) denote its absolute inertia degree,
+then \( \mathcal{N}(\mathfrak{p}) = p^{f_\mathbb{p}} \), where \( p \) is the rational prime lying below p. 
+
+First note that the converge of a product \( \prod_{i=1}^\infty a_i \) is defined such that
+the partial products \( \prod_{i=1}^N a_i \) are non-zero and converge. This holds iff.
+\( \sum_{i=1}^\infty \log(a_i) \) converges.
+
+By Euler’s product formula for s > 1
+\(\zeta_K(s) = \prod_{\mathfrak{p}} \left(1 - \frac{1}{N(\mathfrak{p})^s}\right)^{-1}.\)
+
+Taking log of both sides in the above equation, we obtain for \(s > 1\)
+\[
+\log \zeta_K(s) = \sum_{\mathfrak{p}} \sum_{m=1}^\infty \frac{1}{m N(\mathfrak{p})^{ms}}. \quad (9.18)
+\]
+
+The sum on the right-hand side of the above equation will be split into two parts. For \(s > 1\), define
+\(P(s) = \sum_{\mathfrak{p}_1} \frac{1}{N(\mathfrak{p}_1)^s},\)
+
+where \(\mathfrak{p}_1\) runs over all those prime ideals of \(\mathcal{O}_K\) whose absolute residual degree is 1 and denote the sum of the remaining terms of (9.18) by \(G(s)\). Therefore for \(s > 1\)
+
+\[
+G(s) = \sum_{\substack{\mathfrak{p} \\ f_{\mathfrak{p}} \geq 2}} \sum_{m=1}^\infty \frac{1}{m N(\mathfrak{p})^{ms}} + \sum_{\substack{\mathfrak{p} \\ f_{\mathfrak{p}} = 1}} \sum_{m=2}^\infty \frac{1}{m N(\mathfrak{p})^{ms}}.
+\]
+
+So (9.18) is rewritten as
+
+\(\log \zeta_K(s) = P(s) + G(s).\)
+Let \(\mathfrak{p}\) be a prime ideal of \(\mathcal{O}_K\) and \(p\) be the rational prime lying below it. If \(f_{\mathfrak{p}} \geq 2\), then
+
+\[
+\sum_{m=1}^\infty \frac{1}{m N(\mathfrak{p})^{ms}} \leq \sum_{m=1}^\infty \frac{1}{p^{2sm}} = \frac{1}{p^{2s} - 1} < \frac{2}{p^{2s}},
+\]
+
+and if \(f_{\mathfrak{p}} = 1\), then
+
+\[
+\sum_{m=2}^\infty \frac{1}{m N(\mathfrak{p})^{ms}} \leq \sum_{m=2}^\infty \frac{1}{p^{sm}} = \frac{1}{p^s (p^s - 1)} < \frac{2}{p^{2s}}.
+\]
+Consequently for \( s > 1 \), we have
+
+\( G(s) \leq \sum_{\mathfrak{p}|p} \sum_{p} \frac{2}{p^2} \)
+
+where \( p \) runs over all rational primes and \( \mathfrak{p} \) runs over prime ideals of \( \mathcal{O}_K \).
+
+In view of the fundamental equality proved in Chap. 4, for any rational prime \(p\) there exist at most \(n\) 
+prime ideals \(\mathfrak{p}\) of \(\mathcal{O}_K\) which lie over \(p\), where \(n\) is the degree of \(K/\mathbb{Q}\). 
+Thus for \(s > 1\)
+
+\[
+G(s) \leq 2n \sum_p \frac{1}{p^{2s}} \leq 2n \zeta(2s).
+\]
+
+By Proposition 9.5, \(\zeta(s)\) is a continuous function of \(s\) in the interval \((1, \infty)\). 
+Therefore, in view of the above inequality, \(G(s)\) is bounded when \(s \to 1^+\). 
+By Dirichlet’s Class number formula, we know that \(\lim_{s \to 1^+} (s - 1) \zeta_K(s) = hk \neq 0\), which implies
+
+\(\zeta_K(s) \to \infty\) as \(s \to 1^+\); consequently \(\log \zeta_K(s) \to \infty\) as \(s \to 1^+\). 
+But \(\log \zeta_K(s) = P(s) + G(s)\), and \(G(s)\) remains bounded as \(s \to 1^+\). 
+So \(P(s) \to \infty\) as \(s \to 1^+\) and hence there are infinitely many terms in the sum for \(P(s)\). 
+Therefore there are infinitely many prime ideals with absolute residual degree 1.
+
+\(\zeta_K(s) = G(s) \prod_p \prod_\chi \left(1 - \frac{\chi(p)}{p^s}\right)^{-1}\) for \(s > 1\), 
+and considering the
+
