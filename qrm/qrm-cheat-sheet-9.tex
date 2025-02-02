@@ -1,0 +1,83 @@
+Define qualitative robustness.
+
+Robustness depends on the metric that is used on the space of probability measures.
+Risk measures are not either robust or not robust, but more or less robust.
+There exists a tradeoff between tail sensitivity and robustness.
+
+Let \(\Omega = \mathbb{N}\), \(X_i(\omega) = \omega(i)\), and \(\mathcal{F} = \sigma(X_i : i \in \mathbb{N})\).
+For any Borel probability measure \(\mu\) on \(\mathbb{R}\) denote
+\[P_{\mu} := \mu^{\otimes \mathbb{N}}.\]
+\(\mathcal{A} \subseteq \mathcal{M}_1\), the probability measures on \(\mathbb{R}\), with metric \(d_A\)
+\(d_B\) metric on \(\mathcal{M}_1\)
+\(\mathcal{R}_{\rho}\) is robust on \(\mathcal{A}\) with respect to \(d_A\), \(d_B\), if
+\[\forall \mu \in \mathcal{A}, \epsilon > 0 \quad \exists \delta > 0, n_0 \in \mathbb{N} \quad \forall n \geq n_0: \nu \in \mathcal{A}, d_A(\mu, \nu) \leq \delta \Rightarrow d_B(P_{\mu} \circ \hat{P}_n^{-1}, P_{\nu} \circ \hat{P}_n^{-1}) \leq \epsilon\]
+where \(\hat{P}_n := \mathcal{R}_{\rho}(\frac{1}{n} \sum_{k=1}^n \delta_{X_k})\).
+
+How can the weak topology and the \( \varphi \)-weak topologies be metrized
+and what is \( \varphi \)-Robustness?
+
+A set \(\mathcal{A} \subset \mathcal{M}_1\) is called uniformly \(\psi\)-integrating, if
+\[\lim_{M \rightarrow \infty} \sup_{\nu \in \mathcal{A}} \int_{\{\psi \geq M\}} \psi d\nu = 0.\]
+
+The Prohorov \(\psi\)-metric is given by:
+\[d_{\psi}(\mu, \nu) = d_{Proh}(\mu, \nu) + \left| \int \psi d\mu - \int \psi d\nu \right|, \quad \mu, \nu \in \mathcal{M}_1,\]
+where the Prohorov metric is defined as
+\[d_{Proh}(\mu, \nu) = \inf \{ \epsilon > 0 : \mu(A) \leq \nu(A^{\epsilon}) + \epsilon \text{ for all } A \in \mathcal{B}(\mathbb{R}) \}\]
+with \(A^{\epsilon} = \{ x \in \mathbb{R} : \inf_{a \in A} |x-a| < \epsilon \}, \epsilon > 0\).
+
+While the weak topology which is induced by the Prohorov metric is insensitive to the tails, for unbounded \(\psi\) the \(\psi\)-weak 
+topology is finer and does not neglect deviations of measures in the tails.
+
+Definition (\(\psi\)-Robustness)
+
+A risk functional \(\mathcal{R}_{\rho}\) is called \(\psi\)-robust on \(\mathcal{M} \subset \mathcal{M}_1\), 
+if it is robust with respect to \(d_{\psi}\) and \(d_{Proh}\) on every uniformly \(\psi\)-integrating set \(\mathcal{A} \subset \mathcal{M}\).
+
+State equivalent characterizations of \( \varphi \)-robustness.
+
+Let \(\rho: L^{\infty} \rightarrow \mathbb{R}\) be a distribution-based risk measure and 
+\(\bar{\rho}: L^1 \rightarrow \mathbb{R} \cup \{+\infty\}\) its unique extension. 
+Suppose that \(\Psi\) is a finite Young function that satisfies the \(\Delta_2\)-condition, and set 
+\(\psi(x) = 1 + \Psi(|x|), x \in \mathbb{R}\).
+
+Then the following conditions are equivalent:
+
+a) \(\bar{\rho}\) is finite on the Orlicz heart \(H^{\Psi} := H^{\Psi}(\Omega, \mathcal{F}, P) = \{ X \in L^0 : E[\Psi(c|X|)] < \infty\) 
+    for all \(c > 0 \}\).
+b) The mapping \(\mathcal{R}_{\rho}: \mathcal{M}_{1,c} \rightarrow \mathbb{R}\) is continuous with respect to the \(\psi\)-weak topology.
+
+If any of the conditions above is satisfied, the mapping 
+\(\mathcal{R}_{\rho}: \mathcal{M}_{\psi}^1 = \mathcal{M}(H^{\Psi}) \rightarrow \mathbb{R}\) 
+is well defined and continuous with respect to the \(\psi\)-weak topology.
+
+Any of the conditions a) - b) is equivalent to the \(\psi\)-robustness of \(\mathcal{R}_{\rho}: \mathcal{M}_{1,c} \rightarrow \mathbb{R}\).
+
+If any of the equivalent conditions is satisfied, the mapping \(\mathcal{R}_{\rho}: \mathcal{M}(H^{\Psi}) \rightarrow \mathbb{R}\) is
+- well defined,
+- continuous with respect to the \(\psi\)-weak topology, and
+- \(\psi\)-robust.
+
+
+How is the index of qualitative robustness defined?
+
+The question goes on with, What is the largest possible
+index for convex distribution-based risk measures? Can you specify examples of
+risk measures that attain this smallest upper bound for convex risk measures?
+
+\(L^p\)-spaces are particularly important. 
+Letting \(\Psi_p(x) = |x|^p/p\) for \(0 < p < \infty\), \(x \in \mathbb{R}\), the \(\Delta_2\)-condition is always satisfied. 
+This is a Young function if \(p \geq 1\). This is required for an application of Theorem 4.3.8.
+
+Definition (Index of Qualitative Robustness)
+
+Assume that \(\rho: L^{\infty} \rightarrow \mathbb{R}\) is a distribution-based risk measure. 
+The associated index of qualitative robustness is given by
+\[iqr(\rho) = \frac{1}{\inf \{ p \in (0, \infty) : \mathcal{R}_{\rho} \text{ is } \psi_p\text{-robust on } \mathcal{M}_{1,c} \}} \in [0, \infty]\]
+
+Convex risk measures always have an index of qualitative robustness that is at most 1. 
+In view of Theorem 4.3.8 & Theorem 4.3.9, the index of qualitative robustness can then be written as
+\[iqr(\rho) = \frac{1}{\inf \{ p \in [1, \infty) : \bar{\rho} \text{ is finite on } L^p \}} \in [0, 1]\].
+
+Average Value at Risk at level \( α ∈ (0, 1) \), AV@Rα , is a special case of a distortion risk measure \( \rho_g \) with
+\( g(t) = (\frac{t}{\alpha} \wedge 1 \)
+Since the right hand side derivative of \( g \) is bounded, one obtains that \( \text{iqr}(\text{AV@R}_{\alpha} = 1\).

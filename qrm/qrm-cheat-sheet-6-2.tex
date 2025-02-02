@@ -1,0 +1,56 @@
+What are factor models? Provide examples.
+
+The value \(V_t\) of a financial position at time \(t\) is explained by the values \(Z_t^1, Z_t^2, \dots, Z_t^m\) of \(m\) 
+risk factors at time \(t\):
+\[V_t = v(Z_t^1, Z_t^2, \dots, Z_t^m)\]
+
+for a deterministic function \(v = v(z^1, \dots, z^m)\).
+Factor models are a common approach in practice:
+- They are often a consequence of pricing formulas in market models.
+- Or, they are approximations of market values in multivariate regression models.
+They can be used for simplified calculations based on the distributions of risk factors.
+
+Value of a call option in the Black-Scholes model:
+- Option with maturity \(T\) and strike \(K\)
+- Stock with price process \((S_t)_{t \geq 0}\)
+\[C_t = v(S_t, T-t) \quad \text{with} \quad v(x,\tau) = x\Phi(d_+(x,\tau)) - e^{-r\tau} K \Phi(d_-(x,\tau))\]
+
+Value of a fixed-rate coupon bond:
+- Coupon payments \(c_1, \dots, c_m\) at dates \(T_1, \dots, T_m\), \(N\) face value
+- \(P(t,T_i)\) price of a zero bond with face value 1 and maturity \(T_i\) at time \(t\)
+\[V_t = v(P(t,T_1), \dots, P(t,T_m)) \quad \text{for} \quad v(z^1, \dots, z^m) = N \cdot z^m + \sum_{i: T_i \geq t} c_i \cdot z^i \]
+
+
+Explain the Delta-normal approximation. How do you obtain the V@R and AV@R?
+
+Our goal is to measure \( \DeltaV := V_{t+h} - V_t = v(Z^1_{t+h}, \dots, Z^m_{t+h}) - v(Z^1_{t}, \dots, Z^m_{t}) \)
+the joint distribution of risk factors is known then one analytical method can be:
+
+Delta approximation — 1. order Taylor approximation:
+Set \(z^i = z^i(t)\) and \(\Delta z^i = z^i(t+h) - z^i(t)\) for \(t \geq 0\) and \(h > 0\).
+If the function \(v\) is differentiable, then a Taylor approximation yields
+\[\Delta v := v(z^1 + \Delta z^1, z^2 + \Delta z^2) - v(z^1, z^2) \approx \frac{\partial v(z^1, z^2)}{\partial z^1} \Delta z^1 + \frac{\partial v(z^1, z^2)}{\partial z^2} \Delta z^2.\]
+
+Since the Taylor approximation is a local approximation, a good approximation quality can only be expected for 'small' changes \(\Delta z^i\).
+
+For the random variables \(\Delta Z^1, \Delta Z^2\) we obtain with \(d_i = \frac{\partial v}{\partial z^i}\)
+\[\Delta V \approx d_1 \Delta Z^1 + d_2 \Delta Z^2.\]
+
+Assumption: \((\Delta Z^1, \Delta Z^2)^T \sim N_2(h\mu, h\Sigma)\)
+
+Conclusions:
+- \(E[\Delta Z^i] = h\mu_i\), \(Var[\Delta Z^i] = h\sigma_i^2\), \(i = 1, 2\), \(Cov[\Delta Z^1, \Delta Z^2] = h\sigma_{1,2}\)
+- \(\Delta V\) is approximately normally distributed:
+\[E[\Delta V] \approx h(d_1\mu_1 + d_2\mu_2), \quad Var[\Delta V] \approx h(d_1^2\sigma_1^2 + d_2^2\sigma_2^2 + 2d_1d_2\sigma_{1,2}).\]
+- Value at Risk of the profit and loss \(\Delta V\):
+\[V@R_{\lambda}(\Delta V) = E[-\Delta V] - \Phi^{-1}(\lambda) \sqrt{Var(\Delta V)}\]
+Here \(\Phi\) denotes the cumulative distribution function of the standard normal distribution.
+- Similar formula for Average Value at Risk:
+\[AV@R_{\lambda}(\Delta V) = E[-\Delta V] + \frac{1}{\lambda} \varphi(\Phi^{-1}(\lambda)) \sqrt{Var(\Delta V)}\]
+Here \(\varphi\) denotes the density of the standard normal distribution.
+
+This method is called Delta-Normal approximation.
+
+Explain that distribution-based risk measures define both functionals on measur-
+able functions (or elements of the equivalence classes in \( L^0 \) ) and on probability
+measures.

@@ -1,0 +1,169 @@
+Describe the equivalence between solvency tests and acceptability of future own
+funds.
+
+Let \( A_t \) denote the assets  and \( L_t \) the liabilities of an insurance company such as they're presented on a balance sheet.
+Then the own founds/net asset values are \( E_t = A_t - L_t \).
+The quantities at time \(t=0\) are known, the quantities at time \(t=1\) are random variables on a given probability space 
+\((\Omega, \mathcal{F}, \mathbb{P})\).
+The increment of the net asset value is \(\Delta E_1 := E_1 - E_0\).
+
+Solvency test
+For a given regulatory monetary risk measure \(\rho\), the company is solvent if
+\[\rho(\Delta E_1) \leq E_0 \Leftrightarrow \rho(E_1) \leq 0 \Leftrightarrow E_1 \in A_{\rho}\]
+
+Characterize in more detail the specific solvency tests based on V@R and AV@R
+and their relationship to the probability of solvency.
+
+Standard examples are the monetary risk measures Value at Risk (V@R) and Average Value at Risk (AV@R) at some level \(\alpha \in (0,1)\):
+\[V@R_{\alpha}(X) := \inf \{ x \in \mathbb{R} : P(X+x<0) \leq \alpha \}\]
+\[AV@R_{\alpha}(X) := \frac{1}{\alpha} \int_0^{\alpha} V@R_{\beta}(X) d\beta\]
+
+Regulatory standards
+- Solvency II \quad V@R at level \(\alpha = 0.5\%\)
+- Swiss solvency test \quad AV@R at level \(\alpha = 1\%\)
+- Basel III \quad AV@R with level \(\alpha = 2.5\%\)
+
+Value at Risk and Average Value at Risk
+- \(V@R_{\alpha}(\Delta E_1) \leq E_0 \quad \Leftrightarrow \quad P(A_1 \geq L_1) \geq 1-\alpha\)
+- \(AV@R_{\alpha}(\Delta E_1) \leq E_0 \quad \Leftrightarrow \quad P(A_1 \geq L_1) \geq 1-\alpha\)
+
+
+Let \( λ ∈ [0, 1] \) be a recovery fraction, what inclusions hold for the events \( \{A_1 \leq \lambda L_1\}\)
+for different \( \lambda \)'s. Formalize the largest lower bound of the probability of these set
+under solvency constraints with respect to V@R and AV@R, respectively.
+
+We denote by \(\mathcal{X}\) a set of positive random variables on some nonatomic probability space \((\Omega, \mathcal{F}, P)\). 
+We assume that \(\mathcal{X}\) contains all positive discrete random variables and fix \(\alpha \in (0,1)\).
+For all \(\lambda \in (0,1)\) we have
+
+\[1 - \alpha = \inf \{ P(A \geq \lambda L) : A, L \in \mathcal{X}, AV@R_{\alpha}(A-L) \leq 0 \}\]
+\[= \inf \{ P(A \geq \lambda L) : A, L \in \mathcal{X}, V@R_{\alpha}(A-L) \leq 0 \}.\]
+
+
+How can this regulatory problem be resolved? Argue in detail.
+
+NOT FOUND
+
+Illustrate the role of guard rails in a simple toy model of the behavior of equity
+holders.
+
+Probability space \(\Omega = \{g, b\}\) with \(P(b) = \frac{a}{2}\) with \(a \approx 0\), say \(a = 0.5\%\) or \(a = 1\%\).
+Liabilities
+\[L_1(\omega) = \begin{cases} 1 \quad \text{if } \omega = g, \\ 100 \quad \text{if } \omega = b. \end{cases} \]
+The company can manage its assets by engaging in a stylized financial contract with zero initial cost transferring dollars from the good state to the bad state.
+More specifically, we assume that the company can choose one of the following asset profiles at time 1:
+\[A_1^k(\omega) = \begin{cases} 101-k \quad \text{if } \omega = g, \\ k \quad \text{if } \omega = b, \end{cases} \quad \text{with } k \in [0, 100]. \]
+Hedging its liabilities completely would require the company to choose \(k = 100\).
+
+For any \(k \in [0, 100]\), the company's net asset value is given by
+\[E_1^k(\omega) = \begin{cases} 100-k \quad \text{if } \omega = g, \\ k-100 \quad \text{if } \omega = b. \end{cases} \]
+
+Due to limited liability, the corresponding shareholder value is
+\[\max\{E_1^k(\omega), 0\} = \begin{cases} 100-k \quad \text{if } \omega = g, \\ 0 \quad \text{if } \omega = b. \end{cases} \]
+
+Hence, the choice \(k=0\) is optimal from the perspective of shareholders — corresponding to no recovery in the bad state.
+
+The company is solvent independent of \(k\):
+\[V@R_{\alpha}(E_1^k) = k-100 \leq 0, \quad AV@R_{\alpha}(E_1^k) = \frac{1}{\alpha} \left( \frac{\alpha}{2}(100-k) + \frac{\alpha}{2}(k-100) \right) = 0.\]
+
+What are general recovery risk measures? What is RecV@R/RecAV@R?
+
+The Recovery Value at Risk with increasing level function \(\gamma: [0,1] \rightarrow [0,1)\) is defined by
+
+\[RecV@R_{\gamma}(X, Y) = \sup_{\lambda \in [0,1]} V@R_{\gamma(\lambda)}(X + (1-\lambda)Y).\]
+
+In applications, \(X\) plays the role of the net asset value \(E_1\) or the increment of the net asset value \(\Delta E_1\), and \(Y\) 
+refers to liabilities \(L_1\).
+
+For every \(\lambda \in [0,1]\) consider a map \(\rho_{\lambda}: \mathcal{X} \rightarrow \mathbb{R} \cup \{\infty\}\) and assume that 
+\(\rho_{\lambda_1} \geq \rho_{\lambda_2}\) whenever \(\lambda_1 \leq \lambda_2\). 
+The recovery risk measure \(Rec\rho: \mathcal{X} \times \mathcal{X} \rightarrow \mathbb{R} \cup \{\infty\}\) is defined by 
+\(Rec\rho(X, Y) := \sup_{\lambda \in [0,1]} \rho_{\lambda}(X + (1-\lambda)Y)\).
+
+Another example of a general recovery risk measure is recovery average value at risk that dominates \(RecV@R\) and which is 
+cash invariant in its first component, monotone, convex, subadditive, positively homogeneous, star shaped in its first component, 
+and normalized.
+
+The Recovery Average Value at Risk \(RecAV@R_{\gamma}: L^1 \times L^1 \rightarrow \mathbb{R} \cup \{\infty\}\) with increasing level function \(\gamma: [0,1] \rightarrow [0,1)\) is defined by
+\[RecAV@R_{\gamma}(X, Y) := \sup_{\lambda \in [0,1]} AV@R_{\gamma(\lambda)}(X + (1-\lambda)Y).\]
+
+
+Formulate the Markowitz problem with RecAV@R. How can this be reduced to
+an LP which can be solved by standard algorithms like the simplex algorithm
+
+Risk measures are an important instrument to limit downside risk in portfolio optimization problems.
+- This idea is related to the classical Markowitz problem (1952) in which standard deviation quantifies the risk. Efficient frontiers characterize 
+  the best tradeoffs between return and risk.
+- Standard deviation is not a sensible risk measure outside elliptical distributions. In realistic applications, 
+  it must be replaced by better downside risk measures.
+
+Recovery risk measures may successfully be applied to portfolio optimization in practice.
+For \(RecAV@R\) with suitable recovery functions the characterization of the efficient frontier may, on the basis of a suitable minimax theorem, 
+be reduced to the minimization of a linear function on a convex polyhedron.
+
+The Markowitz problem is then:
+For a given level function \(\gamma: [0,1] \rightarrow [0,1]\) and for given \(a \in \mathbb{R}\), we consider the following problem
+\[\min_{\mathbf{x} \in \Delta^K} RecAV@R_{\gamma}(E_1(\mathbf{x}), L_1)\]
+\[\text{s.t. } E(A_1(\mathbf{x})) \geq a.\]
+
+State how the Markowitz problem can be reduced to
+an LP which can be solved by standard algorithms like the simplex algorithm
+
+
+
+The net asset value of the company equals
+
+\[E_1(\mathbf{x}) := A_1(\mathbf{x}) - L_1 = b \left( 1 + \sum_{k=1}^K X^k R^k - Z \right).\]
+where \( x^k > 0\) is the fraction of total budget \( b > 0 \) invested into product \( k \).
+We define
+\[\Delta^K := \left\{ \mathbf{x} \in \mathbb{R}_+^K; \sum_{k=1}^K x^k = 1 \right\}\] 
+\[\Delta^K(\mu) := \left\{ \mathbf{x} \in \Delta^K; \sum_{k=1}^K x^k E(R^k) \geq \mu \right\}.\]
+
+The Markowitz problem then requires us to compute and optimize
+\[RecAV@R_{\gamma} \left( b \cdot \left[ 1 + \sum_{k=1}^K x^k R^k - Z \right], bZ \right) = -b + b \cdot RecAV@R_{\gamma} \left( \sum_{k=1}^K x^k R^k - Z, Z \right).\]
+We focus on the special case of piecewise-constant recovery function. In this case, \(RecAV@R\) is a maximum of finitely many terms:
+\[RecAV@R_{\gamma} \left( \sum_{k=1}^K x^k R^k - Z, Z \right) = \max_{i=1, \dots, n+1} AV@R_{\alpha_i} \left( \sum_{k=1}^K x^k R^k - r_i Z \right).\]
+
+- For convenience, for \(i = 1, \dots, n+1\) we define auxiliary functions for the OCE representation of \(AV@R\):
+\[\Psi^i(\mathbf{x}, v) = \frac{1}{\alpha_i} \cdot E \left[ \left( v - \sum_{k=1}^K x^k R^k - r_i Z \right)^+ \right] - v.\]
+Minimizing over \(v \in \mathbb{R}\) gives \(AV@R_{\alpha_i} \left( \sum_{k=1}^K x^k R^k - r_i Z \right)\).
+- This allows us to write
+\[RecAV@R_{\gamma} \left( \sum_{k=1}^K x^k R^k - Z, Z \right) = \max_{i=1, \dots, n+1} \min_{v \in \mathbb{R}} \Psi^i(\mathbf{x}, v).\]
+- The original problem can thus be rewritten:
+\[\min_{\mathbf{x} \in \Delta^K(\mu)} \max_{i=1, \dots, n+1} \min_{v \in \mathbb{R}} \Psi^i(\mathbf{x}, v).\]
+
+The efficient frontier (balancing downside risks with returns) can then be found via the following theorem:
+
+For every \(\mathbf{x} \in \Delta^K\) the following minimax equality holds:
+\[\max_{i=1, \dots, n+1} \min_{v \in \mathbb{R}} \Psi^i(\mathbf{x}, v) = \min_{v \in \mathbb{R}^{n+1}} \max_{i=1, \dots, n+1} \Psi^i(\mathbf{x}, v^i).\]
+
+In particular, problem (3) can be equivalently written as
+\[\min_{\mathbf{x} \in \Delta^K(\mu)} \min_{v \in \mathbb{R}^{n+1}} \max_{i=1, \dots, n+1} \Psi^i(\mathbf{x}, v^i).\]
+
+The problem of determining the portfolios with miminal risk for a fixed expected target return \(\mu \in \mathbb{R}\) can be equivalently expressed as
+\[\min_{(\mathbf{x}, v, T) \in \Delta^K(\mu) \times \mathbb{R}_+^{n+1} \times \mathbb{R}} \{ T; \Psi^i(\mathbf{x}, v^i) \leq T, i = 1, \dots, n+1 \}.\]
+This can be solved via Linear Programming (LP).
+
+
+Describe types of Knightian uncertainty that could additionally be modeled and
+for which solutions can still be obtained.
+
+In the presence of Knightian uncertainty, we assume that the statistical probability measure is not known. Instead we take a worst-case approach with uncertainty set \(\mathcal{M} \subset \mathcal{P}\).
+
+Definition 4.4.1
+
+Let \(\gamma: [0,1] \rightarrow [0,1]\) be an increasing function and \(\mathcal{M} \subset \mathcal{P}\). 
+The corresponding Worst-Case Recovery Average Value at Risk is defined by
+\[RecAV@R_{\gamma}^{\mathcal{M}}(X, Y) := \sup_{P \in \mathcal{M}} RecAV@R_{\gamma}^P(X, Y).\]
+
+Robust problem
+
+We are interested in the following robust problem:
+\[\min_{\mathbf{x} \in \Delta^K} RecAV@R_{\gamma}^{\mathcal{M}}(E_1(\mathbf{x}), L_1)\]
+\[\text{s.t. } \inf_{P \in \mathcal{M}} E_P(A_1(\mathbf{x})) \geq a.\]
+
+This in turn can be used to solve for Mixture Uncertainty or Box Uncertainty via a combination of Monte-Carlo and LP methods.
+Mixture uncertainty can be succinctly stated as 
+\(\mathcal{M}_{\text{mix}} = \{ \sum_{j=1}^m \lambda_j \mathbb{P}_j : \mathbf{\lambda} \in \Delta^m \}\).
+
+

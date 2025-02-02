@@ -1,0 +1,97 @@
+What is risk sharing among entities? How is the total SCR computed for a single
+aggregate entity in comparison to several individually regulated entities?
+
+Financial firm is not consolidated, but forms a corporate network:
+
+- Subentities \(i=1,2, \dots, n\),
+- Individually regulated according to risk measures \(\rho^i\)
+
+The total balance sheet can be split among the sub-entities using legally binding transfer agreements:
+\[(E_t^i)_{i=1,2, \dots, n} \text{ with } E_t = \sum_{i=1}^n E_t^i, \quad t=0,1\]
+
+This implies that the aggregate SCR of the network becomes
+\[\sum_{i=1}^n SCR^i = E_0 + \sum_{i=1}^n \rho^i(E^i).\]
+
+- The corporate network can design optimal transfer agreements in order to minimize the SCR, 
+  leading to the following \textbf{optimal risk sharing problem}:
+\[\Box_{i=1}^n \rho^i (E) := \inf \left\{ \sum_{i=1}^n \rho^i(E^i) : \sum_{i=1}^n E^i = E, E^1, E^2, \dots, E^n \in \mathcal{X} \right\}\]
+- If \(\rho^i = \rho \quad \forall i\) is coherent, then \(\rho(E) \leq \sum_{i=1}^n \rho^i(E^i)\) and it is optimal to allocate the 
+  total net asset value to one entity, e.g. the holding company.
+- For non-coherent risk measures, the inequality may be reversed: 
+  Decentralized risk measurement and appropriate transfer agreements between multiple entities might sweep the downside risk under the carpet.
+
+What problems arise in the context of V@R-based risk
+measures for sharing risk among companies?
+
+Definition
+A distribution-based risk measure \(\rho: L^{\infty} \rightarrow \mathbb{R}\) is a V@R-type risk measure with parameter \(\alpha > 0\), if
+\[\rho(X) = E \left[ X \cdot \mathbf{1}_{\{-V@R_{\alpha}(X) \leq X\}} - V@R_{\alpha}(X) \cdot \mathbf{1}_{\{-V@R_{\alpha}(X) > X\}} \right] \quad (X \in L^{\infty}).\]
+
+Theorem
+Let \(E \in L^{\infty}, \rho^1, \rho^2, \dots, \rho^n\) be normalized V@R-type risk measures with parameters \(\alpha_1, \alpha_2, \dots, \alpha_n\), and assume that the allocation \((E^i)_{i=1,2,\dots,n}\) is constructed as before. If \(d = \sum_{i=1}^n \alpha_i \geq 1\), then
+\[\Box_{i=1}^n \rho^i(E) \leq \sum_{i=1}^n \rho^i(E^i) = -\text{ess sup } E.\]
+
+Worst case scenario is when one of the \( \rho^i \) is also strongly surplus sensitive at level \( α > 0 \)
+because then 
+\[\Box_{i=1}^n \rho^i(E) = - \infty.\]
+
+
+Explain the model of Eisenberg \& Noe (2001), enhanced by a society node. How
+are the own funds of the nodes computed? How can society’s wealth be evaluated
+as a function of joint addition of capital to all entities?
+
+
+Financial institutions \( N = \{ 1, 2, \ldots, n \} \)
+Society is additional node \( 0 \)
+Nominal liability matrix: \( (\bar{p}_{ij})_{i,j=0,1,2,\ldots,n} \)
+\(
+\bar{p}_i = \sum_{j=0}^{n} \bar{p}_{ij}
+\)
+
+Relative liabilities:
+\[
+a_{ij} = 
+\begin{cases} 
+\frac{\bar{p}_{ij}}{\bar{p}_i}, & \bar{p}_i > 0, \\ 
+0, & \bar{p}_i = 0.
+\end{cases}
+\]
+
+Fixed point / equilibrium:
+Liability payments
+=
+minimum of promised payments and
+available resources
+
+INCLUDE IMAGE FROM 472
+
+Call the promised payments of entity \( i \), \( \bar{p}_i \), and \( p_j(x) \) the amount of capital \( i \) received by \( j \)
+then \( a_{ji} \) is the fractional amount of wealth that should be paid in case that not all promises are kept.
+Additionally \( x_i \) represents the initial capital of \( i \).
+\(p_i(x) = \bar{p}_i \wedge \left( \sum_{j=0}^n p_j(x) a_{ji} + x_i \right), \quad i = 1, 2, \ldots, n \)
+\( p_0(x) = \bar{p}_0 \)
+
+Denote the own founds of \( i \) by \( e_i \) then
+\( e_i(x) = \sum_{j \neq i} p_j(x) a_{ji} + x_i - \bar{p}_i, \quad i = 0, 1, 2, \ldots, n \)
+
+Let \( X \in L^0(\mathbb{R}^n) \) be the random endowment of the financial institutions at time \( t = 1 \) before market clearing.
+If we focus on the wealth of the society, then the relevant stochastic outcome is provided by the random field
+\( Y_k := e_0(X + k), \quad k \in \mathbb{R}^n. \)
+
+What is a set-valued systemic risk measure? State elementary properties. How are
+cash-invariant allocation rules related to regulatory prices of capital for different
+entities?
+
+Systemic risk is measured by the set of allocations of additional capital that lead to acceptable outcomes.
+
+Letting \(\mathcal{P}(\mathbb{R}^n; \mathbb{R}_+) := \{ B \subseteq \mathbb{R}^n \mid B = B + \mathbb{R}^n_+ \}\) 
+be the collection of upper sets with ordering cone \(\mathbb{R}_+\), we call the function 
+
+\(R: \mathcal{Y} \times \mathbb{R}^n \to \mathcal{P}(\mathbb{R}^n; \mathbb{R}_+^n)\)
+a systemic risk measure, if for some acceptance set \(\mathcal{A} \subseteq \mathcal{X}\) of a scalar monetary risk measure:
+
+\[ R(Y; k) = \{ m \in \mathbb{R}^n \mid Y_{k+m} \in \mathcal{A} \}. \]
+
+Elementary Properties:
+1. Cash-invariance:  \( R(Y; k) + m = R(Y; k - m) \)
+2. Monotonicity:  \( Y \geq Z \implies (\forall k \in \mathbb{R}^n: R(Y; k) \supseteq R(Z; k)) \)

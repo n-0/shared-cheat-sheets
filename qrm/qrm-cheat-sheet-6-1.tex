@@ -1,0 +1,166 @@
+What is a robust representation of a risk measure?
+
+Let us denote by \( \mathcal{M}_1 := \mathcal{M}_1(\Omega, \mathcal{F}) \) the set of all probability measures on \( (\Omega, \mathcal{F}) \).
+
+Definition.
+We say that a convex risk measure \( \rho \) has a robust representation if
+
+\[
+\rho(X) = \sup_{Q \in \mathcal{M}_1} \{ \mathbb{E}_Q[-X] - \alpha(Q) \} = \sup_{Q \in \mathcal{Q}_\rho} \{ \mathbb{E}_Q[-X] - \alpha(Q) \}
+\]
+with some penalty function \( \alpha : \mathcal{M}_1 \to \mathbb{R} \cup \{ \infty \} \). Here, the family
+
+\[
+\mathcal{Q}_\rho := \{ Q \in \mathcal{M}_1 \mid \alpha(Q) < \infty \}
+\]
+
+collects the measures \( Q \in \mathcal{M}_1 \) with finite penalty; in particular, for \(  Q \in \mathcal{Q}_\rho \), one requires that \( \mathbb{E}_Q[-X] \) 
+is well-defined for all \( X \in \mathcal{X}. \) 
+
+The measures in \(\mathcal{Q}_\rho\) can be interpreted as plausible probabilistic models that are taken more or less seriously as specified by the penalty function \(\alpha\).
+The capital requirement \(\rho(X)\) is computed as the worst case of the penalized expected loss \(\mathbb{E}_Q[-X]\), taken over all models \(Q \in \mathcal{Q}_\rho\).
+
+
+State the robust representation theorem for convex monetary risk measures for \( L^\infty \)
+and \( L^p \). Discuss an economic interpretation in terms of Knightian uncertainty and
+penalized losses.
+
+Robust Representation of Risk Measures on \( L^\infty(\Omega, \mathcal{F}, \mathbb{P}) \)
+
+Let \(\rho\) be a convex risk measure on \(\mathcal{X} = L^\infty(\Omega, \mathcal{F}, \mathbb{P})\). In this case, \(\rho\) admits a robust representation
+\[
+\rho(X) = \sup_{Q \in \mathcal{M}_1(\mathbb{P})} \left\{ \mathbb{E}_Q[-X] - \alpha(Q) \right\}
+\]
+with penalty function \(\alpha(Q) = \sup_{X \in A} \mathbb{E}_Q[-X]\), \(Q \in \mathcal{M}_1(\mathbb{P})\), if and only if one of the equivalent conditions holds:
+
+ \(\rho\) is continuous from above, i.e., \(\rho(X_n) \searrow \rho(X)\) whenever \(X_n \searrow X\) \(\mathbb{P}\)-a.s.
+ \(\rho\) has the Fatou property:
+\[
+\rho(X) \leq \liminf_{n \to \infty} \rho(X_n)
+\]
+for any bounded sequence \((X_n)_{n \in \mathbb{N}}\) in \(L^\infty(\Omega, \mathcal{F}, \mathbb{P})\) which converges \(\mathbb{P}\)-a.s. to \(X\).
+
+(Robust Representation of Risk Measures on \( L^p(\Omega, \mathcal{F}, \mathbb{P}) \)
+
+A convex risk measure \(\rho : L^p(\Omega, \mathcal{F}, \mathbb{P}) \to \mathbb{R}\), \(1 \leq p < \infty\), admits a robust representation 
+\[
+\rho(X) = \max_{Q \in \mathcal{M}_1^q(\mathbb{P})} \{\mathbb{E}_Q[-X] - \alpha(Q)\}, \quad X \in L^p(\Omega, \mathcal{F}, \mathbb{P})
+\]
+with penalty function \(\alpha(Q) = \sup_{X \in A} \mathbb{E}_Q[-X]\), \(Q \in \mathcal{M}_1^q(\mathbb{P})\), with
+- dual exponent \(q := p/(p-1) \in (1, \infty]\),
+- probability measures \(\mathcal{M}_1^q := \left\{ Q \in \mathcal{M}_1(\mathbb{P}) \bigg| \frac{dQ}{d\mathbb{P}} \in L^q(\Omega, \mathcal{F}, \mathbb{P}) \right\}\).
+
+What are the following objects: Young function, Luxemburg norm, Orlicz space, Orlicz heart?
+
+The question goes on with:
+How are the latter two space related to each other? State the \( \Delta_2 \) -
+condition and explain its significance. What is the connection to \( L^p \) -spaces? Can
+you state a robust representation theorem for monetary risk measures defined on
+Orlicz hearts?
+
+A Young function \(\Psi: [0, \infty) \to [0, \infty)\)
+is left-continuous, non-decreasing convex such that \(\lim_{x \to 0} \Psi(x) = 0\), \(\lim_{x \to \infty} \Psi(x) = \infty\).
+
+The Orlicz space
+\(
+L^\Psi := L^\Psi(\Omega, \mathcal{F}, \mathbb{P}) = \{X \in L^0 : \mathbb{E}[\Psi(c|X|)] < \infty \text{ for some } c > 0 \}
+\)
+is a Banach space if endowed with the Luxemburg norm
+\(
+\|X\|_\Psi := \inf\{a > 0 : \mathbb{E}[\Psi(|X|/a)] \leq 1\}.
+\)
+
+The Orlicz heart
+\(H^\Psi := H^\Psi(\Omega, \mathcal{F}, \mathbb{P}) = \{X \in L^0 : \mathbb{E}[\Psi(c|X|)] < \infty \text{ for all } c > 0\}\)
+is a linear subspace of \(L^\Psi\) that equals the trivial space \(\{0\}\), if \(\Psi\) attains the value \(\infty\). 
+We will, thus, assume from now on that \(\Psi\) is a real-valued function. In this case, \(\Psi\) is continuous,
+\(
+L^\infty \subseteq H^\Psi \subseteq L^\Psi \subseteq L^1,
+\)
+and the Orlicz heart \(H^\Psi\) is the closure of \(L^\infty\) in \(L^\Psi\) with respect to the Luxemburg norm \(\|\cdot \|_\Psi\), thus also a Banach space.
+
+The equality \(H^\Psi = L^\Psi\) holds, if and only if the \(\Delta_2\)-condition holds:
+\(
+\exists C, x_0 > 0 \, \forall x \geq x_0 : \Psi(2x) \leq C \Psi(x).
+\)
+
+An important special case in which the \(\Delta_2\)-condition is satisfied corresponds to Young functions \(\Psi(x) = x^p/p\) for \(p \in [1, \infty)\), 
+leading to the classical situation of \(L^p\)-spaces, i.e.,
+\(
+L^p = H^\Psi = L^\Psi.
+\)
+In contrast, if we consider the exponential Young function \(\Psi(x) = e^x - 1\) which does not satisfy the \(\Delta_2\)-condition, 
+the Orlicz heart and Orlicz space are not identical.
+
+Suppose that a convex risk measure \(\rho : H^\Psi \to \mathbb{R}\) is defined on the Orlicz heart \(H^\Psi\), then it admits a robust representation
+\(
+\rho(X) = \max_{Q \in \mathcal{M}^{\Psi^\ast}(\mathbb{P})}\{\mathbb{E}_{\mathbb{Q}}[-X] - \alpha(\mathbb{Q})\}
+\)
+where \( X \in H^\Psi \)
+in terms of the set
+\(\mathcal{M}^{\Psi^\ast}(\mathbb{P}) := \{ \mathbb{Q} \in \mathcal{M}_1(\mathbb{P})| \frac{d\mathbb{Q}}{d\mathbb{P}} \in L^{\Psi^\ast}(\mathbb{P}) \}\)
+where the conjugate of \( \Psi \)
+\( \Psi^\ast(y) := \sup_{x \geq 0} \{ xy - \Psi(x) \},\ y\geq 0\)
+is again a Young function.
+
+
+Distribution-based convex risk measures possess a unique extension to \( L^1 \). Explain
+this in detail. How is the finiteness of the risk measure on subspaces related to
+continuity properties?
+
+Distribution-Based Risk Measure
+A monetary risk measure \(\rho\) on \(\mathcal{X}\) is called distribution-based (or law-invariant), if \( \rho(X) \) depends only on the distribution of \( X \) under \(\mathbb{P}\), i. e., \(\rho(X)=\rho(Y)\), whenever \( X \) and \( Y \) have the same distribution under \(\mathbb{P}\).
+
+Theorem.
+Let \(\rho:L^{\infty}\rightarrow\mathbb{R}\) a distribution-based convex risk measure. 
+- Then there exists a unique extension 
+\[\bar{\rho}:L^{1}\rightarrow\mathbb{R}\cup\{+\infty\}\]
+   of \(\rho\) that is convex, monotone, cash-additive, and lower semicontinuous with respect to the \(L^{1}\)-norm.
+- If \(\bar{\rho}\) is finite on some Orlicz heart \(H^{\omega}\) with finite Young function \(\Psi\), then it is continuous on \(H^{\omega}\) with respect to the corresponding Luxemburg norm.
+
+Risk measures can thus uniquely be defined on either \(L^{\infty}\) or \(L^{1}\). Their continuity properties are related to their finiteness.
+
+
+Compute the value at risk of a lognormal loss.
+
+
+\(Y \sim N(\mu, \sigma^2)\)
+Financial position \(X = \exp(Y)\), whose losses \(L = -X\) have a lognormal distribution
+Note that both \(X\) and \(Y\) have continuous distributions.
+
+Derivation via quantile transformation:
+\[V@R_{\lambda}(X) = -q_X(\lambda) = \exp(q_Y(1-\lambda)) = \exp(V@R_{\lambda}(-Y)) = \exp(\mu + \Phi^{-1}(1-\lambda)\sigma)\]
+
+Alternative derivation:
+The Value at Risk of \(X\) at level \(\lambda\) is determined by:
+\[\lambda = P[X + V@R_{\lambda}(X) < 0] = P[-\exp(Y) < -V@R_{\lambda}(X)] = P[Y > \ln(V@R_{\lambda}(X))] = 1 - \Phi\left(\frac{\ln(V@R_{\lambda}(X)) - \mu}{\sigma}\right).\]
+This implies:
+\[\Phi^{-1}(1-\lambda) = \frac{\ln(V@R_{\lambda}(X)) - \mu}{\sigma} \Leftrightarrow V@R_{\lambda}(X) = \exp(\mu + \Phi^{-1}(1-\lambda)\sigma)\]
+
+What is the statement of Kusuoka’s theorem?
+
+Let \(M_1((0,1])\) denote the set of all probability measures on \(((0, 1], \mathcal{B}((0, 1]))\), 
+where \(\mathcal{B}((0, 1])\) is the Borel-\(\sigma\)-algebra on the interval \((0, 1]\).
+
+Robust Representation of Distribution-Based Risk Measures:
+Suppose that \(L^2(\Omega, \mathcal{F}, P)\) is separable. In this case, a convex risk measure \(\rho: L^{\infty}(\Omega, \mathcal{F}, P) \rightarrow \mathbb{R}\) with acceptance set 
+\(A_{\rho}\), is distribution-based if and only if
+\[\rho(X) = \sup_{\mu \in M_1((0,1])} \left( \int_{(0,1]} AV@R_{\lambda}(X) \mu(d\lambda) - \beta_{\min}(\mu) \right)\]
+with penalty function \(\beta_{\min}(\mu) = \sup_{X \in A_{\rho}} \int_{(0,1]} AV@R_{\lambda}(X) \mu(d\lambda)\).
+
+
+Derive a formula for the AV@R of normal random variables. How does this compare
+to V@R?
+
+AV@R and variance: If \(X\) is normally distributed, then
+\[AV@R_{\lambda}(X) = E_P[-X] + \frac{1}{\lambda} \varphi(\Phi^{-1}(\lambda)) \sigma_P(X),\]
+where \(\varphi\) denotes the density of the standard normal distribution.
+
+Derivation:
+Use that \(V@R_{\lambda}(X) = E_P[X] - \Phi^{-1}(\lambda) \sigma_P(X)\) combined with the substitution \(x = \Phi^{-1}(\alpha)\) and \(\varphi'(x) = -x\varphi(x)\):
+
+\begin{align*}
+AV@R_{\lambda}(X) &= \frac{1}{\lambda} \int_0^{\lambda} V@R_{\alpha}(X) d\alpha = E_P[-X] + \left( \frac{1}{\lambda} \int_0^{\lambda} -\Phi^{-1}(\alpha) d\alpha \right) \sigma_P(X) \\
+&= E_P[-X] + \left( \frac{1}{\lambda} \int_{-\infty}^{\Phi^{-1}(\lambda)} -x\varphi(x) dx \right) \sigma_P(X) \\
+&= E_P[-X] + \frac{1}{\lambda} \varphi(\Phi^{-1}(\lambda)) \sigma_P(X)
+\end{align*}

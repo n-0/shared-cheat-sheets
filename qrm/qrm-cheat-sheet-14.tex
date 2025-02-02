@@ -1,0 +1,354 @@
+State Bayes’ rule and the law of total probability.
+
+Law of Total Probability:
+The probability in the denominator can be calculated as
+\[
+\mathbb{P}[B] = \mathbb{P}[B|A]\mathbb{P}[A] + \mathbb{P}[B|A^c]\mathbb{P}[A^c].
+\]
+
+Bayes' Rule:
+The conditional probability \(\mathbb{P}[A|B]\) is given by
+\[
+  \mathbb{P}[A|B] = \frac{\mathbb{P}[B|A]\mathbb{P}[A]}{\mathbb{P}[B]} = \frac{\mathbb{P}[A \cap B]}{\mathbb{P}[B]}
+\]
+
+Interpretation:
+If we know that the event \(B\) occurs, it changes our belief on the probability of \(A\).
+Put into classical terms, Posterior = Likelihood × Prior ÷ Evidence.
+
+
+Describe the approach of Bayesian statistics. Explain the notion of prior, posterior
+and conditional distribution. State the updating formula for pmf and pdf. Discuss
+the proportionality trick.
+
+Prior Distribution: 
+This represents the initial beliefs about a parameter \(\vartheta\) before observing any new data. 
+It is denoted by \(f_\vartheta(\vartheta)\) and expresses the uncertainty about the parameter based on prior knowledge.
+
+Conditional Distribution: Given data \(\mathbf{x}\), the likelihood or conditional distribution \(f_{X|\vartheta}(\mathbf{x}|\vartheta)\) quantifies the probability of observing the data under various parameter values.
+
+ Posterior Distribution: After observing data, the prior is updated to a posterior distribution \(f_{\vartheta|X}(\vartheta|\mathbf{x})\), incorporating both the prior beliefs and the likelihood from the observed data.
+
+Updating Formula
+For a probability mass function (discrete case):
+\[
+f_{\vartheta|X}(\vartheta|\mathbf{x}) = \frac{f_{X|\vartheta}(\mathbf{x}|\vartheta) \cdot f_\vartheta(\vartheta)}{f_X(\mathbf{x})}
+\]
+For a probability density function (continuous case):
+\[
+f_{\vartheta|X}(\vartheta|\mathbf{x}) = \frac{f_{X|\vartheta}(\mathbf{x}|\vartheta) \cdot f_\vartheta(\vartheta)}{\int f_{X|\vartheta}(\mathbf{x}|\vartheta) \cdot f_\vartheta(\vartheta) \, d\vartheta}
+\]
+
+Proportionality Trick
+When computing the posterior distribution, the denominator \(f_X(\mathbf{x})\) or \(\int f_{X|\vartheta}(\mathbf{x}|\vartheta) \cdot f_\vartheta(\vartheta) \, d\vartheta\) can be complex. However, since it is a normalizing constant, the posterior is often expressed up to a constant of proportionality:
+\[
+f_{\vartheta|X}(\vartheta|\mathbf{x}) \propto f_{X|\vartheta}(\mathbf{x}|\vartheta) \cdot f_\vartheta(\vartheta)
+\].
+
+
+Define Bayes risk and Bayesian point estimators. Discuss examples.
+
+Definition:
+We consider some probability space \((\Omega, \mathcal{F}, \mathbb{P})\) on which all random variables are defined:
+\(\theta \in \mathbb{R}\) has the known prior distribution \(f_\theta\).
+The \(\mathcal{X}\)-valued random data \(X\) with \(\theta\)-conditional distribution \(f_{X|\theta}\) are distributed according to
+\[
+f_X(x) = \int_{\vartheta \in \Theta} f_{X|\vartheta}(x|\vartheta)f_\theta(\vartheta) \, d\vartheta
+\]
+where \(d\vartheta\) is the Lebesgue measure in the continuous case and the counting measure in the discrete case.
+  
+A mapping \(T : \mathcal{X} \to \mathbb{R}\) is called (point) estimator for \(\theta\).
+For an admissible estimator (measurability, integrability), we assume the existence of a loss function \(L(\theta, T)\).
+
+The function
+\[
+\rho^L(T) := \mathbb{E}[L(\theta, T(X))]
+\]
+is called the Bayes risk of \(T\) (under \(L\)).
+
+An admissible estimator \(T^*\) is called Bayes estimator for \(\theta\) (under \(L\)), 
+if it minimizes the Bayes risk \(\rho^L(T)\) over all admissible estimators \(T\).
+
+The most common choice of a loss function to determine Bayesian point estimators is the squared error (SE):
+
+\[
+L^{\text{SE}}(\theta, T) = (\theta - T(X))^2.
+\]
+
+Form of the Bayes estimator under SE:
+The Bayes estimator under SE \(T^{*,\text{SE}} : \mathcal{X} \to \mathbb{R}\) is given by
+\[
+T^{*,\text{SE}}(x) = \mathbb{E}[\theta|X = x],
+\]
+i.e., by the conditional expectation of \(\theta\) given \(X = x\).
+This formula immediately results from the properties and calculation rules of the conditional expectation.
+The Bayes estimator can be calculated using the posterior distribution \(f_{\vartheta|X}(\vartheta|x)\):
+\[
+T^{*,\text{SE}}(x) = \mathbb{E}[\theta|X = x] = \int_\Theta \vartheta \, f_{\vartheta|X}(\vartheta|x) \, d\vartheta.
+\]
+
+The Bayes estimator under SE corresponds to the mean of the posterior distribution.
+Example
+\(\theta|X = x\) possesses a beta distribution with parameters \(x + 1\) and \(n - x + 1\). 
+Hence, the Bayes estimator under SE for the one-year claim occurrence probability is given by
+\[
+T^{*,\text{SE}}(x) = \mathbb{E}[\theta|X = x] = \frac{x+1}{n+2}
+\]
+if claims have occurred in \(x\) out of the \(n\) observed years.
+
+Introduce the Binomial sampling model with potential applications.
+
+The one-parameter model described by the conditional probability mass function
+\[
+f_{X|\theta}(x|\vartheta) = \binom{n}{x} \vartheta^x (1 - \vartheta)^{n-x},
+\]
+
+i.e., \(X|\theta = \vartheta \sim \text{Bin}(n, \vartheta)\) is called the binomial model.
+
+The binomial model appears in various applications:
+\(X\): number of claims caused by a driver with unknown claim occurrence probability per year \(\vartheta\) in \(n\) years.
+Happiness data 
+
+The data in the sketched application examples possesses the following unifying structure:
+The sample size is fixed and equal to \(n\).
+For each outcome in the sample \(i \in \{1, \ldots, n\}\), a certain event of interest may either occur, \(X_i = 1\), or not occur, \(X_i = 0\), each with the same unknown occurrence probability \(\vartheta\).
+Outcomes in the sample are conditionally independent given \(\theta = \vartheta\).
+Interest is in the number of occurring events in the sample \(X = \sum_{i=1}^{n} X_i\).
+
+Mathematically, this leads to the assumptions
+\(X_1, \ldots, X_n | \theta = \vartheta\) are i.i.d. \(\text{Ber}(\vartheta)\) distributed random variables.
+\(X = \sum_{i=1}^{n} X_i | \theta = \vartheta \sim \text{Bin}(n, \vartheta)\).
+
+
+Define the notion of priors conjugate for a sampling model. Discuss this for the
+Binomial sampling model. Derive the posterior for a Beta prior.
+
+A class \( \mathcal{P} \) of prior distributions for \( \theta \) is called conjugate for a sampling model \( f_{X|\theta} \) if
+\( f_{\theta} \in \mathcal{P} \implies f_{\theta|X} \in \mathcal{P} \)
+
+Binomial Model: Posterior under Beta Prior
+
+\[
+\begin{array}{ll}
+    \bullet & \theta \sim \text{Beta}(a, b), \; a, b > 0 \\
+    \bullet & X|\theta = \vartheta \sim \text{Bin}(n, \vartheta), \\
+\end{array}
+\]
+then \(\theta | X = x \sim \text{Beta}(x + a, n - x + b)\).
+Proof:
+\[
+f_{\theta|x}(\vartheta|x) = \frac{f_{X|\theta}(x|\vartheta) f_{\theta}(\vartheta)}{f_{X}(x)} 
+= \frac{1}{f_{X}(x)} \cdot \frac{1}{\beta(a, b)} \vartheta^{a-1} (1 - \vartheta)^{b-1} \cdot \mathbb{1}_{[0,1]}(\vartheta) 
+\left( \binom{n}{x} \vartheta^x (1 - \vartheta)^{n-x} \right)
+\]
+\[
+= c(n, x, a, b) \cdot \vartheta^{x+a-1} (1 - \vartheta)^{b+n-x-1} \cdot \mathbb{1}_{[0,1]}(\vartheta) 
+\stackrel{(*)}{=} f_{\text{Beta}(a+x,b+n-x)}(\vartheta)
+\]
+
+Proportionality trick for step \((*)\):
+Our posterior density and the beta density are proportional (only difference is the constant \(c(n, x, a, b)\)), i.e., they share the same shape.
+But since both the beta density and our posterior density integrate to 1, they also share the same scale.
+
+
+Elaborate on sufficient statistics for estimating parameters in the Bayesian setting.
+
+Observing the realized data \(x_1, \ldots, x_n\), Bayes' rule yields:
+\[
+f_{\vartheta | X_1, \ldots, X_n}(\vartheta | x_1, \ldots, x_n) = \frac{f_{X_1, \ldots, X_n | \vartheta}(x_1, \ldots, x_n | \vartheta) \cdot f_{\vartheta}(\vartheta)}{f_{X_1, \ldots, X_n}(x_1, \ldots, x_n)}
+\]
+\[
+= \vartheta^{\sum_{i=1}^{n} x_i} \cdot (1 - \vartheta)^{n-\sum_{i=1}^{n} x_i} \cdot f_{\vartheta}(\vartheta) \cdot \frac{1}{f_{X_1, \ldots, X_n}(x_1, \ldots, x_n)}
+\]
+
+If we now compare the relative conditional probabilities evaluated at \(\vartheta_a\) and \(\vartheta_b\), we see that
+\[
+\frac{f_{\vartheta|X_1, \ldots, X_n}(\vartheta_a | x_1, \ldots, x_n)}{f_{\vartheta|X_1, \ldots, X_n}(\vartheta_b | x_1, \ldots, x_n)}
+= \left(\frac{\vartheta_a}{\vartheta_b}\right)^{\sum_{i=1}^{n} x_i} \cdot \left(\frac{1 - \vartheta_a}{1 - \vartheta_b}\right)^{n-\sum_{i=1}^{n} x_i} \cdot \frac{f_{\vartheta}(\vartheta_a)}{f_{\vartheta}(\vartheta_b)}
+\]
+
+i.e., the ratio of the conditional densities/probabilities at the two arguments \(\vartheta_a\) and \(\vartheta_b\) depends on the data 
+\(x_1, \ldots, x_n\) only through their sum \(\sum_{i=1}^{n} x_i\).
+
+One can show that
+\[
+\mathbb{P}(\theta \in A \mid X_1 = x_1, \ldots, X_n = x_n) = \mathbb{P}\left( \theta \in A \mid \sum_{i=1}^{n} X_i = \sum_{i=1}^{n} x_i \right)
+\]
+for any event \( A \in \mathcal{B}([0, 1]) \).
+
+This means that \( \sum_{i=1}^{n} X_i \) contains all information about \( \theta \) available in the data.
+We say that \( \sum_{i=1}^{n} X_i \) is a sufficient statistic for \( \theta \) and \( f_{\theta \mid x_1, \ldots, x_n} \).
+
+
+Define the notation of predictive distribution. Compute it for the Binomial sampling model with beta prior.
+
+An important feature of Bayesian inference is the existence of a predictive distribution for new observations.
+Let \(x_1, \ldots, x_n\) be the outcomes of the trials underlying the chosen sampling model and let \(X_{n+1}\) be 
+the random outcome of an additional trial that has not yet been carried out.
+
+Definition 6.2.3 (Predictive Distribution) 
+
+The predictive distribution of \(X_{n+1}\) is the conditional distribution of \(X_{n+1}\) given \(\{X_1 = x_1, \ldots, X_n = x_n\}\).
+
+Application to the Binomial Model:
+For conditionally i.i.d. Bernoulli random variables, it holds that
+
+\[
+\mathbb{P}(X_{n+1} = 1 | X_1 = x_1, \ldots, X_n = x_n) = f_{X_{n+1} | X_1, \ldots, X_n}(1 | x_1, \ldots, x_n)
+\]
+\[
+= \int f_{X_{n+1}| \theta, X_1, \ldots, X_n}(1 | \vartheta, x_1, \ldots, x_n) f_{\theta | X_1, \ldots, X_n}(\vartheta | x_1, \ldots, x_n) d\vartheta
+\]
+\[
+= \int \vartheta \cdot f_{\theta | X_1, \ldots, X_n}(\vartheta | x_1, \ldots, x_n) d\vartheta
+\]
+\[
+= \mathbb{E}[\theta | X_1 = x_1, \ldots, X_n = x_n] = \frac{a + \sum_{i=1}^{n} x_i}{a + b + n}
+\]
+\[
+\mathbb{P}(X_{n+1} = 0 | X_1 = x_1, \ldots, X_n = x_n) = 1 - \mathbb{E}[\theta | X_1 = x_1, \ldots, X_n = x_n] = \frac{b + \sum_{i=1}^{n} (1 - x_i)}{a + b + n}
+\]
+
+What is p-Bayesian coverage? What is frequentist coverage? How can confidence
+intervals be computed on the basis of quantiles? What are HPD regions, and what
+is their advantage?
+
+A random interval \( \left[ l(\mathbb{X}), u(\mathbb{X}) \right] \)  is said to possess a \( p \)-frequentist coverage for \( \theta \) if
+\[
+\forall \vartheta : \quad \mathbb{P}(l(\mathbb{X}) < \vartheta < u(\mathbb{X}) | \theta = \vartheta) \geq p.
+\]
+
+Interpretation: The standard frequentist confidence interval describes the \(\theta\)-conditional probability that the interval 
+will cover the true value \( \vartheta \) before the data is observed.
+Frequentist coverage Pre-experimental coverage and prior distribution is irrelevant.
+Bayesian coverage Post-experimental coverage, but result depends on choice of prior distribution.
+
+Goal: We will construct confidence intervals with \( p \)-Bayesian coverage that asymptotically also possess p-frequentist coverage.
+
+Idea: Use posterior quantiles to determine a confidence interval
+Steps: In order to create a \(1 - \alpha\) quantile-based confidence interval:
+Find numbers \(\theta_{\alpha/2} < \theta_{1-\alpha/2}\) such that
+\(\mathbb{P}(\theta < \theta_{\alpha/2} \mid X = x) = \frac{\alpha}{2}\),
+\(\mathbb{P}(\theta > \theta_{1-\alpha/2} \mid X = x) = \frac{\alpha}{2}\).
+
+The numbers \(\theta_{\alpha/2}, \theta_{1-\alpha/2}\) are the \(\alpha/2\) and \(1-\alpha/2\) posterior quantiles of \(\theta\) given \(X = x\).
+
+If there are \( \theta \)-values outside of the quantile-based interval that possess a higher posterior probability
+(density) than some points inside the interval, another approach is required.
+
+A \( (1 - \alpha) \)-HPD region is defined as a subset of the parameter space \( s(x) \subseteq \Theta \) such that
+
+\( \mathbb{P}(\theta \in s(x) \mid X = x) = 1 - \alpha \),
+If \( \vartheta_a \in s(x) \) and \( \vartheta_b \notin s(x) \), then 
+\( f_{\theta \mid X}(\vartheta_a \mid x) > f_{\theta \mid X}(\vartheta_b \mid x) \).
+
+All points in an HPD region have a higher posterior density than points outside the region.
+Note, however, that if the posterior density is multimodal, an HPD region might not be an interval any more!
+
+
+Introduce the Poisson sampling model with potential applications. Show that
+Gamma priors are conjugate for this sampling model.
+
+The one-parameter model described by the conditional probability mass function for the conditionally independent samples
+\[
+f_{X_i|\theta}(x_i|\vartheta) = \frac{\vartheta^{x_i}}{x_i!} e^{-\vartheta}, \quad \text{for } x_i \in \{0, 1, 2, \ldots\}
+\]
+
+i.e., \(X_i|\theta = \vartheta \sim \text{Poi}(\vartheta)\), \(i = 1, \ldots, n\), (i.e., \(X_i|\theta = \vartheta\), 
+i.i.d. Poisson-distributed) is called the Poisson model.
+
+If \(\theta \sim \Gamma(a, b), \, a, b > 0\)
+\(X_1, \ldots, X_n | \theta = \vartheta \sim \text{Poi}(\vartheta)\)
+then \(\left( \theta \big| \{X_1 = x_1, \ldots, X_n = x_n\} \right) \sim \Gamma\left(a + \sum_{i=1}^n x_i, b + n\right)\).
+
+Proof: In the considered situation, it holds that
+
+\begin{align*}
+f_{\theta|X_1,\ldots,X_n}(\vartheta|x_1,\ldots,x_n) &= c(x_1,\ldots,x_n) \cdot e^{-n\vartheta} \vartheta^{\sum_{i=1}^n x_i} \cdot f_{\theta}(\vartheta) \\
+&= c(x_1,\ldots,x_n) \cdot e^{-n\vartheta} \vartheta^{\sum_{i=1}^n x_i} \cdot \frac{b^a}{\Gamma(a)} \vartheta^{a-1} e^{-b\vartheta} \\
+&= \bar{c}(x_1,\ldots,x_n,a,b) \cdot \vartheta^{\sum_{i=1}^n x_i} e^{-n\vartheta} \cdot \vartheta^{a-1} e^{-b\vartheta} \\
+&= \bar{c}(x_1,\ldots,x_n,a,b) \cdot \vartheta^{a + \sum_{i=1}^n x_i-1} e^{-(b+n)\vartheta},
+\end{align*}
+which proves the statement.
+
+Using the properties of the gamma distribution, we find that the posterior expectation of \( \theta \) can,
+analogous to the binomial model, be written as a convex combination of prior expectation and sample average:
+
+\[
+\mathbb{E}[\theta | X_1 = x_1, \ldots, X_n = x_n] = \frac{a + \sum_{i=1}^n x_i}{b + n}
+\]
+\[
+= \frac{b}{b+n} \cdot \underbrace{\frac{a}{b}}_{\text{prior expectation}} + \frac{n}{b+n} \cdot \underbrace{\frac{\sum_{i=1}^n x_i}{n}}_{\text{sample average}}
+\]
+
+Interpretation of the parameters in terms of prior information:
+\( b \) is interpreted as the number of prior observations
+\( a \) is interpreted as the sum of counts from the \( b \)
+
+Implication for large sample size: Analogous to the binomial model, for large sample size \( n \) , the
+information from the data dominates the prior information.
+
+What are exponential families? If they are sampling models, what are convenient
+choices of conjugate priors? Explain that the Bernoulli sampling model and the
+Poisson model are special cases.
+
+A one-parameter exponential family distribution with parameter \( \phi \) is characterized through a density/probability mass function of the form
+\[
+f_{X|\phi}(x|\phi) = h(x) \cdot c(\phi) \cdot e^{\phi t(x)}
+\]
+where \( t(x) \) is the sufficient statistic of the distribution, \( h \) is an arbitrary measurable function, 
+and \( c \) is the normalizing constant.
+
+
+One can show that for a particular prior distribution of the form
+\[
+f_{\phi}(\varphi) = \kappa(n_0, t_0) \cdot c(\varphi)^{n_0} \cdot e^{n_0 t_0 \varphi}
+\]
+a one-parameter exponential family model will yield the posterior distribution
+\[
+f_{\phi|X_1,\ldots,X_n}(\varphi|X_1,\ldots,X_n) \propto f_{\phi}(\varphi) \cdot f_{X_1,\ldots,X_n|\phi}(X_1,\ldots,X_n|\varphi)
+\]
+\[
+\propto c(\varphi)^{n_0+n} \exp \left( \varphi \cdot \left[ n_0 t_0 + \sum_{i=1}^{n} t(x_i) \right] \right)
+\]
+
+which is of the same form as the prior distribution with updated parameters \( n_0 + n \) instead of \( n_0 \) and 
+\( n_0 \cdot t_0 + n \cdot \bar{t}(x_1,\ldots,x_n) \) instead of \( n_0 \cdot t_0 \) with 
+\( \bar{t}(x_1,\ldots,x_n) = \frac{1}{n} \sum_{i=1}^{n} t(x_i) \).
+This is the conjugate prior for one-parameter exponential family models
+Interpretation
+\( n_0 \) can be interpreted as the 'prior sample size',
+\( t_0 \) is interpreted as 'prior guess' of \( t(X_i) \) (to be precise, one can show that: \( t_0 = \mathbb{E}[t(X_i)] \)).
+
+E.g. Binomial distribution
+For a single binary variable, \( X_1 \), we have:
+\(
+f_{X_1|\theta}(x_1|\vartheta) = \vartheta^{x_1} \cdot (1 - \vartheta)^{1-x_1} = \left(\frac{\vartheta}{1-\vartheta}\right)^{x_1} \cdot (1 - \vartheta)
+\)
+\(
+= (1 + e^{\varphi})^{-1} \cdot e^{\varphi x_1},
+\)
+where \( \varphi = \log \left( \frac{\vartheta}{1-\vartheta} \right) \)
+We obtain an exponential family model with \( h(x_1) = 1 \), \( c(\varphi) = (1 + e^{\varphi})^{-1} \) and sufficient statistic \( t(x_1) = x_1 \).
+The conjugate prior in terms of \( \phi \) is thus given by
+\(
+f_{\phi}(\varphi) \propto (1 + e^{\varphi})^{-n_0} \cdot e^{n_0 t_0 \varphi}.
+\)
+Changing variables, this translates into a prior distribution for \( \theta \):
+\(
+f_{\theta}(\vartheta) \propto \vartheta^{n_0 t_0 -1} (1 - \vartheta)^{n_0(1-t_0)-1},
+\)
+
+The Poisson model with parameter \( \vartheta \) can be shown to belong to the class of one-parameter exponential family models with
+\( t(x) = x \)
+\( \varphi = \log(\vartheta) \)
+\( c(\varphi) = \exp(e^{-\varphi}) \).
+The conjugate prior in terms of \( \phi \) is thus given by
+\(
+f_{\phi}(\varphi) \propto \exp(n_0 e^{-\varphi}) e^{n_0 t_0 \varphi}.
+\)
+This translates into the conjugate prior in terms of \( \theta \) as
+\(
+f_{\theta}(\vartheta) \propto \vartheta^{n_0 t_0 - 1} e^{-n_0 \vartheta},
+\)
+the density of a gamma distribution with parameters \( n_0 t_0, n_0 \).

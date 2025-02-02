@@ -1,0 +1,156 @@
+What is the square root formula in the standard formula of Solvency II (for firms
+that do not use an internal model)?
+
+Let \( EC_i \) be the Economic Capital for module \( i, i = 1, \ldots, n \) and let EC denote the aggregated capital.
+
+A risk aggregation rule is a mapping
+
+\( f(EC_1, \ldots, EC_n) = EC \)
+
+which maps the individual capital amounts per module to the total capital.
+
+Aggregation Rules:
+Simple Summation: \( EC = EC_1 + \ldots + EC_n \)
+Correlation Adjusted Summation:
+\( EC = \sqrt{\sum_{i=1}^{n} \sum_{j=1}^{n} \rho_{i,j} EC_i EC_j} \)
+
+where \( \rho_{i,j} \in [0, 1] \) denote correlation parameters.
+- This aggregation rule is also called Square Root Formula. 
+  Risk aggregation in the Solvency II Standard Formula is based on the Square Root Formula.
+- The Square Root Formula can be derived at the level of probability distributions in a multivariate Gaussian setting 
+  or more generally for elliptical distributions.
+
+
+Solvency Capital Requirement (SCR) in Solvency II, is defined by the Mean Value at Risk:
+
+\( \text{SCR}(X) = \text{V@R}_{0.005}(X - \mathbb{E}[X]). \)
+
+
+Demonstrate that this aggregation works for jointly normal risk and Mean-V@R
+(and also Mean-AV@R). Why is the formula still problematic?
+ 
+The square root formula resembles the structure of the formula of the variance \(\text{Var}\) or standard deviation \(\sigma = \sqrt{\text{Var}}\), 
+respectively, of two random variables with linear correlation \(\rho\):
+\(
+\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y) + 2\rho \sqrt{\text{Var}(X)} \sqrt{\text{Var}(Y)},
+\)
+\(
+\sigma(X + Y) = \sqrt{\sigma^2(X) + \sigma^2(Y) + 2\rho \sigma(X)\sigma(Y)}.
+\)
+\(X \sim \mathcal{N}(\mu, \sigma^2) \Rightarrow \text{V@R}_\lambda(X) = -\mu - \Phi^{-1}(\lambda)\sigma, \text{SCR}(X) = -\Phi^{-1}(\lambda)\sigma\)
+
+If \(X, Y\) are multivariate Gaussian risks with correlation \(\rho\), then
+\(
+\text{SCR}(X + Y) = \sqrt{(\text{SCR}(X))^2 + (\text{SCR}(Y))^2 + 2\rho\text{SCR}(X)\text{SCR}(Y)}.
+\)
+
+For risks satisfying a multivariate normal distribution (or more generally an elliptical distribution), the square root formula is correct for risk aggregation.
+ATTENTION:
+For other marginal distributions (in particular: skewed distributions, heavy tails) or dependencies 
+(in particular: tail dependencies) the square root formula is not correct!
+
+
+How do internal models compute risk measures of aggregate positions?
+
+Framework: The total portfolio is given by \(X := X_1 + \ldots + X_n\).
+Calculation of the total risk: margins-plus-copula approach:
+Model the marginal distributions of \(X_1, \ldots, X_n\).
+Model the dependency between \(X_1, \ldots, X_n\) in terms of a suitable copula. 
+Simulate the distribution of \(X\) based on the marginal distributions and the copula.
+Estimate the total risk capital EC in terms of a suitable risk measure.
+
+This approach is quite challenging. In particular, the choice/specification of the copula may have a severe impact on the risk figures
+
+Explain capital allocation, risk contributions, and the properties complete capital
+allocation and diversification. Give examples of such principles.
+
+
+Mathematical description
+Consider \(n\) risky sub-portfolios whose outcomes are given by \(X_1, \ldots, X_n\).
+Then the total portfolio is given by \(X := X_1 + \cdots + X_n\).
+If risk is measured in terms of a sub-additive risk measure \(\rho\), then there is a diversification effect in the total portfolio:
+\(
+\rho(X) \leq \sum_{i=1}^n \rho(X_i)
+\)
+
+Goal
+Allocate to each sub-portfolio \(X_i\), \(i = 1, \ldots, n\), a risk capital contribution \(\rho(X_i \mid X)\) which reflects its contribution 
+to the total risk \(\rho(X)\) and to the diversification effect.
+
+Key properties of a meaningful capital allocation
+Complete capital allocation: \(\sum_{i=1}^n \rho(X_i \mid X) = \rho(X)\)
+Diversification: For each sub-portfolio \(X_i\), \(i = 1, \ldots, n\), the allocated capital is at most as large as the sub-portfolio’s standalone capital:
+\(
+\rho(X_i \mid X) \leq \rho(X_i) \quad \text{for } i = 1, \ldots, n.
+\)
+
+
+Proportional allocation:
+\(
+\rho(X_i \mid X) = \frac{\rho(X_i)}{\sum_{j=1}^n \rho(X_j)} \rho(X)
+\)
+
+Marginal principles, e.g.:
+Euler allocation (for homogeneous risk measures):
+\(
+\rho(X_i \mid X) = \left. \frac{d}{dh} \rho(X + h X_i) \right|_{h=0}
+\)
+ Covariance principle:
+\(
+\rho(X_i \mid X) = \frac{\text{Cov}(X_i, X)}{\sigma^2(X)} \rho(X)
+\)
+
+Game theoretical methods, e.g., Shapley allocation
+
+
+Show that the Euler allocation satisfies for coherent risk measures complete capital
+allocation and diversification.
+
+Let \( f : \mathbb{R}^n \ {0} \to \mathbb{R} \) be differentiable and positive homogeneous of order \( \alpha > 0 \) i.e.,
+\( f(t \mathbf{w} = t^\alpha f(\mathbf(w) \) for all \( t > 0, \mathbf{w} \in \mathbb{R}^n \setminus \{0\} \)
+Define the weighted portfolio \( X(\mathbf{w}) = \sum_{j=1}^n w_i X_i, \mathbf{w} \in \mathcal{O} \) and the risk functional
+\( f_\rho(\mathbf{w}) = \rho(X(\mathbf{w})) \)
+Since \(f_{\rho}\) is positive homogeneous of order 1, Euler's rule implies
+\[f_{\rho}(\mathbf{w}) = \sum_{i=1}^n \frac{\partial f_{\rho}}{\partial w_i}(\mathbf{w}) \cdot w_i, \quad \text{hence} \quad \rho(X) = f_{\rho}(\mathbf{1}) = \sum_{i=1}^n \frac{\partial f_{\rho}}{\partial w_i}(\mathbf{1}).\]
+
+Let \(f_{\rho}\) be positive homogeneous and differentiable at \(\mathbf{w} = \mathbf{1}\). 
+Then the allocation \[\rho_i(X|X) := \frac{\partial f_{\rho}}{\partial w_i}(\mathbf{1}), \quad i=1, \dots, n,\]
+is called the Euler Capital Allocation Principle.
+
+Remarks:
+- The Euler principle satisfies property 1 (complete capital allocation).
+- Property 2 (diversification) is satisfied if \(\rho\) is convex.
+
+
+What is RoRaC-compatibility, and how is it related to the Euler allocation?
+
+Return on Risk adjusted Capital:
+The RoRaC (ex ante) the ratio between the expected economic profit and the corresponding risk capital:
+\(
+\text{RoRaC} := \frac{\text{expected economic profit}}{\text{Risk Adjusted Capital}}.
+\)
+
+Definition: For a given risk measure \(\rho\), let
+\[
+\text{RoRaC}(X) = \frac{\mathbb{E}[X]}{\rho(X)} 
+\quad \text{and} \quad 
+\text{RoRaC}(X_k \vert X) = \frac{\mathbb{E}[X_k]}{\rho(X_k \vert X)}
+\]
+
+denote the RoRaC of the total portfolio \(X\) and of the sub-portfolio \(X_k\) respectively. A capital allocation \(\rho(X_k \vert X)\) is said to be 
+RoRaC compatible if there exists an \(\varepsilon > 0\) such that
+
+\[
+\text{RoRaC}(X_k \vert X) > \text{RoRaC}(X) 
+\Rightarrow 
+\text{RoRaC}(X + hX_k) > \text{RoRaC}(X) 
+\quad \text{for all } 0 < h < \varepsilon.
+\]
+
+Interpretation:
+- Typically, \(X\) signifies a quantity with \(\rho(X) > 0\) such as the net asset value at time \(1\) minus initial capital at time \(0\). In other words, \(\rho(X)\) could, for example, be the solvency capital requirement.
+- Increasing the amount of sub-portfolio \(X_k\), whose RoRaC exceeds RoRaC of the total portfolio, increases the RoRaC of the total portfolio.
+
+Under suitable differentiability assumptions for a coherent risk measure \(\rho\), the RoRaC compatible capital allocation \(\rho(X_k|X)\) (if exists) 
+is unique and given by the Euler allocation:
+\[\rho(X_k|X) = \frac{d}{dh} \rho(X + hX_k)|_{h=0}\]

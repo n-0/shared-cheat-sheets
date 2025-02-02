@@ -1,4 +1,5 @@
-Define monetary risk measures and relate them to acceptance sets
+Define the notion of a monetary risk measure. What is the corresponding accep-
+tance set? Explain the important notion of capital requirements.
 
 Monetary Risk Measure
 A mapping \(\rho : \mathcal{X} \to \mathbb{R}\) is called a monetary risk measure if it satisfies the following properties:  
@@ -27,7 +28,9 @@ The monetary risk measure \(\rho\) can be recovered from its acceptance set
 i.e., \(\rho\) is indeed a capital requirement.
 
 
-State how properties of the risk measure can be translated into properties of the acceptance set
+Define and discuss the notions convex risk measure, coherent risk measure, sub-
+additive risk measure. How do these properties correspond to properties of the
+acceptance set?
 
 Properties of Acceptance Sets
 
@@ -43,8 +46,8 @@ Acceptance sets as a starting point for regulation:
 - They correspond to risk measures which possess an operational interpretation as capital requirements.
 - Thus, acceptance sets are a good starting point to formulate the normative standards of a regulator.
 
-Define measures of dispersion and show how their
-deficiencies can be fixed by the coefficient of variation
+What is the difference of measures of dispersion on the one hand and downside
+risk measures on the other? Give examples
 
 Measures of dispersion:
 Variance:  
@@ -76,9 +79,7 @@ Coefficient of variation:
 \text{cv}(X) = \frac{\sigma(X)}{\mathbb{E}[X]}
 \)
 
-Define shortfall measures
 Shortfall measures quantify the risk of exceeding a given loss threshold \( a \).
-
 
 Example 4.1.3 (Upper and Lower Partial Moments)
 
@@ -131,7 +132,9 @@ Consider \( S \sim \mathbb{P}_i \) for the probability measure \( \mathbb{P} \) 
 Then, \( \rho_S = \text{max}_{\mathbb{P} \in \{\mathbb{P}_1, \dots, \mathbb{P}_n\} E_{\mathbb{P}}[L(S)]\), 
 which corresponds to the general robust representation of a coherent risk measure.
 
-Define V@R and MV@R
+
+Define value at risk and provide a critique of this risk measure in the context of
+risk management applications.
 
 Value at Risk at level \(\lambda \in (0,1)\) of a financial position \(X\):
 \( \text{V@R}_\lambda(X) := \inf\{m \in \mathbb{R} : \mathbb{P}[X + m < 0] \leq \lambda\} \)
@@ -287,7 +290,11 @@ Construction principle:
 \)
 
 
-Define AV@R and T@VR
+Define the risk measures average value at risk. State key properties of this risk
+measure.
+
+The question continues with, Prove that it dominates V@R at the same level. What is its robust
+representation also state its OCE form?
 
 Average Value at Risk at level \(\lambda \in (0, 1]\) for a financial position \(X\):
 
@@ -365,7 +372,9 @@ Thus, TV@R is coherent on the set of continuous random variables.
 Problem:
 For modeling purposes, continuous random variables are typically not sufficient.
 
-Define Choquet integrals 
+Define capacities and Choquet integrals. Can you motivate this notion from facts
+that you know from probability (just focus on positive random variables)?
+
 A Choquet capacity is a function \(\mu: \mathcal{F} \rightarrow [0, 1]\) such that
 
 1. \(\mu(\emptyset) = 1 - \mu(\Omega) = 0\)
@@ -381,7 +390,8 @@ the Choquet integral of \( f \) with respect to \( \mu \) is:
 1. \(\mu(\emptyset) = 1 - \mu(\Omega) = 0\)
 2. \(A, B \in \mathcal{F}, A \subset B \implies \mu(A) \le \mu(B)\)
 
-Define comonotonicity of functions and risk measures.
+How are comonotonic measurable functions defined? What are comonotonic risk
+measures? How can they be characterized in terms of capacities?
 
 Two measurable functions \( X, Y \) on \((\Omega, \mathcal{F})\) are comonotonic if
 \(
@@ -400,7 +410,12 @@ A monetary risk measure \(\rho : \mathcal{X} \to \mathbb{R}\) is comonotonic, if
 \rho(X) = \int (-X) \, dc
 \)
 
-Define distortion risk measures and relate them to the V@R family
+What are distortion risk measures (DRMs)?
+
+The question continues with,
+Under which condition on the distor-
+tion function are they coherent? How can they be represented in terms of V@Rs
+at different levels?
 
 An increasing function \(\psi : [0, 1] \rightarrow [0, 1]\) with \(\psi(0) = 0\) and \(\psi(1) = 1\) is called a distortion function. 
 If \(\mathbb{P}\) is a probability measure on \((\Omega, \mathcal{F})\), then 
@@ -417,8 +432,7 @@ For the general case, we refer to Dhaene, Kukush, Linders & Tang (2012).
 
 The distortion risk measure \(\rho^{\psi}(X)\) is coherent, if and only if \(\psi\) is concave.
 
-
-Example 4.2.7 (Value at Risk, Average Value at Risk, Range Value at Risk)
+Provide examples of DRMs together with their distortion functions.
 
 Let \(\alpha, \beta > 0\).
 1. Value at Risk: \(\text{V@R}_{\alpha}(X) = \inf\{m \in \mathbb{R} : \mathbb{P}[m + X < 0] \leq \alpha\}\)
@@ -468,7 +482,9 @@ For independent copies \(X_1, \ldots, X_n\) of \(X\) we get
 i.e., \(\rho(X)\) can be described as the expectation under \(\mathbb{P}\) 
 of the maximal loss occurring in the portfolio \(X_1, \ldots, X_n\).
 
-Derive Utility-Based Shortfall Risk
+How is the risk measure utility-based shortfall risk (UBSR) defined? How does
+the coherent special case look like? What form does the acceptance set take in the
+coherent case?
 
 Construction:
 
@@ -559,7 +575,9 @@ for \(l(x) = e^{\gamma x}\) (loss function) and \(u(x) = 1 - e^{-\gamma x}\) (ex
 
 Conclusion: The Entropic Risk Measure is a special case of the Utility-Based Shortfall Risk.
 
-Define divergence risk measures
+
+What is g-divergence? How are divergence
+risk measures defined?
 
 Let \( g : \mathbb{R}_+ \to \mathbb{R} \cup \{\infty\} \) be a lower semicontinuous and convex function with \( g(1) < \infty \) 
 and superlinear growth \( g(x)/x \to \infty \) as \( x \to \infty \)
@@ -584,6 +602,9 @@ The divergence risk measure can be represented by the variational identity:
 \(
 \rho_g(X) = \inf_{y \in \mathbb{R}} \{\mathbb{E}_{\mathbb{P}}[g^*(y - X)] - y\}
 \)
+
+Provide some prominent examples of divergence risk measures. Why are the divergence
+risk measures up to a change of sign equal to the optimized certainty equivalents (OCE's)?
 
 AV@R: 
 For \(\lambda \in (0,1]\) let \(g(x) = 0\) for \(x \leq \lambda^{-1}\) and \(g(x) = \infty\) otherwise, 

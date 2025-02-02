@@ -1,0 +1,236 @@
+How can simulations from the posterior and the predictive distributions be im-
+plemented? Provide examples of potentially interesting functionals that can be
+computed via simulations.
+
+Recall the characterization of the posterior predictive distribution for the new sample \( X_{n+1} \) given the information 
+\( X_1 = x_1, \ldots, X_n = x_n \):
+\[
+f_{X_{n+1} \mid X_1, \ldots, X_n}(x_{n+1} \mid x_1, \ldots, x_n) = \int f_{X_{n+1} \mid \theta}(x_{n+1} \mid \vartheta) \cdot f_{\theta \mid X_1, \ldots, X_n}(\vartheta \mid x_1, \ldots, x_n) \, d\vartheta
+\]
+
+Problem: In many modeling situations, we may be able to sample from \( f_{X_i \mid \theta} \) and \( f_{\theta \mid X_1, \ldots, X_n} \), 
+but \( f_{X_{n+1} \mid X_1, \ldots, X_n} \) might be too complicated to sample from it directly.
+
+Idea: Indirect sampling using the following Monte Carlo procedure: For each \( r \in \{ 1, \ldots, s \} \):
+Sample \( \theta^{(r)} \sim f_{\theta \mid X_1, \ldots, X_n} \), yielding the sample value \( \theta^{(r)} = \vartheta^{(r)} \).
+Sample \( X_{n+1}^{(r)} \sim f_{X_{n+1} \mid \theta = \vartheta^{(r)}} \), yielding the sample value \( X_{n+1}^{(r)} = x_{n+1}^{(r)} \).
+
+The sequence \(\{ (\vartheta^{(1)}, x_{n+1}^{(1)}), \ldots, (\vartheta^{(s)}, x_{n+1}^{(s)}) \} \) consists of \( s \) independent samples from 
+the joint posterior distribution of \( (\theta, X_{n+1}) \).
+
+The sequence \(\{ x_{n+1}^{(1)}, \ldots, x_{n+1}^{(s)} \} \) consists of \( s \) independent samples from the marginal
+posterior distribution of \( X_{n+1} \), i.e., from the \emph{posterior predictive distribution}.
+
+Let \(g\) be a measurable function (satisfying suitable integrability conditions) and let \( \theta^{(1)}, \ldots, \theta^{(s)} \) be i.i.d. samples
+from \(f_{\theta \mid X_1 = x_1, \ldots, X_n = x_n}.\) From the law of large numbers (LLN) we obtain:
+\(\frac{1}{s} \sum_{r=1}^{s} g(\theta^{(r)}) \xrightarrow{s \to \infty} \mathbb{E}[g(\theta) \mid X_1 = x_1, \ldots, X_n = x_n].\)
+
+Examples of approximations for \( s \to \infty \):
+\(\bar{\theta} := \frac{1}{s}\sum_{r=1}^{s} \theta^{(r)} \to \mathbb{E}[\theta \mid X_1, \ldots, X_n]\)
+
+
+Specify the normal sampling model. Derive a sufficient statistic.
+
+The two-parameter model described by the conditional probability density function
+\[
+f_{X \mid \theta, \sigma^2}(x \mid \vartheta, \varsigma^2) = \frac{1}{\sqrt{2 \pi \varsigma^2}} \cdot \exp \left( -\frac{1}{2} \left( \frac{y - \vartheta}{\varsigma} \right)^2 \right),
+\]
+
+i.e., \(\{ X \mid \theta = \vartheta, \sigma^2 = \varsigma^2 \} \sim \mathcal{N}(\vartheta, \varsigma^2)\) is called the normal model.
+
+Suppose our model is 
+\( \{X_1, \ldots, X_n \mid \theta = \vartheta, \sigma^2 = \varsigma^2 \} \) 
+i.i.d. normally distributed with parameters \((\vartheta, \varsigma^2)\).
+
+The joint sampling density is given by
+\[
+f_{x_1, \ldots, x_n \mid \theta, \sigma^2}(x_1, \ldots, x_n \mid \vartheta, \varsigma^2) = \prod_{i=1}^n f_{x_i \mid \theta, \sigma^2}(x_i \mid \vartheta, \varsigma^2) = (2\pi \varsigma^2)^{-n/2} \cdot \exp \left( -\frac{1}{2} \sum_{i=1}^n \left( \frac{x_i - \vartheta}{\varsigma} \right)^2 \right)
+\]
+\[
+= (2 \pi \varsigma^2)^{-n/2} \cdot \exp \left( -\frac{1}{2} \left[ \frac{1}{\varsigma^2} \sum_{i=1}^n x_i^2 - 2 \frac{\vartheta}{\varsigma^2} \sum_{i=1}^n x_i + n \frac{\vartheta^2}{\varsigma^2} \right] \right)
+\]
+\((\sum_{i=1}^n x_i^2, \sum_{i=1}^n x_i)\) constitutes a two-dimensional sufficient statistic.
+
+Knowing the values of these two quantities is equivalent to knowing the values of
+\[
+\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i, \quad \text{and} \quad s^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2
+\]
+\((\bar{x}, s^2)\) also constitutes a sufficient statistic.
+
+
+Motivate rigorously that the normal is a good candidate for a prior for the mean,
+conditionally on the sampling variance.
+
+If 
+\(
+\{ \theta \mid \sigma^2 = \varsigma^2 \} \sim \mathcal{N}(\mu_0, \tau_0^2), \quad \mu_0 \in \mathbb{R}, \tau_0 > 0
+\),
+\(
+\{ X_1, \ldots, X_n \mid \theta = \vartheta, \sigma^2 = \varsigma^2 \} \sim \mathcal{N}(\vartheta, \varsigma^2),
+\)
+then
+\(
+\theta \mid \{X_1 = x_1, \ldots, X_n = x_n, \sigma^2 = \varsigma^2\} \sim \mathcal{N}(\mu_n, \tau_n^2),
+\)
+where
+\(
+\tau_n^2 = \frac{1}{\frac{1}{\tau_0^2} + \frac{n}{\varsigma^2}} \quad \text{and} \quad \mu_n = \frac{\frac{1}{\tau_0^2} \mu_0 + \frac{n}{\varsigma^2} \bar{x}}{\frac{1}{\tau_0^2} + \frac{n}{\varsigma^2}}.
+\)
+
+ADD REMAINING PROOF (LEFT AS EXERCISE)
+
+
+Define the notion of precision. State the posterior distribution of the mean, conditionally on the sampling variance. 
+How are posterior precision and posterior mean computed?
+
+The (conditional) posterior parameters \( \tau_n^2, \mu_n \),
+ combine information from the prior knowledge (captured in the parameters  
+\(\tau_0, \mu_0\) of the prior distribution) with information from the sample data:
+Posterior Variance and Precision: Note that
+\[
+\frac{1}{\tau_n^2} = \frac{1}{\tau_0^2} + \frac{n}{\zeta^2}.
+\]
+
+The posterior inverse variance is obtained as the sum of prior inverse variance and the inverse of the data variance.
+Inverse variance is often called precision. Let:
+\(\tilde{\zeta}^2 = 1/\zeta^2\) \sampling precision, i.e., a measure of the distance of the \( x_i \)'s to \( \vartheta \),
+\(\tilde{\tau}_0^2 = 1/\tau_0^2\) prior precision,
+\(\tilde{\tau}_n^2 = 1/\tau_n^2\) posterior precision
+and it holds:
+\( \tilde{\tau}_n^2 = \tilde{\tau}_0^2 + \tilde{\zeta}^2 \)
+
+Posterior Mean: Note that
+\[
+\mu_n = \frac{\tilde{\tau}_0^2}{\tilde{\tau}_0^2 + n \tilde{\zeta}^2} \cdot \mu_0 + \frac{n \tilde{\zeta}^2}{\tilde{\tau}_0^2 + n \tilde{\zeta}^2} \cdot \bar{x}.
+\]
+The posterior mean is a weighted average of the prior mean and the sample mean.
+The weights are 
+on the prior mean: \(1/\tau_0^2\), the prior precision
+on the sample mean: \( n/\zeta^2\) i.e., the sampling precision of the sample mean.
+Assume that the prior mean was based on \(\kappa_0 \) prior observations from the same or similar population \(X_1, \ldots, X_n\).
+If we set the prior variance \(\tau_0^2 = \zeta^2/\kappa_0 \) equal to the variance of the mean of prior observations, the posterior mean could be written as
+\(
+\mu_n = \frac{\kappa_0}{\kappa_0 + n} \mu_0 + \frac{n}{\kappa_0 + n} \bar{x}.
+\).
+
+
+ What is the predictive distribution in the normal model?
+
+Note that we can assume \( \{ X_{n+1} | \theta = \vartheta, \sigma^2 = \varsigma^2 \} \sim \mathcal{N}(\vartheta, \varsigma^2) \)
+\( \iff X_{n+1} = \theta + \epsilon, \; \{ \epsilon | \theta = \vartheta, \sigma^2 = \varsigma^2 \} \sim \mathcal{N}(0, \varsigma^2) \),
+and \( \theta | \sigma^2 \text{ and } \epsilon | \sigma^2 \) are conditionally independent.
+
+Then wen can compute posterior mean and variance of \( X_{n+1} \): 
+
+\(
+\mathbb{E}[X_{n+1}|X_1 = x_1, \ldots, X_n = x_n, \sigma^2 = \varsigma^2] = \mathbb{E}[\theta + \epsilon|X_1 = x_1, \ldots, X_n = x_n, \sigma^2 = \varsigma^2]
+\)
+\(
+= \mathbb{E}[\theta|X_1 = x_1, \ldots, X_n = x_n, \sigma^2 = \varsigma^2] + \mathbb{E}[\epsilon|X_1 = x_1, \ldots, X_n = x_n, \sigma^2 = \varsigma^2]
+\)
+\(
+= \mu_n + 0 = \mu_n
+\)
+\(
+\operatorname{Var}[X_{n+1}|X_1 = x_1, \ldots, X_n = x_n, \sigma^2 = \varsigma^2] = \operatorname{Var}[\theta + \epsilon|X_1 = x_1, \ldots, X_n = x_n, \sigma^2 = \varsigma^2]
+\)
+\(
+= \tau_n^2 + \varsigma^2.
+\)
+It can be shown that the predictive posterior distribution is
+\( \{ X_{n+1}|X_1 = x_1, \ldots, X_n = x_n, \sigma^2 = \varsigma^2 \} \sim \text{N}(\mu_n, \tau^2_n + \varepsilon^2 \)
+
+In the limit,
+we become increasingly certain about \( \theta \), i.e., the posterior variance \( \tau_n^2 \) approaches zero,
+albeit not reducing \( \varepsilon^2 \) (sampling variance); which is therefore a lower bound of our uncertainty.
+
+
+If we consider the joint inference for mean and variance of the sampling distribu-
+tion, what is a convenient prior for the variance?
+
+
+Consider the following two-parameter sampling model:
+
+\( 1/\sigma^2 \sim \Gamma(v_0/2, v_0\sigma_0^2/2) \)
+\( \{\theta\} \sim N(\mu_0, \tau_0^2) \)
+\( \{X_1, ..., X_n | \theta = \vartheta, \sigma^2 = \varsigma^2 \} \sim i.i.d. \ N(\theta, \sigma^2) \)
+
+DON'T INCLUDE THIS ITS MORE THAN NECESSARY
+
+Using the independence of priors for \( \theta \) and \( \sigma^2 \), one can show for the precision \( \tilde{\sigma}^2 \):
+\[ f_{\sigma^2 | \theta, x_1, ..., x_n}(\varsigma^2 | \theta, x_1, ..., x_n) \propto \left( \varsigma^2 \right)^{n/2} \exp \left\{ -\frac{1}{2}\varsigma^2 \sum_{i=1}^{n} (x_i - \theta)^2 \right\} \cdot \left( \varsigma^2 \right)^{\nu_0/2 - 1} \exp \left\{ -\frac{1}{2}\varsigma^2 \nu_0 \sigma_0^2 \right\} \]
+\[ = \left( \varsigma^2 \right)^{\frac{(\nu_0 + n)}{2} - 1} \cdot \exp \left\{ -\frac{1}{2}\varsigma^2 \cdot \left( \nu_0 \sigma_0^2 + \sum_{i=1}^{n} (x_i - \theta)^2 \right) \right\} \]
+Identifying a gamma density, we obtain
+\[ \{\sigma^2 | \theta = \vartheta, X_1 = x_1, ..., X_n = x_n \} \sim IG(\nu_n/2, \nu_n \sigma_n^2(\theta)/2), \]
+where
+\[ \nu_n = \nu_0 + n, \quad \sigma_n^2(\theta) = \frac{1}{\nu_n} [\nu_0 \sigma_0^2 + n s_n^2(\theta)], \]
+and \( s_n^2(\theta) = \sum_{i=1}^{n} (x_i - \theta)^2 / n \) is the unbiased estimator of \( \sigma^2 \) given \( \theta = \vartheta \).
+
+The benefit is that the posterior distributions match the priors for \( \theta, \sigma^2 \).
+
+
+
+Explain in detail how Gibbs sampling can be applied
+in the independent case for the Normal model. Extend this to the multivariate case.
+
+
+
+Problem:
+The marginal distribution of \( \sigma^2 \) given the data is in this case not an inverse-gamma distribution.
+It is even not another standard distribution from which we could easily sample!
+
+In the independent prior normal model, we can use the full conditional distributions of the parameters to sample from the 
+joint posterior distribution using the Gibbs sampler:
+
+Gibbs Sampling in the Normal Model
+
+Input: Initial values \(\Phi^{(0)} = \{\theta^{(0)}, \sigma^{2(0)}\}\); Set \(s = 1\).
+
+Algorithm:
+Step 1: Sample \(\theta^{s} \sim f_{\theta | \sigma^2, x_1,...,x_n}\) (normal)
+Step 2: Sample \(\sigma^{2(s)} \sim f_{\sigma^2 | \theta^{(s)}, x_1,...,x_n}\) (gamma)
+Set \(s = s + 1\), return to Step 1.
+Output: Dependent sequence of parameter values
+\[
+\Phi^{(1)} = \{\theta^{(1)}, \sigma^{2(1)}\}, \Phi^{(2)} = \{\theta^{(2)}, \sigma^{2(2)}\}, ...
+\]
+
+Multivariate:
+If \(X_1,...,X_n\) are independent samples from a multivariate normal distribution with mean \(\theta\), then a convenient prior distribution for 
+\(\theta\) is a multivariate normal distribution \(\theta \sim N(\mu_0, \Lambda_0)\).
+
+In this case, one can show that the full conditional distribution is given by:
+\[
+(\theta | X_1,...,X_n, \Sigma = \varsigma) \sim N(\mu_n, \Lambda_n),
+\]
+where \(\Lambda_n = (\Lambda_0 + n\varsigma^{-1})^{-1}\) and \(\mu_n = \Lambda_n (\Lambda_0 \mu_0 + n\varsigma^{-1}\bar{x})\).
+
+A multivariate generalization of the gamma distribution is the so-called generalized Wishart distribution. 
+Analogous to the univariate case, a generalized inverse-Wishart distribution prior for the covariance matrix results in a 
+generalized inverse-Wishart full conditional distribution.
+
+\iffalse
+Consider the following two-parameter sampling model:
+
+\( 1/\sigma^2 \sim \Gamma(v_0/2, v_0\sigma_0^2/2) \)
+\( \{\theta | \sigma^2 = s^2 \} \sim N(\mu_0, s^2/\kappa_0) \)
+\( \{X_1, ..., X_n | \theta = \vartheta, \sigma^2 = \varsigma^2 \} \sim i.i.d. \ N(\theta, \sigma^2) \)
+
+The joint posterior density of \( \theta \) and \( \sigma^2 \) can be decomposed as
+\[ f_{\theta, \sigma^2 | x_1, ..., x_n} = f_{\theta | \sigma^2, x_1, ..., x_n} \cdot f_{\sigma^2 | x_1, ..., x_n} \]
+
+From a previous section, we know that
+\( \{\theta | X_1 = x_1, ..., X_n = x_n, \sigma^2 = s^2 \} \sim N(\mu_n, s^2/\kappa_n) \)
+where
+\[ \kappa_n = \kappa_0 + n \]
+and
+\[ \mu_n = \frac{\kappa_0\mu_0 + n\bar{x}}{\kappa_n} \]
+Based on
+\[ f_{\sigma^2 | x_1, ..., x_n}(s^2 | x_1, ..., x_n) \propto f_{\sigma^2}(s^2) \cdot \int_{-\infty}^{\infty} f_{x_1, ..., x_n | \theta, \sigma^2}(x_1, ..., x_n | \vartheta, s^2) \cdot f_{\theta | \sigma^2}(\vartheta | s^2) d\vartheta, \]
+one may show in tedious computations that
+\[ \{1/\sigma^2 | X_1 = x_1, ..., X_n = x_n \} \sim \Gamma(\nu_n/2, \nu_n \sigma_n^2/2), \]
+where
+\[ \nu_n = \nu_0 + n \]
+and
+\[ \sigma_n^2 = \frac{\nu_0 \sigma_0^2 + (n-1)s^2 + \frac{\kappa_0 n}{\kappa_0 + n}(\bar{x} - \mu_0)^2}{\nu_n}. \]
+\fi

@@ -1,0 +1,122 @@
+What is the actuarial equivalence principle / principle of pooling? 
+What are systematic risks?
+
+
+The most important principle of the insurance business is the pooling of risks:
+- Many homogeneous and independent risks in the insurer’s portfolio
+  fair premium=average claims amount (plus safety loading, expenses)
+Premium calculation based on the Actuarial Equivalence Principle:
+- Expected present value of premium payments=expected present value of insurance benefits
+- Pricing of insurance contracts related to statistical probabilities (‘statistical’ or ‘real-world’ probability measure \( \mathbb{P}\))
+Insurance pricing considers non-systematic risks:
+For systematic risk like financial market risk and non-diversifiable insurance risks (e. g., longevity risk) the
+equivalence principle is not applicable, due to the lack of pooling of risks.
+
+Why is the net risk premium a good approximation, but not fully sufficient? One
+static perspective is the CLT. Another, dynamic one uses the law of iterated logarithm.
+
+Pooling of risks expressed in terms of the Law of Large Numbers:
+- For a large portfolio of i.i.d. insurance claims \(L_i \sim L\), \(i \in \mathbb{N}\), 
+   modeled as non-negative random variables on \((\Omega, \mathcal{F}, P)\),
+  \[\lim_{n \rightarrow \infty} \frac{1}{n} \sum_{i=1}^n L_i = E[L] \quad P\text{-a.s..}\]
+- This suggests that the premium per contract should be equal to the expected claims amount ('net risk premium'), i.e., \(\pi(L) = E[L]\).
+
+ATTENTION: The net risk premium is not sufficient:
+- Classical results of ruin theory state that ruin of the insurer occurs in the long run \(P\)-a.s. if only the net risk premium \(\pi(L) = E[L]\) is charged.
+- A similar result holds in a one-period setting: Letting the portfolio size \(n\) tend to infinity, the one-period 'ruin probability'
+\[P \left[ \pi n(L) - \sum_{i=1}^n L_i < 0 \right] = P \left[ \frac{\sum_{i=1}^n (L_i - E[L])}{\sqrt{n} \sigma(L)} < 0 \right]\]
+converges to 1/2 (Central Limit Theorem).
+
+Conclusion: An (explicit or implicit) safety loading is necessary!
+By the strong law of large numbers, the random walk \(Z_n := \sum_{i=1}^n (\pi + L_i)\), \(n \in \mathbb{N}\), satisfies
+\[\lim_{n \rightarrow \infty} \frac{1}{n} Z_n = \pi + E[L_1] \quad P\text{-a.s..}\]
+\(\pi < E[L_1]\): For any \(u\), this implies
+\[\lim_{n \rightarrow \infty} K_n^u = \lim_{n \rightarrow \infty} Z_n = -\infty \quad P\text{-a.s.},\]
+hence \(P[\inf_{n \in \mathbb{N}} K_n^u < 0] = 1\).
+\(\pi > E[L_1]\): In this case, \(\lim_{n \rightarrow \infty} Z_n = +\infty \quad P\text{-a.s.}\) and hence
+\[\inf_{n \in \mathbb{N}} Z_n > -\infty \quad P\text{-a.s..}\]
+This implies
+\[\lim_{u \rightarrow \infty} P[\inf_{n \in \mathbb{N}} K_n^u < 0] = \lim_{u \rightarrow \infty} P[u + \inf_{n \in \mathbb{N}} Z_n < 0] = 0.\]
+
+\(\pi = E[L_1]\):
+For \(\pi = E[L_1]\), the increments of the random walk \(Z_n\), \(n \in \mathbb{N}\), have zero expectation.
+The law of the iterated logarithm yields
+\[\lim_{n \rightarrow \infty} \frac{Z_n}{\sqrt{2nVar[L_1] \ln \ln n}} = -1 \quad P\text{-a.s.},\]
+i.e., for \(P\)-almost all \(\omega \in \Omega\) there exists a subsequence \(n_k(\omega)\) such that
+\[\lim_{k \rightarrow \infty} Z_{n_k(\omega)}(\omega) = -\infty.\]
+This implies as above
+\[P[\inf_{n \in \mathbb{N}} K_n^u < 0] = P[u + \inf_{n \in \mathbb{N}} Z_n < 0] = 1.\]
+
+
+Explain the terms explicit premium principle and implicit premium principle. How
+can the latter be framed using the notion of first order stochastic dominance?
+
+Example 4.7.1 (Explicit premium principle)
+
+Let \(L\) be an insurance claim, and let \(\rho(-L)\) be some measure of risk (e.g., variance, standard deviation, Value at Risk, ...). 
+For a parameter \(a>0\), the functional
+\[\pi(L) = E[L] + a\rho(-L)\]
+is called an explicit premium principle.
+
+Remarks:
+Safety loadings might also be chosen dependent on the number of risks in a portfolio to keep the probability of ruin below a given threshold.
+
+An implicit safety loading results from conservative best estimate assumptions:
+Assume that \(F\) is the cumulative distribution function of a random variable \(L \geq 0\) under \(\mathbb{P}\), 
+but the actuary calculates with a more conservative cumulative distribution function \(G\) (corresponding to a measure \(\tilde{\mathbb{P}}\)), 
+i.e.,
+\[1 - F(x) = \mathbb{P}[L>x] \leq \tilde{\mathbb{P}}[L>x] = 1 - G(x) \quad (x \in \mathbb{R}_+).\]
+This corresponds to \textbf{first order stochastic dominance}.
+The net risk premium with respect to \(G\) or \(\tilde{\mathbb{P}}\), respectively, satisfies
+\begin{align*}
+  \mathbb{E}_{\tilde{\mathbb{P}}}[L] &= \int_0^{\infty} (1-G(x))dx \\
+    &= \int_0^{\infty} (1-F(x))dx + \int_0^{\infty} (F(x)-G(x))dx = \mathbb{E}_{\mathbb{P}}[L] + a
+\end{align*}
+with a safety loading \(a := \int_0^{\infty} (F(x)-G(x))dx > 0\) with respect to the actual net risk premium \(\mathbb{E}_{\mathbb{P}}[L]\).
+In this sense, the actuary applies a change of measure before calculating the premium based on the expectation.
+
+
+Let \(L \geq 0\) be a random variable which models possible claims of an insurance contract or a portfolio of insurance contracts (losses from the insurer's perspective).
+Since monetary risk measures correspond to capital requirements, it is natural to define an insurance premium as follows:
+\(\pi(L) = \rho(-L)\) for a single contract
+\(\pi_n(L_i) = \frac{1}{n} \rho(-(L_1 + \dots + L_n))\) premium per risk in a homogenous portfolio of independent \(L_1, \dots, L_n\)
+This change of sign is due to the actuarial interpretation: Here \(L\) describes the possible claims of an 'insurance risk'. 
+The corresponding financial position of the insurer is then given by \(-L\), and so the premium \(\pi(L) = \rho(-L)\) is determined 
+as the capital that is required to make that position acceptable.
+
+Let \(\rho\) be a convex risk measure on \(\mathcal{X} = L^{\infty}(\Omega, \mathcal{F})\). 
+We assume that \(\rho\) is finite and normalized to \(\rho(0)=0\).
+In this case, the functional \(\pi\) on \(\mathcal{X}\) defined by
+\[\pi(L) := \rho(-L)\]
+satisfies the following properties:
+
+Normalization: \(\pi(0)=0\),
+Translation property: \(\pi(L+m) = \pi(L) + m\) for \(L \in \mathcal{X}\) and \(m \in \mathbb{R}\),
+Monotonicity: \(L_1 \leq L_2 \Rightarrow \pi(L_1) \leq \pi(L_2)\),
+Convexity: \(\pi\) is convex on \(\mathcal{X}\).
+
+Note also that \(\pi\) is continuous from below if \(\rho\) is continuous from above.
+Such functionals \(\pi\) were introduced by Deprez and Gerber (1985) in an actuarial context as convex principles of premium calculation.
+
+The premium principle
+\[\pi_{\gamma}(L) := \frac{1}{\gamma} \log E_{\mathbb{P}}[e^{\gamma L}],\]
+which corresponds to the convex entropic risk measure \(e_{\gamma}\) is called the exponential principle.
+
+The exponential principle \(\pi_{\gamma}\) satisfies the zero utility principle with respect to the exponential utility function 
+\(u_{\gamma}(x) := \frac{1}{\gamma}(1-e^{-\gamma x})\), i.e.,
+\[E_{\mathbb{P}}[u_{\gamma}(\pi_{\gamma}(L)-L)] = u_{\gamma}(0),\]
+and it is additive on independent risks.
+
+Conversely, any premium principle which satisfies the zero utility principle and is additive for independent risks must be of the form 
+\(\pi_{\gamma}\) for some \(\gamma \geq 0\), including the linear case \(\gamma = 0\).
+
+If \(L \geq 0\) models the possible claims of an insurance contract, the net risk premium is given by
+\(\mathbb{E}_{\mathbb{P}}[L] = \int_0^{\infty} \mathbb{P}[L>x\) dx.
+In order to obtain a safety loading, one could weight the probabilities \(\mathbb{P}[L>x]\) with a concave distortion function \(\psi\), i.e., an increasing and concave function on the unit interval defined by \(\psi(0)=0\) and \(\psi(1)=1\).
+In this case, we obtain the premium
+\[\pi(L) = \int_0^{\infty} \psi(\mathbb{P}[L>x]) dx\]
+Thus, the premium is calculated as the Choquet integral
+\[\pi(L) = \int L dc\]
+with respect to some concave distortion \(c = \psi \circ \mathbb{P}\) of the underlying probability measure \(\mathbb{P}\).
+In the actuarial literature this is often called Wang's premium principle. 
+It corresponds to the class of distortion risk measures, up to a change of sign.

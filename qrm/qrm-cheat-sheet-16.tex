@@ -1,0 +1,94 @@
+
+%forthe precision \( \gamma = \frac{1}{\sigma^2} \):
+
+State the classical normal linear regression model. Which parameters are the
+objective of (Bayesian) statistical inference?
+
+The two-parameter model described by the conditional probability mass function
+\[
+f_{y | \beta, \sigma^2, X}(y | \beta, \sigma^2, X) = (2\pi\sigma^2)^{-n/2} \exp \left( -\frac{1}{2\sigma^2} \sum_{i=1}^{n} (y_i - \beta^T X_i)^2 \right)
+\]
+\[
+\propto \exp \left( -\frac{1}{2\sigma^2} [y^T y - 2\beta^T X^T y + \beta^T X^T X \beta] \right)
+\]
+i.e., \(y | \{\beta = \beta, \sigma^2 = \varsigma^2, X = X\} \sim N(X\beta, \varsigma^2 I)\) is called the Bayesian normal linear regression model.
+
+
+Which marginal prior distributions allow – assuming a product prior – a tractable
+computation of the full conditional distributions?
+
+Since \( \mathbf{y} \) is normal, the same could be assumed about \( \mathbb{\beta} \), say \( \mathcal{N}(\beta_0, \Sigma_0) \), which indeed
+gives a multivariate normal as posterior.
+
+\(f_{\beta | y, X, \sigma^2}(\beta | y, X, \sigma^2) \propto f_{y | X, \beta, \sigma^2}(y | X, \beta, \sigma^2) \cdot f_{\beta}(\beta)\)
+\[
+\propto \exp \left( \beta^T [\Sigma_0^{-1} \beta_0 + X^T y / \varsigma^2] - \frac{1}{2} \beta^T [\Sigma_0^{-1} + X^T X / \varsigma^2] \beta \right),
+\]
+which is proportional to a multivariate normal density \(N(\beta_n, \Sigma_n)\), where
+\[
+\Sigma_n = (\Sigma_0^{-1} + X^T X / \varsigma^2)^{-1} \quad \beta_n = \Sigma_n (\Sigma_0^{-1} \beta_0 + X^T y / \varsigma^2).
+\]
+
+If the elements of the prior precision matrix \(\Sigma_0^{-1}\) are small in magnitude, the conditional expectation \(\beta_n\) is approximately 
+equal to the least squares estimator \(LSE = (X^T X)^{-1} X^T y\) (the estimator from the data).
+If, on the other hand, the sampling precision is very small (i.e., \(\varsigma^2\) is very large), the expectation is approximately 
+equal to the prior expectation \(\beta_0\).
+
+Analogous to before we choose for \( \sigma^2 \) an inverse-gamma distribution, which yields as posterior distribution 
+
+\( \{ \sigma^2 | \mathbf{y} = y, \mathbf{X} = X, \mathbf{\beta} = \beta \} \sim \text{IG}(\frac{\nu_0 + n}{2}, \frac{\nu_0\simga_0^2 + \text{LS}(\beta)}{2} \)
+
+where \(\text{LS}(\beta)\) denotes the sum of squared deviations.
+
+Together they can be estimated with a Gibbs sampler in the same fashion as we did for the normal model.
+
+Why, in particular, are often priors important that incorporate significant uncer-
+tainty? How can this be implemented? Discuss why MCMC is typically necessary to compute the posterior. 
+
+Since priors are hard to compute (the number of prior correlation parameters grows with \( \binom{p}{2} \), \( p \) the number of covariates).
+If the prior distribution is not going to represent real prior information about the parameters, then it
+should be as minimally informative as possible (→ weakly or non-informative priors).
+The resulting posterior distribution would then represent the posterior information of someone who began with
+little knowledge of the population being studied.
+Example:
+⋆ Idea: Increase variances of normal prior for \( \beta \) to incorporate uncertainty of prior knowledge.
+→ Limiting case: \(f_\beta \propto \text{const.}\)
+⋆ Such a prior does not constitute a probability density! It is called improper or diffuse.
+⋆ Still, diffuse priors are admissible as long as the resulting posterior distribution is a proper distribution. In this special case,
+the posterior is proper, but does not possess a tractable parametric form.
+→ The analysis can be based on MCMC methods.
+
+
+Explain the idea of Bayesian model selection. How does the Bayesian formula for the indicator vector look like? 
+
+The question continues with:
+Describe the steps in the Gibbs sampler.
+
+To reduce the number of covariates for which priors have to be computed, we can enlarge the model as follows:
+Write regression coefficients as \(\beta_j = z_j \cdot b_j\), where \(z_j \in \{0, 1\}\) and \(b_j \in \mathbb{R}\), \(j = 1, ..., p\).
+The regression equation becomes
+\[
+y_i = z_1 b_1 x_{i,1} + ... + z_p b_p x_{i,p} + \varepsilon_i, \quad i = 1, ..., n,
+\]
+i.e., the \(z_j\)'s indicate which regression coefficients are non-zero.
+Each value of \(z = (z_1, ..., z_p)\) corresponds to a choice of covariates to include (which is the model selection)
+
+Given a prior distribution \(f_z\) over models, we can compute a posterior probability for each regression model:
+\(
+f_{z | y, X}(z | y, X) = \frac{f_z \cdot f_{y | X, z}}{f_{y | X}(y | X)} = \frac{f_z \cdot f_{y | X, z}}{\sum_{\tilde{z}} f_z(\tilde{z}) \cdot f_{y | X, \tilde{z}}}
+\)
+if we evaluate \(f_{y | X, z}\) for each possible set of covariates \(\tilde{z}\).
+
+The corresponding Gibbs sampler (because the sum in the denominator consists of \( 2^p \) terms) is
+
+Input: Initial values \(\{z^{(0)}, \sigma^{2,(0)}, \beta^{(0)}\}\); Set \(s = 0\).
+
+Algorithm:
+Step 1: Set \(z = z^{(s)}\);
+Step 2: For \(j \in \{1, ..., p\}\) in random order, replace \(z_j\) with a sample from \(f_{z_j | z_{-j}, y, X}\) 
+determined using marginal probabilities \(f_{y | X, z}\)
+Step 3: Set \(z^{(s+1)} = z\);
+Step 4: Sample \(\sigma^{2,(s+1)} \sim f_{\sigma^2 | z^{(s+1)}, y, X}\); [inverse gamma]
+Step 5: Sample \(\beta^{(s+1)} \sim f_{\beta | z^{(s+1)}, \sigma^{2,(s+1)}, y, X}\); [multivariate normal]
+Step 6: Set \(s = s + 1\) and return to Step 1;
+Output: Dependent samples \(\{z^{(s)}, \sigma^{2,(s)}, \beta^{(s)}\}, s = 1, 2, ...\)

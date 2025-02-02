@@ -233,7 +233,7 @@ Observation:
 
 Explain in more detail the methodology of conditional risk measurement in time.
 
-Distortion risk measures are an important class of risk measures that includes VaR, AVaR, RVaR, Wang premium principles, and many other examples as special cases
+Distortion risk measures are an important class of risk measures that includes VaR, AVaR, RVaR, Wang premium principles, and many other examples as special cases.
 Distortion risk measures are a subclass of comonotonic monetary risk measures
 
 We denote in this section by \(X\) a random variable which models losses as its positive part and wealth or gains as its negative part. 
@@ -321,11 +321,13 @@ c = \frac{2E[S_{m+1}]}{\text{Var}(S_{m+1})}, \quad \nu = cE[S_{m+1}], \quad E[S_
 \text{Var}(S_{m+1}) = 2(m+1) - \frac{m^2 + 6m + 6}{n} + \sum_{k=0}^{m+1} \frac{1}{n \cdot p_k}
 \)
 
-Since \(c \to 1\) and \(\nu \to m+1\) as \(n \to \infty\), the distributions used in the finite sample approximation are asymptotically equal to the asymptotic distribution known from Pearson’s \(\chi^2\)-test
-But in Nass' \(\chi^2\)-test the distribution of the approximating \(\frac{1}{c}Z\) matches for each \(n\) the first two moments of the distribution of \(S_{m+1}\), while \(\chi^2_{m+1}\) matches only the first moment
+Since \(c \to 1\) and \(\nu \to m+1\) as \(n \to \infty\), the distributions used in the finite sample approximation are asymptotically equal to the asymptotic distribution 
+known from Pearson’s \(\chi^2\)-test
+But in Nass' \(\chi^2\)-test the distribution of the approximating \(\frac{1}{c}Z\) matches for each \(n\) the first two moments of the distribution 
+of \(S_{m+1}\), while \(\chi^2_{m+1}\) matches only the first moment
 
 
-Describe Multinomial Backtest for DRMs
+How can the AV@R-approach be generalized to arbitrary DRMs for multinomial backtests?
 
 If \(g\) is left-continuous, the DRM can be expressed as
 \(
@@ -367,8 +369,8 @@ O_k := \sum_{t=1}^n \mathbf{1}_{\{X_t = k\}}, \quad k = 0, 1, \ldots, m+1
 
 are the key statistics of the multinomial backtest.
 
-
-Desribe explicitely how to run a backtest for DRMs
+Describe explicitely how to run a backtest for DRMs. Explain the power impact of
+stratification of levels and discretization.
 
 Null hypothesis \( H_0 \)
 Components of \( L = (L_t)_{t=1,2,\ldots,n} \) are independent random variables with standard normal distribution \( \mathcal{N} \)
@@ -392,6 +394,6 @@ This is repeated \( N \) times to obtain the estimator
 \]
 
 A larger number of samples n leads to improved power
-3Power in our method does not monotonously increase in the stratification parameter m
+Power in our method does not monotonously increase in the stratification parameter m
 In particular, too many strata, i.e., large m, is not the best choice - randomization of levels is more
 successful than discritization!

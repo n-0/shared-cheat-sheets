@@ -1,0 +1,251 @@
+Explain the basic idea of credibility theory, i.e., learning from the individual and
+collective experience. How do the Bayesia/Frequentists approaches for net premia differ?
+
+Credibility theory aims at finding risk-adequate premiums for different heterogeneous contracts in a
+portfolio – given the observed claims history of the portfolio.
+
+Let \( X_{i,t} \) represents the claim caused by contract \( i \) in the period \( t \), \( n_i \) is the sample size for the 
+\( i \)-th contract.
+then the frequentists approach for the net premia is
+
+\( \overline{X}_i = \frac{1}{n_i} \sum_{k=1}^{n_i} X_{i,k} \simeq \mathbb{E}[X_{i, 1}] \)
+
+Heterogeneity of contracts is captured by an unknown parameter for each contract that determines
+the contract’s individual risk profile. The premium ansatz is chosen to be the expected claim size per
+contract – given the knowledge on the contract’s risk profile.
+Given the observed claims history of the overall portfolio, the premiums are estimated.
+We choose the Bayes estimator (under SE) for estimating the premium.
+
+
+Define the heterogeneous risk model. Explain that the relevant
+information is characterized by the individual claims experience of the relevant
+contract alone.
+
+The question also included: The net risk premium is given by a conditional expectation given the true type and motivated by a conditional LLN. 
+Discuss this.
+
+The Heterogenous risk model is with the Prob. space \((\Omega, \mathcal{F}, \mathbb{P})\):
+1. The \(i\)th risk is described through the random variables \((\theta_i, (X_{i,t})_{t=1,...,n})\). Here, \(\theta_i\) denotes the real-valued parameter of heterogeneity and \((X_{i,t})_{t=1,...,n}\) represent the claim sizes caused by risk \(i\) in over time.
+2. \((\theta_i, (X_{i,t})_{t=1,...,n}), i = 1, ..., r\), are i.i.d. random elements.
+3. It holds: \(X_{i,t} \in L^2 (\Omega, \mathcal{F}, \mathbb{P})\) for all \(i, t\).
+4. Given \(\theta_i\), the sequence \((X_{i,t})_{t=1,...,n}\) is i.i.d. with conditional distribution function denoted by \(F(\cdot | \theta_i)\).
+
+Which allows for the following Ansatz, that the net risk premium given \(\theta_i\) is:
+\[
+\mu(\theta_i) := E[X_{i,t} | \theta_i] = \int_{\mathbb{R_+}} x \, dF(x | \theta_i).
+\]
+Remark: Motivated by the law of large numbers: Given \(\theta_i\), it holds that
+\[
+\bar{X}_i := \frac{1}{n_i} \sum_{t=1}^{n_i} X_{i,t} \xrightarrow[n_i \to \infty]{} \mu(\theta_i) \quad \mathbb{P}\text{-a.s.},
+\]
+i.e., \(\mu(\theta_i)\) is an approximation of the average claim size \(\bar{X}_i\) of risk \(i\) given \(\theta_i\).
+Estimate the net risk premium \( \mu(\theta_i) \) given the claims history of the overall portfolio
+\( \mathfrak{X}_j = (X_{j,1}, \dots, X_{j,nj})^\top \), \(j = 1, \dots, r\).
+
+Idea: Estimation through minimization of the \(L^2\) distance:
+\(
+\rho(\hat{\mu}) := E[(\mu(\theta_i) - \hat{\mu})^2].
+\)
+Overall, we thus obtain the following optimization problem
+\(
+\text{minimize } \rho(\hat{\mu}) = E[(\mu(\theta_i) - \hat{\mu})^2] \text{ over all } \hat{\mu} \in L^2 (\Omega, \mathcal{F}_0, \mathbb{P}).
+\)
+Note that this is just the Bayes estimator with SE as Loss function in disguise. As a consequence we get
+
+Theorem:
+The optimization problem possesses a solution \(\hat{\mu}^{\ast} \in L^2 (\Omega, \mathcal{F}_0, \mathbb{P})\) namely the conditional expectation
+\(
+\hat{\mu}^{\ast} := E[\mu(\theta) | \mathcal{F}_0] = E[\mu(\theta_i) | X_i].
+\)
+The solution is \(\mathbb{P}\)-a.s. unique. The minimal squared error (minimal Bayes risk) is given by
+\(
+\rho(\hat{\mu}^{\ast}) = E[\text{Var}[\mu(\theta_i) | X_i]],
+\)
+where \(\text{Var}[\mu(\theta_i) | X_i] := E[(\mu(\theta_i) - E[\mu(\theta_i) | X_i])^2 | X_i]\) is the conditional variance of \(\mu(\theta_i)\) given the data \(X_i\).
+
+The Theorem shows that the estimator \(\hat{\mu}^{\ast}\) for \(\mu(\theta_i)\) given the claims experience \( X_1, \dots, X_r \) of all risks only
+depends on the individual claims experience \( X_i = (X_{i,1}, \dots, X_{i, n_i})^\top \) of risk \( i \).
+To explicitly calculate the Bayes estimator, we need to know the (posterior) distribution of \( \thea_i|\mathcal{X}_i \).
+
+Discuss Bayesian estimators in the context of credibility theory with the Poisson sampling model.
+
+We assume that the parameter of heterogeneity \(\theta\) is \(\Gamma(\alpha, \beta)\)-distributed (prior distribution) and that given \(\theta\), 
+\(X_t\), \(t = 1, ..., n\), are independent and identically \(\text{Poi}(\theta)\)-distributed (we thus consider a Poisson sampling model).
+
+From the previous sections, we know that in this situation, \(X \sim \text{NB}(\alpha, \frac{\beta}{1+\beta})\) and it holds that
+\[
+\mu(\theta) = E[X_1 | \theta] = \theta.
+\]
+To obtain our estimator \(\mu^{\ast} = E[\mu(\theta) | X] = E[\theta | X]\) explicitly, we first calculate the density of the (posterior) distribution 
+\(f_{\theta | X}\).
+
+Since \(f_{\theta}(y) = \frac{\beta^{\alpha}}{\Gamma(\alpha)} y^{\alpha-1} e^{-\beta y} \mathbb{I}_{(0, \infty)}(y)\), the posterior is of the form
+\[
+f_{\theta | X}(y, X) = \frac{1}{P[X=x]} P[X_1 = x_1 | \theta] \cdots P[X_n = x_n | \theta] f_{\theta}(y)
+\]
+\[
+= C_1(x) y^{\alpha-1} e^{-\beta y} \prod_{t=1}^{n} \frac{y^{x_t}}{x_t!} e^{-y}
+\]
+\[
+= C_2(x) y^{\alpha + \sum_{t=1}^{n} x_t - 1} e^{-(\beta + n)y}
+\]
+for constants \(C_1(x)\), \(C_2(x)\).
+
+This is of the form of a gamma distribution, i.e.,
+\[
+\theta | X \sim \Gamma \left( \alpha + \sum_{t=1}^{n} X_t, \beta + n \right).
+\]
+Using the formula for the expected value of the gamma distribution, we obtain
+\[
+\hat{\mu}^{\ast} = E[\theta | X] = \frac{\alpha + \sum_{t=1}^{n} X_t}{\beta + n}.
+\]
+Since \(E[\theta] = \frac{\alpha}{\beta}\), the Bayes estimator possesses the alternative representation
+\[
+\hat{\mu}^{\ast} = (1 - w) E[\theta] + w \bar{X}
+\]
+with weight \(w := \frac{n}{\beta + n} \in (0, 1)\) and \(\bar{X} = \frac{1}{n} \sum_{t=1}^{n} X_t\).
+The minimal squared error according to our result for the optimal solutionis given by
+\[
+\rho(\mu^{\ast}) = E[\text{Var}[\mu(\theta) | X]] = E[\text{Var}[\theta | X]]
+\]
+\[
+= E \left[ \frac{\alpha + \sum_{t=1}^{n} X_t}{(\beta + n)^2} \right] = \frac{\alpha + n E[X_1]}{(\beta + n)^2}
+\]
+\[
+= \frac{\alpha}{\beta} \frac{1}{\beta + n},
+\]
+where the last equality follows from \(E[X_1] = E[E[X_1 | \theta]] = E[\theta] = \frac{\alpha}{\beta}\).
+As one would expect - the minimal squared error, i.e., the estimation error, decreases with increasing number of observation periods \(n\).
+
+
+Explain the reason for the best linear estimator in credibility theory and its definition.
+Explain in terms of L2 -projection operators the difference to the usual estimator.
+
+In general, calculating the estimator \( \hat{\mu}^{\ast} = E[\mu(\theta_i) | X_i] \) is only feasible for some distributions,
+A workaround is restricting the set of allowed functions for \( \hat{\mu}^{\ast} \), namely the subset of linear estimators:
+\(\mathcal{L} := \{ \hat{\mu} | \hat{\mu} = a_0 + \sum_{i=1}^{r} \sum_{t=1}^{n_i} a_{i,t} X_{i,t} \text{ with } a_0, a_{i,t} \in \mathbb{R} \}\)
+
+The reformulated goal is to obtain the best linear estimator of \(X\) given \(Y_1, ..., Y_m\) using the \(L^2\) distance, 
+i.e., we want to find an estimator
+\[
+\hat{Z}_L^{\ast} \in \mathcal{C}' := \{ \hat{Z} \mid \hat{Z} = a_0 + a^T Y \text{ with } a_0 \in \mathbb{R}, a \in \mathbb{R}^m \}
+\]
+that minimizes \(E[(X - \hat{Z})^2]\) over all \(\hat{Z} \in \mathcal{C}'\).
+
+Describe the general characterization of a best linear estimator. Note that this
+involves only moments up to order 2.
+
+Let \((a_0, a)\) be an arbitrary solution to the system of linear equations
+\[
+a_0 = E[X] - a^T E[Y], \quad \Sigma_{X,Y} = \Sigma_Y a
+\]
+and \(\hat{Z}_L := a_0 + a^T Y\). Then, for all \(\hat{Z} \in \mathcal{C}'\), it holds that
+\[
+E[(X - \hat{Z})^2] \ge E[(X - \hat{Z}_L)^2] = \text{Var}[X] - a^T \Sigma_Y a,
+\]
+i.e., each pair \((a_0, a)\) corresponds to a best linear estimator \(\hat{Z}_L\). 
+Conversely, the equations (10) also constitute a necessary condition for a best linear estimator.
+
+An estimator \(\hat{Z}_L^{\ast}\) from a) fulfills the equations
+\(
+E[X] = E[\hat{Z}_L^{\ast}] \quad \text{and} \quad \text{Cov}[X, Y_i] = \text{Cov}[\hat{Z}_L^{\ast}, Y_i] \quad (i = 1, ..., m).
+\)
+If \(\Sigma_Y\) is invertible, there exists a unique minimizer \(\hat{Z}_L^{\ast}\) of \(E[(X - \hat{Z})^2]\) in the class \(\mathcal{C}'\), namely
+\(
+\hat{Z}_L^{\ast} = E[X] + \Sigma_{X,Y} \Sigma_Y^{-1} (Y - E[Y]).
+\)
+The corresponding minimal squared error is given by
+\(
+E[(X - \hat{Z}_L^{\ast})^2] = \text{Var}[X] - \Sigma_{X,Y} \Sigma_Y^{-1} \Sigma_{X,Y}^T = \text{Var}[X] - \text{Var}[\hat{Z}_L^{\ast}].
+\)
+
+State the assumptions and results of the Bühlmann model
+and the Bühlmann-Straub model
+
+The Bühlmann Model is defined through the following assumptions:
+
+1. The \(i\)th contract is described through \((\theta_i, (X_{i,t})_{t=1,...,n})\). Here, \(\theta_i\) denotes the 
+parameter of heterogeneity and the random variables \((X_{i,t})_{t=1,...,n}\) represent claim sizes of the \(i\)th contract over time.
+2. The pairs \((\theta_i, (X_{i,t})_{t=1,...,n})\), \(i = 1, ..., r\), are independent.
+3. The sequence \((\theta_i)_{i=1,...,r}\) is i.i.d.
+4. It holds \(\text{Var}[X_{i,t}] < \infty\) for all \(i\) and \(t\).
+5. Given \(\theta_i\), the random variables \(X_{i,t}\), \(t \ge 1\), are independent and their expected values and variances are functions of 
+\(\theta_i\):
+\(
+\mu(\theta_i) = E[X_{i,t} | \theta_i] \quad \text{and} \quad v(\theta_i) = \text{Var}[X_{i,t} | \theta_i].
+\)
+
+Technical Remark:
+Due to 2.), \((\mu(\theta_i))_{i=1,...,r},\ (v(\theta_i))_{i=1,...,r}\) are i.i.d. sequences
+We will write:
+\(
+\mu = E[\mu(\theta_i)], \quad \lambda = \text{Var}[\mu(\theta_i)] \quad \text{and} \quad \varphi = E[v(\theta_i)].
+\)
+
+The central innovation over the Heterogenous model is that the individuals/risk profiles \( X_i \) can have different distributions
+(which does not vary over time though).
+One can then derive from the covariance structure (\( \text{Cov}[X_{i,t}, X_{i, s}] = \lambda + \phi \) for \( t = s \) or else \( \lambda \),
+that under the assumption \(\varphi > 0\), a best linear estimator \(\hat{\mu}_L = a_0 + a^T \text{ of } \mu(\theta_i)\) given the data 
+\(\bar{X}_1, ..., \bar{X}_r\) exists. It is \(\mathbb{P}\)-a.s. unique and given by
+\(
+\hat{\mu}_L^{\ast} = (1 - w) \mu + w \bar{X}_i
+\)
+where
+\[
+w = \frac{n_i \lambda}{\varphi + n_i \lambda} \in (0, 1) \quad \text{and} \quad \bar{X}_i = \frac{1}{n_i} \sum_{t=1}^{n_i} X_{i,t}.
+\]. \(\hat{\mu}_L^{\ast}\) is called the credibility estimator and \( w \) the credibility weight, 
+the higher it is the stronger the emphasis on individual claims, 
+in fact with \( w \to 1, n_i \to \infty \) this becomes the frequentist approach.
+The minimal squared error is given by
+\(
+\rho(\hat{\mu}_L^{\ast}) = (1 - w) \lambda.
+\).
+
+If we change the property 5 in the Bühlmann Model we get the Bühlmann-Straub Model, in particular
+5'. Given \(\theta_i\), \(X_{i,t}\), \(t \ge 1\), are independent; their expectation and variances are given as functions of \(\theta_i\):
+\[
+\mu(\theta_i) = E[X_{i,t} | \theta_i] \quad \text{and} \quad \text{Var}[X_{i,t} | \theta_i] = \frac{v(\theta_i)}{p_{i,t}},
+\]
+where \(p_{i,t}\) are known positive weights and let \( p_i = \sum_{t=1}^{n_i} p_{i,t} \).
+The main innovation here is heterogeneity over time for an individual/risk profile.
+
+The best linear estimator is:
+If the covariance matrix \(\Sigma_X\), \(i \in \{1, ..., r\}\) is invertible, it is
+\(
+\hat{\mu}_L^{\ast} = (1 - w) \mu + w \bar{X}_i
+\)
+where
+\(
+w = \frac{\lambda p_i}{\varphi + \lambda p_i} \quad \text{and} \quad \bar{X}_i = \frac{1}{p_i} \sum_{t=1}^{n_i} p_{i,t} X_{i,t}
+\)
+the \(\mathbb{P}\)-a.s. unique best linear estimator of \(\mu(\theta_i)\) given the data \(\bar{X}_1, ..., \bar{X}_r\). 
+The minimal squared error is given by
+\(
+\rho(\hat{\mu}_L^{\ast}) = (1 - w) \lambda.
+\)
+
+
+\iffalse
+Due to 2.), claim histories belonging to different risks are independent.
+Claim sizes belonging to a single risk \(X_{i,1}, ..., X_{i,n_i}\), however, can be correlated:
+
+Let \(\mu(\theta_i) := E[X_{i,1} | \theta_i]\). Then, because \(E[X_{i,s} | \theta_i] = E[X_i | \theta_i] = \mu(\theta_i)\) and \(E[X_{i,s}] = E[E[X_{i,s} | \theta_i]] = E[\mu(\theta_i)] = E[X_{i,t}]\) we obtain from 4.) that
+\[
+\text{Cov}[X_{i,s}, X_{i,t}] = E[E[(X_{i,s} - E[X_{i,s}])(X_{i,t} - E[X_{i,t}]) | \theta_i]]
+\]
+\[
+= E[(E[X_{i,s} | \theta_i] - E[X_{i,s}])(E[X_{i,t} | \theta_i] - E[X_{i,t}])]
+\]
+\[
+= \text{Var}[\mu(\theta_i)],
+\]
+i.e., \(\text{Cov}[X_{i,s}, X_{i,t}] > 0\) for \(\text{Var}[\mu(\theta_i)] > 0\).
+
+Claim sizes \(X_{i,t}\), \(t = 1, ..., n_i\), \(i = 1, ..., r\), are identically distributed since for all \(x \in \mathbb{R}\):
+\[
+F_{X_{i,t}}(x) = P[X_{i,t} \le x] = E[P[X_{i,t} \le x | \theta_i]] \overset{4.)}{=} E[F(x | \theta_i)] \overset{2.)}{=} E[F(x | \theta_1)].
+\].
+\fi
+
+
+
