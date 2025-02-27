@@ -1,0 +1,319 @@
+Discuss finite differences. What is the advantage of this method compared to other
+methods, what is the disadvantage? Why is the central difference estimator pre-
+ferred to the standard difference quotient? How should the discretization depend
+on the number of samples? What is the best possible rate of the root mean-squared
+error? How does this compare to standard MC?
+
+
+Given is a parameter \( ϑ \).
+The random variable \( Z(ϑ) \) depends on \( ϑ \) and can be simulated.
+The Monte Carlo estimation of \( z(ϑ) = \mathbb{E}[Z(ϑ)] \) is tractable.
+Assumption: \( ϑ \mapsto z(ϑ) \) is smooth, i. e., the function \( z \) is multiple times continuously differentiable.
+
+
+If \(f(\vartheta)\) is smooth, we know that:
+\[ \lim_{h \to 0} \frac{f(\vartheta + h) - f(\vartheta)}{h} = \lim_{h \to 0} \frac{f(\vartheta + \frac{h}{2}) - f(\vartheta - \frac{h}{2})}{h} \]
+
+A Taylor expansion provides us with the following equations:
+
+\( \Delta_f = \frac{f(\vartheta + h) - f(\vartheta)}{h} = f'(\vartheta) + \frac{h}{2} f''(\vartheta) + \mathcal{O}(h^2)\) 
+which is the forward-difference estimator.
+
+While
+\(= \frac{f(\vartheta + \frac{h}{2}) - f(\vartheta - \frac{h}{2})}{h} = f'(\vartheta) + \frac{h^2}{24} f'''(\vartheta) + \mathcal{O}(h^4)\)
+is the central difference estimator
+
+The preferred random variable for the construction of the estimator of the derivative is
+\( D(\vartheta) = \frac{Z(\vartheta + \frac{h}{2}) - Z(\vartheta - \frac{h}{2})}{h} \)
+
+Sample \( Z(\vartheta + \frac{h_R}{2}), Z(\vartheta - \frac{h_R}{2}) \)
+R-times independently for each replication.
+Consider \( R \uparrow \infty \)  and a corresponding choice \( h_R \downarrow 0 \).
+How should the function \( h_R \) be chosen to minimize the rate of the mean-square error?
+
+\(\mathbb{E}[(\hat{Z}'(\vartheta) - Z'(\vartheta) )^2] \to 0 \)
+when \( R \to \infty \) with \( \hat{Z}'(\vartheta) \) 
+based on \( R \) independent replications of \( D(\vartheta) \)  using \( h_R \)? 
+
+One can show that \( h_R = \mathcal{O}(R^{-1/6}) \) leads to the best possible rate \(  \mathcal{O}(R^{-1/3}) \)   for independent sampling.
+But a better rate can be achieved by using common random numbers if \( Z(\vartheta) \) is smooth a.s.
+
+Finite differences allow higher-order expansions that improve the optimal rates. But these methods implicitly involve FD approximations of
+higher-order derivatives requiring the evaluation of z at multiple points. This increases computational effort and may also affect the
+variance. Additionally the optimal choice of samples \( n \) vs. step size \( h \) is a careful balance,
+since the first influences the variance and the later variance and bias (which is non-zero)
+In practice, these methods are thus typically not used.
+
+What is a kernel estimator of a function? How can you construct an estimator of
+the derivative from this?
+
+Estimation of \(z(\vartheta)\): more weight of samples close to \(\vartheta\) than further away, according to kernel \(k\)
+Estimation of \(z'(\vartheta)\): exploit smoothness of \(k\)
+k kernel: typically smooth and symmetric probability density,
+e. g., normal density
+
+Kernel estimator of  \(z(\vartheta)\): Assume \(\vartheta \in [0,1]\)
+
+\[ \frac{1}{(R+1)h} \sum_{r=0}^{R} Z \left( \frac{r}{R} \right) k \left( \frac{\vartheta - r/R}{h} \right), \quad h > 0 \]
+
+Observations:
+For \(h\) smaller, the term \(Z \left( \frac{r}{R} \right)\) with \(\frac{r}{R}\) far away from \(\vartheta\) gets less weight. \(h\) is called bandwidth.
+\[ \frac{1}{(R+1)h} \sum_{r=0}^{R} k \left( \frac{\vartheta - r/R}{h} \right) \]
+is a Riemann-sum approximating \(\int k(y) dy = 1\) with a partition of size \(\frac{1}{Rh}\) and with \(R+1\) buckets.
+Convergence requires \(R \uparrow \infty, h \neq 0\) and \(Rh \rightarrow \infty\). 
+
+Exploiting the smoothness of k, differentiation with respect to \(\vartheta\) yields
+\(D_{R}(\vartheta)=\frac{1}{(R+1)h^{2}}\sum_{r=0}^{R}Z \left( \frac{r}{R} \right) k^{\prime} \left( \frac{\vartheta - r/R}{h} \right). \)
+
+Letting first tend \(R \uparrow \infty\) and then \(h \downarrow 0\), 
+one observes that convergence to \(z'(\vartheta)\) occurs if \(k(x) = \mathcal{O}(|x|)\) as 
+\(x \rightarrow \infty\).
+The value of the bandwidth \(h > 0\) can be chosen as a function of \(R \uparrow \infty\), but as in the case of finite differences the rate is significantly slower than \(R^{-1/2}\). 
+
+
+Samplewise / pathwise differentiation leads to infinitesimal perturbation analysis.
+Which conditions are necessary for this to work? What is the rate of convergence
+of the corresponding MC estimator?
+
+Infinitesimal Perturbation Analysis (IPA)
+
+Based on sample path differentiation
+* For almost all \(\omega \in \Omega\), \(\vartheta \mapsto Z(\vartheta)(\omega)\) is a smooth function.
+* Thus, \(D(\vartheta)(\omega) = \frac{d}{d\vartheta} Z(\vartheta)(\omega)\) can be computed pathwise.
+The goal is to estimate \(z'(\vartheta)\) With \(z(\vartheta) = \mathbb{E}[Z(\vartheta)]\).
+Estimator - 
+\[
+\hat{z}'_R(\vartheta) = \frac{D_1 + ... + D_R}{R} \text{ with } D_1, ..., D_R \sim D \text{ iid}
+\]
+The requirement for consistency (LLN) is:
+\[\mathbb{E} \left[ \frac{d}{d\vartheta} Z(\vartheta) \right] = \mathbb{E} \left[ \frac{d}{d\vartheta} Z(\vartheta) \right] (*)\]
+and the convergence rate by CLT:
+\[\sqrt{R} (\hat{z}'_R(\vartheta) - z'(\vartheta)) \sim \mathcal{N}(0, \text{Var}(D)),\]
+i.e., the estimator converges at the canonical rate \(R^{-1/2}\). 
+
+If \( \vartheta \mapsto z(\vartheta) \) can be expressed on a common probability space and the function is smooth, often IPA can be
+used.
+In this case, also FD can be implemented with \( Z(ϑ + \frac{h}{2} ), Z (ϑ − \frac{h}{2}) \) sampled not independently, but on the
+basis of common random numbers.
+If IPA is admissible, then the preferred choice is IPA. If IPA is not admissible, common random numbers can
+improve the performance of FD.
+
+Discuss two simple examples involving two independent random variables \( Z_1, Z_2 \)
+that admit respectively do not admit the application of infinitesimal perturbation
+analysis.
+
+This also answers the question:
+Explain in detail how infinitesimal perturbation analysis can be used to compute
+the sensitivity of a European-type derivative price with respect to the initial value
+of the asset.
+
+Imagine a network consisting of nodes \( n_1, n_2, n_3 \), where \( n_1 \) is the source
+and \( n_3 \) the sink with connecting edges \( e_1 = (n_1, n_2), e_2 = (n_2, n_3)\). 
+Let \( X_1, \varthetaX_2 \), where \( \vartheta \in [0, 1] \) be the random variables specifying the capacity of \( e_i \)
+and the capacity of the whole network as \( \text{max}\{X_1, \vartheta X_2\} = Z(\theta)  \)
+Then \( D(\vartheta) = 0 \) if \( X_1 > \vartheta X_2 \) and \( D(\vartheta = X_2 \) if \( X_1 < \vartheta X_2 \),
+while it is undefined for \( \vartheta = \frac{X_1}{X_2} \).
+So for this \( Z \) the IPA works.
+
+If we assume that \( \vartheta X_2 > X_1  \) and we define \( Z(\vartheta = 1_{\vartheta X_2 > X_1} \)
+then \( D(\vartheta) = 0 \) for all \( \vartheta \neq \frac{X_1}{X_2} \). If \( \mathbb{P}[X_1 = X_2] = 0 \), \( D(\vartheta) = 0 \) a.s.
+But \( z(\vartheta) =  \mathbb{P}[\vartheta X_2 > X_1]\) typically possesses a derivative \( z'(\vartheta) \neq 0 \).
+Thus the IPA method is not applicable here, since 
+\( z'(\vartheta) = \frac{d}{d\vartheta}\mathbb{E}[Z(\vartheta)] \neq 0\)
+and
+\( \mathbb{E}[\frac{d}{d\vartheta}Z(\vartheta)] = D(\vartheta) = 0 \) a.s.
+do not match.
+
+Explain in detail how infinitesimal perturbation analysis can be used to compute
+the sensitivity of a European-type derivative price with respect to the initial value
+of the asset.
+
+IPA works for the following setup, mainly because Lipschitz-continuity is satisfied
+
+Underlying asset price process: 
+\( (X(t))_{0 < t \leq T} = (X(t, x))_{0 < t \leq T} \) for \(X(0) = X(0, x) = x > 0 \)
+
+Common model for any \( x > 0 \):
+
+\[ dX(t) = a(X(t)) dt + b(X(t)) dB(t), \quad X(0) = x \]
+
+i.e. 
+
+\[ X(t, x) = x + \int_0^t a(X(s,x)) ds + \int_0^t b(X(s,x)) dB(s) \]
+
+where \(B\) is a Brownian motion with respect to a risk-neutral measure
+
+Pathwise differentiation with respect to \(x\) yields
+    \[ Y(t, x) = \frac{\partial}{\partial x} X(t, x) = 1 + \int_0^t a'(X(s,x))Y(s, x) ds + \int_0^t b'(X(s,x))Y(s,x) dB(s) \]
+These computations suggest for \(z(x) := \mathbb{E}[f(X(T, x))]\):
+\[ z'(x_0) = \mathbb{E}[f'(X(T,x_0))Y(T, x_0)] \], where \((X, Y)\) satisfies a coupled pair of SDEs:
+\( dX(t) &= a(X(t)) dt + b(X(t)) dB(t), \quad X(0) = x_0 \)
+\( dY(t) &= a'(X(t))Y(t) dt + b'(X(t)) Y(t) dB(t),\ Y(0) = 1\)
+
+Explain how the setting looks like that admits an application of the likelihood ratio
+method. How is the score function defined? What is the formula for the derivative
+that involves the score function?
+
+
+Suppose we have \( Z = f(X_1, \dots, X_n) \) and \( X \) has density \(g_\theta \), where 
+\( \theta \) are the parameters of \( g \).
+
+We then have
+\( \mathbb{E}_{\vartheta}[Z] = \int f(x) g_\theta(x) dx \)
+\( \frac{d}{d\vartheta} \mathbb{E}_{\vartheta}[Z] = \int f(x) \frac{d}{d\vartheta} g_\theta(x) dx\)
+where we have assumed the interchange of the order of differentiation and integration is again justified. Writing
+\( \dot{g}_\vartheta \) for \( \frac{dg_\vartheta}{d\vartheta} \)
+this is the same as
+\( \int f(x) \frac{g_\vartheta}{g_\vartheta}\dot{g}_\vartheta dx\)
+\( = \mathbb{E}_{\vartheta}[f(x) \frac{\dot{g}_\vartheta}{g_\vartheta}]\)
+
+Note that \( S_{X, \vartheta} = \frac{\dot{g}_\vartheta}{g_\vartheta} = \frac{d}{d\vartheta} \log(g_\vartheta) \), which in general 
+is also referred as the score function.
+
+We could also interpret this as a change of measures (Radon-Nikodym) theorem, by defining the measures \( d\mathbb{P}_{\vartheta} = g_{\vartheta}\)
+and \( d\tilde{\mathbb{P}} = \frac{g_{\vartheta}}{\log(g_\vartheta)} \), note that \( d\mathbb{P}_{\vartheta} << d\tilde{\mathbb{P}}\), 
+the Radon-Nikodym derivative is then \( \frac{d\mathbb{P}_{\vartheta}}{d\tilde{\mathbb{P}}} = \log(g_\vartheta)\), which is also referred to as
+\( L(\vartheta) \) in the lecture and we have the equations \(z(\vartheta) = \mathbb{E}_{\vartheta}[Z] = \tilde{\mathbb{E}}[Z L(\vartheta)\)
+and \( z'(\vartheta) = \tilde{\mathbb{E}}_[ZL'] \) as we have seen before.
+
+the generalization to higher dimensions is simply to set the score function to \( S_{X,\vartheta} = \sum_{i=1}^{d} \frac{d}{d\vartheta} \log(f^{i}(X) \)
+where \( f^{i} \) is the \( i \)-th component.
+It holds in particular \( \tilde{\mathbb{E}}[S_{X, \vartheta}] = 0 \) due to 
+\( \int \frac{g_{\vartheta}'}{g_\vartheta} g_{\vartheta} d\tilde{\mathbb{P}} = \int g_{\vartheta}' d\tilde{\mathbb{P}} \)
+and \( 1 = \int g_{\vartheta} d\tilde{\mathbb{P}} \) we can differentiate on both sides and by assumption may move the 
+differential inside the integral to see the equality to the previous term.
+
+Discuss the application of the likelihood ratio method in an insurance risk model.
+
+Consider insurance risks modeled by a compound Poisson sum:
+\( \mathcal{C} = \sum_{i=1}^{N} V_i\) where the \( (V_i)_{i \in \mathbb{N}} \) are i.i.d.
+and \( N \sim \text{Poisson}(\lambda) \).
+
+a) 
+Define \( z(\lambda) = \mathbb{P}[C > c] \). Aim: Estimate \( z'(\lambda) \).
+
+* Method: Reference measure is counting measure, 
+\( f_{\lambda}(x) = e^{-\lambda} \frac{\lambda^x}{x!} \)
+Then \( S_N(\lambda) = \frac{d}{d \lambda} \log f_{\lambda}(N) = \frac{N}{\lambda} - 1 \) 
+hence \( z'(\lambda_0) = \mathbb{E}_{\lambda_0} [ 1_{\{C > c\}} \cdot (\frac{N}{\lambda_0} - 1) ] \)
+
+b) 
+Assume now that \(\lambda\) is fixed. Instead we suppose that the \(V_i\)s have a density \(f_{\vartheta}\) with respect to the Lebesgue measure.
+Define \(z(\vartheta) = \mathbb{P}[C > c] \). Aim: Estimate \(z'(\vartheta)\)!
+Method: Reference measure for individual \(V_i\) is Lebesgue measure. We define
+\( S_i = \frac{d}{d \vartheta} \log f_{\vartheta}(V_i) \)
+Setting \( S := \sum_{i=1}^N S_i \), one obtains \( z'(\vartheta_0) = \mathbb{E}_{\vartheta_0}[1_{\{C > c\}} \cdot S] \).
+
+Explain the computation of vega in the Black-Scholes model using the likelihood
+ratio method.
+
+We analyze the dependence on the volatility in the Black-Scholes model.
+The price of a European call option is
+\( z(\sigma)=\mathbb{E}[e^{-rT}(S(0)e^{X}-K)^{+}] \text{ with } X\sim\mathcal{N}((r-\frac{\sigma^{2}}{2})T,\sigma^{2}T)\)
+Aim: Estimate \( z'(\sigma_{0})! \) ('Vega')
+Methods:
+\( S_{X}(\sigma)=\frac{d}{d\sigma}log(\frac{1}{\sqrt{2\pi T}\sigma}exp(-\frac{(x-(r-\frac{\sigma^{2}}{2})T)^{2}}{2\sigma^{2}T}))=-\frac{1}{\sigma}+\frac{x^{2}}{\sigma^{3}T}-\frac{2xr}{\sigma^{3}}-\frac{-4\sigma^{3}(r-\frac{\sigma^{2}}{2})T-4\sigma(r-\frac{\sigma^{2}}{2})^{2}T}{4\sigma^{4}}.\)
+Then:
+\( z'(\sigma_{0})=\mathbb{E}[e^{-rT}(S(0)e^{X}-K)^{+}\cdot S_{X}(\sigma_{0})] \text{ with } X\sim\mathcal{N}((r-\frac{\sigma_{0}^{2}}{2})T,\sigma_{0}^{2}T) \)
+
+
+
+
+\(\tilde{\pi}_{x_{-i}}^{(i)}(x_i) = \frac{\tilde{\pi}(x)}{\sum_{y_i : (y_i, x_{-i}) \in E} \tilde{\pi}(y_i, x_{-i})}\)
+
+The Gibbs sampler relies on a specific structure of the state space. Please specify
+this. How can the conditional distribution of a component given the remaining
+ones be computed in this setting? State the algorithm of the Gibbs sampler.
+Under suitable conditions, what is known about the invariant distribution and
+convergence of the Gibbs sampler?
+
+We assume that the state space has a specific structure:
+
+\(E \subseteq E_1 \times E_2 \times \dots \times E_d\)
+
+i.e., each state is characterized by its \(d\) components.
+
+The idea of the Gibbs sampler is that only one component is updated in each step while all others remain the same. 
+This leads to a particularly simple recursive structure that can easily be implemented algorithmically.
+
+We introduce the following notation for a given \(x \in E\)
+
+\(
+x = (x_1, ..., x_d),\ x_1 \in E_1, x_2 \in E_2, \dots, x_d \in E_d 
+\)
+\(x_{-j} = (x_1, ..., x_{j-1}, x_{j+1}, \dots, x_d)\)
+
+Define \( x \sim_j y \) if \( x_i = y_i \) for all \( i \neq j \) and let \( \pi(\vartheta|y) \) be the usual
+posterior distribution for \( \vartheta \), given \( y \).
+
+Then the conditional transition probability is defined as
+\( \tilde{\pi}(\vartheta_{-j}|\vartheta) = \tilde{\pi}(\vartheta_{j}|\vartheta_1 = \theta_1, \dots, \vartheta_{j-1} = \theta_{j-1}, \vartheta_{i+1} = \theta_{i+1}, \dots, y) \), which coincides in this situation with the likelihood (conjugate priors)
+\( p_j(\vartheta) = (d\sum_{z \in \Theta; z \sim_j x} \pi(z))^{-1}\pi(y) \) if \( x \sim_j y \) and \( 0 \) otherwise
+
+Let \( \eta^{0} = (\vartheta_1, \dots, \vartheta_d) \) be the initial state then the Gibbs sampling proceeds by repeating the following 2 steps:
+1. Pick an index \( k \in \{1, . . . , m\} \) either via round-robin or uniformly at random
+2. Update \(\eta^{t}\) to \( \eta^{t+1} \) according to the distribution \(p_k(\eta)\)
+
+It can be shown that this generates a Markov chain with the transition probabilities of \( p_j(\vartheta) \)
+
+In the case that the indices are chosen with uniform distribution this is a special case  
+of the Metropolis-Hastings algorithm with \( Q_k(y|x) = p(y|x)) \) if \( y_ \sim_j x \) and \( 0 \) otherwise.
+
+The (prior) distribution \(\pi(x)\) is invariant for the Gibbs sampler.
+If \(E\) is finite and the Gibbs sampler is irreducible, then \(d_{n}(x)\rightarrow0\), i.e.,
+\(\mathcal{L}(\xi_{n}) \rightarrow \pi\)
+in total variation as when \( n \to \infty \) as well as
+\(\hat{f_{n}} := \frac{1}{n}\sum_{k=1}^{n} f(\xi_{k}) \xrightarrow \pi(f)\)
+a.s. and in \( L^{1} \)
+
+
+Consider a hidden Markov model. What is the conditional distribution of a com-
+ponent given the remaining ones and given the observation? Formally derive this
+result.
+
+An application of the Gibbs sampler are hidden Markov models:
+Observation: \(Y_{0}, Y_{1}, ..., Y_{n}\)
+Hidden Markov process: 
+\(X_{0}, X_{1}, ..., X_{n}\)
+Known structure and known quantities
+* Initial distribution and transition probabilities \(q(x_{i-1}, x_{i})\) of the hidden Markov chain
+* Conditional independence of \((Y_{i})\) given \(X\); conditional distribution of \(Y_{i} = y_{i}\) given \((X_{i})_{i} = (x_{i})_{i}\) is \(g_{x_{j}}(y_{i})\)
+
+These specifications admit a representation of the conditional distribution of the hidden \((X_{i})\) given the observed \((Y_{i})\) as:
+
+\( \mathbb{P}_{\nu}(X_{0} = x_{0}, X_{1} = x_{1}, ..., X_{n} = x_{n} | Y_{0} = y_{0}, Y_{1} = y_{1}, ..., Y_{n} = y_{n}) \)
+
+\( = \frac{\nu(x_0) q(x_0, x_1) \dots q(x_{n-1}, x_n) g_{x_0}(y_0) g_{x_1}(y_1) \dots g_{x_n}(y_n)}{\mathbb{P}(Y_0 = y_0, ..., Y_n = y_n)} \)
+
+The aim is to sample from this conditional distribution!
+For the Gibbs sampler one needs to deal with terms of the form:
+
+\( p_i(\vartheta) = (d\sum_{z \in \Theta; z \sim_i x} \pi(z))^{-1}\pi(y) \) if \( x \sim_i y \) and \( 0 \) otherwise
+
+One needs to distinguish \(i = 0, 0 < i < n, i = n\). If one focuses on \(0 < i < n\) most terms cancel out and the simple result is:
+
+\(p_i(x) = \frac{q(x_{i-1}, x_{i}) q(x_{i}, x_{i+1}) g_{x_{i}}(y_{i})}{\sum_{z_{i} : (z_{i}, x_{-i}) \in E} q(x_{i-1}, z_{i}) q(z_{i}, x_{i+1}) g_{z_{i}}(y_{i})}\)
+
+Analyzing the conditional distribution of a component given the remaining ones
+in the Ising model shows that at a chosen site the Gibbs sampler flips the state
+with a conditional Bernoulli probability. Derive the formula for this conditional
+probability used in the sampler.
+
+Let \( \{x_i\}_{i \in S}, \{y_i\}_{i \in S} \) be a set of sides in \( S \) with \( x_i, y_i \in \{-1, 1\} \)
+Observe that if \(y \sim_i x\) in this model, then \(y_i = -x_i\).
+
+We introduce the following notation:
+\(n_i(x) = \) number of neighbors \(i'\) of \(i\) with \(x_{i'} \neq x_i\)
+\(m_i(x) = \) number of neighbors \(i'\) of \(i\) with \(x_{i'} = x_i\)
+
+Since 
+\(\tilde{pi}(x) = e^{-\beta n_i(x)} \cdot d_i(x) \quad \text{with} \quad d_i(x) = \exp \left\{ -\beta \sum_{\substack{j \neq i, k \neq i, \\ \{j, k\} \in E}} 1_{\{x_j \neq x_k\}} \right\},\)
+the term \(d_i(x)\) cancels out in the relevant fraction.
+
+This provides us with the following result for \(x \sim_i y\):
+
+\(p(y,x_{-i}) = p_i(y) = \frac{e^{-\beta m_i(x)}}{e^{-\beta n_i(x)} + e^{-\beta m_i(x)}}\)
+
+The Gibbs sampler in the Ising model operates as follows:
+1. Choose a site \(i\) (systematic scan or random scan).
+2. Flipping is a Bernoulli argument with the probability computed in equation of \( p_i(y) \)

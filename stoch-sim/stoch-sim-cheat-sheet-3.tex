@@ -1,0 +1,445 @@
+Markov Chain Monte Carlo (MCMC)
+
+What is a (Markov) kernel? What is a probability kernel?
+
+Suppose that \( (S, \mathcal{S}) \) and \( (T , \mathcal{T}) \) are measurable spaces. Then
+\( µ : S \times \mathcal{T} \to \mathbb{R}_+ \cup \{\infty\}\)
+
+is called a (Markov) kernel from \( S \) to \( T \) if
+1. \( \forall B \in \mathcal{T}, s \mapsto \mu_s(B) = \mu(s, B) \) is \( \mathcal{S} \)-measurable.
+2. \( \forall s \in S, s \mapsto \mu_s \) is a measure on \( \mathcal{T} \)
+The special case of a probability kernel, refers to the situation \( \mu : S \times \mathcal{T} \to [0, 1] \) 
+such that \( \mu_s \) is a probability measure for all \( s \in S \).
+
+
+Define the notion of random elements.
+
+Let \((\Omega, \mathcal{F}, P)\) be a probability space, and \( (E, \mathcal{E}) \) a measurable space. A random element with values in \( E \) is a function \( X : \Omega \to E \) which is 
+\((\mathcal{F}, \mathcal{E})\)-measurable. That is, a function X such that for any \( B \in \mathcal{E} \), the preimage of \( B \) lies in \( \mathcal{F} \).
+
+Sometimes random elements with values in \( E \) are called \( E \)-valued random variables.
+
+Note if \( (E, \mathcal{E}) = (\mathbb{R} , \mathcal{B}(\mathbb{R}))\), where \( \mathcal{B}(\mathbb{R}) \) is the Borel \( \sigma \)-algebra, 
+then the definition of random element is the classical definition of random variable.
+
+The power lies in the abstraction, since \( E \) could also be a space of functions (e.g. \(E = C[0, 1] \) with norm \( \|f\| = \sup_{x \in [0, 1]} |f(x)| \) and the corresponding Borel \( \sigma \)-algebra, which is typically the setup for continuous time stochastic processes.
+
+Define the notion of a regular conditional distribution. What is a sufficient
+condition for its existence?
+
+Let \( (\Omega, \mathcal{A}, \mathbb{P}) \) be a probability space and \( (S, \mathcal{S}) \), \( (T , \mathcal{T}) \) measurable spaces.
+Given random elements \( \xi : \Omega \to T \), \( \nu : \Omega \to S\)
+it may be possible to define a conditional distribution of \( \xi \) given \( \sigma(\eta) \), that is
+\( \mathbb{P}[\xi \in A|\eta], A \in \mathcal{T} \) and in particular we would like to have a probability kernel
+with \( \mu(\eta, A) = \mathbb{P}[\xi \in A|\eta] \).
+
+Its existense is guaranteed if \( T \) is Polish (completely metrizable separable space).
+
+
+Define a Markov process. What is the extended Markov property?
+
+The process \( X : (\Omega, I) \to E\) has the Markov property, if
+for all \( A \in \mathcal{B}(E) \) and all \( s, t \in I \) with \( s \leq t \)
+1. \( X \) is \( \mathbb{F} \)-adapted.
+2. \( \mathbb{P}[X_t \in A | \mathcal{F}_s] = \mathbb{P}[X_t \in A | X_s]\)
+
+In the lecture (2) is also expressed as \( \mathcal{F_t} \) being conditionally independent of \( X_s \) given \( X_t \).
+The idea of requirement (2) is that \( \mathcal{F}_s \) contains all events that have potentially
+lead to the state \( X_t \), while \( |X_s = \sigma(X_s) \) refers only to the specific event, which causes the value at \( X_s \)
+(so all \(X_k, k < s \) do not matter).
+
+The strong/extended Markov property asserts that given a stopping time \( \tau \), \( \mathbb{P}[X_{\tau + t} \in A | \mathcal{F}_\tau] = \mathbb{P}[X_{\tau + t} \in A | X_\tau] \),
+equivalently \( \mathcal{F_\tau} \) is conditionally independent of \( X_{\tau + t} \) given \( X_{\tau} \) for all \( t \in I \).
+
+What are the Chapman-Kolmogorov relations? State Kolmogorov’s existence theorem.
+
+A family of finite-dimensional distributions is defined as:
+Let \( X = \{X_t\}_{t \in T} \) a Markov process with one-dimensional distributions \( \nu_t \) and transition kernels \( \mu_{s,t} \),
+\( s, t \in T \), \( s \leq t \). Then for all \( t_0 \leq \dots \leq t_n \in T \) :
+\( \mathcal{L}(X_{t_0} , X_{t_1}, \dots, X_{t_n}) = \nu_{t_0} \otimes \mu_{t_0,t_1} \otimes \dots \otimes \mu_{t_{n-1}, t_n} \)
+\( \mathbb{P}[(X_{t_1}, \dots, X_{t_n}) \in \cdot | F_{t_0}] = (\ \mu_{t_0,t_1} \otimes \dots \otimes \mu_{t_{n-1}, t_n}(X_{t_0}, \cdot) \)
+
+Then Kolmogorov’s existence theorem states:
+Suppose an initial distribution \( \nu_{t_0} \) and transition kernels \( \mu_{s,t} \) are given satisfying the Chapman-Kolmogorov
+relations. Then there exists a Markov process with these specifications.
+
+The Chapman-Kolmogorov relations are:
+\( \mu_{s,u} = \mu_{s, t}\mu{t,u}, s \leq t \leq u \)
+
+
+What is a time-homogeneous Markov process? State the Chapman-Kolmogorov
+relations in this case, also called the semigroup property.
+
+Let \( T = \mathbb{R}_{+} \) or \( T = \mathbb{Z}_{+} \).
+A time-homogeneous Markov process possesses transition kernels \( \mu_{s,t} \) of the form \( \mu_{t-s} \) , s.t.
+\( \mathbb{P}[X_t \in B|\mathcal{F}_s] = \mu_{t-s}(X_s , B) \) a.s., \( B \in \mathcal{S}\), \( s \leq t \).
+
+Then the finite-dimensional distributions simplify to 
+
+\( \mathcal{L}(X_{t_0} , X_{t_1}, \dots, X_{t_n}) = \nu \mu_{t_0} \otimes \mu_{t_1 - t_0} \dots \otimes \mu_{t_n - t_{n-1}} \)
+\( \mathbb{P}[(X_{t_1}, \dots, X_{t_n}) \in \cdot | F_{t_0}] = (\ \mu_{t_1 - t_0} \otimes \dots \otimes \mu_{t_n - t_{n-1}}(X_{t_0}, \cdot) \)
+
+and the Chapman-Kolmogorov relations are:
+\( \mu_{s+t} = \mu_{s}\mu{t}, s, t \in T \)
+which is also referred to as semigroup property.
+
+
+Explain how the law of a Markov process may be derived:
+
+The full question reads:
+A Markov process is a stochastic process (family of random elements) on a filtered
+probability space with specific properties (as stated). Alternatively, the process
+can be interpreted as a random element in a suitable product space. How does
+the construction work? What is the law of the process? What can you say about
+10uniqueness? How can the law of the Markov process for a fixed transition semigroup
+be reconstructed for any initial distribution if its law is known for deterministic
+starting values (i.e., Dirac measures)?
+
+Let \( S^{T} \) be the space of all maps \( f \) from \( T \) to \( S \) with the \( \sigma \)-algebra
+generated by the projection \( \pi_t(f) = f(t) \), that is \( \mathcal{S}^{T} = \sigma(\{\pi_t : S^{T} \to S, t \in T\}) \)
+It can be proven that for a fixed initial distribution \( \nu \) on \( S \) and semigroup of transition kernels \( \mu_{s,t} \)
+\( X_{\nu} : \Omega \to S^{T}, \omega \mapsto (X_{\nu,t}(\omega)) \)
+is measurable with respect to \( \mathcal{S}^{T} \), so its a random element in \( S^{T}, \mathcal{S}^T \).
+The image measure of \( X_\nu \) is the distribution of the Markov process \( \mathbb{P}_\nu = \mathcal{L}(X_\nu) \),
+which is unique, even though multiple \( X_\nu \) may have this law.
+
+In particular this is a mixture \( \mathbb{P}_\nu = \int_{S} \mathbb{P}_{\delta_x}(A)\nu(dx)\).
+
+What is the canonical construction of a stochastic process?
+
+Recall the design we leveraged for the law of a Markov process then
+the canonical process on \( (S^T , \mathcal{S}^T) \)
+is defined by setting \( X = \text{id}, \omega \mapsto \omega \)
+(so \( \omega \) is a function from \( T \) to \( S \) with the projection 
+\( \pi_t(\omega) = \omega(t) \)) 
+with the natural/canonical filtration \( \mathcal{F}_t = \sigma(\{X_s\}_{s \leq t}) \) then
+\( X : (S^{T}, \mathcal{F}_t, \mathbb{P}_\nu) \to (S^T, \mathcal{S}^T) \), where  
+\( \mathbb{P}_\nu \) is the law determined uniquely by \( \nu \), \( \mu_{s,t} \),
+is the so called canonical construction.
+
+
+What is a statistical model? What is the difference between the classical approach
+and Bayesian statistics? State Bayes’ formula. Provide application examples.
+
+A statistical model \( (\Chi , \mathcal{F}, \mathbb{P}_\vartheta : \vartheta \in \Theta) \) consist of
+- The space of observable data \( \Chi \) (similar to the usual sample space \( \Omega \))
+- The \( \sigma \)-algbebra of events \( F \)
+- The admissable models \( \{\mathbb{P}_\vartheta | \vartheta \in \Theta \} \) 
+- The parameter space \( \Theta \)
+
+
+Two common approaches to determine \( \{\mathbb{P}_\vartheta | \vartheta \in \Theta \} \)
+are the classical/frequentist approach and the Bayesian one.
+
+The classical approach usually assumes that there is only one correct \( \vartheta \),
+which can be determined by a large number of observations.
+
+The Bayesian instead assumes a probability distribution \( \pi \sim \vartheta \) on \( \Theta \),
+called the prior distribution.
+It is also derived by a large number of observations and some assumptions about the distribution.
+
+In the Bayesian approach we do not have direct access to \( \pi \), but only the posterior distribution
+\( \pi(\vartheta|x) = \frac{\pi(\vartheta)p(x|\vartheta)}{p(x)} = (\int_{\Theta} \pi(\vartheta)p(x|\vartheta) d\vartheta)^{-1} \pi(\vartheta)p(x|\vartheta) \)
+(this is an application of Bayes rule)
+where \( p(x) \) is the probability density function of the observed data \( X \) and \( p(x|\vartheta) \) the conditional density on \( \vartheta \)
+which receives the special name likelihood in this context.
+\( \mathbb{P}[x, \vartheta] = \pi(\vartheta)p(x|\vartheta) \) is the joint distribution.
+
+The most famous real-world application is probably in medical studies:
+Suppose we developed an early detection test for lung cancer and want
+to show its efficiancy. 
+Let \( \Chi = \{B, \overline{B}\} \) with \( B \) representing a positive test
+and \( \overline{B} \) an inconclusive/negative test result.
+
+Let \( \Theta = \{A, \overline{A}\} \), where \( A \)
+stands for lung cancer and \( \overline{A} \) for no disease.
+
+We are then interested in \( \pi(\vartheta = A|x = B) \) that is the probability
+of a patient having cancer, given that they had a positive test.
+
+Note that we have direct access to all the other information \( p(x = B) \)
+is simply the observed frequency of positive/negative results disregarding if the subject actually had cancer.
+\( \pi(\vartheta = A) \) the probability of the general population to have lung cancer 
+(or the ratios of our control and test groups in the study),  
+and \( p(x|\vartheta = A) \) is the share of true positives, false positives in our study.
+
+Actually \( p(x = B) \) may not be straightforward to determine
+and that's where Markov Chain Monte Carlo steps in.
+
+
+Justify that for the simulation of the posterior using MCMC we only need to
+understand the numerator in Bayes’ formula. Or more generally explain the big
+picture behind MCMC.
+
+This also includes the answer to:
+Consider the inverse problem of independent normal data with known variance and
+uncertain mean. Suppose that the prior for the mean is also normal. Compute the
+posterior using the “proportionality trick”.
+
+
+Note that by Bayes formula \( \pi(\vartheta|x) \propto \pi(\vartheta)p(x|\vartheta) = f_{\vartheta, \pi} \)
+so the posterior is proportional to the joint distribution, where
+\( \propto \) refers to equality up to multiplication by a constant. 
+
+Afterall 
+we have access to the observations \( x \) and so the integral \( p(x) = \int_{\Theta} \pi(\vartheta)p(x|\vartheta) d\vartheta \)
+directly evaluates to a constant and is not dependent on \( \vartheta \) during evaluation.
+
+So in general MCMC tries to solve the problem, that we want to sample from a distribution \( f(z) = \frac{1}{Z_f}\tilde{f}(z) \)
+where \( \tilde{f}(z) \) is easy to compute, but \( \frac{1}{Z_f} \) hard or near impossible.
+
+There is the special situation of conjugate priors, where the posterior 
+has the same distribution as the prior, so \( \pi(\vartheta|x;\alpha_1) ~ \pi(\vartheta;\alpha_0) \)
+but potentially with a different set of so called hyperparameters \( \alpha_0(x) \to \alpha_1(x) \) which may depend on \( x \).
+We say that the likelihood function \( p(x|\vartheta \) is conjugate prior to \( \pi(\vartheta) \) and we have conjugate famility.
+E.g. \( \pi(\vartheta) ~ N(\mu,\sigma^2) \) then \( (\mu,\sigma^{2}) \) are the hyperparameters \( \alpha_0 \)
+
+More concretely:
+Suppose \( \vartheta \sim \mathcal{N}(\mu_0, \gamma_2) \) and \( p(X_i | \vartheta) = \mathcal{N}(\vartheta, \sigma_2) \)
+for \( i = 1, \dots, N \) with known \( \sigma_2 \) and of course unknown \( \vartheta \). In this case we
+\( α_0 = (µ_0, γ^2) \). If \( X = (X_1, \dots, X_N ) \).
+We then have
+\( p(θ | x) \propto p(x | θ)\pi(θ; α0) \propto \exp{-\frac{1}{2\gamma_0^2}(\vartheta - \mu_)^2}\Pi_{i=1}^{N} \exp(-\frac{1}{2\sigma^2}(x_i - \vartheta)^2 \)
+\( \propto \exp(-\frac{1}{2\gamma_1^{2}}(\vartheta - \mu_1)^2 \)
+where \( \gamma_1^2 = (\gamma_0^{-2} + N\sigma^{-2})^{-1} \) and \( \mu_1 = \gamma_1^{2}(\mu_0 \gamma_0^{-2} + \sum_{i=1}^N x_i \sigma^{-2} \)
+We recognize \( p(\vartheta|x) \sim N(\mu_1, \gamma_2\)
+
+Note that if we let \( N \to \infty \) then \( \gamma_1 \to 0 \) and \( (\vartheta - \mu_1)^{2} \to \vartheta \).
+
+How can particle systems (static situation) be modeled? Define the Ising model.
+Why are direct computations based on its distribution typically infeasible – im-
+plying that the application of MCMC is important?
+
+We consider a discrete set of sites \( S \).
+The sites are in certain states, e.g., in \( \{-1, 1\} \).
+This leads to configurations \( x = (x_i)_{i \in S} \) with \( x_i \in \{-1, 1\}\).
+The configurations are random, i.e., there exists a probability measure on \(\{-1, 1\}^{S}\).
+A canonical model can be constructed as follows:
+
+If \( X \) is the identity on \(\{-1, 1\}^{S}\) and \( X_i : \{-1, 1\}^{S}  \to \{-1, 1\} \) is the projection on coordinate \( i \), then
+\( X = (X_i)_{i \in S} \) is a random element that canonically models the random configurations.
+
+E.g.
+Ferromagnets:
+site = atom, \( \{-1, 1\} \) possible spin directions
+Image analysis:
+\( S = \{1, 2, \dots, N\} \times \{1, 2, \dots, M\} \) set of pixels, \( {−1, +1} \) white or black.
+
+Distributions \( \Pi^{*} \) on a configuration space can be specified in different ways.
+A typical approach specifies local properties like attraction or repulsion
+This requires notions of neighborhood:
+As an example, consider a graph \( G = (S, E) \) with vertices \( S \) and edges \( \Eta \), i.e.,
+\( i,i' \in S \) neighbors \( \iff \) \( (i, i') \in \Eta \)
+Special case: \( S \in \mathbb{Z}^{2} \) with
+\( (i, i') \in \Eta \iff i = (u, v), i' = (u', v'), |u' - u| + |v ′ − v | = 1\)
+
+A well known case the Ising model
+
+Ising model
+
+\(  \Pi^{*}(x) \propto \pi(x) = \exp \left\{ -\beta \sum_{\{i,i'\} \in E} 1_{\{x_i \neq x_{i'}\}} \right\} \)
+
+with inverse temperature \( \beta > 0 \)
+
+* \( \pi(x) \) is smaller when more neighboring sites have opposite signs (local attraction).
+* A lower temperature corresponding to a larger \( \beta \) makes all 1's or all -1's more likely.}
+
+A direct computation based on \( \Pi^{*} \) is typically infeasible, since the normalizing constant cannot be computed.
+This can be illustrated for a relatively small graph with \(S = \{1,2,...,8\}^2\). 
+
+The normalizing constant involves $2^{64}$ summands:
+\( C = \sum_{x \in \{-1,1\}^8} \exp \left\{ -\beta \sum_{i,j \in E} 1\{x_i \neq x_j\} \right\} \)
+Illustrating the importance of MCMC.
+
+MCMC can also be used for counting complicated combinatorial objects. Discuss
+simple examples of this type.
+
+An application of MCMC becomes also important, if $E$ is finite but very large and constructed from a complicated structure. 
+What is the cardinality of \(E\)?
+How can we sample from a uniform distribution on \(E\)?
+
+Examples
+1. Hard-core-model
+
+The set \(E \subset \{-1,1\}^{\{1,2,...,N\} \times \{1,2,...,M\}}\), and \(E\) contains only those configurations such that no two neighboring points are occupied. 
+
+2. Square ice model
+
+The vertices are given by \(\{1,2,...,N\} \times \{1,2,...,M\}\), the edges by 
+\[E = \{ii' : i = (u,v), i'=(u',v') \in V, |u'-u| + |v'-v| = 1\}.\]
+Let \(S \subset P(E)\) such that \(\forall A \in S \ \forall ii' \in E: ii' \in A \vee ii' \in A\).
+Consider now \(E \subset S\) such that the non-boundary vertices each possess two ingoing and two outgoing arrows (at boundary: at most).
+
+3. Coloring
+
+\(E\) is the set of possible allocations of \(q\) colors to boxes such that not two squares with a common boundary have the same color. 
+
+Define a hidden Markov model. Describe applications of MCMC in this context.
+
+A Hidden Markov model is a bivariate discrete stochastic process $(X_k, Y_k)_{k \geq 0}^\top$ such that 
+    * \( X_k \) is a Markov process
+    * \(Y_k\) is a sequence of random variables 
+        * that are conditionally independent given \((X_k)_{k \geq 0}\), 
+        * and the conditional distribution \(\mathbb{P}(Y_j \in \cdot | (X_k)_{k \geq 0}) = \mathbb{P}(Y_j \in \cdot | X_j)\) depends only on \(X_j\), \(j \geq 0\)
+
+Hidden Markov models admit a functional representation as a general state-space model, i.e., 
+\[
+X_{k+1} &= a(X_k, U_k) \\
+Y_k &= b(X_k, V_k)
+\]
+
+with measurable functions \( a,b \) and mutually independent sequences of identically distributed random variables \( (U_k)_k, (V_k)_k\) that are independent of \( X_0 \).
+That is \( \mathbb{P}[Y_n \in A|Y_1 = y_{1}, \dots, Y_{n-1} = y_{n-1}, X_1 = x_1, \dots, X_n = x_n] = \mathbb{P}[Y_n \in A|X_n = x_n] \).
+In order to model data and for the purpose of statistical inference, the model is considered in the filtration generated by 
+\( (Y_k)_{k \geq 0} \). This means that the Markov process \((X_k)_{k \geq 0}\) is hidden.
+
+MCMC has various applications in this context:
+* Computing the posterior distribution of \(X_0, X_1, ..., X_n\) given observations \(Y_0 = y_0, ..., Y_n = y_n\).
+* Other tasks: If the model is governed by unknown parameters, the parameter estimation may involve MCMC. 
+
+For a concrete example, suppose you want to find the temperature \( \{X_n\}_{n \in S}, X_n \in \mathbb{R}\) in London, for each day during the summer of 1500,
+but you only have information about the amount of water that was imported by the city each day \( \{Y_n\}_{n \in S}, Y_i \in \{1, 2, 3\} \), 
+which is grouped into low, middle and a high amount. Then we have access to \( \mathbb{P}[Y_n = k|X_n = c] = \pi(Y_n|X_n)\) 
+(simply by measuring the frequence of water \( k \)-amount water imported during the summer)
+and an estimate for \( \mathbb{P}[X_n = c|Y_n = k] = p(X_n|Y_n) \) (the probability that it is \( c \)-degrees given that that \( k \)-amount water
+was imported, so it should be an increasing function in \( k \)). 
+
+Note that this places the restriction that weather may only depend on the previous day, instead of say the whole week.
+
+
+Explain the Metropolis-Hastings algorithm in detail. How is it related to the sought
+distribution?
+
+For consistency reasons \( \Pi^{*} \) is referred here as \( \pi \) and \( q(x,y) \) as \( Q(y|x) \),
+deviating slightly from the lecture.
+
+Some prerequisites are required:
+A Markov chain is said to be reversible if there exists a probability distribution \( \pi \) on \( \Omega \) such
+that \( p(x | y)\pi(y) = p(y | x)\pi(x) \)
+Further \( \pi \) is then the stationary/equilibrium/invariant distribution of a Markov chain
+since
+\( \sum_{x} p(y|x) \pi(x) = \sum_x p(x|y)\pi(y) = \pi(y) \).
+
+Suppose we want to sample from a distribution \( \pi(x) := \frac{\tilde{\pi}(x)}{Z_p} \). To do this
+we first construct a (reversible) Markov chain as follows. Let \( X_t = x \) be the current state. We then perform the
+following two steps repeatedly:
+1. Generate \( Y \sim Q(\cdot | x) \) for some Markov transition matrix \( Q \).
+Let y be the generated value.
+2. Set \( X_{t+1} = y \) with probability \( α(y | x) := 1 \wedge \frac{\tilde{\pi}(y)}{\tilde{\pi}(x)} \frac{Q(x|y)}{Q(y|x)} \)
+Otherwise set \( X_{t+1} = x \).
+
+The fraction in \( \alpha(y|x) \) is also referred to as Metropolis-Hastings ratio
+and \( Q \) the proposal kernel.
+The transition probabilities created by the algorithm (so not \( Q \)) are
+\( p(y|x) = \alpha(y|x)Q(y|x) \) if \( y \neq x \) and \( p(y|x) = 1 - \sum_{y \neq x} \alpha(y|x)Q(y|x) \).
+
+For the right choice of \( Q \) the resulting Markov chain is reversible 
+and if \( \tilde{\pi}(x) > 0, Q(x|y) > 0, p(x|x) > 0  \) for some \( x \in \Omega \)
+it is also irreducible and ergodic, so the ergodic theorem applies.
+Then the stationary distribution is precisely \( \pi(x) = \tilde{\pi }\frac{x}{Z_p} \).
+
+Note that \( Z_p \) is not required for the algorithm.
+
+The rate of convergence to the target distribution is, however not easy to determine
+concepts like exponential ergodicity are theoretically available but often not applicable in practice.
+
+Proof: 
+\( \pi \) is proporational by the constant \( Z_p \) to \( \tilde{\pi} \), since we can divide such terms out of the 
+reversible Markov chain equation, it suffices to show that \( \tilde{\pi} \) is the distribuition which makes \( p(y|x) \) reversible.
+
+\( p(y|x)\tilde{\pi}(x) = \alpha(y|X)Q(y|X)\tilde{\pi}(x) = (\frac{\tilde{\pi}(y)}{\tilde{\pi}(x)} \frac{Q(x|y)}{Q(y|x)} \wedge 1)Q(y|x)\tilde{\pi}(x) \)
+\( =  Q(x|y)\tilde{\pi}(y) \wedge Q(y|x)\tilde{\pi}(x) = (1 \wedge \frac{\tilde{\pi}(x)}{\tilde{\pi}(y)} \frac{Q(y|x)}{Q(x|y)})Q(x|y)\tilde{\pi}(y) \)
+\( \alpha(x|y)Q(x|y)\tilde{\pi}(y) = p(x|y)\pi(y) \)
+
+How is a burn-in period used in the Metropolis-Hastings algorithm, and why?
+
+
+The Metropolis-Hastings Algorithm - Burn-in Period
+
+Convergence is an asymptotic property that characterizes the behavior of the samples, if their number approaches \(\infty\).
+Typically, the Metropolis-Hastings chain \((\xi_{k})\) is started with some initial distribution and is only asymptotically stationary:
+
+(The invariant distribution is the sought object that is asymptotically sampled with the Markov chain, but the invariant distribution is typically not available as a tractable initial distribution whenever MCMC needs to be used.)
+
+For finite and not too large \(k\), the distribution of \(\xi_{k}\) might still deviate significantly from the invariant distribution.
+
+Choose a burn-in period \(m \in \mathbb{N}\) to mitigate the impact of the wrong initial distribution.
+Estimators are now redefined as follows:
+\[
+\pi(x) = \frac{1}{n-m} \sum_{k=m+1}^{n} 1_{\{\xi_{k}=x\}}
+\]
+\[
+\hat{f}_{n} = \frac{1}{n-m} \sum_{k=m+1}^{n} f(\xi_{k})
+\]
+
+The burn-in period \(m\) is typically chosen as 10\% of the total run length in typical applications.
+
+
+Define Exponential Ergodicity and relate it to MCMC
+
+Exponential Ergodicity / Geometric ergodicity
+
+Consider an arbitrary Markov chain \((\xi_{k})_{k \geq 0}\).
+
+We consider the distance of one-dimensional marginal distributions from the invariant distribution:
+
+\[ d_{k}(y) := \sum_{x \in E} |\mathbb{P}_{y}(\xi_{k} = x) - \pi(x)| \]
+
+The Markov chain is exponentially ergodic, if 
+\[ \exists \rho < 1, h: E \rightarrow (0, \infty): d_{k}(y) \leq h(y) \cdot \rho^{k} \]
+
+The following is useful in the context of MCMC
+Irreducible, aperiodic Markov chains on a finite state space are automatically exponentially ergodic.
+The constant \(\rho\) is given by the absolute value of the eigenvalue of the one-step transition matrix having second-largest modulus.
+In problems that require sophisticated simulation techniques like MCMC, analytical bounds on the second eigenvalue are typically too difficult to compute or too loose to be useful. 
+
+Concrete implementations of the Metropolis-Hastings algorithm rely on different
+proposal kernels. Discuss examples.
+
+The Independence Sampler
+
+The proposal is independent of the current state \(x\), i.e., 
+\[ Q(y|x) = q(y),\ \forall x, y \in E \]
+This special choice leads to a Metropolis-Hastings ratio
+
+\[ \frac{\pi(y)}{\pi(x)} \frac{Q(x)}{Q(y)} = \frac{\omega(y)}{\omega(x)}\] 
+with 
+\[ \omega(x) = \frac{\pi(x)}{q(x)} \]
+
+
+We define constants
+\( C := \sum_{x \in E} \pi(x)\)
+\(A := \sup_{x \in E} \omega(x) \)
+
+The following conditions are equivalent:
+
+1. The Metropolis-Hastings chain run by independent sampling is exponentially ergodic.
+2. \( A < \infty \).
+
+In this case,
+\( d_k(y) \leq \left( 1 - \frac{C}{A} \right)^k \)
+
+One can show that \( C \leq A \). The upper bound for the speed of convergence is the better, the closer \(A\) to \(C\).
+It is not ideal, if \(Q(x)\) becomes much smaller than \(\pi(x)\) for some \(x\). For example, this is the case 
+if \(E = \mathbb{Z}\) and \(Q\) is lighter-tailed than \(\pi\). 
+
+
+
+Random-Walk proposal
+
+We consider as an example \(E = \mathbb{Z}^d\).
+The main idea is that the proposal \(Q(y|X)\) does not directly depend on the current location \(x\), but only on the difference 
+between the future state \(y\) and the current state \(x\):
+
+\( Q(y|x) = f(y - x) \) with \(\sum_{z \in \mathbb{Z}^d} f(z) = 1, f > 0\)
+
+Let \(E = \mathbb{Z}\) and \(Q(y|x) = f(y - x)\).
+
+Suppose that the function \(f\) is symmetric, i.e., \(f(z) = f(-z)\).
+In addition, we make the following assumptions:
+1. \( \exists \alpha > 0, x_0 > 0: \forall |y| \geq |x| \geq x_0 \):
+2. \(\frac{\tilde{\pi(y)}}{\tilde{\pi}(x)} \leq e^{-\alpha(|y| - |x|)}\)
+(This assumption implies that the tail of \(\tilde{\pi}\) decays at least exponentially fast.)
+3. \( \forall x_1 > 0: \inf_{|x| \leq x_1} \tilde{\pi}(x) > 0 \).
+
+Then the random-walk Metropolis-Hastings algorithm is exponentially ergodic.

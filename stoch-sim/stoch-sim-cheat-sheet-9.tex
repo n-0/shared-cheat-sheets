@@ -1,0 +1,235 @@
+Explain how to refine the Euler-Maruyama approximation by expanding both the
+drift and the diffusion term to the same order.
+
+The Euler-Maruyama was our standard approach to simulate stochastic processes,
+meaning given an SDE 
+\( dX_t = a(X_t) dt + b(X_t) dW_t,\ X_0 = x_0 \) in \( \mathbb{R}^{d} \)
+with solution
+\( X_t = x_0 + \int_{0}^{t} a(X_u) du + \int_{0}^t b(X_u) dW_u \)
+(so \( a : \mathbb{R}^{d} \to \mathbb{R}^{d},\ b : \mathbb{R}^{d} \to \mathbb{R}^{d\timesm}\)
+as \( W \) is assumed to be a \( m \)-dim BM) the scheme discretizes 
+\( \hat{X}_{t_{i+1}} = \hat{X}_{t_i} + a(\hat{X}_{t_i})(t_{i+1} - t_i) + b(\hat{X}_{t_i})\sqrt{t_{i+1} - t_i}Z_{i+1}\)
+if the distances of the simulation steps \( 0 = t_0 < t_1 < \dots < t_m \) are of fixed distance \( h \) one can replace
+\( t_{i+1} - t_i = h \).
+
+One can optimize the precision even further via Higher-Order expansion from the Taylor
+
+series however this looks slightly different as usual since we're dealing with Stochastic calculus
+according to Ito.
+
+\( d(b(X_t)) = \mu_b(X_t) + \sigma_b(X_t)  + b'(X_t)b(X_t) dW_t \)
+where \( \mu_b(X_t) = b'(X_)a(X_t) + \frac{1}{2}b''(X_t)b^2(X_t)dt \)
+and \( \sigma_b(X_t) = b'(X_t)b(X_t) dW_t \)
+
+An Euler approximation \( b(X) \) is given by
+\( b(X_u) \approx b(X_t) + \mu_b(X_t)(u - t) + \sigma_b(X_t)(W_u - W_t) \)
+and we have \( \mu_b(X_t)(u - t) \in \mathcal{O}(u - t) \), \(\sigma_b(X_t)(W_u - W_t) \in \mathcal{O}(\sqrt{u - t}) \)
+we're only interested in \( \mathcal{O}(h) \) order terms so we can ignore \( \mu_b \).
+end up with
+\( \int_{t}^{t+h} b(X_u) dW_u = b(X_t)(W_{t+h} - W_t) + b'(X_t)b(X_t)\int_{t}^{t+h} W_u - W_t dW_u \)
+and \( \int_{t}^{t+h} W_u - W_t dW_u  = \frac{1}{2}(W_{t+h} - W_t)^2 - \frac{1}{2}h\) according to Ito's Lemma.
+put into sampling notation 
+\( \hat{X}_{i+1} = \hat{X}_i + a(\hat{X}_i)h + b(\hat{X}_i)\sqrt{h}Z_{i+1} + \frac{1}{2}b'(\hat{X}_i)b(\hat{X}_i)h(Z^2_{i-1} - 1) \)
+which is also referred to as the Milstein-Scheme.
+
+What are strong and weak convergence orders?
+
+One can heuristically describe the convergence orders as the following criteria:
+Strong criteria
+- pathwise proximity of discretized process to original process
+Weak criteria
+- proximity of the corresponding distributions
+for the time interval \( [0, T], h > 0 \) fixed and \( n = \frac{T}{h} \) floored to the nearest integer.
+
+For \( \beta > 0 \)
+Strong order of convergence
+\( \mathbb{E}[\|\hat{X}_{nh} - X_T\|] \leq ch^\beta \) for constant \(\beta, c, h > 0\) small
+Weak order of convergence
+\(| \mathbb{E}[f(\hat{X}_{nh})] - \mathbb{E}[f(X_T)]]| \leq ch^\beta \) for constant \( \beta, c > 0\) 
+and \( f \mathbb{R}^{d} \to \mathbb{R}) \) a suitable famility of functions
+e.g. \( C^{2\beta+2}_p \) functions polynomially bounded \( \exists k, q \forall x \in \mathbb{R}^d : |g(x)| \leq k(1+ \|x\|^q) \)
+for order \( 0, 1, \dots, 2\beta + 2 \).
+
+Euler: If the process \( X \) is sufficiently nice, the strong order is \( \frac{1}{2} \) and the weak order is \( 1 \).
+Milstein: For a sufficiently regular process, both strong and weak order are \( 1 \).
+
+Explain a simple strategy (extrapolation) to improve the weak convergence order.
+Does the discretization error depend on the simulation methodology? Where does
+the simulation methodology matter?
+
+Idea
+Combine two 1st-order schemes at different levels of discretization to produce a 2nd-order scheme
+
+Notation
+\( X^h \) is the discretized process with step size \( h \)
+\(X^h(t)\) is the value of process at time \( t \)
+
+Fact
+If both the process \( X \) and the function \( f \) are sufficiently regular, then
+\( \mathbb{E}[f(X^h(T))] = \mathbb{E}[f(X(T))] + ch + o(h) \)
+
+This implies:
+\( \mathbb{E}[f(X(T))] = 2\mathbb{E} [f(X^h(T))] - \mathbb{E}[f(X^{2h}(T))] + o(h) \quad (*) \)
+\( 2\mathbb{E}[f(X^h(T))] - \mathbb{E}[f(X^{2h}(T))] \) is the object that needs to be computed from MC in order to reduce discretization error.
+
+(i) Reduction of discretization error in (*)  involves difference of two expectations; the discretization error does not
+depend on the way how the two expectations are simulated - independently or with dependence.
+ii) However, the Monte-Carlo error can be reduced if the simulation of both expectations involves suitable
+dependence:
+\( \mathbb{E}[f(X^h(T))] - \mathbb{E}[f(X^{2h}(T))] = \mathbb{E}[2f(X^h(T)) - f(X^{2h}(T))] \)
+\( \text{Var} [2f(X^h(T)) - f(X^{2h}(T))] \)
+\( = \mathbb{E}[(2f(X^h(T)) - f(X^{2h}(T)))^2] - (\mathbb{E}[2f(X^h(T)) - f(X^{2h}(T))])^2 \)
+\( = 4 \text{Var}[f(X^h(T))] + \text{Var}[f(X^{2h}(T))] - 4 \text{Cov} (f(X^h(T)), f(X^{2h}(T))) \)
+\( \Rightarrow \) Positive dependence is useful.
+
+Possible strategy:
+\( X^h \): Brownian increments \( \sqrt{h} Z_1, \sqrt{h} Z_2, \sqrt{h} Z_3, ... \) with \(Z_1, Z_2, ... \sim N(0,1)\) i.i.d
+\( X^{2h} \) Brownian increments \( \sqrt{h}(Z_1 + Z_2), \sqrt{h} (Z_3 + Z_4), ... \)
+
+More generally
+Given a probability space \( (\Omega, \mathbb{F}, \mathbb{P} \), a filtration is a family \(\{\mathcal{F}_t\}_{t \in T}\) of sub-σ-algebras of \( \mathbb{F} \) indexed by a totally ordered set \( T \) (typically representing time), such that it satisfies the following properties:
+Increasing: For any \( s, t \in T \) with \( s \leq t \), we have \( \mathcal{F}_s \subseteq \mathbb{F}_t \)
+Adaptedness: \( \mathcal{F}_{0} \) contains all the null sets of \( \mathbb{F} \) (Optional, but often assumed).
+Right-continuity: (Optional, but often assumed) For any \( t \in T \), we have \( \mathcal{F}_t = \cap_{s > t} \mathcal{F}_s \)
+
+Theorem (Arbitrage-Free Prices): The set \( \mathcal{C}_{0} \) of all arbitrage-free prices  \( C_0 \) of a contingent claim \( C_T \) at time \( 0 \) is non-empty and given by  \( \mathcal{C_0} = \{S^{0}_{0}\mathbb{E}_{\mathbb{Q}}[\frac{C_{t}}{S^{0}_{T}}] | \mathbb{Q} \in \mathcal{Q}\} \) such that \( \mathbb{E}_{\mathbb{Q}}[\tilde{C}_T] < \infty\) 
+
+
+with bounds \( \inf C_0 = \inf_{\mathbb{Q} \in \mathcal{Q}} S_0^0 \mathbb{E}_{\mathbb{Q}}[\frac{C_T}{S^0_T}] \)
+and similarly \( \sup C_0 = \sup_{\mathbb{Q} \in \mathcal{Q}} S_0^0 \mathbb{E}_{\mathbb{Q}}[\frac{C_T}{S^0_T}] \)
+
+Meaning for the claim \( C_t \) exists a real number \( r \in \mathbb{R} \) and portfolio/trading strategy \( \nu(t) \) s.t.
+\( C_T = r + \int_{0}^{T} p(t) dX_t \), where \( X_t \) encodes the stochastic processes of the assets that make up the claim
+(e.g. \( (X_t)_1 \coloneqq  \) saving account \( (X_t)_2 \coloneqq \) some stock.
+each 
+
+Convergence in distribution \( d \)
+If \( X_n \sim F_n \) then this means
+\( \lim_{n \to \infty} F_n(x) = F(x) \)
+for \( X \sim F \)
+Converge in probability 
+\( \lim_{n \to \infty} \mathbb{P}[|\hat{X}_n - X| > \varepsilon] = 0 \)
+Almost sure convergence 
+\( \mathbb{P}[\lim_{n \to \infty} \hat{X}_n = X] = 1\)
+Note that the position of the limes matters a lot.
+Converge in \( r \)-th mean (\(\mathcal{L}^r\))
+\( \lim_{n \to \infty} \mathbb{E}[|\hat{X}_n - X|^r] = 0\)
+Don't forget \( p \implies a.s. \implies d \)
+and \( L^r \implies L^s \implies a.s. \) for \( r \geq s \)
+
+
+Let \(\bar{X}_n = \sum_{i=1}^n X_i\) denote the sample mean for i.i.d. draws from a r.v. \(X\), the weak law of large numbers
+states \(\bar{X}_n \xrightarrow{p} E[X]\) for \(n \to \infty\)
+
+The Lindeberg-Levy CLT sates for the same setup
+\( \sqrt{n}(\bar{X}_n - E[X]) \xrightarrow{d} \mathcal{N}(0, \sigma^2) \).
+
+Moreover the Markov/Chebyshev inequality states for a measure space \((\Omega, \mathcal{F}, \mu)\), measurable function \( f \)
+and \( 0 < p < \infty \)
+\( \mu(\{\omega \in \Omega : |f(\omega)| \geq \varepsilon\}) \leq \frac{1}{\varepsilon^p}\int_\Omega |f|^p d\mu \).
+This can be generalized for a non-negative and non-decreasing \( g(t) \neq 0 \) to 
+\( \mu(\{\omega \in \Omega : f(\omega) \geq \varepsilon\}) \leq \frac{1}{g(\varepsilon)}\int_\Omega g \circ f d\mu \).
+
+Since 
+
+
+Girsanovs theorem application in finance
+
+This matters in quantitative finance, since it allows us to turn any 
+asset whose diffusion is given by some drifting BM (assumption of the Black-Scholes model) 
+into a martingale so the fundamental theorem of asset pricing applies.
+In particular let \( M_t \) be the risk free asset \( dM_t = r_t M_t dt \)
+and the asset of interest \( dS_t = S_t(\mu_t dt + \sigma_t dW_t \)
+then \( \frac{S_t}{M_t} = X_t\)
+with \( dX_t = X_t((\mu_t - r_t)dt + \sigma_t dW_t \)
+factoring terms \( dX_t = \sigma_t X_t(\frac{\mu_t - r_t}{\sigma_t}dt + dW_t) \)
+then Girsanov allows us to find a suitable probability measure \( \mathbb{Q} \)
+equivalent to the original \( \mathbb{P} \) under which
+\( \tilde{W}_t = W_t + \int_{0}^{t}\frac{\mu_t - r_t}{\sigma_t} dt \)
+is a driftless BM and substituting this into our \( X_t \) gives
+\( dX_t = \sigma_t X_t(\frac{\mu_t - r_t}{\sigma_t}dt + d\tilde{W}_t - \frac{\mu_t - r_t}{\sigma_t}dt) = \sigma_t X_t d\tilde{W}_t \)
+
+
+Explain the notation used in the lecture for transition kernels of Markov processes.
+
+Let \( (S,\mathcal{S}) \) be the state space and \( \{X_t\}_{t \in T}\) the markov process.
+For \( B \subset \mathcal{S} \), and \( s \leq t \), a transition kernel \( \mu_{s,t} \)
+denotes
+\( \mu_{s,t}(X_s, B) = \mathbb{P}[X_t \in B|\mathcal{F}_s] = \mathbb{P}[X_t \in B|X_s] \) a.s.
+One dimensional distributions are written as
+
+\( \nu_t = \mathcal{L}(X_t) \) and \( \nu_0 = \mathcal{L}(X_t) \) is the initial distribution of the Markov process.
+
+Consider kernels \(\mu, \nu\) from \(S\) to \(S\) 
+► Kernel from \(S\) to \(S^2\)
+\(\forall B \in S^2: (\mu \otimes \nu)(s, B) := \int \mu(s, dt) \int \nu(t, du) 1_B(t, u)\)
+
+This can, of course, iteratively be generalized to kernels from \(S\) to \(S^n\)
+► Kernel from \(S\) to \(S\)
+\(\forall B \in S: (\mu \nu)(s, B) := (\mu \nu)(s, S \times B) := \int \mu(s, dt) \nu(t, B)\)
+
+For \( A \in \mathcal{S}^{T} \) (maps from \( T \) to the \( \sigma \)-algebra \( \mathcal{S} \)) and \( x \in S \)
+any initial distribution \( \nu \) the law of the Markov process with fixed transition semigroup
+can now be represented as a mixture
+
+\( \mathbb{P}_{\nu}A = \int_{\mathcal{S}}\mathbb{P}_{x}(A)\nu(dx) \)
+
+Put a little bit more concrete this states if we want to evaluate the probability
+of the Markov chain to be in the set \( A \), (which consists of potential paths of the markov chain) 
+this is the same as measuring the probability of going from \( x \) into a certain chain in \( A \)
+and weighing it according to the probability of starting in \( x \) (which is given by \( \nu \)).
+
+
+Explain the Cox-Ross-Rubinstein model and its properties
+
+which is also better known as the Binomial options pricing model.
+
+We start from the initial price \( S_0 \) and fix \( u \geq 1,\ 0 \geq d \leq 1 \) the percentage 
+the asset might go up or down respectively. We repeat this for a number of fixed time steps
+and visualize the movements in a tree, where the nodes are hierarchically ordered by time.
+The final nodes contain the potential outcomes of \( S_T \).
+
+Note that multiple ways might lead to the same endresult at a time step \( t \)
+e.g. (u,d), (d,u) so we fuse them into one block for simplicity.
+
+We have the no-arbitrage condition \( d < 1 + r < u \), (\( r \) is the usual risk-free interest rate)
+and we can calculate the risk neutral probabilities in one step via the formula \( p = \frac{1+r - d}{u-d} \)
+for the price going up and \( 1 - p \) for going down.
+
+
+Give some identities for the Variance, Covariance and 
+define the conditional expectation.
+
+\( \text{Var}[X] = \mathbb{E}[(X - \mathbb{E}[X])^2] = \mathbb{E}[X^2] - \mathbb{E}[X]^2 \)
+\( \text{Var}[X + a] =  \text{Var}[X]\) for constant \( a \)
+\( \text{Var}[aX] =  a^2\text{Var}[X]\)
+\( \text{Var}[aX \pm bY] =  a^2\text{Var}[X] + b^2\text{Var}[X] \pm 2ab\text{Cov}[X, Y]\)
+More generally for any linear combination
+\( \text{Var}[\sum_{i=1}^N a_iX_i = \sum_{i,j=1}^N a_ia_j\text{Cov}[X_i, X_j] = \sum_{i=1}^{N} a_i^2\text{Var}[X_i] + 2\sum_{1 \leq i < j \leq N} \text{Cov}[X_i, X_j] \)
+The order of the \( i < j \) in the last equality matters.
+This simplifies to a great deal if the \( X_i \) are independent, since then
+\( \text{Cov}[X, Y] = 0 \)
+continuing with the covariance, it satisfies
+\( \text{Cov}[X, a] = 0 \), 
+\( \text{Cov}[aX, bY] = ab\text{Cov}[X,Y] \)
+\( \text{Cov}[X + a, Y + b] = \text{Cov}[X,Y] \)
+\( \text{Cov}[aX + bY, cW + dV] = ac\text{Cov}[X,W] + ad\text{Cov}[X,V] + bc\text{Cov}[Y,W] + bd\text{Cov}[Y,V] \)
+and its commutative in its arguments.
+
+Let \( (\Omega, \mathcal{A}, \mathbb{P}) \) be underlying probability space, for \( \mathcal{F} \in \mathcal{A} \)
+the conditional expectation is defined as the random variable \(\mathbb{E}[X|\mathcal{F}] \coloneqq Y \)
+s.t.
+1. \( Y \) is \( \mathcal{F} \) measurable
+2. For any \( A \in \mathcal{F}\) we have \( \mathbb{E}[X\mathbb{1}_{A}] = \mathbb{E}[Y\mathbb{1}_{A}] \).
+Then for any \( B \in \mathcal{A} \), \( \mathbb{P}[B|\mathcal{F}] \coloneqq \mathbb{E}[\mathbb{1}_{B}|\mathcal{F}] \)
+is called the conditional probability of \( B \) given \( \mathcal{F} \).
+If we write \( \mathbb{E}[X|Y] \) this is understood as \( \mathbb{E}[X|\sigma(Y)] \)
+
+For \( X, Y \) being random variables 
+If we have a joint density it holds \( \mathbb{E}[h(X)|Y] = \frac{\int h(x)f(x,Y)\lambda(dx)}{\int f(x,Y)\lambda(dx)} \)
+which is equivalent to the simpler (but not general enough) definition via Bayes rule, by noting that \( \int f(x, Y)\lambda(dx) = \mathbb{P}(Y) \)
+and setting \( h(x) = \mathbb{1}_{X \in B} \).
+
+A not so obvious rule is the tower property for \( \mathcal{G} \subseteq \mathcal{F} \subseteq \mathcal{A} \)
+it holds
+\( \mathbb{E}[\mathbb{E}[X|\mathcal{F}]|\mathcal{G}] =  \mathbb{E}[\mathbb{E}[X|\mathcal{G}]|\mathcal{F}] = \mathbb{E}[X|\mathcal{G}] \)

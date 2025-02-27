@@ -20,7 +20,7 @@ Examples: Divisible abelian groups (e.g., \( \mathbb{Q}/\mathbb{Z} \)), injectiv
 
 2. Resolutions
 Projective Resolution: An exact sequence of the form:
-\(\cdots \longrightarrow P_1 \longrightarrow P_0 \longrightarrow M \xrightarrow 0\)
+\(\cdots \longrightarrow P_1 \longrightarrow P_0 \longrightarrow M \longrightarrow 0\)
 where each \( P_i \) is a projective module.
 They precisely define split exact seqeuences via their resolution.
 
@@ -68,11 +68,11 @@ Define the Tor/Ext functors and state some properties
 Let \(A\) and \(D\) be \(R\)-modules. For any projective resolution of \(A\)
 let 
 \(
-d_n^i : \operatorname{Hom}_R(P_{n-1}, D) \to \operatorname{Hom}_R(P_n, D)
+d_n^i : \operatorname{Hom}_R(P_{n}, D) \to \operatorname{Hom}_R(P_{n+1}, D)
 \)
 for all \(n \geq 1\). Define
 \(
-\operatorname{Ext}_R^n(A, D) = \ker d_{n+1}^i / \operatorname{image} d_n^i,
+\operatorname{Ext}_R^n(A, D) = \ker d_{n}^i / \operatorname{im} d_{n-1}^i,
 \)
 
 where \( \operatorname{Ext}_R^0(A, D) = \ker d_1^i \). The group \( \operatorname{Ext}_R^n(A, D) \) is called the \( n \)\-th 
@@ -83,7 +83,13 @@ In particular \( \operatorname{Ext}^n \) is the same as the cohomology of interp
 \( \text{Hom}(A, G) \) with \( 0 \). The functor \( \operatorname{Ext}_R^n(-, D) \) is contravariant (and usually of interest) and 
 \( \operatorname{Ext}_R^n(A, -) \) covariant.
 
-Then \( \operatorname{Ext}(A, D) = \text{Hom}(F_1, G) / \text{im}(\iota^\vee) \).
+For finitely generated modules/groups, \( A \) we have the luxury of a presentation \( 0 \longrightarrow F_1 \xrightarrow{\iota} F_0 \xrightarrow{\pi} A \longrightarrow 0 \),
+thus after removing \( A \) we get the not necessarily exact sequence
+%and exactness preserved for the \( \text{Hom}(-, D) \) functor
+
+\( 0 \longrightarrow \text{Hom}(F_0, D) \xrightarrow{\iota^\vee} \text{Hom}(F_1, D) \longrightarrow 0 \)
+
+Hence, \( \operatorname{Ext}(A, D) = \text{Hom}(F_1, D) / \text{im}(\iota^\vee) \).
 
 Let \(G\) be any abelian group.
 1. If \(A\) is a free group, then \(\operatorname{Ext}(A, G) = 0\). 
@@ -97,18 +103,18 @@ Let \(D\) be a right \(R\)-module and let \(B\) be a left \(R\)-module. For any 
 \)
 for all \(n \geq 1\) as in (15). Then
 \(
-\operatorname{Tor}_n^R(D, B) = \ker(1 \otimes d_n) / \operatorname{image}(1 \otimes d_{n+1})
+\operatorname{Tor}_n^R(D, B) = \ker(1 \otimes d_n) / \operatorname{im}(1 \otimes d_{n+1})
 \)
 
-where \( \operatorname{Tor}_0^R(D, B) = (D \otimes P_0) / \operatorname{image}(1 \otimes d_1) \). 
-The group \( \operatorname{Tor}_n^R(D, B) \) is called the \( n \)-th homology group derived from the functor covariant \(D \otimes - \). 
+where \( \operatorname{Tor}_0^R(D, B) = (D \otimes P_0) / \operatorname{im}(1 \otimes d_1) \). 
+The group \( \operatorname{Tor}_n^R(D, B) \) is called the \( n \)-th homology group derived from the covariant (in both arguments actually) functor \(D \otimes - \). 
 When \(R = \mathbb{Z}\) the group \(\operatorname{Tor}_n^R(D, B)\) is also denoted simply \(\operatorname{Tor}_n(D, B)\) and
 \(\operatorname{Tor}(D, B) := \operatorname{Tor}_1(D, B)\)
 In particular \( \operatorname{Tor}_n \) is the same as the homology of interpreting the resolution as a chain complex and replacing 
-\( D \times B \) with \( 0 \).
+\( D \otimes B \) with \( 0 \).
 
 
-Then \( \operatorname{Tor}(A, D) = H_1(F_\bullet \times G) = \text{ker }\iota \times \text{id}_G \)
+Then \(  \operatorname{Tor}(A, D) = H_1(D \otimes F_\bullet) = \text{id}_D \otimes \text{ker }\iota \)
 
 Let \(G\) be any abelian group.
 1. If \(A\) is a free group, then \(\operatorname{Tor}(A, G) = 0\). 
@@ -117,6 +123,7 @@ Let \(G\) be any abelian group.
 the subgroup of \(n\)-torsion elements of \(G\).
 3. If \(\{A_i\}_{i \in I}\) is any family of abelian groups, then 
 \(\operatorname{Tor}\left( \bigoplus_{i \in I} A_i, G \right) \cong \bigoplus_{i \in I} \operatorname{Tor}(A_i, G). \)
+4. \(\text{Tor}(A, G) \simeq \text{Tor}(G, A)\)
 
 In some very specific sense one can say then that \( \operatorname{Tor},\operatorname{Ext} \) are dual to each other,
 in particular the following relation holds if the underyling ring is even a field \( \mathbb{K} \)
@@ -173,7 +180,8 @@ H^n(X, A; G) \cong H^n(Y, B; G) \text{ for all } n \in \mathbb{Z}.
 In particular, if \(f\) induces isomorphisms in homology \(f_*\), then the induced homomorphisms \(f^*\) in cohomology are also isomorphisms.
 
 Something that wasn't covered in the lecture is the fact that it also holds for \( X \) of finite dimension
-\(0 \longrightarrow H^n(X) \otimes G \longrightarrow H^n(X;G) \longrightarrow \text{Tor}(H^{n+1}(X), G) \to 0.\),
+\(0 \longrightarrow H_n(X) \otimes G \longrightarrow H_n(X;G) \longrightarrow \text{Tor}(H_{n+1}(X), G) \to 0.\)
+%\(0 \longrightarrow H^n(X) \otimes G \longrightarrow H^n(X;G) \longrightarrow \text{Tor}(H^{n+1}(X), G) \to 0.\),
 which is also split and is derived from the homology version of the universal coefficient theorem.
 
 
@@ -188,11 +196,13 @@ A \otimes_R B \cong B \otimes_R A
 - Naturality of the isomorphism means \( \tau_{A, B}(a \otimes b) = b \otimes a \).
 However this does not mean for specific elements \( a \otimes b = b \otimes a \), this does only
 hold in some subalgebra's of the tensor algebra (e.g. \( \text{Sym} \).
+
 2. Associativity
 \(
 (A \otimes_R B) \otimes_R C \cong A \otimes_R (B \otimes_R C)
 \)
  Naturality of the isomorphism means \(\alpha_{A, B, C}((a \otimes b) \otimes c) = a \otimes (b \otimes c)\).
+ 
 3. Distributivity over Direct Sums
 \(
 A \otimes_R (B \oplus C) \cong (A \otimes_R B) \oplus (A \otimes_R C)
@@ -202,8 +212,10 @@ A \otimes_R (B \oplus C) \cong (A \otimes_R B) \oplus (A \otimes_R C)
 R^n \otimes_R M \cong M^n
 \)
 - This is because \(R^n\) can be seen as a direct sum of \(n\) copies of \(R\).
-Some degenerate cases are \( R \otimes_R M \cong M \), \( M \otimes_R 0 \cong 0 \)
-### Interaction with Hom Functor
+Some degenerate cases are \( R \otimes_R M \cong M \), \( M \otimes_R 0 \cong 0 \).
+
+
+Interaction with Hom Functor
 1. Hom-Tensor Adjunction
 \(
 \text{Hom}_R(A \otimes_R B, C) \cong \text{Hom}_R(A, \text{Hom}_R(B, C))
@@ -224,10 +236,10 @@ A \otimes_R M \rightarrow B \otimes_R M \rightarrow C \otimes_R M \rightarrow 0
 is exact for any \(R\)-module \(M\).
 
 3.
-There multiple equivalent definitions of flat modules,
+There are multiple equivalent definitions of flat modules \( M \),
 1. For all injective \( \phi : K \to L \) of right \( R \)-modules, the map \( \phi \otimes \text{id}_{M} : K \otimes M \to L \otimes M \)
 is also injective. As it turns out, this is the same as if \(- \otimes_R M\) preserves exact sequences (in particular over PID's this is the same
-as being free, and projective and either way implies torsion free,
+as being free, and projective and either way implies torsion free),
 Specifically, for a flat module \(M\) and an exact sequence \(0 \rightarrow A \rightarrow B \rightarrow C \rightarrow 0\):
  \(
  0 \rightarrow A \otimes_R M \rightarrow B \otimes_R M \rightarrow C \otimes_R M \rightarrow 0
@@ -287,7 +299,7 @@ where \( i \otimes m \mapsto im \), and it’s surjective (not necessarily injec
 
 Let \( R \) be a domain with fraction field \( K \) and \( V \) be a \( K \)-vector space.
 (1) For all \( R \)-modules \( M \), there is an \( R \)-module isomorphism \( V \otimes_R M \simeq V \otimes_R (M/M_{\text{tor}})\) 
-is the torsion submodule of M. In particular \( v \otimes m = 0 \) if and only if \( v = 0 \) or \( m \in M_{\text{tor}} \)
+\(M_{\text{tor}}\) is the torsion submodule of M. In particular \( v \otimes m = 0 \) if and only if \( v = 0 \) or \( m \in M_{\text{tor}} \)
 and \( M_{\text{tor}} = \text{ker}(M \to K \otimes_R M),\ m \mapsto 1 \otimes m \).
 (2) For \( R \)-modules \( M \), if \( M \) is torsion then \( V \otimes_R M = 0 \) and if \( M \) is not torsion and
 \( V \) is nonzero then \( V \otimes_R M \neq 0 \).

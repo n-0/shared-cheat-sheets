@@ -1,0 +1,245 @@
+Define the \(K[x]\)-module on \(V\) inherited from a homomorphism \(T \in \text{End}(V)\),
+where \(V\) is originally a vector space over \(K\). Note some essential properties.
+
+The action of a \(f(x) \in K[x]\) on an element \(v \in V\) is given by \(f(x)v = f(T)(v)\)
+The structure is also denoted \((V, T)\).
+
+Suppose \((V, T), (W, S)\) are such \(K[x]\)-modules and \(\phi : (V, T) \to (W, S)\)
+a \(K[x]\)-module hom. Then \(\phi : V \to W\) is also a vector space hom., also
+\(\phi(T(v)) = \phi(x(v)) = x\phi(v) = S(\phi(v))\), since \(T = x\) in \((V, T)\).
+Hence if \(\phi\) is an isomorphism it holds \(T = \phi^{-1} \circ S \phi\), which motivates similar operators.
+
+If \((V, T)\) is free then \(\text{dim}_{K}((V)) = \infty\) as vector space and otherwise 
+\((V, T)\) must be torsion and can be decomposed via the invariant/elementary factors, which are in this case
+polynomials that is
+
+\((V, T) \simeq K[x]/a_1(x) \oplus K[x]/a_2(x) \oplus \dots \oplus K[x]/a_n(x)\), with \(a_1(x) | a_2(x) | \dots | a_n(x)\).
+These are unique if we enforce, that the \(a_i\) are monic. Since \(a_n(x)\) is the annhilator of \((V, T)\) the minimal polynomial 
+\(m_T(x)\) is the largest invariant factor of \(V\). Additionally \((m_T(x)) = \ker{\phi}, \phi : K[x] \to K[T]\).
+
+
+Derive the companion/Frobenius matrix
+
+Suppose we want to represent \(T\) in a particular suitable basis of \(F(x)/a(x)\), where \(a(x) = x^k + b_{k-1}x^{k-1} \dots + b_0\) is the largest
+invariant factor aka the minimal polynomial of \(T\). This basis is given by \(1, \bar{x}, \bar{x}^2, \dots, \bar{x}^{n-1}\)
+with \(\bar{x} = x \text{mod} (a(x))\), as \(T = x\) the action of \(T\) on these elements is given by \(1 \to \bar{x}, \bar{x} \to \bar{x}^2 \dots
+\bar{x}^{n-1} \to \bar{x}^k = -b_0 - b_1\bar{x} - \dots - b_{k-1}\bar{x}^{k-1}\), since \(a(\bar{x}) = 0\) in \(F[x]/(a(x))\). Thus
+we may write \(T\) as:
+
+\(
+\begin{bmatrix}
+0 & 0 & 0 & \dots & -b_0 \\ 
+1 & 0 & 0 & \dots & -b_1 \\ 
+0 & 1 & 0 & \dots & -b_2 \\ 
+\vdots & \dots & \dots & \dots & \dots \\ 
+0 & 0 & \dots & 1 & -b_{k-1}
+\end{bmatrix}
+\)
+
+
+Derive the rational canonical form
+
+Build the companion matrix \(\mathcal{C}_i\) of \(T\) for each \(a_i\) in the invariant factor decomposition
+\((V, T) \simeq K[x]/a_1(x) \oplus K[x]/a_2(x) \oplus \dots \oplus K[x]/a_n(x)\)
+and write them as 
+\(
+\begin{bmatrix}
+C_1 & 0 & \dots & 0 \\ 
+0 & C_2 & \dots & 0 \\ 
+\vdots & \dots & \dots & \dots \\
+0 & 0 & 0 & C_n \\
+\end{bmatrix}
+\)
+in block notation.
+This is the rational canonical form of \(T\).
+Moreover if linear transformations \(S, T\) induce isomorphic \(K[x]\)-modules then they have the same
+rational canonical form.
+
+The special case is, if \(T \in \text{Mat}_{n}(F)\) for some field \(F\) then \(T\) is similar to a diagonal matrix \(D\)
+in rational canoncial form, \(T = P D P^{-1} \).
+
+
+
+Denote the field \(F = R/(p)\), since \((p)\) is maximal in \(R\).
+It holds
+
+
+Motivate the Jordan normal form
+
+We know that \(T\) has a rational canonical form in \((V, T)\), with invariant factors \(a_1(x) | a_2(x) | \dots | a_n(x)\),
+according to the elementary divisor theorem, we can instead consider the irreducible polynomial factors of these polynomials.
+In the best case scenario these are linear factors, s.t. \(a_j(x) = \Pi_{i \in I}(x - \lambda_i)^{\alpha_i}\) for each \(j\).
+These immediately gives a basic requirement we have for the existence of Jordan canonical form, the characteristic polynomial
+(of which all these \(a_i(x)\) are divisors\) must split over \(K\).
+
+Now consider the basis \((\bar{x} - \lambda)^{k-1}, (\bar{x} - \lambda)^{k-2}, \dots, \bar{x} - \lambda, 1\) of \(K[x]/(x - \lambda)^k\).
+Then the action of \(T\) is given by 
+\(x 1 \mapsto \lambda 1 + (\bar{x} - \lambda), x (\bar{x} - \lambda) \mapsto \lambda(\bar{x} - \lambda + (\bar{x} - \lambda)^2, \dots, x (\bar{x} - \lambda)^{k-1} = \lambda (\bar{x} - \lambda)^{k-1}\)
+Hence we can represent \(T\) as the matrix 
+\(
+\begin{bmatrix}
+\lambda & 1 & \dots & 0 \\ 
+0 & \lambda & 1 & \dots \\ 
+\vdots & \dots & \dots & \dots \\
+0 & 0 & \lambda & 1 \\
+0 & 0 & 0 & \lambda \\
+\end{bmatrix}
+\)
+This is the Jordan block of size \(k\) for the eigenvalue \(\lambda\) similarly to the rational canonical form,
+we can built a direct sum of the Jordan blocks for each \(K[x]/(a_i(x)\),
+to obtain the Jordan canonical form (note that there is no \(1\) above a \(\lambda\) if the block is only of size \(1\))
+
+In particular note that if \(P^{-1}AP = J\) (which always exists if \(T \in \text{Mat}_{n}(K)\)), then \(AP = PJ\).
+Denote by \(p_i\) the \(i\)-th column of \(P\), if we calculate for each \(\lambda_i\) entry in \(J\), \((A - \lambda_i I_n)p_i = v\), where \(v = 0\) if \(p_i\) is regular
+eigenvector or \(p_{i-1}\) if its a generalized eigenvector, hence we would have not a full basis for \(V\) if one of the \(p_i\) is a generalized
+eigenvector (lin. dependent), hence the repeated \(\lambda\) entries with a \(1\) above, to migitate this issue. Moreover the eigenspaces \(T_\lambda = \{ v \in V | \exists r, (x - \lambda)^{r}v = 0 \}\),
+can be seen as the subspaces of \(V\) given through the elementary divisors representation \(F[x]/(x - \lambda)^r\).
+
+
+State the 4 fundamental spaces of a matrix \(A \in \text{Mat}_{n \times m}{K}\)
+
+We have the
+1. Column space \(\text{col}(A) = \text{span}(\{a_1, a_2, \dots, a_m\})\), where \(a_i\) is the \(i\)th-column of \(A\)
+1. Row space, \(\text{row}(A) = \text{span}(\{a_1, a_2, \dots, a_n\})\), where \(a_i\) is the \(i\)th-row of \(A\)
+1. kernel/right null space, \(\text{ker}(A) = \{ v \in K^M | Av = 0\}\)
+1. left null space, \(\text{coker}(A) = \{ v \in K^n | vA = 0\}\)
+
+
+We have \(\text{dim}(\text{col}(A)) = \text{dim}(\text{row}(A))\) which also implies \(\text{dim}(\text{im}(A)) = \text{dim}(\text{im}(A^{T}))\) (equivalently the rank of the matrices is the same).
+The rank-nullity theorem asserts \(\text{dim}(\text{col}(A)) + \text{dim}(\text{ker}(A)) = m\) (so the dimension of the domain of \(A\)).
+The rank is bounded by \(\text{rank}(A) \leq \text{min}(m, n)\).
+
+
+Is there a simple way to determine the rational/Jordan canonical form for \(\text{dim} \in \{2, 3\}\)?
+Moreover how can the one derive rational canonical form from the Jordan normal form and vice verca?
+
+
+Yes, after finding the characteristic and minimal polynomial (the latter can be found from the prior by trial and error) of the linear transformation \(T\), 
+the divisibility relations, determine already the invariant factors and with that their elementary divisors (which are the linear monomials to the highest power, which divide the invariant factor).
+
+E.g. if \(T\) has invariant factors \(\{(x - 1)(x - 3)^{3}\}\), \(\{(x - 1)(x - 2)(x - 3)^3\}\), \(\{(x - 1)(x - 2)(x - 3)^3\}\) then elementary divisors are in turn \(\{(x - 1), (x - 3)^3\}\), \(\{(x - 1), (x - 2), (x - 3)^3\}\) etc.
+
+Conversely if the elementary divisors are (with repetition) \(\{(x - 1)^3, (x - 1)^{3}, (x - 1)\}\), \(\{(x - 5)^2), (x - 5)\}\), \(\{(x - 4)\}\), one can arange them in a grid, where each row
+lists in ascending order all the available powers of the same eigenvalue and eigenvalues with less powers fill up their first columns with \(1\)'s to achieve the same row length.
+The product of the columns are then invariant factors, in this case \(\{(x - 1)\}\), \(\{(x - 1)^3(x - 5)^2\}\) \(\{(x - 1)^3(x - 5)\}\), \(\{(x - 1)^3(x - 5)^2(x - 4)\}\)
+
+
+Define a \(B\)-algebra \(A\) over a commutative ring \(B\) and name some examples:
+
+An (associative) unital \(B\)-algebra \(A\) (which is usually referred to) is a ring,
+which can be seen as a \(B\)-module at the same time, with compatible multiplication, that is
+\(A \times A \to A\) satisfies \((ba)a' = b(aa') = a(ba')\).
+
+More precisely there is a ring hom. \(\phi : B \to Z(A)\), where \(Z(A)\) is the center of \(A\), s.t.
+\(b \cdot a\) is defined as \(b \cdot a = \phi(b) a\).
+
+The polynomial ring \(R[x1, \dots, x_n]\) is an \(R\)-algebra.
+Each subring \(B'\) of \(B\) defines via the restriction of \(\phi' : B' \to Z(A)\) a \(B'\)-algebra
+\(\text{Mat}_n(R)\) is an \(R\)-algebra which is usually not commutative.
+
+
+Define and give examples of finitely generated and finite algebra's.
+
+If there are finitely many \(a_1, \dots, a_n \in A\)  s.t. \(A = B[a_1, \dots, a_n]\) with \(B\) the
+underlying ring and \(A\) the \(B\)-algebra, then \(A\) is finitely generated.
+
+If \(A\) is finitely generated as a \(B\)-module and also a \(B\)-algebra, then \(A\) is finite.
+In particular
+\(A = Ba_1 + \dots + Ba_n\)
+
+\(R\) is a finite \(R\)-algebra.
+\(R[x_1, \dots, x_n]\) is a finitely gen. \(R\)-algebra, but not finite.
+
+The inherited \(K[X]\) module from a linear transformation \(\phi\) on a finite dimensional \(K\)-vector space
+is a finite algebra.
+
+
+Define integral elements of a ring \(A\) over a ring \(B\).
+
+Let \(B \subset A\) be commutative, \(a \in A\) is integral over \(B\) if there is a monic \(p(x) \in B[X]\) with 
+\(p(a) = 0\). 
+\(A\) is integral over \(B\) if this holds for all elements of \(A\).
+
+Note that if \(A, B\) are fields these notions coincide with algebraic elements and normal extensions.
+\(\text{End}(V)\) is integral over \((V, \phi)\) with finite dim. \(V\).
+
+
+Prove and state how subalgebra's behave in regard to finiteness.
+
+Let \(C \subset B \subset A\) be commutative rings
+
+1. If \(B\) is a finite \(C\)-algebra and \(A\) a finite \(B\)-algebra, then \(A\) is a finite \(C\)-algebra.
+2. If \(A\) is a finite \(B\)-algebra, then \(A\) is integral over \(B\).
+3. If \(a \in A\) is integral over \(B\), then \(B[a]\) is a finite \(B\)-algebra. 
+
+Proof:
+(1) Let \(\{b_n\}_{n \in [m]}\) be the generating set of \(B\) as \(C\)-module and \(\{a_n\}_{n \in [m]}\) of \(A\) as \(B\)-module.
+Then \(A = Ba_1 + \dots + Ba_n = (Cb_1 + \dots + Cb_n)a_1 + \dots + (Cb_1 + \dots + Cb_n)a_n\) which gives the desired result.
+(2) Take any \(\alpha \in A\), use the determinant trick on \(I = B\) and \(\phi(x) = \alpha x\) (thus \(\phi(A) \subset BA\), implying
+that \(\alpha\) is integral over \(B\), note that this particular \(\phi\) has powers that look like just a regular polynomial in \(x\).
+with coefficients in \(B\) times a power of \(\alpha\), (setting \(x = 1\) gives then just \(\alpha\), which is valid since the specific \(p \in B[\phi]\)
+is \(0\) for all arguments).
+(3). Since \(\a\) is integral over \(B\) it satisfies some \(p(a) = a^{n} + b_{n-1}a^{n-1} + \dots + b_0 = 0\), hence \(B[a] = B + \dots + B a^{n-1}\).
+
+A few direct consequences are
+
+1. Lemma of Nakayama for algebra's:
+Let \(A \neq 0\) a finite \(B\)-alebgra, then for all proper ideals \(I\) of \(B\), \(IA \neq A\).
+Proof: By contraposition, if \(IA = A\) then the determinant trick gives for \(\phi = \text{id}\) that \(1 + i_{n-1} + \dots + i_0 = 0\) holds,
+but then \(1 \in I\), so \(I\) is not proper.
+
+2. Let \(A\) be a field, \(B \subset A\) a subring, s.t. \(A\) is a finite \(B\)-algebra. Then \(B\) is also a field.
+From the prev. (2), \(b^{-1} \in A\) satisfies some \(p(b^{-1}) = 0\), shifting term the highest order term to the other side and 
+multiplying by \(b^{n-1}\) gives that \(b^{-1} \in B\).
+
+
+State and prove the existence of a coord. transformation of multinomial over a infinite field, which has a highest order
+term in the last coordinate.
+
+Let \(K\) be an infinite field \(f \in K[x_1, \dots, x_n]\), \(f \neq 0\), \(0 < d = \text{deg}f\), then there is a transformation
+\(x'_i = x_i - \alpha_i x_n, \alpha_i \in K\) s.t. \(f(x'_1 + \alpha_1 x_n, \dots, x'_{n-1} + \alpha_{n-1} x_n, x_n) \in K[x_1', \dots, x_n]\)
+has a \(cx^{d}_n\) term for \(0 \neq c \in K\).
+
+Take any linear transformation of the prescribed form and note that \(f = F_d + G\), where \(F_d\) is homogenous, only with terms of \(\text{deg} = d\)
+and \(G\) contains all remaining terms. Since the coordinate transformation leaves degree fixed we have 
+\(f(x'_1 + \alpha_1 x_n, \dots, x'_{n-1} + \alpha_{n-1} x_n, x_n) = x^{d}_n F_d(\alpha_1, \dots, \alpha_{n-1}, 1) + \text{lower order terms or not containing x_n}\),
+since \(K\) is infinite and \(F_d\) not trivial, there are \(\alpha_i \in K\), s.t. \(F_d(\alpha_1, \dots, \alpha_{n-1}, 1) \neq = 0\), thus we set \(c = F_d(\alpha_1, \dots, \alpha_{n-1}, 1)\) to obtain the desired result.
+
+Define alebgraic ind. elements of an algebra.
+
+Let \(A\) be a \(K\)-algebra, where \(K\) is a field and \(\{a_1, \dots, a_n\} \subset A\) the elements in question. 
+If there's no non-trivial polynomial \(f \in K[t_1, \dots, t_n]\), with \(f(a_1, \dots, a_n) = 0\) then the elements are algebraically independent.
+
+Prove and state the Noether Normalization Lemma
+
+Let \(K\) be an infinite field \(A = K[a_1, \dots, a_n]\) a finitely generated \(K\)-algebra, then there are \(y_1, \dots y_m \in A\) with \(m \leq n\)
+s.t.
+1. \(y_1, \dots, y_m\) are alg. ind. over \(K\)
+2. \(A\) is a finite \(K[y_1, \dots, y_m]\)-algebra.
+
+We proceed via induction, take the generators \(a_1, \dots, a_n\) and consider the evaluation homomorphism 
+\(\phi : K[x_1, \dots, x_n] \to K[a_1, \dots, a_n]\) with \(I = \text{ker}(\phi)\), if \(I = 0\) we are already done, so assume
+\(I \neq 0\). If \(n = 1\) it follows \(f(a_1) = 0\), setting \(m = 0\) gives with the fact
+3. If \(a \in A\) is integral over \(B\), then \(B[a]\) is a finite \(B\)-algebra
+the desired result.
+Let \(n > 1\), from the existence lemma of certain coord. transformations there are \(a'_i = a_i - \alpha_i a_n\)
+s.t. \(f(a'_1 + \alpha_1 x_n, \dots, x_n) \in K[a'_1, \dots, x_n]\) has a \(c x_n^{d}\) term. Set 
+\(A' = K[a_1', \dots, a'_{n-1}] \subset A\)
+\(F(x_n) = c^{-1} f(a'_1 + \alpha_1 x_n, \dots, x_n) \in A'[x_n]\)
+then \(F(x_n)\) is monic and \(F(a_n) = 0\), hence \(a_n\) is integral over \(A'\).
+Applying the induction hypothesis on \(A'\) makes it a finite \(K[y_1, \dots, y_m]\)-algebra, but \(a_n\) is integral
+so \(A = A'[a_n]\) is also a finite \(A'\)-algebra and the inheritance of finite algebras asserts also that \(A\) is a \(K[y_1, \dots, y_m]\)-algebra, 
+yielding the desired result.
+
+
+State and prove the weak Nullstellensatz (Zariski's lemma)
+Let \(K\) be an infinite field, \(A\) a fin. gen. \(K\)-algebra, which is also a field,
+then \(A\) is algebraic over \(K\).
+
+According to Noether's normalization lemma, \(A\) is a finite \(B = K[y_1, \dots, y_m]\)-algebra, for some
+\(y_1, \dots y_m \in A\). Moreover \(B\) is a field, since \(A\) is finite over \(B\) and due to the fact:
+
+Let \(A\) be a field, \(B \subset A\) a subring, s.t. \(A\) is a finite \(B\)-algebra. Then \(B\) is also a field.
+
+But then also \(m = 0\) over \(K\), hence \(A\) is finite field extension of \(K\), which must be algebraic.
+

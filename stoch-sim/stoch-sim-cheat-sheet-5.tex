@@ -1,0 +1,563 @@
+What are the random walk constructions of Brownian motion, arithmetic Brownian
+motion and Brownian motion with time-dependent, but deterministic drift and
+volatility and their multivariate counterparts? 
+How does the number of operations depend on the number of points of
+the time grid?
+
+A first approach exploits the fact that the increments are normally distributed and independent.
+On a time grid, process can thus be adjusted on the basis of these increments.
+
+We fix times \(0=t_{0}<t_{1}<\cdot\cdot\cdot<t_{n}\) and independent random variables \(Z_{1},Z_{2},..., Z_{n}\sim\mathcal{N}(0,1).\)
+1. Brownian motion
+\(\mathcal{W}(t_{i+1})=W(t_{i})+\sqrt{t_{i+1}-t_{i}}\cdot Z_{i+1},\ i=0,1,...,n-1\)
+2. Constant drift and volatility
+\(X(t_{i+1})=X(t_{i})+\mu\cdot(t_{i+1}-t_{i})+\sigma\cdot\sqrt{t_{i+1}-t_{i}}\cdot Z_{i+1},\ i=0,1,...,n-1\)
+3. Time-dependent drift and volatility
+\(X(t_{i+1})=X(t_{i})+\int_{t_{i}}^{t_{i+1}}\mu(s)ds+\sqrt{\int_{t_{i}}^{t_{i+1}}\sigma^{2}(u)du}\cdot Z_{i+1},\ i=0,1,...,n-1\)
+
+The random walk construction provides a simulation method that is exact on the discrete time grid
+\(0=t_{0}<t_{1}<\cdot\cdot\cdot<t_{n}\)
+
+For intermediate time points the process may be interpolated linearly. At these times the result is subject to
+discretization error.
+This applies, of course, also to all other methods that are exact on a time grid, but interpolate between the
+specified time points.
+
+The run-time complexity dependent on the resolution \( n \) of the grid is \( \mathcal{O}(n) \).
+
+Fromn this construction one can also build the arithmetic Brownian motion by inserting it into the discretization
+of its defining equation
+\(dX_t = \mu dt + \sigma dW_t \).
+
+The multivariate generalizations are given by
+fixing times \(0=t_{0}<t_{1}<\cdot\cdot\cdot<t_{n}\) and independent random vectors \(Z_{1},Z_{2},...,Z_{n}\sim\mathcal{N}(0,I)\)
+Then for \( i=0,1,...,n-1\) the schemes are
+Brownian motion W:
+\(W(t_{i+1})=W(t_{i})+\sqrt{t_{i+1}-t_{i}}\cdot Z_{i+1}\)
+
+Constant drift and volatility \(dX(t)=\mu~dt+BdW(t)\):
+
+\(X(t_{i+1})=X(t_{i}) + \mu \cdot (t_{i+1}-t_{i}) + \sqrt{t_{i+1}-t_{i}} \cdot B \cdot Z_{i+1}\)
+
+Time-dependent drift and volatility \(dX(t)=\mu(t)dt+B(t)dW(t)\)
+
+\(X(t_{i+1})=X(t_{i})+\int_{t_{i}}^{t_{i+1}}\mu(s)ds+B(t_{i},t_{i+1})\cdot Z_{i+1},\)
+\(B(t_{i},t_{i+1})B(t_{i},t_{i+1})^{\top}=\int_{t_{i}}^{t_{i+1}}B(u)B(u)^{\top}du,\)
+
+Derive the auto-covariance of Brownian motion. How does the Cholesky factor-
+ization for finite-dimensional marginal distributions of Brownian motion look like?
+When using this for simulation, how does the number of operations depend on
+the number of points of the time grid, if the method is implemented directly (i.e.,
+without additional simplifications)?
+
+The Cholesky factorization provides an alternative simulation method that is based on the following observation:
+
+\[ \text{Cov}(W(s), W(t)) = \text{Cov}(W(s), W(s) + (W(t) - W(s))) \]
+\[ = \text{Cov}(W(s), W(s)) + \text{Cov} (W(s), W(t) - W(s)) = s \text{ with } s \leq t \]
+
+Letting \(C \in \mathbb{R}^{n \times n}\) with \(C_{ij} = \min(t_i, t_j)\), we get \((W(t_1), W(t_2), ..., W(t_n)) \sim \mathcal{N}(0, C)\).
+
+The Cholesky factorization \(C = AA^T\) is specified by
+\[ A = 
+\begin{pmatrix}
+\sqrt{t_1} & 0 & \dots & 0 \\
+\sqrt{t_1} & \sqrt{t_2 - t_1} & 0 & \vdots \\
+\vdots & \vdots & \ddots & 0 \\
+\sqrt{t_1} & \sqrt{t_2 - t_1} & \dots & \sqrt{t_n - t_{n-1}}
+\end{pmatrix}
+\] 
+
+Brownian motion with drift \(\mu\) and volatility \(\sigma^2\) possesses on the time grid \(0=t_0<t_1<t_2<...<t_n\) a multivariate normal distribution
+\(
+N \left( \begin{pmatrix}
+t_1 \ t_2 \ \vdots \ t_n
+\end{pmatrix} \cdot \mu, \sigma^2 \cdot C \right)
+\)
+
+Using the Cholesky factorization, this can be simulated on the basis of a random vector Z with n independent standard normal components:
+\(
+(t_1 \ t_2 \ \dots \ t_n)^T \cdot \mu + \sigma \cdot A Z
+\)
+
+
+Describe the Brownian bridge simulation of Brownian motion. Where do you need
+to argue with the Markov property? How does the number of operations depend
+on the number of points of the time grid?
+
+Benefit: later useful for variance reduction techniques and low-discrepancy methods
+Connection to Brownian Bridge:
+
+A Brownian motion conditioned on end points is a Brownian bridge:
+1.generate \(W(t_n)\)
+2. generate \(W(t_{\frac{n}{2}})\)
+3. etc.
+
+The specific implementation requires simulations from conditional distributions of three-dimensional random vectors.
+
+
+We begin with considering a three-dimensional marginal distribution of Brownian motion, i.e.,
+\( 0 \leq u < s < t \)
+
+\(
+\begin{pmatrix}
+W(u) \\ W(s) \\ W(t)
+\end{pmatrix} 
+\sim \mathcal{N}
+\left(
+\begin{pmatrix}
+0 \\ 0 \\ 0
+\end{pmatrix},
+\begin{pmatrix}
+u & u & u \\
+u & s & s \\
+u & s & t
+\end{pmatrix}
+\right) 
+\)
+From the conditioning formula for normal random vectors we obtain:
+
+\[\mathcal{L}(W(s) | W(u) = x, W(t) = y) = \mathcal{N} \left( \frac{(t-s)x + (s-u)y}{t-u}, \frac{(t-s)(s-u)}{t-u} \right) \]
+This is the only formula that is needed for the Brownian bridge construction:
+If the values
+\[ \frac{W(s_1),}{= x_1} \frac{W(s_2),..., \frac{W(s_k)}{= x_k}} \]
+are known for \(s_1 < s_2 < ... < s_k\), then for \(s \in (s_i, s_{i+1})\) conditioning on all values is the same as conditioning on \(W(s_i) = x_i, W(s_{i+1}) = x_{i+1}\) due to the Markov property of Brownian motion.
+
+Sampling \(W(s)\) with \(s_i < s < s_{i+1}\), \(W(s_i) = x_i\), \(W(s_{i+1}) = x_{i+1}\):
+
+\( W(s) = \frac{(s_{i+1} - s)x_i + (s - s_i)x_{i+1}}{s_{i+1} - s_i} + \sqrt{\frac{(s_{i+1} - s)(s - s_i)}{s_{i+1} - s_i}} \cdot Z, \quad Z \sim N(0,1) \)
+* Sampling with drift
+▸ sample rhs end point first
+▸ afterwards the algorithm is identical, since a Brownian bridge constructed from Brownian motion with or without drift has the same law
+* Sampling with volatility
+▸ adjust the standard deviation of the innovations accordingly
+
+The run-time complexity dependent on the resolution \( n \) of the grid is \( \mathcal{O}(n) \).
+
+How could a principle component analysis be implemented for any multivariate
+Gaussian process?
+
+We consider the n-dimensional marginal distribution of a Brownian motion:
+\( i, j \in \{1, 2, \dots, n\}   \)
+\( (W(t_1) \ W(t_2) \ ... \ W(t_n))^T \sim \mathcal{N}(0, C) \text{ with } C_{ij} = \min(t_i, t_j), \ \)
+
+* Solving 
+\[ Cv_i = \lambda_i v_i, \ ||v_i|| = 1, \ i = 1, 2, ..., n \]
+\[ \lambda_1 > \lambda_2 > ... > \lambda_n > 0 \]
+\[ a_i = \sqrt{\lambda_i} v_i, \ i = 1, 2, ..., n \]
+provides for suitable independent \( Z_i \sim \mathcal{N}(0,1), \ i = 1, 2, ..., n \) the representation
+\[ (W(t_1) \ W(t_2) \ ... \ W(t_n))^T = Z_1 a_1 + Z_2 a_2 + ... + Z_n a_n \]
+
+If \( t_{i+1} - t_i = \Delta t \ \forall i \), the solution is
+\[ v_i(j) = \frac{2}{\sqrt{2n+1}} \cdot \sin \left( \frac{2i-1}{2n+1} \cdot j \pi \right), \ j = 1, 2, ..., n \]
+\[ \lambda_i = \frac{\Delta t}{4} \sin^{-2} \left( \frac{2i-1}{2n+1} \cdot \frac{\pi}{2} \right) \]
+
+The run-time complexity dependent on the resolution \( n \) of the grid is \( \mathcal{O}(n^{2}) \),
+but the principle components construction identifies what is most important:
+This knowledge can be exploited, e.g. to provide focus when variance reduction techniques are designed and
+combined with the underlying approach.
+
+State some general information about the geometric Brownian motion (gBM)
+provide an exact recursive simulation scheme with deterministic drift and volatility
+and the asymptotic behavior of the paths.
+
+By the exponentiation of the arithmetic BM and applying Ito's lemma
+the gBM satisfies the SDE
+\( \frac{dS_t}{S_t} = (\mu + \frac{1}{2}\sigma^2)dt + \sigma dW_t \)
+with the solution \( S_t = S(0)\exp((\mu \frac{1}{2}\sigma^2)t + \sigma W(t) \)
+
+The one-dimensional marginal distributions of Geometric Brownian Motion are lognormal:
+\(Y \sim LN(\mu, \sigma^2)\), if \(Y = \exp(\mu + \sigma Z)\), \(Z \sim N(0,1)\)
+distribution function: 
+([ P(Y \le y) = \Phi \left( \frac{\log(y) - \mu}{\sigma} \right) \]
+ density: \( y \mapsto \frac{1}{y \sigma} \phi \left( \frac{\log(y) - \mu}{\sigma} \right) \)
+ moments: 
+\( \mathbb{E}(e^{aZ}) = e^{\frac{1}{2} a^2}, \ \mathbb{E}(Y) = e^{\mu + \frac{1}{2} \sigma^2}, \ \text{Var}(Y) = e^{2\mu + \sigma^2} (e^{\sigma^2} - 1) \)
+median: \(\text{median}(Y) = e^\mu\)
+In terms of the parameters of the Geometric Brownian Motion this translates as follows:
+If \(S \sim GBM(\mu, \sigma^2)\), then \(\frac{S(t)}{S(0)} \sim LN((\mu - \frac{1}{2} \sigma^2)t, \sigma^2 t)\)
+moments: \(\mathbb{E}(S(t)) = e^{\mu t} S(0), \ \text{Var}(S(t)) = e^{2 \mu t} S(0)^2 (e^{\sigma^2 t} - 1)\)
+\( \mathbb{E}(S(t) | S(\tau), 0 \le t \le u) = \mathbb{E}(S(t) | S(u)) = e^{\mu (t - u)} S(u) \) due to the Markov property
+* median: \(\text{median}(S(t)) = S(0) \cdot e^{(\mu - \frac{1}{2} \sigma^2)t} \)
+
+
+The asymptotic behavior is given by
+\( \frac{1}{t}W(t) \to 0 \) as \( t \to \infty \) a.s. by LLN so 
+\( \frac{1}{t}\log(S_t) \to \mu - \frac{1}{2}\sigma^{2} \) a.s.
+In particular if \( \frac{1}{2}\sigma^{2} > 0 \) then \( S_t \to \infty \) otherwise to \( 0 \).
+Observe that 
+\( \mu > 0 > \mu - \frac{1}{2}\simga^2 \implies S_t \to 0,\ \mathbb{E}[S_t] = e^{\mu t}S_0 \to \infty \)
+a.s. as \( t \to \infty \).
+Rare but very large values generate the exponential growth of the mean, although the paths converge to 0
+
+Consider a time grid \(0 = t_0 < t_1 < ... < t_n\).
+Random inputs to the simulation are independent \(Z_1, Z_2, ..., Z_n \sim \mathcal{N}(0, 1)\).
+The following recursion is an exact simulation, i.e., without any discretization error:
+for \( i = 1, 2, ..., n-1 \)
+\( S(t_{i+1}) = S(t_i) \cdot \exp \left( (\mu - \frac{1}{2} \sigma^2) (t_{i+1} - t_i) + \sigma \sqrt{t_{i+1} - t_i} \cdot Z_{i+1} \right)\)
+A generalized recursion is also available for time-dependent \(\mu\) and \(\sigma\):
+\[ S(t_{i+1}) = S(t_i) \cdot \exp \left( \int_{t_i}^{t_{i+1}} (\mu(s) - \frac{1}{2} \sigma^2(s)) ds + \sqrt{\int_{t_i}^{t_{i+1}} \sigma^2(u) du} \cdot Z_{i+1} \right)\]
+
+
+If dividends are introduced in the Black-Scholes-model, how do the accounting and
+the risk-neutral measure have to be adjusted?
+
+A continuous dividend yield \(\delta\) is associated with a dividend account:
+\(\frac{dD(t)}{dt} = \delta S(t) + r D(t)\)
+Need adjusted martingale condition, since now the process
+\(\beta(t)^{-1} \cdot (S(t) + D(t)),\ t \geq 0 \)
+is a martingale under \( Q \) the risk neutral measure
+\(\Rightarrow \frac{dS(t)}{S(t)} = (r - \delta) dt + \sigma dW(t) \),
+where \( \beta(t) = e^{rt} \) is a savings account
+
+This is important to compute the paths of equity indices, which typically
+include dividends in their growth as well as exchange rates, where 
+the foreign interest rate can be seen as dividens \( r_f \)
+and last commodities, where the costs of storing are negative dividends
+and the benefits of holding are positive dividends, also called convenience yield.
+
+Provide a couple of path-dependent options whose pricing typically requires simu-
+lation.
+
+Asian options
+The payoff is the \( (\bar{S} - K)^{+} \) for a call and \( (K - \bar{S})^{-} \) for a put where \( \bar{S} \) is the average 
+asset price during the considered time period.
+
+Conventionally, this means an arithmetic average. In the continuous case, this is obtained by
+\( \bar{S}(0,T) = \frac{1}{T} \int_{0}^{T} S(t) dt \)
+
+For the case of discrete monitoring (with monitoring at the times \( 0=t_0, t_1, t_2, \dots, t_n=T \) and \( t_i=i\cdot \frac{T}{n} \))  we have the average given by
+\( \bar{S}(0,T) = \frac{1}{n} \sum_{i=1}^{n} S(t_i) \)
+
+Barrier options:
+These exists in the following variations with barrier \( b \), strike \( K \) and expiration \( T \)
+Up-and-out: spot price starts below the barrier level and has to move up for the option to be knocked out.
+Down-and-out: spot price starts above the barrier level and has to move down for the option to become null and void.
+Up-and-in: spot price starts below the barrier level and has to move up for the option to become activated.
+Down-and-in: spot price starts above the barrier level and has to move down for the option to become activated.
+
+Knock out means becoming worthless
+so the payoff of an down-and-out could be described as 
+\( \mathbb{1}_{\gamma(b) > T}(S(T) - K)^{+} \)
+with \( \gamma(b) = \inf_{S_{t_i} < b} t_i \) (discr.)
+or \( \gamma(b) = \inf_{S_{t_i} \leq b} t_i \) (cont.)
+
+Lookback options
+The option's strike price is floating (in the lecture there are also variations with a fixed strike \( K \))
+and determined at maturity. 
+The floating strike is the optimal value of the underlying asset's price during the option life. 
+The payoff is the maximum difference between the market asset's price at maturity and the floating strike. 
+For the call, the strike price is fixed at the asset's lowest price during the option's life, and, for the put, 
+it is fixed at the asset's highest price.
+So the payoff for a call is
+\( \sup_{t \in [0, T]} S_T - S_t = S_T - S_{\text{min}}\)
+and for a put
+\( \sup_{t \in [0, T]} S_t - S_T  = S_{\text{max}} - S_T \)
+Depending on cont./discr. the points admissable might not be the whole interval \( [0, T] \).
+
+Explain that deterministic, time-dependent short-rates and volatilities still admit
+an exact simulation of the stock. Why is this not true for a state-dependent local
+volatility model?
+
+Zero coupon bonds pay off \( 1 \) unit of currency at their maturity \( T \)
+so their value in between is given by \( B(0, t) = \exp(-\int_{0}^{t} r(u)du \)
+where \( r(u) \) is the risk-free rate, which could also be determined from
+the bond prices via \( r(u) = -\frac{d}{dT}\log B(0, T)|_{T=u} \).
+This requires the following adjustment to the price of the stock
+\( S(t) = S(0)\exp(\int_{0}^t r(u)du - \frac{1}{2}\sigma^2 t + \sigma W(t) \)
+
+We consider a time grid: \(0=t_{0}<t_{1}<\cdot\cdot\cdot<t_{n}\) and independent \(Z_{1},Z_{2},..., Z_{n}\sim\mathcal{N}(0,1)\)
+Then
+\(S(t_{i+1})=S(t_{i})\cdot exp \left( \int_{t_{i}}^{t_{i+1}}r(u)du-\frac{1}{2}\sigma^{2}(t_{i+1}-t_{i})+\sigma\sqrt{t_{i+1}-t_{i}}\cdot Z_{i+1} \right)\)
+Alternatively, this can be rewritten in terms of zero-coupon bonds. This is due to the following identity:
+
+\(B(t_{i},t_{i+1})=\frac{B(0,t_{i+1})}{B(0,t_{i})}=exp \left( -\int_{t_{i}}^{t_{i+1}}r(u)du \right)\)
+The exact simulation can thus be rewritten in the following way:
+\(S(t_{i+1})=S(t_{i})\cdot\frac{B(0,t_{i})}{B(0,t_{i+1})}\cdot exp \left( -\frac{1}{2}\sigma^{2}(t_{i+1}-t_{i})+\sigma\sqrt{t_{i+1}-t_{i}}\cdot Z_{i+1} \right)\)
+
+If however the volatility is also dependent on the current price no exact simulation is available (only with time it should be, though not considered in the lecture)
+and in inexact scheme with discretization errors is given by
+\( S_{t_{i+1}} = S_{t_i}\exp((r - \frac{1}{2}\sigma^2(S_{t_i},t_i))(t_{i+1} t_i) + \sigma(S_{t_i}, t_i)\sqrt{t_{i+1} - t_i}Z_{i+1} \)
+
+
+How can a multi-variate correlated geometric Brownian motion with fixed correla-
+tion matrix be recursively simulated using a Cholesky decomposition?
+
+Let  \(X_1, X_2, ..., X_d\) be standard Brownian motions that are correlated, i.e.,
+
+\[\text{Cov}(X_i(t), X_j(t)) = \rho_{ij} t \quad \forall i,j,t\]
+Setting \(\Sigma_{ij} = \sigma_i \sigma_j \rho_{ij}\), we introduce the notation
+\[(\sigma_1 X_1 \ \sigma_2 X_2 \dots \ \sigma_d X_d)^T \sim BM(0, \Sigma)\]
+We determine A such that \(AA^T = \Sigma\), e.g., as a Cholesky factor.
+These correlated Brownian motions provide a basis for defining correlated Geometric Brownian motions:
+\[\frac{dS_i(t)}{S_i(t)} = \mu_i dt + \sigma_i dX_i(t) = \mu_i dt + \sum_{j=1}^d A_{ij} dW_j(t),\ i = 1, 2, ..., d\]
+for suitable uncorrelated Brownian motions \(W_1, W_2, ..., W_d\). One computes
+
+\[\text{Cov}(S_i(t), S_j(t)) = S_i(0) S_j(0) e^{(\mu_i + \mu_j)t} (e^{\rho_{ij} \sigma_i \sigma_j t} - 1)\] 
+
+Consider again a time grid \(0=t_{0}<t_{1}<\dots<t_{n}\) and independent d-dimensional standard Gaussian vectors
+\[Z_{1},Z_{2},\dots,Z_{n}\sim\mathcal{N}(0,I_{d})\]
+
+An exact simulation of the Geometric Brownian Motion in multiple dimensions is specified as follows:
+
+\[S_{i}(t_{k+1})=S_{i}(t_{k})\cdot \exp \left( (\mu_{i}-\frac{1}{2}\sigma_{i}^{2})(t_{k+1}-t_{k})+\sqrt{(t_{k+1}-t_{k})\sum_{j=1}^{d}A_{ij}\cdot Z_{k+1,j}} \right),\]
+for \( i \in \{ 1,2,\dots,d\} \)
+and \( k \in \{ 0,1,2,\dots,n-1\} \)
+
+The drift can be adjusted such that the simulation samples under \(P\), the statistical measure, or \(Q\), a risk-neutral measure, respectively.
+If the savings account is the numeraire, then the drift under \(Q\) is the constant risk-free rate \(r\).
+
+A multi-variate model is used for pricing of options that depend on multiple un-
+derlyings. Provide examples of such options and their payoffs?
+
+Spread Options
+The spread between two assets at maturity is S1 (t) − S2 (T )
+If the strike is K and we are considering a call on the spread, the corresponding payoff is
+\( ([S_1(T) − S_2(t)] − K )^{+} \)
+
+Basket Options
+These options dependent on a portfolio of d underlying assets \( S_1, S_2, \dots, S_d \)
+We suppose that the weights on the assets are \( c_1, c_2, \dots, c_d \)
+A call with strike K on the basket has a payoff
+\( ([\sum_{i=1}^{d} c_i S_i(T)] − K )^{+} \)
+
+Outperformance options
+An example of an outperformance option looks how a collection of assets outperforms a threshold \( K \)
+This leads to a payoff
+\( (\sup_{i} c_i S_i(T) -K)^{+}  \)
+Generalized Barrier options
+E.g.
+A down-and-in put on \( S_1 \) that knocks in when \( S_2 \) drops below a barrier at \( b \):
+\( \mathbb{1}_{\inf_{i \in \{1, \dots, n\} S_2(t_i) < b  }}(K - S_1(T))^{+} \)
+
+Quantos
+A quanto is a type of derivative in which the underlying is denominated in one currency, but the instrument
+itself is settled in another currency at some rate.
+
+Suppose e.g. that we are considering
+the price S1 of a stock in a foreign currency
+the exchange rate S2 expressed as the quantity of domestic currency required per unit of foreign currency
+then the payoff is \( S_2(T)(S_1(T) - K)^{+} \).
+
+Gaussian short rate models (generalizing the Ornstein-Uhlenbeck process) with
+deterministic functions governing the drift and volatility admit a solution that can
+conveniently be applied in special cases. State this.
+
+The models are all special cases of an SDE of the following form
+\( dr(t) = [g(t) + h(t)r(t)] dt + \sigma(t) dW(t) \)
+with deterministic functions of time \(g\), \(h\), \(\sigma\)
+The model admits the following solution:
+
+\( r(t) = e^{H(t)} r(0) + \int_0^t e^{H(t)-H(s)} g(s) ds + \int_0^t e^{H(t)-H(s)} \sigma(s) dW(s), \ H(t) = \int_0^t h(s) ds \)
+These processes are Gaussian, i.e., \(\forall t_1, t_2, ..., t_n\) the vector \((r(t_1), r(t_2), ..., r(t_n))\) is multivariate normal.
+
+How do you derive in the Vasicek model a) an exact simulation and b) an Euler
+scheme entailing discretization error?
+
+Vasicek model
+The model is based on an Ornstein-Uhlenbeck process
+\( dr(t) = \alpha(b - r(t))dt + \sigma dW_t \)
+with \( \alpha, b, \sigma > 0 \), \( W \) a \( Q \)-BM.
+If the parameters are deterministic but time-dependent, the model is called the Hull-White model
+We consider a version of the Vasicek model but with time-dependent b
+\( r(t) = e^_{-\alpha(t-u)}r(u) + \alpha \int_{u}^{t} e^{-\alpha(t - s)} b(s) ds + \sigma \int_{u}^{t} e^{-\alpha(t-s}dW_s \)
+
+Consider a time grid \(0=t_{0}<t_{1}<\dots<t_{n}\) and independent \(Z_{1},Z_{2},\dots,Z_{n}\sim\mathcal{N}(0,1)\).
+
+We consider two simulation approaches. The first is based on the known conditional distribution; the second exploits naively the SDE.
+1. Exact Simulation
+\[r(t_{i+1})=e^{-\alpha(t_{i+1}-t_{i})}r(t_{i})+\mu(t_{i},t_{i+1})+\sigma_{r}(t_{i},t_{i+1})\cdot Z_{i+1}\]
+
+2. Euler Scheme
+\[r(t_{i+1})=r(t_{i})+\alpha(b(t_{i})-r(t_{i}))(t_{i+1}-t_{i})+\sigma\sqrt{t_{i+1}-t_{i}}\cdot Z_{i+1}\]
+
+In contrast to the first method, the Euler scheme entails some discretization error and is not exact. 
+
+Discuss calibration and simulation of the Ho-Lee model. Define forward rates and
+explain their significance.
+
+This model assumes a constant volatility \( \sigma \) but allows a flexible choice of the drift which is deterministic
+function \( g \) of time:
+\( dr(t) = g(t)dt + \sigma dW_t \)
+Consider a time grid \(0=t_{0}<t_{1}<\dots<t_{n}\) and independent \(Z_{1},Z_{2},\dots,Z_{n}\sim\mathcal{N}(0,1)\).
+ A generalized Ho-Lee model is characterized by the SDE
+\[dX(t)=\mu(t)dt+\sigma(t)dW(t)\]
+with deterministic functions \(\mu,\sigma\)
+
+Exact Simulation
+\[X(t_{i+1})=X(t_{i})+\int_{t_{i}}^{t_{i+1}}\mu(s)ds+\sqrt{\int_{t_{i}}^{t_{i+1}}\sigma^{2}(u)du}\cdot Z_{i+1}\]
+Euler Scheme
+\[X(t_{i+1})=X(t_{i})+\mu(t_{i})(t_{i+1}-t_{i})+\sigma(t_{i})\cdot\sqrt{t_{i+1}-t_{i}}\cdot Z_{i+1}\]
+
+In contrast to the first method the Euler scheme entails some discretization error and is not exact. 
+(Actually I think this is just a gBM)
+
+Regarding the calibration, with some effort it can be seen
+\[ g(t) = \frac{\partial}{\partial T} f(0, T)_{|T=t} + \sigma^2 t \]
+where \( f(t, T) = - \frac{d}{dT}\log B(t, T) \) is the instantaneous forward rate observed at \( t \) for time \( T \),
+satisfying \( B(0, T) = \exp(- \int_{0}^{T} f(0,t)dt) \):
+Comparison with the bond price equation shows that
+
+This allows to rewrite the SDE as
+\[ dr(t) = g(t) dt + \sigma dW(t) = \left( \frac{\partial}{\partial T} f(0, T)_{|T=t} + \sigma^2 t \right) dt + \sigma dW(t) \]
+
+This representation implies that, for simulating this model, g is not needed but only suitable forward rates.
+
+Simulation
+Consider a time grid \( 0 = t_0 < t_1 < ... < t_n \) and independent \( Z_1, Z_2, ..., Z_n \sim \mathcal{N}(0,1) \).
+Exact simulation
+\(r(t_{i+1}) &= r(t_i) + \int_{t_i}^{t_{i+1}} g(s) ds + \sigma \cdot \sqrt{t_{i+1} - t_i} \cdot Z_{i+1}\)
+\(= r(t_i) + [f(0, t_{i+1}) - f(0, t_i)] + \frac{\sigma^2}{2} [t_{i+1}^2 - t_i^2] + \sigma \cdot \sqrt{t_{i+1} - t_i} \cdot Z_{i+1}\)
+
+Recall a square-root diffusion and its simulation by Euler discretization. Show that
+this simulation is not exact.
+
+Any Gaussian process, like the Ornstein-Uhlenbeck process in the Vasicek model, takes negative values with positive probability.
+This might be a disadvantage for interest rate and credit intensity models.
+An interesting alternative goes back to William Feller (1951).
+This process was introduced as a model for interest rates by John C. Cox, Jonathan E. Ingersoll and Stephen A. Ross in 1985.
+
+Square-Root Diffusion (CIR-process)
+
+\( dr(t) = \alpha \cdot (b-r(t))dt + \sigma \sqrt{r(t)} dW(t) \)
+
+\( \alpha, b > 0, \ r(0) > 0, \ 2ab \geq \sigma^2 \)
+
+Strong existence and uniqueness were shown by William Feller
+This required some thought, since the square root is not Lipschitz-continuous at \( 0 \).
+
+As simple methodology to simulate from a square-root diffusion is a Euler discretization.
+We consider the points in time \(0 = t_0 < t_1 < ... < t_n\) and independent normals \(Z_1, Z_2, ..., Z_n \sim \mathcal{N}(0, 1)\).
+The following Euler scheme is not exact:
+\(r(t_{i+1}) = r(t_i) + \alpha (b - r(t_i)) [t_{i+1} - t_i] + \sigma \sqrt{r(t_i)^+} \sqrt{t_{i+1} - t_i} \cdot Z_{i+1}\)
+
+A classical application is in the context of non-constant volatility models:
+
+Assuming bond prices With the short rate
+\( dr(t) = \alpha \cdot (b-r(t))dt + \sigma \sqrt{r(t)} dW(t) \)
+they take the form
+\( T \mapsto \mathbb{E} \left[ \exp \left( -\int_{0}^{T} r(u) du \right) \right] \)
+
+This inspires the Heston model
+This generalizes the Black-Scholes model by taking a square-root diffusion to specify the volatility of the asset:
+
+\(\frac{dS(t)}{S(t)} = r dt + \sqrt{V(t)} dW_{1}(t)\)
+\(dV(t) = \alpha \cdot (b-V(t)) dt + \sigma \sqrt{V(t)} dW_{2}(t)\)
+
+The two-dimensional Brownian motion \((W_{1}, W_{2})\) may possess correlated components.
+
+
+What is the density of a gamma distribution with given shape and scale parameter?
+How do you obtain the special case of a \( \chi^{2} \)-distribution with \( \nu \) degrees of freedom?
+
+Why is it sufficient to simulate gamma distributions with scale parameter equal to
+1?
+
+
+The gamma distribution is characterized by two parameters:
+    * Shape parameter \(a\)
+    * Scale parameter \(\beta\)
+Its density is 
+\(f(y) = f_{\alpha, \beta}(y) = \frac{1}{\Gamma(\alpha) \beta^\alpha} y^{\alpha-1} e^{-\frac{y}{\beta}}, y \ge 0\)
+Example
+A Chi-Square(\(\nu\)) corresponds to \(\beta = 2\) and \(\alpha = \frac{\nu}{2}\)
+Simulation algorithms
+Observe that we may focus on simulating \(X \sim \Gamma(\alpha, 1)\), since the scale parameter \(\beta\) captures that \(\beta X \sim \Gamma(\alpha, \beta)\).
+We discuss two simulation methods, suggested by Cheng & Feast (1980) and Ahrens & Dieter (1974), that are appropriate for values \(a > 1\) and \(a \le 1\), respectively.
+
+Elaborate on the different methods to simulate a gamma distribution
+
+The method of Cheng and Feast builds on an acceptance-rejection method due
+to Kinderman, Monahan. Explain the general framework of Kinderman,Monahan and prove that it works. 
+What is the constraint on the shape parameter of the gamma distribution 
+in the method of Cheng, Feast, and why is it assumed?
+
+The approach of Cheng & Feast (1980) builds on a general methodology for random variable with values in \(\mathbb{R}_+\) and bounded density \(f\)
+1. Generate \((U_1, U_2) \sim \text{unif}(A)\) with 
+\(A = \{ (u_1, u_2) \in \mathbb{R}_+^2 : u_1 \le \sqrt{f \left( \frac{u_2}{u_1} \right) } \}\)
+Then \(\frac{U_2}{U_1}\) has density \(f\).
+2. In applications, \((U_1, U_2)\) are simulated by first generating bivariate random vectors that are uniformly distributed in a rectangle \(A\) (possibly except for some small mass) and then using the acceptance-rejection method.
+This approach can be applied to a gamma distribution with \(\alpha > 1\).
+
+For the gamma distribution with \(\alpha > 1\) one may use the rectangle \([0, 1] \times [0, \overline{u}_2]\) with
+
+\(\overline{u}_1 = \left( \frac{\alpha - 1}{e} \right)^{\frac{\alpha - 1}{2}}, \quad \overline{u}_2 = \left( \frac{\alpha + 1}{e} \right)^{\frac{\alpha + 1}{2}},\)
+which is a superset of
+\(A = \left\{ (u_1, u_2) : 0 \leq u_1 \leq \sqrt{f \left( \frac{u_2}{u_1} \right)} \cdot e^{u_1} \right\}\)
+
+ Applying the acceptance-rejection method allows to sample the gamma distribution \(\Gamma(\alpha, 1)\) from \(\frac{U_2}{U_1}\).
+
+Repeat the following for the number of samples
+\( \bar{a} \leftarrow a-1, \ b \leftarrow \left( a - \frac{1}{6a} \right) / \bar{a}, \ m \leftarrow \frac{2}{a}, \ d \leftarrow m+2 \)
+Label A:
+Generate \( U_1, U_2 \sim \text{unif}[0, 1] \)
+\( V \leftarrow \frac{b U_2}{U_1} \) \\
+if \( m U_1 - d + V + \frac{1}{V} \leq 0 \) goto label B
+else if \( m \log U_1 - \log V + V - 1 \leq 0 \) goto label B
+else goto Label A
+Label B:
+return \( Z \leftarrow \bar{a} V \)
+
+The algorithm includes first an if-condition that does not require an evaluation of log; the evaluation of a more
+complicated if-condition involving a log is only executed if necessary
+
+For \( a \leq 1 \) one can use the acceptance-rejection method sampling first from
+
+\( g(z) = p \cdot a z^{a-1}\) if \( z \in [0, 1] \)
+otherwise if \( z > 1 \) \( g(z) = (1-p) \cdot e^{-z+1}\),
+where \( p = \frac{e}{a + e} \)
+
+The distribution with density \(g\) is a mixture:
+with probability \(p\) generate a random variable on \([0, 1]\) with density \(z \mapsto a z^{a-1}\) using the inverse transform method
+with probability \(1-p\) generate a random variable on \((1, \infty)\) with density \(z \mapsto e^{-z+1}\) using the inverse transform method
+The density we are interested in is
+
+\( f(z) = \frac{1}{\Gamma(a)} y^{a-1} e^{-y} \quad \text{with} \quad \frac{f(z)}{g(z)} \leq \frac{a + e}{ae \Gamma(a)},\ \forall z \)
+
+The corresponding algorithmn is
+
+Set \( b = \frac{a+e}{e} \)
+Label A:
+generate \( U_1, U_2 \sim \text{unif}[0, 1] \)
+set \( Y = b U_1 \)
+if \( Y \leq 1 \)
+- set \( Z = Y^{1/a} \)
+- if \( U_2 < e^{-Z} \) goto Label B
+else \( Z = -\log(\frac{b - Y}{a} \)
+if \( U_{2} \leq Z^{a-1} \) goto Label B
+else goto Label A
+Label B:
+return \( Z \)
+
+The correctness can be derived from
+We prove that \((U_1, U_2) \sim \text{unif}(A)\) with \(A = \{ (u_1, u_2) \in \mathbb{R}^2_+ : u_1 \leq \sqrt{f \left( \frac{u_2}{u_1} \right) } \}\) implies that 
+\(\frac{U_2}{U_1}\) has density \(f\).
+
+\( \mathbb{P} \left( \frac{U_2}{U_1} \in B \right) = c \cdot \iint_{\mathbb{R}_+^2} 1_{\left\{ \frac{u_2}{u_1} \in B, (u_1, u_2) \in A \right\}} du_1 du_2 \)
+\( = c \cdot \int_{\mathbb{R}_+} \int_{\mathbb{R}_+} 1_{\{ z \in B, (u_1, u_1 z) \in A \}} u_1 du_1 dz \)
+\( = c \cdot \int_{\mathbb{R}_+} \int_{\mathbb{R}_+} u_1 \cdot 1_{\{ z \in B, u_1 \le \sqrt{f(z)} \}} du_1 dz \)
+\( = \frac{c}{2} \int_B f(z) dz \)
+
+
+Why is a recursive implementation of the inverse transform method particularly
+efficient for the Poisson distribution?
+
+A Poisson distribution \( \text{Poisson}(\theta) \) with parameter \(\theta > 0\) is given as follows:
+\( N \sim \text{Poisson}(\theta) \)
+\( \mathbb{P}(N = k) = e^{-\theta} \frac{\theta^k}{k!}, k = 0, 1, 2, ... \)
+In the simulation we apply the inverse transform method.
+The fact that \( \mathbb{P}(N = k) \) decays exponentially fast for \( k \to \infty \) suggests a recursive comparison.
+An alternative approach based on exponential waiting times is slow:
+\( X_1, X_2, ... \sim \text{exp}(\theta) \) with mean \(\frac{1}{\theta}\) independent
+\( X_i = - \frac{\log(U_i)}{\theta} \) with \( U_1, U_2, ... \sim \text{unif}[0, 1] \) independent
+\( N = \sup \{ n: X_1 + ... + X_n < 1 \} \) with \( \sup \emptyset = 0 \)
+
+The algorithm then boils down to
+\( p = e^{-\theta},\ F = p \)
+\( N = 0 \)
+generate \( U \sim \text{unif}[0, 1] \)
+while \( U > F \)
+\( N = N + 1 \)
+\( p = \frac{p\theta}{N} \)
+\( F = F + p \)
+return \( N \)
+

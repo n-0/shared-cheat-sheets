@@ -1,0 +1,388 @@
+Define a linear congruential generator to produce pseudorandom numbers. In terms
+of quality, recall four issue that should be considered.
+
+A linear congruential generator mimics a uniform distribution on \( [0, 1] \) via a deterministic recursion with the
+following structure:
+Seed \( x_0 \)
+Recursion \( x_{i+1} = (a x_{i} + c) \text{mod} m \) 
+Output \( u_{i+1} = \frac{x_{i+1}}{m}\)
+
+This generates random \( U_i \sim \text{unif}[0, 1] \), which are i.i.d.
+
+1. Period length
+On finite & deterministic computers the generator eventually repeats the same numbers
+Long periods are generally preferred
+In the special case with computations modulo \( m \), the period length is at most \( m − 1 \)
+2. Reproducibility & portability
+It is often important to validate and replicate results. This requires rerunning an algorithm in exactly the same
+way, potentially not on the same platform.
+3. Speed
+4. Randomness
+
+Using the notation of the lecture, for c = 0 state a condition for a full period.
+
+Sufficient criteria for a full period are the following:
+1. If \( c \neq 0 \) and if the following three conditions hold, a full period is guaranteed:
+Largest common devisor (LcD) of \( c \) and \( m \) is 1.
+Every prime number that divides \( m \)m divides \( a - 1 \)
+\( a − 1 \) is divisible by \( 4 \) if \( m \) is.
+2.
+If \( c = 0 \) and if the following three conditions hold, a full period is guaranteed:
+1. \( m \) is prime.
+2. \( a_{m-1} - 1 \equiv 0 \mod m \)
+3. \( a_{j} - 1 \equiv k \mod m \), \( k \neq 0 \), for \( j = 1, 2, \dots, m − 2. \)
+If \( a \) satisfies the last two conditions is equivalent to \( a \) is a primitive root of \( m \).
+
+On computers, numbers of different types are typically stored using a fixed number
+of bits. Naive implementations of linear congruential generators might fail due to
+overflow. Describe two strategies for bounding the size of numbers in intermediate
+computations.
+
+Assume there exist natural numbers \( \alpha, a_1, a_2 \) such that
+\( a = 2^\alpha a_1 + a_2 \),
+\( a_1 , a_2 < 2^\alpha\),
+In this case, the recursion of the generator can be represented by numbers that admit smaller upper bounds:
+\( ax_i mod m = (a_1 (2^{\alpha} x_i \mod m) + a_2 x_i \mod m) \mod m \)
+
+E.g. assuming \( m = 2^{\beta} - 1 \) then also \( x_i \leq 2^{\beta} - 2 \) and \( (2^{\alpha} x_i \mod m) \leq 2^{\alpha + \beta} - 2^{\alpha + 1} \mod m \),
+last multiplying by \( a_1 \) bounds this term strictly by  \( 2^{2 \alpha + \beta} - 2^{2 \alpha + 1} \mod 2^{ \beta } - 1 \)
+
+Assume that
+\( a \leq \sqrt{m} \)
+Then an algorithm can be specified such that all intermediate calculations result in integers between
+\( −(m − 1), \dots, m − 1 \)
+
+Setting \( q = \floor{\frac{m}{a}}, r = m \mod a, m = aq + r \) then the representation is
+
+\( ax_i \mod m = a(x_i \mod q) - \floor{\frac{x_i}{q}}r + (\floor{\frac{x_i}{q}} - \frac{ax_i}{m})m\)
+
+This approach was suggested by P. Bratley, B.L. Fox & L. Schrage (1987).
+The specific terms are bounded by
+1. \( 0 \leq a (x_i \mod q) < aq ≤ aq + r = m \)
+2. \( 0 \leq \floor{\frac{x_i}{q}}r \leq \frac{m-1}{q}r \leq m - 1 \)
+
+The last term does not need to be computed directly. It is \( 0 \), if \( (1) − (2) \geq 0 \), and \( m \), if \( (1) − (2) < 0 \).
+This can be seen as follows:
+We know that the third summand satisfies \((3) = zm \) for \( z \in \mathbb{Z} \), \( −(m − 1) \leq (1) − (2) \leq m − 1 \), \( 0 < (1) − (2) + (3) \leq m − 1 \) 
+(since we are still modulo m)
+implying \( z \in \{0, 1\} \) with \( z = 0 \) if \( (1) − (2) \geq 0 \) and \(z = 1\) if \((1) − (2) < 0 \).
+
+The equation itself holds due to
+
+\( ax_i \mod m = ax_i - \floor{\frac{ax_i}{m}}m = (ax_i - \floor{\frac{x_i}{q}}m) + (\floor{\frac{x_i}{q}} - \floor{\frac{ax_i}{m}})m\)
+Then the left term can be decomposed as 
+\( (ax_i - \floor{\frac{x_i}{q}}m) = ax_i - \floor{\frac{x_i}{q}}(aq + r) = a(x_i - \floor{\frac{x_i}{q}}q) - \floor{\frac{x_i}{q}}r = a(x_i \mod q) - \floor{\frac{x_i}{q}}r \).
+
+
+Show for \(c = 0\) that linear congruential generators possess a lattice structure.
+Discuss the relationship between the distance of the occurring hyperplanes and
+the goal of the method.
+
+From 
+\(
+x_{i+1} = a x_i \mod m
+\)
+
+it follows for initial seed \( x_0 \)
+\(
+x_1 = a x_0 \mod m
+\)
+\(
+x_2 = a x_1 \mod m = a (a x_0 \mod m) \mod m = a^2 x_0 \mod m
+\)
+Continuing this process, we find that:
+\(
+x_i = a^i x_0 \mod m
+\)
+To reveal the lattice structure, we consider the sequence of values \( (x_i, x_{i+1}, x_{i+2}, \ldots, x_{i+k-1}) \) in a k-dimensional space. 
+For simplicity, consider the 2-dimensional case \( (x_i, x_{i+1}) \).
+\(
+(x_i, x_{i+1}) = (a^i x_0 \mod m, a^{i+1} x_0 \mod m)
+\)
+The key insight is that each point \( (x_i, x_{i+1}) \) lies on the line:
+\(
+x_{i+1} = a x_i \mod m
+\)
+If there would be an additional constant involved, the pattern would be less regular since
+\(
+x_1 = a x_0 + c\mod m
+\)
+\(
+x_2 = a x_1 \mod m = a (a x_0 + c \mod m) \mod m = a^2 x_0 + ac + c\mod m
+\)
+so 
+\(
+x_{i} = a^i x_i + a^{i-1}c + a^{i-2}c \dots + c\mod m
+\)
+
+Recall the definition of a distribution function and a quantile function. Letting
+\( F^{-1} \) be a quantile function and \( U \sim \text{unif}(0, 1) \), derive the 
+derive the distribution function of \( F^{-1}(U) \).
+
+Let \( F \) be a cumulative distribution function, and let 
+\( F^{-1} \) be its generalized inverse function (using the infimum because CDFs are weakly monotonic and right-continuous)
+
+\( F^{-1}(u) = \inf \{x | F(x) \geq u\} (0<u<1)\)
+Claim: If \( U \) is a uniform random variable on \( [0, 1] \) then \( F^{-1}(U) \) has \( F \) as its CDF
+\( \mathbb{P}(F^{-1}(U) \leq x) = \mathbb{P}(U \leq F(x)) = F(X) \)
+where we used the right-continuity of \( F \) in the first equality.
+
+In case we want to sample a random variable conditional on \( \{a < X \leq b \}\) with \( F(a) < F(b) \),
+we use \( V = F(a) + [F(b) - F(a)]U \) then \( F^{-1}(V) \sim \mathcal{L}(X|a < X \leq b)\), since
+\( \mathbb{P}(F^{-1}(V) \leq x) = \mathbb{P}(F(a) + [F(b) - F(a)]U \leq F(x))\) 
+\( \mathbb{P}(U \leq \frac{F(x) - F(a)}{F(b) - F(a)} = \frac{F(x) - F(a)}{F(b) - F(a)} \).
+
+Illustrate the inverse transform method for the exponential distribution
+
+The exponential distribution is given by \( F(x) = 1 - e^{-x/\theta}, x \geq 0 \)
+then \( F^{-1}(u) = - \theta\text{log}(1 - u) \) and \( 1 - u \sim u \) so
+\( F^{-1}(u) = - \theta\text{log}(u) \).
+
+
+Give numerical methods to compute the result of the inverse transform:
+
+If \( F^{-1} \) is analytically tractable (which is more than often not the case)
+then it can used directly. 
+Otherwise for discrete random variables, one may use a tableau of the 
+probability density function e.g. \( \mathbb{P}(X = c_1) = p_{1}, \mathbb{P}(X = c_2) = p_{2} \dots \),
+sample a \( U \sim \text{unif}(0, 1) \) and find the closest \( q_i = \sum_{j=1}^{i} p_j \) s.t. \( q_{i-1} U \leq q_i \) and return \( c_i \).
+
+For continuous ones, Newton's method is applicable via fixed point iteration \( F(x) - u = 0 \) to determine a suitable \( x \), e.g. 
+\( x_{n+1} = x_n - \frac{F(x_n) - u}{f(x_n)} \).
+
+State the algorithm of the acceptance-rejection-method and prove that it works.
+
+The principle goes as follows:
+1. Generate samples from convenient distribution.
+2. Reject random subset.
+3. Then the accepted samples are distributed according to the target distribution.
+To be precise, let \( X ~ f \) be the random variable to be sampled and \( g \) some other density, with \( f(x) \leq cg(x), c > 0 \)
+
+1. Generate \( X \) from \( g \)
+2. Generate \( U \sim \text{unif}(0, 1) \)
+3. if \( U \leq \frac{f(X)}{cg(X)} \) return \( X \) else goto step \( 1 \).
+
+If let \( Y \) be the output of this algorithm and \( k = \frac{f(X)}{cg(X)} \), then this works because
+\( \mathbb{P}(Y \in A) = \mathbb{P}(X \in A|U \leq k) = \frac{\mathbb{P}(X \in A, U \leq k)}{P(U \leq k)} \)
+\( = \mathbb{E}[\mathbb{1}_{X \in A}\mathbb{P}(U \leq k|X)](\mathbb{E}[\mathbb{P}(U \leq k|U)])^{-1} = \int_A k g(x) dx (\int_\Omega k g(x) dx = \int_A f(x) dx \)
+
+This can potentially be optimized by using a simpler function than \(\frac{f(X)}{cg(X)} \) for comparison, this is also referred to as the squeeze method.
+
+
+Explain the acceptance-rejection-algorithm "normal from double exponential".
+
+Double exponential density aka Laplace with \( \mu = 0, b = 1 \) on \( (-\infty, \infty) \), is \( g(x) = \frac{1}{2} e^{-|x|} \)
+For \( U_1 \sim \text{unif}(0, 1) \), we have \( -\text{log}(U_1) \sim \text{exp}(1) \) by the inverse transform method,
+randomizing the sign with Bernoulli distribution \( p = \frac{1}{2} \), yields a double exponential distribution.
+For \( \mathcal{N}(0, 1) \) the density is \( f(x) = \frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}x^2} \), and with the ratio 
+we can find the bounding constant
+\( \frac{f(x)}{g(x)} = \sqrt{\frac{2}{\pi}}\exp(-\frac{1}{2}x^2 + |x|) \leq \sqrt{\frac{2e}{\pi}} = c \)
+Further \( \frac{f(x)}{cg(x)} = \exp(-\frac{1}{2}x^2 + |x| - \frac{1}{2}) = \exp(-\frac{1}{2}(|x| - 1)^{2} \)
+
+This allows the following simplification of the acceptance-rejection-method
+1. Generate \( U_1, U_2, U_3 ~ \text{unif}[0, 1] \)
+2. \( X \leftarrow - \text{log}(U_1) \)
+3. if \( U_2 > \exp(-\frac{1}{2}(X - 1)^2 \) go to step 1.
+4. if \( U_3 \leq \frac{1}{2} \), set \( Y \leftarrow -X \) and return \( Y \)
+
+
+
+Explain the Box-Muller-method.
+The Box-Muller-method solves the following task, 
+generate two independent standard normal random variables \( Z \sim N(0, I_2)\).
+note that \( R = Z^2_1 + Z^2_2 \sim \chi_2^{2} = \exp(\frac{1}{2}) \)
+and \( \mathcal{(Z_1, Z_2)^{T}|R} = \text{unif}(O) \), where \( O \) denotes the circle of radius \( \sqrt{R} \)
+
+1. Generate \( U_1, U_2 \sim \text{unif}(0, 1) \) independently
+2. \( R \leftarrow -2\text{log}(U_1) \)
+3. \( V \leftarrow 2\pi U_2 \)
+4. \( Z_1 \leftarrow \sqrt{R}\cos(V), Z_2 \leftarrow \sqrt{R}\sin(V)\)
+5. return \((Z_1, Z_2)\)
+
+Since \( \sin, \cos \) can be computationally expensive to evaluate, there is an optimization via 
+the Marsaglia-Bray-Algorithm.
+
+Explain the Marsaglia-Bray-algorithm.
+
+1. Generate \( U_1, U_2 \sim \text{unif}([-1, 1]) \)
+2. \( X \leftarrow U_1^2 + U_2^2 \)
+3. if \( X > 1 \) go to step (1)
+4. Set \( Y \leftarrow \sqrt{-\frac{2\text{log}(X)}{X}} \)
+5. return \( (Z_1 = U_1 Y, Z_2 = \leftarrow U_2 Y) \)
+
+Step 3 ensures that why are not sampling outside the unit circle
+and since \( -2\text{log}(X) \sim \exp(\frac{1}{2}) \) we know that \( \sqrt{-2\text{log}(X)} = \sqrt{R} \),
+like in the Box-Muller method.
+Finally \( (\frac{U_1}{\sqrt{X}}, \frac{U_2}{\sqrt{X}}) \) is uniformly distributed on the unit circle
+and acts like \( \sin, \cos \).
+
+
+
+Marsaglia-Bray-Algorithm 
+
+Explain how affine transformations affect multivariate normal distributions
+
+Let \( x ~ \mathcal{N}(\overline{x}, \mathbf{C_y}) \) be a normally distributed multivariate.
+The new random variable \( \mathbf{y} = Ax + b \) obtained via an affine transformation is again normally distributed
+with \( \mathbf{y} \sim \mathcal{N}(\mathbf{A}\mathbf{\bar{x}+\mathbf{b}, \mathbf{A}\mathbf{C_x}\mathbf{A}^\top} \).
+
+In particular this reads:
+\[
+f_\mathbf{Y}(\mathbf{y)}
+= {1 \over \sqrt{\lvert2\pi\mathbf{A}\mathbf{C_x}\mathbf{A}^\top\rvert}}
+\exp\left(- {1 \over 2} \big[\mathbf{y}-(\mathbf{A}\mathbf{\bar{x}}+\mathbf{b}) \big]^\top (\mathbf{A}\mathbf{C_x}\mathbf{A}^\top)^{-1} \big[\mathbf{y}-(\mathbf{A}\mathbf{\bar{x}}+\mathbf{b}) \big] \right)
+\]
+
+The mean is induced by
+\(
+\mathbf{\bar{y}} = \mathbb{E}\{\mathbf{y}\} = \mathbb{E}\{\mathbf{A}\mathbf{x}+\mathbf{b}\} = \mathbf{A}\mathbb{E}\{\mathbf{x}\}+\mathbf{b} = \mathbf{A}\mathbf{\bar{x}}+\mathbf{b}
+\)
+and the covariance by
+\[
+\begin{array}{rcl}
+\mathbf{C_y} & \triangleq & \mathbb{E}\{(\mathbf{y}-\mathbf{\bar{y}})(\mathbf{y}-\mathbf{\bar{y}})^\top\} \\
+& = & \mathbb{E} \Big\{ \Big[ (\mathbf{A}\mathbf{x}+\mathbf{b})-(\mathbf{A}\mathbf{\bar{x}}+\mathbf{b}) \Big] \Big[ (\mathbf{A}\mathbf{x}+\mathbf{b})-(\mathbf{A}\mathbf{\bar{x}}+\mathbf{b}) \Big] ^\top \Big\} \\
+& = & \mathbb{E} \Big\{ \Big[ \mathbf{A}(\mathbf{x}-\mathbf{\bar{x}}) \Big] \Big[ \mathbf{A}(\mathbf{x}-\mathbf{\bar{x}}) \Big] ^\top \Big\} \\
+& = & \mathbb{E} \Big\{ \mathbf{A}(\mathbf{x}-\mathbf{\bar{x}}) (\mathbf{x}-\mathbf{\bar{x}})^\top \mathbf{A}^\top \Big\} \\
+& = & \mathbf{A} \mathbb{E} \Big\{ (\mathbf{x}-\mathbf{\bar{x}}) (\mathbf{x}-\mathbf{\bar{x}})^\top \Big\} \mathbf{A}^\top \\
+& = & \mathbf{A}\mathbf{C_x}\mathbf{A}^\top
+\end{array}
+\]
+
+
+(This matters to the Cholesky decomposition as well as principal component analysis)
+
+What is a Cholesky factorization, and how is it used for multivariate normals?
+
+If we're able to sample multivariate \( Z \sim \mathcal{N}(\mathbf{0}, \mathbf{I}) \) then the Cholesky factorization
+allows us an efficient generation of multivariate normals with arbitrary mean \( \mu \)and positive definite covariance \( \Sigma = AA^{T}\),
+where \( A \) is a lower triangular matrix with real and positive diagonal entries.
+
+By the affine transformation law for multivariate normals, we know that \( X = \mu + AZ \sim \mathcal{N}(\mu, AIA^{T}) \).
+
+\( X \) is then given by 
+\( X_1 = \mu_1 + A_{11} Z_1 \)
+\( X_2 = \mu_2 + A_{21} Z_1 + A_{22} Z_{2}\)
+\( X_d = \mu_d + A_{d1} Z_1 + A_{d2} Z_{2} \dots + A_{dd}Z_d\)
+
+and \( A \) can actually be recursively be determined
+\( \Sigma_{ij} = \sum{k+1}^{j} A_{ik}A_{jk}, j \leq i \), so \( A_{ij} = \frac{\Sigma_{ij}- \sum^{j-1}_{k=1}A_{ik}A_{jk}}{A_{jj}}, j < i \)
+and \( A_{ii} = \sqrt{\Sigma_{ii} - \sum{k=1}^{i-1} A^2_{ik}} \)
+
+
+Define stationarity and invariance for a time-homogeneous Markov process. How
+are these notions related?
+
+Actually in the lecture there was no requirement for time-homogeneity in the succeedings: 
+For an initial distribution \( \nu \) let \( \nu_t = \nu \mu_t \) be the marginal distribution of \( X_t, t \in T \).
+1. A probability measure \( \nu \) on \( (S, \mathcal{S}) \) is invariant, if \(\nu_t = \nu, \forall t \in T\)
+2. The Markov process \( X \) is stationary, if \( \mathcal{L}(\vartheta_t X = \mathcal{L}(X), \forall t \in T \), i.e., \( \mathbb{P}^\nu \) is invariant under shifts
+\( \veta_t : S^T \to S^T \)
+
+The shift operator(s) acts on paths \( \omega : T \to S \) as \( \theta_t(\omega)(s) = \omega(t + s) \) is measurable and commutes
+with the canonical construction, since its the identity.
+
+Additionally we have the following proposition 
+A Markov process is stationary with initial distribution \( \nu \), if and only if \( \nu \) is invariant for \( \mu_t \).
+
+Define the following objects for time-homogeneous Markov process in discrete time:
+hitting time, occupation time, associated probabilities, recurrence, transience.
+
+Hitting time:
+
+The initial hitting time is \( \tau_y = \inf_{n \in \mathbb{N}} X_n = y \)
+and the \( k+1 \) hitting time \( \tau^{k+1}_y = \tau^{k}_y + \tau_y \circ \vartheta_{\tau^{k}_y} \)
+by convention \( \tau_y^0 = 0 \).
+
+Occupation time
+\( \kappa_y = \text{argmax}_{k \in \mathbb{N}} \tau^k_y = \sum_{n\geq 1} \mathbb{1}_{X_n = y} \)
+(so we are interested in \( k \) not in \( \tau^k \)).
+
+The associated probabilities are
+
+\( r_{xy} = \mathbb{P}_x[\tau_y < \infty] = \mathbb{P}_x[\kappy_y > 0] \)
+in particular
+\( \mathbb{P}_x[\kappa_y \geq \infty] = \mathbb{P}_x[\kappa^k_y < \infty] = r_{xy}r_{yy}^{k-1}\)
+\( \mathbb{E}_x[\kappa_y] = \frac{r_{xy}}{1 - r_{yy}} \)
+
+Show that a sufficient condition for recurrence is the positivity of an invariant
+distribution.
+
+TODO ??? Not in the lecture, the definitions also do not seem right
+
+In the discrete time setting, transition kernels can be represented by (infinite)
+matrices; explain how. How do the Chapman-Kolmogorov relations look like in
+this notation?
+
+Let \( S \) be countable and \( T = \mathbb{N}_{0} \), then 
+the so called transition matrix is an \( |S|^2 \) matrix \( M \) 
+(or homomorphism should \( |S| = \infty \))
+with entries \( p_{i,j} = \mathbb{P}[X_{n+1} = j|X_n = i] \), \( i, j \in S \)
+and the \( n \)-step probability is then \( p^{n}_{i,j} = M^{n}_{i,j} \).
+
+The entries must satisfy
+1. \( p_{i,j} \geq 0, \forall i, j \in S\)
+2. \( \sum_{j \in S} p_{i,j} = 1\)
+
+
+The Chapman-Kolmogorov relations are
+\( p^{m+n}_{i,k} = \sum_j p_{i,j}^m p_{j,k}^n \)
+or in matrix notation \( M^{m+n} = M^{m}M^n \)
+
+Calculating \( e_i M \) (where \( e_i \) is the \( i \)-th unit vector) gives the vector  
+\( (p^n_{i,1}, p^n_{i,2}, \dots, p^n_{i,|S|}) \) that is the vector with the entry in the  
+\( j \)-th position as the probability of moving to state \( j \) in \( n \) steps from state \( i \).
+
+A row vector \( \pi = (\pi_1, \pi_2, \dots, \pi_{|S|} \) is called an 
+is called an equilibrium or stationary distribution of the Markov chain if
+1. \( \pi_i \geq 0 \) for all states in \( S \)
+2. \( \sum_{i \in S} = 1 \)
+3. \( \pi P = \pi \)
+
+otherwise we could interpret a vector \( \pi \) as the initial distribution \( \nu \)
+of our \( X_0 \).
+
+What is the period of a state? What is an irreducible Markov chain? State some
+facts on recurrence, transience, period, invariant measures for irreducible Markov
+chains.
+
+The period \( d_i \) of state \( i \) is the greatest common divisor of \( \{n \in \mathbb{N} : p^n_{i,i} > 0\} \)
+A state is aperiodic if \( d_i = 1 \)
+
+If \( i \in S \) has period \( d \), then \( p_{i,i}^{nd} > 0\) for all but finitely many \( n \).
+
+A Markov chain is irreducible, if
+\( r_{i,j} = \mathbb{P}_i[\tau_j < \infty] > 0, \forall i, j \in S \)
+that is at any point in time there is another, where the probability of moving into state 
+\( j \) from state \( i \) is non-zero.
+
+Such irreducible Markov chains satisfy
+1. The states are either all recurrent or transient.
+2. All states have the same period.
+3. If \( \nu \) is invariant, then \( \nu_i > 0 \) for all \( i \in S \).
+
+State the ergodic theorem for irreducible Markov chains.
+
+Define the total variation of a signed measure of a space \( (S, \mathcal{S}) \)as \( \|\mu\| = \sup_{A \in \mathcal{S}} |\mu(A)| \) 
+The ergodic theorem then states
+
+For any irreducible, aperiodic Markov chain in \( S \) holds either (1) or (2):
+1. There exists a unique invariant distribution \( \nu \) with \( \nu_i > 0 \) for all \( i \in S \), 
+and for any initial distribution \( \mu \) on \( S \):
+\( \lim_{n \to \infty} \|\mathbb{P}_\mu \circ \vartheta^{-1}_n - \mathbb{P}_\nu \| = 0\)
+2. No invariant distribution exists, and we have
+\( \lim_{n \to \infty} p^n_{i,j} = 0 \), \( i, j \in S \)
+
+
+Recurrence and Transcience
+\( \mathbb{P}_{x}[\kappa_x \geq k] = r_{x x}^k \)
+
+Recurrence : \( r_{x x} = 1 \)
+The numbers of return to x is almost surely infinite.
+
+Transcience \( r_{x x} < 1\)
+Since \( \sum_k \mathbb{P}x[\kappa_x \geq k] (1 - r_{x x})^{-1} - 1 \) we have \( \mathbb{P}_{x}[\kappa_x = \infty] = 0\)
+by the Borel-Cantelli Lemma. One computes \( \kappa_x \) posseses a geometric distribution under \( \mathbb{P}_x \) i.e.
+\( \mathbb{P}_x[\kappa_x = k] = r^k_{x x}(1 - r_{x x})\)
+If the Markov process possesses an invariant distribution \( \nu \) with \( \nu(x) > 0 \), then \( x \) is recurrent.
+    

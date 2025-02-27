@@ -33,7 +33,7 @@ while \( \Phi^{-1}(V) = \phi^{-1}(V) \subseteq S^{n-1} \) is not open in \( D^n 
 To solve this, enlarge \( V \) by
 
 \( U_{\varepsilon} = V \cup \Phi((1 - \varepsilon, 1) \times \phi^{-1}(V)) \subseteq \Phi(e^n) \)
-and note that \( \Phi(e^n) = ((1 - \varepsilon, 1] \times \phi^{-1}(V)) \cup_\phi V\),
+and note that \( \Phi(e^n) = \Phi(e^n) = [0, 1) \times [0, 2\pi]\),
 where we used polar coordinates \( (r, \theta) \) to parameterize \( D^n \setminus \{0\} \).
 Pictorially the situation is described below.
 
@@ -81,7 +81,7 @@ strong deformation retract from \( U \) to \( Y \), as wanted.
 of relative homology for the pair \( (Y, Y\varphi) \).
 
 This allows to derive the Homology of the \( k \)-th skeleton of a CW-complex, 
-if the homology of the \( k-1 \)-th is already known, by setting \( Y = X^(k-1) \) and iterating the theorem by first attaching
+if the homology of the \( k-1 \)-th is already known, by setting \( Y = X^{(k-1)} \) and iterating the theorem by first attaching
 a cell computing the homology and then doing this again until all cells have been attached.
 
 
@@ -110,7 +110,7 @@ It reduces to the lecture definition under a certain choice for the \( \Phi \), 
 
 (i) \( X^0 \) is discrete (aka points); 
 (ii) for each \(n > 0\), there is a (possibly empty) index set \(A_n\), and a family of continuous functions 
-\(\{f_{\alpha}^{n-1} : S^{n-1} \to X^{n-1} \mid \alpha \in A_n\}\) so that
+\(\{\varphi_{\alpha}^{n-1} : S^{n-1} \to X^{n-1} \mid \alpha \in A_n\}\) so that
 \[
 X^n = \left( \coprod_{\alpha} D^n \right) \coprod_{\varphi} X^{n-1}, 
 \]
@@ -199,7 +199,7 @@ hence there are induced group homomorphisms \((\Phi_\alpha)_* : H_k(D^n_\alpha, 
 \quad (7.6)
 \]
 
-Further we know that \( X^n, X^{n-1} \) are good pairs, so we have \( H_k(X^n, X^{n-1}) \simeq \tilde{H}_k(X^n / X^{n-1} \).
+Further we know that \( X^n, X^{n-1} \) are good pairs, so we have \( H_k(X^n, X^{n-1}) \simeq \tilde{H}_k(X^n / X^{n-1}) \).
 Of course \((D^n_\alpha, \partial D^n_\alpha)\) are as well with \( H_k(D^n_\alpha, \partial D^n_\alpha) \simeq \tilde{H}_k(S^n_\alpha) \).
 Since the attached \( \{e^n_\alpha\} \) are unaffected by taking the quotient except that they're all glued now just to a point \( p = X^{n-1}/X^{n-1} \),
 we can express \( X^n/X^{n-1} = \bigvee_\alpha S^n_\alpha \), thus
@@ -225,7 +225,7 @@ we have that \(H_k(X^{n-1}) \rightarrow H_k(X^n)\) is surjective for \(k \neq n\
 \( H_k(X^0) \xrightarrow{\cong} H_k(X^1) \xrightarrow{\cong} \dotsb \xrightarrow{\cong} H_k(X^{k-1}) \hookrightarrow H_k(X^k) \twoheadrightarrow H_k(X^{k+1}) \xrightarrow{\cong} \dotsb \hspace{1cm} (7.7) \)
 Since \(H_k(X^0) = 0\) for all \(k > 0\), \(H_k(X^n) = 0\) for all \(n < k\), as wanted.
 
-The second part then follows directly for \( \text{dim }X < \infty \) the special case of infinity is a more intricate. 
+The second part then follows directly for \( \text{dim }X < \infty \) the special case of infinity is more intricate. 
 
 
 Define the cellular chain complex

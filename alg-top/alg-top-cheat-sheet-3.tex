@@ -17,7 +17,7 @@ Theorem 5.2.1. With the above notations, the following hold:
 \(\dots \xrightarrow{\delta_n} H_n(U \cap V) \xrightarrow{(i_{U*}, -i_{V*})} H_n(U) \oplus H_n(V) \xrightarrow{j_{U*} + j_{V*}} H_n(X) \xrightarrow{\delta_n} H_{n-1}(U \cap V)\)
 
 Proof:
-By the definition of small chains, each the image of each singular simplex is either contained in \( U \) or \( V \), making \( g \) surjective.
+By the definition of small chains, the image of each singular simplex is either contained in \( U \) or \( V \), making \( g \) surjective.
 It is trivial to assert that \( f \) is injective since \( (0, 0) = f(a) \) implies already that \( a = 0 \).
 It should be straighforward to see that \( \text{ker}\ g = \text{im} f \).
 Thus we can use the existence of the connecting homomorphism \( \phi_n \) together with the theorem of small chains, to assert
@@ -26,7 +26,7 @@ Thus we can use the existence of the connecting homomorphism \( \phi_n \) togeth
 
 The connecting homomorphism can be a little simplified here,
 let \( [c] \in H_n(X) \simeq H_n(U + V) \) then by the Theorem of small chains we have cycles \( c = c_{U} + c_{V} = g(c_{U}, c_{V}) \)
-Moreoso there is a unique \( a \in C_{n-1}(U \cap V) \) with \( f(a) = \partial(c_U, c_V) \), but then \( a = \partial c_U = -\partial c_V  \)
+More so there is a unique \( a \in C_{n-1}(U \cap V) \) with \( f(a) = \partial(c_U, c_V) \), but then \( a = \partial c_U = -\partial c_V  \)
 so \( \phi_n([c_U + c_V]) = [\partial c_U] = - [\partial c_V] \).
 
 Mayer-Vietoris also works in reduced homology, where we instead use the augmented chain complexes 
@@ -232,9 +232,9 @@ For this reason these connecting homomorphisms are sometimes also written \(\par
 Suppose \( A \subseteq X\) is a deformation retract of \( X \). Then \( H_n(X, A) = 0, \forall x \in \mathbb{Z}\).
 Proof: \( \iota : A \to X\) induces an isomorphism \( H_n(A) \simeq H_n(X) \), the LES of rel. homol., \( H_n(X, A) = 0 \).
 
-Note that the reduced relative homology bears no benefit since it creates a chain which is equivalent to the following
+Note that the reduced relative homology agrees completely with the unreduced version, since it creates the sequence:
 \( \dots \tilde{H}_n(A) \longrightarrow \tilde{H}_n(X) \longrightarrow H_n(X, A) \longrightarrow \tilde{H}_{n-1}(A) \longrightarrow \dots \),
-so we would obtain no new information. Moreover \( \tilde{H}_n(X) \simeq H_n(X, \{p\}) \).
+Moreover \( \tilde{H}_n(X) \simeq H_n(X, \{p\}) \).
 
 
 State and prove the excision theorem

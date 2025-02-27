@@ -114,7 +114,7 @@ If we set the prior variance \(\tau_0^2 = \zeta^2/\kappa_0 \) equal to the varia
 \).
 
 
- What is the predictive distribution in the normal model?
+What is the predictive distribution in the normal model?
 
 Note that we can assume \( \{ X_{n+1} | \theta = \vartheta, \sigma^2 = \varsigma^2 \} \sim \mathcal{N}(\vartheta, \varsigma^2) \)
 \( \iff X_{n+1} = \theta + \epsilon, \; \{ \epsilon | \theta = \vartheta, \sigma^2 = \varsigma^2 \} \sim \mathcal{N}(0, \varsigma^2) \),
@@ -155,7 +155,6 @@ Consider the following two-parameter sampling model:
 \( \{\theta\} \sim N(\mu_0, \tau_0^2) \)
 \( \{X_1, ..., X_n | \theta = \vartheta, \sigma^2 = \varsigma^2 \} \sim i.i.d. \ N(\theta, \sigma^2) \)
 
-DON'T INCLUDE THIS ITS MORE THAN NECESSARY
 
 Using the independence of priors for \( \theta \) and \( \sigma^2 \), one can show for the precision \( \tilde{\sigma}^2 \):
 \[ f_{\sigma^2 | \theta, x_1, ..., x_n}(\varsigma^2 | \theta, x_1, ..., x_n) \propto \left( \varsigma^2 \right)^{n/2} \exp \left\{ -\frac{1}{2}\varsigma^2 \sum_{i=1}^{n} (x_i - \theta)^2 \right\} \cdot \left( \varsigma^2 \right)^{\nu_0/2 - 1} \exp \left\{ -\frac{1}{2}\varsigma^2 \nu_0 \sigma_0^2 \right\} \]
@@ -172,7 +171,6 @@ The benefit is that the posterior distributions match the priors for \( \theta, 
 
 Explain in detail how Gibbs sampling can be applied
 in the independent case for the Normal model. Extend this to the multivariate case.
-
 
 
 Problem:
@@ -208,6 +206,9 @@ where \(\Lambda_n = (\Lambda_0 + n\varsigma^{-1})^{-1}\) and \(\mu_n = \Lambda_n
 A multivariate generalization of the gamma distribution is the so-called generalized Wishart distribution. 
 Analogous to the univariate case, a generalized inverse-Wishart distribution prior for the covariance matrix results in a 
 generalized inverse-Wishart full conditional distribution.
+
+
+DON'T INCLUDE THIS ITS MORE THAN NECESSARY
 
 \iffalse
 Consider the following two-parameter sampling model:

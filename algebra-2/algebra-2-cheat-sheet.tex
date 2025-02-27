@@ -1,0 +1,250 @@
+
+\(P_A(x) = \text{det}(xI_n - A) \in R[x]\) it holds \(P_A(A) = 0\).
+
+Applications
+With this we can d
+
+Define an \(R\)-module \(M\)
+
+The axiomatic definition is the existence of two binary operations
+
+\(+ : M \times M \to M, (x, y) = x + y\)
+\(\cdot : R \times M \to M, (r, x) = rx\)
+satisfying
+\((M, +)\) is an abelian group.
+and for \((a, b \in R, x, y \in M)\) it holds
+\(a(x + y) = ax + ay\)
+\((a + b)x = ax + bx\)
+\((ab)x = a(bx)\)
+\(1x\)
+for a (left) \(R\)-module \(M\), 
+In case of a right \(R\)-module, \(a, b \in R\) have to be to the right
+of the \(x, y \in M\) in the axioms.
+
+Alternatively a module can be seen as a ring homomorphism \(\phi: R \to \text{End}(M)\)
+that is \(ax = \phi(a)(x)\), which naturally satisfyies the axioms above. 
+One calls \(\phi\) a ring action on \(M\).
+
+A left \(R\)-module can be turned into a right \(R^{\text{op}}\)-module by means of the anti-isomorphism
+(it's actually not an isomorphism, just a bijective map) \(\text{op} : R \to R^{\text{op}}\) \(\text{op}(ab) = ba\),
+by the map \(\psi = \phi\circ\text{op} : R \to \text{End}(M)\), which actually induces a morphism \(\tilde{\psi} : R^{\text{op}} \to \text{End}(M)\).
+
+\iffalse
+by the induced morphism \(\phi^{\text{op}} : \), \(\phi^{\text{op}} = \psi\text{op_M}\phi\text{op}^{-1}\),
+\text{op_M}
+    where
+
+
+\(\text{op}(\phi)(a)(x) = x\phi(a)\)
+\fi
+
+
+What is the natural relation between abelian groups
+and modules?
+
+
+Take any abelian group \(G\) and make it to a \(\mathbb{Z}\)-module
+by \(\phi : \mathbb{Z} \to \text{End}(G)\), \(\phi(z)(g) = \sum_{i = 1}^{|z|} \text{sgn}(z)g\), in fact this
+is the only possible \(\mathbb{Z}\)-module structure on \(G\).
+
+
+Define an \(R\)-module homomorphism or \(R\)-linear map
+
+if the map \(\phi : M \to N\) satisfies for all \(x, y \in M\) and \(a \in R\)
+\(\phi(x + y) = \phi(x) + \phi(y)\)
+\(\phi(ax) = a\phi(x)\)
+
+then \(\phi\) is an (left) \(R\)-module homomorphism. 
+
+The second property is sometimes tricky e.g. \(\phi : \mathbb{R}^2 \to \mathbb{R}^2, \phi(x, y) = (x, 2y + 1)\) is not a homomorphism
+as it fails to respect scalar multiplication in the second component.
+
+If \(R\) is commutative then \(\text{Hom}_{R}(M, N)\) is an \(R\)-module.
+
+
+Define a submodule \(N\) of and \(R\)-module \(M\)
+
+Axiomatic definition
+
+\(N \neq \emptyset\)
+\(x, y \in N \implies x + y \in N\)
+This can be summarized with \(N\) being a subgroup of \(M\)
+\(x \in N \implies ax \in N, \forall a \in R\)
+
+Then \(N\) is itself an \(R\)-module and the inclusion \(\iota : N \to M\) 
+is an \(R\)-module hom.
+The quotient \(R\)-module \(M/N\) is defined as usual via, \(\alpha\pi(x) = \alpha x + N\).
+
+State the isomorphism theorems for modules
+Let \(\phi: M \to N\) a \(R\)-module hom.
+then \(M/\text{ker}(\phi) \simeq \text{im}\phi\)
+(In particular \(\text{ker}\phi, \text{im}\phi\) are both submodules.
+
+For \(N \subset M \subset L\) it holds
+\( (L/N)/(M/N) \simeq L/M\)
+For \(N_1, N_2 \subset M\) 
+\((N_1 + N_2)/N_1 \simeq N_2/(N_1 \cap N_2)\)
+
+
+Define the direct sum and product of modules
+and state their properties
+
+
+Let \(\{M_i\}_{i \in I}\) be a family of 
+\(R\)-modules. Define the direct product by
+\(\Pi_{i \in I} M_i = \{(x_i)_{i \in I} | x_i \in M_i\}\)
+The direct product inherits an 
+\(R\)-module structure by defining the operations coordinatewise.
+Equivalently elements in \(\Pi_{i \in I} M_i\) are maps \(f : I \to \bigcup_{i \in I} M_i\)
+s.t. \(f(i) \in M_i, \forall i\).
+
+Direct sums of modules 
+\(\bigoplus_{i \in I} M_i\)
+are defined in the same way except only finitely many of the coordinates of the tuples are nonzero. 
+Thus if \(I\) is finite direct sums and products are the same.
+We say \(M\) is the internal direct sum of the family if 
+\(M = \sum M_i\) and \(M_j \cap \sum_{i \neq j} M_i = \{0\}\)
+
+They satisfy the usual universal property 
+
+Direct product
+For an \(R\)-module \(N\) and \(\phi_i : N \to M_i\) for each \(i\),
+there is unique hom. \(\theta : N \to \Pi_{i in I} M_i\) which factors through
+\(\pi_i \circ \theta(n) = \phi_i(n)\) for the canonical projection \(\pi : \Pi_{i in I} M_i \to M_i\).
+
+Direct sum
+For an \(R\)-module \(N\) and \(\phi_i : M_i to N\) for each \(i\),
+there is unique hom. \(\theta : \bigoplus{i in I} M_i \to N\) which factors through
+\(\theta \circ \iota (m) = \phi_i(m)\) for the canonical embedding \(\iota : M_i \to \bigoplus{i in I} M_i\).
+
+
+Define the ideal quotient of submodules \(I, J \subset M\) and the annulator. State also some essential properties
+
+Definition
+\((I : J) = {a \in R | aJ \subset I } \subset R\)
+\((0 : M) = \text{Ann}_R(M)\)
+Properties
+\((I : J) = \text{Ann}_R(J + I)/I\)
+\((I : JK) = ((I : J) : K)\) 
+\((I : R) = I\) 
+\((I : J + K) = (I : J) \cap (I : K)\) 
+\((I : (r)) = \frac{1}{r}(I \cap (r))\) if \(R\) is an integral domain.
+
+Let \(I \subset \text{Ann}_R(M)\) an ideal, then \(M\) is also a \(R/I\)-module
+further \(\text{Ann}_{R/\text{Ann}_R(M)}(M) = 0\).
+
+If \(R\) is commutative then 
+(Sometimes injectivity is refferd
+
+
+Define a generating set, linear independence and free modules
+
+For an \(R\)-module \(M\) and a family \(\{x_i\}_{i \in I} \subset M\)
+is called a generating set if for each \(m \in M\)
+\(m = \sum_{i \in I} \alpha_i x_i\) with only finitely many \(\alpha_i \neq 0\).
+
+If \(|I| < \infty\) we say that \(M\) is finitely generated.
+
+It is lin. if 
+\(\sum{i \in I} \alpha_i x_i = 0 \iff \alpha_i = 0, \forall i \in I\)
+
+If \(\{x_i\}_{i \in I}\) satisfies both these conditions its a basis 
+and \(M\) is free \(R\)-module.
+
+Equivalently, if there is module homomorphism \(\phi R^{I} \to M\) with \(\phi(f) = \sum_{i \in I} f(i) x_i\)
+which is surjective (gen. set) and injective (lin. ind.) 
+
+Equivalently this is a homomorphism from 
+
+How are ideals in \(I \subset R\) related to quotient modules of \(M\)?
+
+If \(I\) is a (left) ideal in \(R\), then \(M/IM\) is an \(R/I\)-module.
+Moreover a basis of \(M\) \(\{x_i\}_{i \in I}\), is a basis for \(M/IM\) via \(\{\pi(x_i)\}_{i \in I}\).
+
+An important application is the following:
+Let \(R\) be a non trivial commutative ring and \(M\) a fin. gen. free \(R\)-module, then for any two bases
+\(\{x_i\}_{i \in I}\), \(\{x_j\}_{j \in J}\), \(|I| = |J|\).
+
+Proof:
+Every commutative ring has at least one maximal ideal, let it be \(I\), then \(M/IM\) is an \(R/I\)-vector space (as \(R/I\) is a field)
+with bases \(\{\pi(x_i)\}_{i \in I}\), \(\{\pi(x_j)\}_{j \in J}\), but any 2 bases of a vector space must have the same cardinality.
+
+
+State and proof the Cayley Hamilton theorem, and describe some of its uses.
+
+Let \(R\) be a commutative ring \(A = (a_{i,j}) \in R\) a \(n \times n\) matrix, for the characteristic polynomial
+\(P_A(x) = \text{det}(xI_n - A) \in R[x]\) it holds \(P_A(A) = 0\).
+
+\(A = \phi : R^n \to R^n\), that is we can represent \(A\) is a module homomorphism, further \(R[\phi] \subset \text{Mat}_n(R)\) generated
+by the identity \(I_n\) and \(A\). Let \(\{e_i = (0, \dots, 1_i, 0 \dots) \}\) be the canonical basis, then we have the linear system of eqs.
+\(\phi(e_i) = \sum^{n}_{j = 1} a_{i, j} e_j\) which is equivalent to \(\sum_{j = 1}^{n} (\delta_{i,j} \phi - a_{i, j}) e_j = 0\), for each \(i \in 1 \dots n\) (FC),
+define the matrix \(B = (\delta_{i,j} \phi - a_{i, j})_{i,j}\), note that \(P_A(x) \to P_A(A) = \text{det} B\) (by the morphism \(R[x] \to R[\phi]\)).
+With the adjugate matrix \(B^{*}B = \text{B}I_n\) we can deduce \(0 = B^{*}B(e_1, e_2, \dots)^{T} = (\text{det}Be_1, \dots)^{T}\) where the first equality stems from FC.
+
+We can find \(A^n\) in terms of lower powers according to this theorem (as \(p(A) = A^n + c_{n-1}A^{n-1} \dots + c_0 I_n\)).
+For \(R\) a field a non-trivial equivalence is that the minimal polynomial of \(A\) divides its characteristic polynomial.
+
+What is the determinant trick?
+
+Let \(R\) be a commutative ring, \(M\) a fin. gen. \(R\)-module, \(I \subset R\) and ideal and \(\phi : M \to M \in \text{End}(M)\) s.t. \(\phi(M) \subset IM\) 
+then there is some relation
+
+\(\phi^{n} + a_{n-1}\phi^{n-1} + \dots + a_0 = 0\) with \(a_i \in I\).
+
+The proof is essentially the same as for the Caley-Hamilton theorem with the most table difference that we evaluate the determinant to get this expression
+and use the fact that \(\phi(M) \subset IM\) so that all entries in the matrix \(B\) are in \(I\).
+
+State and proof the Lemma of Nakayama:
+
+Let \(R\) be a commutative ring, \(M\) a fin. gen. \(R\)-module, \(I \subset R\) an ideal and \(M = IM\) then there is some \(r \in R\) with
+\(r \equiv 1 \text{mod} I\), s.t. \(rM = 0\). This follows from the determinant trick with \(\phi = \text{id}_M\) and \(x = 1 + a_{n-1} + \dots + a_0\).
+
+Lemma of Nakayama
+Let \(R\) be a local ring with maximal ideal \(\mathfrak{m}\). When \(M\) is fin. gen. with \(M = \mathfrak{m}M\) then \(M = 0\)
+By the previous we have an \(x \in R\), \(r \equiv 1 \text{mod} \mathfrak{m}\) and \(x \in \text{Ann}_R(M)\). Suppose \(\text{Ann}_R(M) \neq R\)
+then \(\text{Ann}_R(M) \subset \mathfrak{m}\) by maximality and from the conruence \(1 \in \mathfrak{m}\), a contradiction.
+
+Some useful consequences are then found for decompositions of modules
+
+Let \(R\) be a local ring with maximal ideal \(\mathfrak{m}\). When \(M\) is fin. gen. and \(N \subset M\) with \(M = N + \mathfrak{m}M\) then \(N = M\).
+Proof: Apply Nakayama's Lemma to \(M/N\) and note that \(\mathfrak{m}(M/N) = (\mathfrak{m}M + N)/N = M/N\).
+
+Also if \(\{\pi(x_i)\}_{i \in I}\) are a basis of the \(R/\mathfrak{m}\)-vector space \(M\), so is \(\{x_i\}_{i \in I}\) a basis of the \(R\)-module \(M\).
+Proof: Let \(N = \text{span}(\{x_i\}_{i \in I})\) be the submodule generated by these elements, then \(M = N + \mathfrak{m}M\) from the splitting SES \(0 \to N \to M \to \mathfrak{m}M \to 0\) 
+and by the previous theorem the result follows.
+
+
+Characterize noetherian modules
+and give some examples and theorems
+
+Let \(M\) be an \(R\)-module, tfae.
+
+1. Every submodule of \(M\) is finitely generated.
+2. Every ascending chain of submodules \(N_1 \subset N_2 \subset \dots\) becomes stationary (\(N_i = N_j, j \geq i\) for some \(i\)), also called the ACC-condition.
+3. Every non empty set of submodules of \(N\) has a maximal element.
+
+Examples:
+Every PID ring is noetherian. \(C[0, 1]\) is not noetherian 
+
+Properties:
+Every submodule of a noetherian module is noetherian.
+If \(f : M \to N\) is surjective and \(M\) noetherian, so is \(N\).
+
+For a SES \(0 \to M' \to M \to M'' \to 0\) it holds that \(M\) is noetherian if and only if \(M', M''\) are.
+It follows that \(M\) is noetherian if for a noetherian submodule \(N\) also \(M/N\) is noetherian.
+
+Let \(R\) be a left-noetherian ring and a \(M\) fin. gen. module over it. Then \(M\) is also noetherian.
+
+State an important lemma which contraposits noetherian modules.
+
+If \(M, N\) are \(R\)-modules with \(M \simeq M \oplus N\) and \(N \neq 0\), then \(M\) is not noetherian
+
+The proof is based on the idea to take the poset \(\Sigma\) of \(\{ (M', N') | M' \oplus N' \simeq M \}\) and in particular
+\(M' \simeq M\), assuming there would be a maximal element \((M', N')\) then \(M \simeq M' \oplus N'\) but also \(M' \simeq M \oplus N\) by assumption
+thus \(M \simeq M \oplus N' \oplus N\), since \(N \neq 0\), \(N' \subset N' \oplus N\) (one needs to use the explicite isomorphism to make the notation rigorous)
+\(N'\) is not maximal, a contradiction.
+
+This in turns implies that for two different bases \(\{x_i\}_{i \in I}\), \(\{y_j\}_{j \in J}\) of a noetherian module, we must have \(|I| = |J|\),
+since w.l.o.g. \(|J| \geq |I|\), \(M \simeq R^{|I|}\), so \(M \simeq R^{|I|} \oplus R^{|J| - |I|}\), but by the previous \(R^{|J| - |I|} = 0\)
+as \(M \simeq R^{|I|}\)
+

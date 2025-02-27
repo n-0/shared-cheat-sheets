@@ -95,3 +95,42 @@ a systemic risk measure, if for some acceptance set \(\mathcal{A} \subseteq \mat
 Elementary Properties:
 1. Cash-invariance:  \( R(Y; k) + m = R(Y; k - m) \)
 2. Monotonicity:  \( Y \geq Z \implies (\forall k \in \mathbb{R}^n: R(Y; k) \supseteq R(Z; k)) \)
+
+
+Let \(\mathcal{P}(\mathbb{R}^l)\) be the power set of \(\mathbb{R}^l\). A mapping
+\(
+k^* : \mathcal{Y} \times \mathbb{R}^l \to \mathcal{P}(\mathbb{R}^l)
+\)
+is called a cash-invariant efficient allocation rule (EAR) associated with a systemic risk measure \(R\), 
+if the following properties are satisfied:
+Minimal values:
+\(
+k^*(Y; k) \subseteq \operatorname{Min} R(Y; k)
+\)
+Convex values:
+\(
+k^1, k^2 \in k^*(Y; k) \Rightarrow \alpha k^1 + (1 - \alpha) k^2 \in k^*(Y; k)
+\)
+Cash-invariance:
+\(
+k^*(Y; k) + m = k^*(Y; k - m)
+\)
+
+
+Let \( R : \mathcal{Y} \times \mathbb{R}^l \to \mathcal{P}(\mathbb{R}^l; \mathbb{R}^l_+) \) be a systemic risk measure with convex values. 
+For \( w : \mathcal{Y} \to \mathbb{R}^l_{++} \) such that
+\(
+w(Y) \in \operatorname{recc} R(Y;0)^+,
+\)
+the set-valued mapping
+\(
+\hat{k}(Y; k) = \operatorname{argmin} \left\{ \sum_{i=1}^{l} w(Y)_i m_i \mid m \in R(Y; k) \right\}
+\)
+defines an EAR. 
+
+All EARs \( k^* \) as defined above are included in EARs \( \hat{k} \) of form (4), i.e. 
+\(
+k^*(Y; k) \subseteq \hat{k}(Y; k) \quad \text{for all } Y \in \mathcal{Y} \text{ and } k \in \mathbb{R}^l.
+\)
+
+The lemma provides examples of EARs via a specific choice of the regulatory price of capital \( w \).

@@ -1,0 +1,29 @@
+Explain PCA in the context of a multi-variate Gaussian
+
+More explicitely the question was:
+What is principle component analysis? Diagonalize a symmetric covariance matrix of a multi-variate Gaussian, and characterize the principle components and
+corresponding eigenvalues. Relate this to a level plot of a normal density in 2d. In
+what sense is PCA optimal?
+
+Recall that any symmetric and positive definite matrix \( \Sigma \) may be diagonlized
+via \( \Sigma = V\Lambda V^{T} \), where \( VV^{T} = I \) (orthogonal matrix) and \( \Lambda \) is a diagonal matrix
+in particular \( \Sigma V = V\Lambda \), so the columns of \( V \) are the normalized eigenvectors of \( \Sigma \)
+with corresponding eigenvalue in the column of \( \Lambda \), which are ordered by magnitude \( |\lambda_1| \geq |\lambda_2| \dots \).
+Also we have a sth. similar to a Cholesky decomposition via \( \Sigma = AA^{T} \) where \( A = V\sqrt{\Lambda} \),
+it is however not a Cholesky decomposition, because we did not assume positive definiteness of \( \Sigma \) (only semi-definite)
+so there is not the same symmetric structure in \( A \) (columns indices are not forced to become zero after the row index)
+
+We're interested in a representation of a multi-variate Guassian \( X \sim \mathcal{0, \Sigma} \)
+via \( X = a_1Z_1 + a_2Z_2 + \dots + a_nZ_n\) where \( a_i \) is the column of some matrix \( A \)
+s.t. \( X = AZ \) where \( Z_i \sim \mathcal{N}(0, 1) \) i.i.d.
+From the previous it must be \( A = V\sqrt{\Lambda} \) thus \( A^{-1}X = (\sqrt{\Lambda})^{-1}V^{T}X = Z \) 
+thus \( Z_i = \frac{1}{\sqrt{\lambda_i}}v_i^{T}X \).
+
+The \( v_i^{T}X = \lambda_iZ_i \) are referred to as principal components.
+Further  \( a_i = \sqrt{\lambda_i}v_i \) and \( Z_i \) satisfy a certain optimality condition,
+namely that among all vectors and random variables with unit mean and zero variance 
+they minimize the mean squared error.
+\( E(\|X - \sum_{i=1}^{k} a_i Z_i\|^{2}) \)
+
+Due to the ordering of the eigenvalues then the first principle component has the most significant impact,
+followed by the second etc.

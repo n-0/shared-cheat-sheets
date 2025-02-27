@@ -1,0 +1,368 @@
+What is the one-dimensional distribution of the stock price in a jump-diffusion
+model with constant drift and volatility, a Poisson counting process and i.i.d. 
+log-normal multiplicative jump sizes? Explain.
+
+These models include occasional jumps besides the Brownian diffusion term.
+The SDE generalizes Geometric Brownian motion:
+\( \frac{dS(t)}{S(t-)} = \mu dt + \sigma dW(t) + dJ(t),\ W \text{ Q-BM},\ J \perp W \)
+where the summands are the drift, diffusion and jump part respectively. 
+
+Jump process \( J \)
+Random arrival times  \( 0 < \tau_1 < \tau_2 < ... \)
+Counting process \( N(t) = \sup \{n : \tau_n \leq t\} \)
+Jump sizes \( Y_1 - 1, Y_2 - 1, \dots \) for random variables \( Y_1, Y_2, \dots \)
+Then:
+
+\( J(t) = \sum_{j=1}^{N(t)} (Y_j - 1) \)
+
+The symbol \( dJ(t) \) denotes the jump at time t, i.e.,
+
+\( dJ(t) = \begin{cases}
+Y_j - 1, & \text{if } t = \tau_j \\
+0, & \text{if } t \notin \{ \tau_1, \tau_2, ... \}
+\end{cases} \)
+
+which in turn implies \( S(\tau_i) = S(\tau_i -) + S(\tau_i -)(Y_i - 1) = S(\tau_i-)Y_i \)
+
+In the case of multiplicative jumps one computes
+\( S(t) = S(0) \cdot \exp \left\{ (\mu - \frac{1}{2} \sigma^2) t + \sigma W(t) \right\} \cdot \prod_{j=1}^{N(t)} Y_j \)
+
+Some special cases allow for some simplification: Poisson and lognormals
+Counting process \(N\) is a Poisson process with rate \(\lambda\), i.e., interarrival times \(T_{j+1} - T_j\) independent with
+\( \mathbb{P}(T_{j+1} - T_j \le t) = 1 - e^{-\lambda t}, \quad t > 0. \)
+
+Jump sizes are governed by random variables \(Y_1, Y_2, ...\) iid \(\stackrel{\text{iid}}{\sim} LN(a, b^2)\), i.e., \(\ln Y_j \sim N(a, b^2)\).
+This implies that for any \(n\) we have \(\prod_{j=1}^n Y_j \sim LN(an, b^2n)\)
+
+Distribution of \(S\) Conditional on \(N(t) = n\):
+\( S(t) = S(0) \cdot \exp \{(\mu - \frac{\sigma^2}{2}) t + \sigma W(t)\} \cdot \prod_{j=1}^n Y_j \sim S(0) \cdot LN((\mu - \frac{\sigma^2}{2})t, \sigma^2 t) \cdot LN(an, b^2n) = \), \( LN(\ln S(0) + (\mu - \frac{\sigma^2}{2})t + an, \sigma^2 t + b^2n)\) with distribution function \(F_{n,t\)} \)
+
+Since \(N\) is Poisson-distributed, we obtain a Poisson mixture of lognormals:
+\( \mathbb{P} (S(t) \le x) = \sum_{n=0}^\infty e^{-\lambda t} \frac{(\lambda t)^n}{n!} F_{n,t}(x) \)
+
+
+Describe a stock price model under a martingale measure with constant drift and
+volatility, a Poisson counting process and iid multiplicative jump sizes. 
+
+(cont. question) How does its SDE look like? (But note that jump diffusion models are usually incomplete
+such that infinitely other martingale measures exist. Here, we just fix one!)
+
+We try to identify an equivalent measure \( Q \) such that \((S(t)e^{−rt})_t \) is a \( Q \)-martingale.
+
+\( \frac{dS_t}{S_{t-}} = \mu_1 dt + \sigma dW_t + dJ_t - \mu_2 dt \)
+
+if \( W \) is a \( Q \)-BM then
+\( \mu_1 = r \) the risk free interest rate
+\( \mu_2 \) needs to compensate for the jumps \( J(t) = \sum_{j=1}^{N(t)} Y_j - 1 \)
+and in general it holds that \( \sum_{j=1}^{N(t)} h(Y_j) - \lambda \mathbb{E}[h(Y_1)]t  \) is martingale
+so for our case \( h(y) = y - 1 \) we have \( \mu_2 = \lambda \mathbb{E}[h(Y_1)] = \lambda(\mathbb{E}[Y_1] - 1) \)
+
+and we conclude 
+\( \frac{dS_t}{S_{t-}} = rdt + \sigma dW_t + dJ_t - (\lambda(\mathbb{E}[Y_1] - 1)dt \)
+
+
+Specify an exact simulation of jump diffusion model with Poisson counting process
+for a fixed time discretization. How can you even include an exact simulation of
+jump times and the distribution of the process at these jump times?
+
+The goal is to simulate the process at dates that are fixed a priori \( 0 = t_0 < t_1 < ... < t_n \):
+Our assumptions ar e
+\( N \) is a Poisson process
+\(Y_1, Y_2, ...\) are iid, but we do not require that their distributions are lognormal; instead the common distribution can flexibly be chosen
+The processes \( N, W \) and random variables \(\{Y_1, Y_2, ...\}\) are mutually independent.
+This leads to the following time discretization of the log process:
+\(X(t_{i+1}) = X(t_i) + (\mu - \frac{1}{2} \sigma^2) (t_{i+1} - t_i) + \sigma \cdot [W(t_{i+1}) - W(t_i)] + \sum_{j=N(t_i)+1}^{N(t_{i+1})} \log Y_j\)
+
+The corresponding algorithm is
+
+1. generate \(Z \sim N(0,1)\)
+2. generate \(N \sim \text{Poisson}(\lambda(t_{i+1}-t_{i}))\);
+   if \(N = 0\), set \(M = 0\) and go to Step 4
+3. generate \(\log Y_1, ..., \log Y_N\); set \(M = \log Y_1 + \dots + \log Y_N\)
+4. set 
+\(X(t_{i+1}) = X(t_{i}) + (\mu - \frac{1}{2} \sigma^2) (t_{i+1} - t_i) + \sigma \sqrt{t_{i+1} - t_i} \cdot Z + M\) 
+
+Remark:
+• If \(Y_j \sim LN(a, b^2)\), then
+\(\sum_{j=1}^{n} \log Y_{j} \sim an + b \sqrt{n} \mathcal{N}(0,1)\).
+This implies that Step 3 can be replaced by Step 3':
+3' generate \(Z' \sim N(0, 1)\); set \(M = aN + b \sqrt{N} Z'\)
+• A similar strategy can be chosen if \(\ln Y_j\) is gamma distributed.
+
+
+To also simulate the jump times, observe that
+between jumps the process behaves like GBM
+and additionally there are jumps at the jump times.
+
+\(S(\tau_{j+1}-) = S(\tau_{j}) \cdot \exp \left\{ (\mu - \frac{1}{2} \sigma^2) (\tau_{j+1} - \tau_j) + \sigma [W(\tau_{j+1}) - W(\tau_j)] \right\}\)
+
+\(S(\tau_{j+1}) = S(\tau_{j+1}-) \cdot Y_{j+1}\)
+
+Setting \(X(t) = \ln S(t)\), we get
+
+\(X(\tau_{j+1}) = X(\tau_{j}) + (\mu - \frac{1}{2} \sigma^2) (\tau_{j+1} - \tau_j) + \sigma [W(\tau_{j+1}) - W(\tau_j)] + \log Y_{j+1}\)
+
+1. Generate \(R_{j+1}\) from an exponential distribution with mean \(\frac{1}{\lambda}\) 
+2. Generate \(Z_{j+1} \sim \mathcal{N}(0,1)\)
+3. Generate \(\log Y_{j+1}\)
+4. Set \(\tau_{j+1} = \tau_{j} + R_{j+1}\) and
+
+\(X(\tau_{j+1}) = X(\tau_{j}) + (\mu - \frac{1}{2} \sigma^2) R_{j+1} + \sigma \sqrt{R_{j+1}} \cdot Z_{j+1} + \log Y_{j+1}\)
+
+To include an intermediate time step \( t \) into an already run simulation one can save computational effort by the observation
+
+Consider the times
+\(\tau_j < t < \tau_{j+1}\)
+Then we obtain that
+
+\(S(t) = S(\tau_{j}) \cdot \exp \left\{ (\mu - \frac{1}{2} \sigma^2) (t - \tau_j) + \sigma [W(t) - W(\tau_j)] \right\}\)
+\(S(\tau_{j+1}) = S(t) \cdot \exp \left\{ (\mu - \frac{1}{2} \sigma^2) (\tau_{j+1} - t) + \sigma [W(\tau_{j+1}) - W(t)] \right\} \cdot Y_{j+1}\)
+
+What is a Levy process? What are infinitesimal distributions? What is a subordinator?
+
+A Levy process is equivalent to a process \( X \) that satisfies any one tfoa:
+1. \( X \) has stationary, independent increments and \( X(t) \to X(s) \) in law, when \( t \to s \)
+2. \( X \) can be written as \( X = \mu dt + \sigma dW_t + J_t\) where \( W_t, J_t \) are independent
+and \( J_t \) is a pure jump Levy process.
+3. \( X(1) \sim F \), where \( F \) is an infinitesimal divisible distribution.
+and conversely for \( F \) there always exists a Levy process \( Y \) with \( Y(1) \sim F \)
+
+thus BMs, Poisson processes etc. are all special cases of Levy processes.
+
+A random variable Y has an infinitesimal divisible distribution
+if and only if for all 
+\( n \in \mathbb{N} \) there are \( Y_1 , \dots, Y_n \) i.i.d. such that \( Y = \sum^n_{i=1} Y_i^{(n)}  \).
+
+Pure jump Levy processes are categorized into
+Finite activity: There are finitely many jumps on any compact time interval,
+which is the same as as compound Poisson process \(  \sum_{i=1}^{N(t)} Y_i\) with \( Y_i \) i.i.d. and \( N ~ \text{Pois}(\lambda) \) 
+Infinite activity
+There are infinitely many jumps on any compact time interval.
+In this case the increments of the process can still be simulated but not all jumps.
+
+Typically, one assume for a Lévy process \( X \) that \( X(0) = 0 \).
+A Lévy process \( X \) is called a subordinator, if \( X \) is increasing. This corresponds precisely to positive infinitesimal distributions, i.e.,
+\( X(1) \geq 0 \).
+An interesting and tractable class of Lévy processes is constructed as time changes of Brownian motion using subordinators:
+In this case, one takes a Brownian motion \( W \) and a subordinator \( G \) with \( W \bot G \).
+Then \( (W(G(t))_t \geq 0 \) is again a Lévy process.
+
+
+Define a variance gamma process, and provide a simulation algorithm in the special
+case of only three parameters.
+
+The gamma distribution is infinitely divisible and positive.
+This implies that that each gamma distribution corresponds to a subordinator, a gamma process.
+
+Simulating a gamma process
+• Let \(X\) be a Lévy subordinator with \(X(1) \sim \text{Gamma}(\alpha, \beta)\).
+• Consider a time grid \(0 = t_0 < t_1 < ... < t_n\).
+• On the time grid, an exact simulation of the process requires simply an exact simulation of the increments
+\(X(t_{i+1}) - X(t_i) \sim \text{Gamma}(\alpha \cdot (t_{i+1} - t_i), \beta)\)
+
+A gamma process \(G\) is a subordinator that can be used to define a time change of a Brownian motion with drift \(W\):
+\(VG_{t}=W(G(t)).\)
+The process \( VG \) is called a variance gamma process.
+One can show that the variance gamma process is in fact the difference of two gamma processes.
+
+Simulation of variance gamma process:
+
+We focus on the following special case with only three parameters:
+\( W \) has drift \(\mu\) and volatility \(\sigma\)
+\(G(1) \sim \text{Gamma}(\frac{1}{\beta}, \beta)\)
+We consider again a time grid \(0 = t_0 < t_1 < ... < t_n\)
+Algorithm:
+1. generate \(Y \sim \text{Gamma}((t_{i+1} - t_i)/\beta, \beta)\)
+2. generate \(Z \sim \mathcal{N}(0,1)\)
+3. set \(X(t_{i+1}) = X(t_{i}) + \mu Y + \sigma \sqrt{Y} \cdot Z\)
+
+State in the context of one-dimensional random variables the Monte Carlo estima-
+tion problem, the crude method and the approach using control variates.
+
+The flash card also answers the questions
+Compute the optimal coefficient and optimal variance.
+How can the optimal coefficient be estimated using simulated data?
+How does this method generalize to multiple controls?
+
+
+Problem: Estimate \(\mathbb{E}[Y]\) by simulation!
+Simulation: Available: samples \((X_1, Y_1), (X_2, Y_2), ...\) iid such that \(Y_i \sim Y, X_i \sim X, \mathbb{E}[X]\) known
+a) Naive approach:
+\(\hat{Y}_n := \frac{1}{n} \sum_{i=1}^n Y_i \rightarrow \mathbb{E}[Y]\) a.s. and in \(L^1\) by LLN
+b) Alternative approach: Define \(Y_i(b) := Y_i - b(X_i - \mathbb{E}[X])\)
+\(\Rightarrow \hat{Y}_n(b) := \frac{1}{n} \sum_{i=1}^n Y_i(b) \rightarrow \mathbb{E}[Y]\) a.s. and in \(L^1\) by LLN
+Observe: \(\text{Var}(\hat{Y}_n) = \frac{1}{n} \text{Var}(Y_i(b))\), if \(X, Y \in L^2\)
+\( \sigma^2(b) := \text{Var}(Y_i(b)) = \sigma_Y^2 - 2b \sigma_X \sigma_Y \rho_{XY} + b^2 \sigma_X^2\) with \(\sigma_X^2 = \text{Var}(X), \sigma_Y^2 = \text{Var}(Y), \rho_{XY} = \frac{\text{Cov}(X, Y)}{\sigma_X \sigma_Y} \)
+
+Since \(\hat{Y}_n(b)\) is unbiased, smallest MSE is the same as smallest variance.
+Minimizing quadratic function \(b \mapsto \sigma^2(b)\) gives optimal coefficient and optimal variance
+\(b^{*} = \frac{\text{Cov}(X, Y)}{\text{Var}(X)}, \ \sigma^2(b^{*}) = (1 - \rho_{XY}^2) \sigma_Y^2 (0)\)
+\(\rightsquigarrow\) Correlation determines efficiency of method.
+
+Estimating \(b^{*}\): Typically, \(\sigma_Y, \rho_{XY}\) unknown. Use regression estimate:
+\( \hat{b}_n = \frac{\sum_{i=1}^n (X_i - \bar{X}_n)(Y_i - \bar{Y}_n)}{\sum_{i=1}^n (X_i - \bar{X}_n)^2} \)
+
+Method can be generalized to the multidimensional case
+\(Y\) random variable, \(X = (X^{(1)}, \dots, X^{(d)})^T\) with covariance matrix
+\(\begin{pmatrix}
+\Sigma_X & \Sigma_{XY} \\
+\Sigma_{XY}^T & \sigma_Y^2 
+\end{pmatrix}\) 
+which is in \(\mathbb{R}^{(d+1) \times (d+1)}\)
+Apply \(\bar{Y}_n(b) = \bar{Y}_n - b^T (\bar{X}_n - \mathbb{E}[X])\)
+for \(b^{*} = \Sigma_X^{-1} \Sigma_{XY} \in \mathbb{R}^d\).
+
+Missing the answer to "Discuss possible applications, i.e., “underlying assets” and “tractable dynamics”."
+
+Explain the key ideas of antithetic variates. What is the approximate effort? Show
+that antithetic variates reduce variance.
+
+Goal: Estimate \(\mathbb{E}[Y]\) for \(Y = f(Z_1, \dots, Z_d)\) with \(f: \mathbb{R}^d \rightarrow \mathbb{R}\), \(Z = (Z_1, \dots, Z_d) \sim \mathcal{N}(0, I_d)\)
+• Observation:
+With \(f_0(z) := \frac{f(z) + f(-z)}{2}\), we get \(\mathbb{E}[f_0(Z)] = \mathbb{E}[Y]\).
+Replacing samples of \(Y\) by samples of \(f_0(Z)\) is antithetic sampling.
+
+Variance reduction:
+Define \(f_1(z) := \frac{f(z) - f(-z)}{2}\). Then \(f = f_0 + f_1\), where \(f_0\) is the symmetric part and \(f_1\) is the asymmetric part.
+Then \(\text{Var}(f_0(Z)) = \text{Var}(Y) - \text{Var}(f_1(Z))\), since
+\(\text{Var}(Y) = \text{Var}(f(Z)) = \text{Var}(f_0(Z) + f_1(Z)) = \text{Var}(f_0(Z)) + \text{Var}(f_1(Z)) + 2 \text{Cov}(f_0(Z), f_1(Z))\)
+\(\text{Cov}(f_0(Z), f_1(Z)) = \mathbb{E} \left[ \left( \frac{f(Z) + f(-Z)}{2} - \mathbb{E}[Y] \right) \left( \frac{f(Z) - f(-Z)}{2} \right) \right]\)
+\(= \frac{1}{4} \mathbb{E} \left[ (f(Z)^2 - f(-Z)^2) \right] - \frac{\mathbb{E}[Y]}{2} [\mathbb{E}[f(Z)] - \mathbb{E}[f(-Z)]] = 0\)
+
+Antithetic sampling removes the variance of the antisymmetric part.
+This idea generalizes to other measure-preserving transformations: systematic sampling.
+
+This also answers the questions
+In the context of Gaussians instead of uniform simulation factors, define the addi-
+tive decomposition of a function into a symmetric and antisymmetric part.
+Prove that antithetic sampling removes the variance of the antisymmetric part.
+
+Idea: negative dependence between pairs of replication
+If \(U \sim \text{unif}[0, 1]\), then also \(1-U \sim \text{unif}[0, 1]\). If \(F\) is a distribution function, then \(F^{-1}(U) \sim F, F^{-1}(1-U) \sim F\).
+
+Example: \(Z \sim \mathcal{N}(0, 1), U = \Phi(Z) \Rightarrow Z = \Phi^{-1}(U) \sim \Phi^{-1}(1-U) \sim \mathcal{N}(0, 1)\)
+Problem: Given \(Y \sim F\). Compute \(\mathbb{E}[Y]\) by simulation!
+Method:
+
+Generate \(U_1, U_2, ... \sim \text{unif}[0, 1]\) iid
+Construct pairs \((Y_1, \tilde{Y}_1), (Y_2, \tilde{Y}_2), ...\) by setting \(Y_i = F^{-1}(U_i), \tilde{Y}_i = F^{-1}(1-U_i)\), \(i = 1, 2, ...\)
+Antithetic variates estimation:
+
+\(\hat{Y}_{\text{AV}, n} = \frac{1}{2n} \left( \sum_{i=1}^n Y_i + \sum_{i=1}^n \tilde{Y}_i \right) = \frac{1}{n} \sum_{i=1}^n \frac{Y_i + \tilde{Y}_i}{2} \rightarrow \mathbb{E}[Y]\) by LLN
+
+(a.s., in \(L^1\), in \(L^2\) if everything in \(L^2\))
+
+
+Explain the basic idea of stratified sampling. How are general stratification vari-
+ables and general proportions integrated?
+
+General stratification variable:
+\(X \ \mathbb{R}^d\)-valued random variable, \(A_1, A_2, \dots, A_k\) partition of \(\mathbb{R}^d\), \(p_i = \mathbb{P}[X \in A_i]\)
+then \(\mathbb{E}[Y] = \sum_{i=1}^k p_i \mathbb{E}[Y | X \in A_i]\)
+For each \(i\), sample from \(\mathcal{L}(Y | X \in A_i)\).
+
+General proportions \(n_1, \dots, n_k\):
+Set \(q_i := \frac{n_i}{n}\), then we obtain the estimator
+\(\hat{Y} = \frac{1}{n} \sum_{i=1}^k \frac{p_i}{q_i} \sum_{j=1}^{n_i} Y_{ij}\)
+
+
+In particular for a given cumulative distribution function \(F: \mathbb{R} \rightarrow [0, 1]\) with quantile function \(F^{-1}(u) = \inf \{ x : F(x) \geq u \}\), 
+\(u \in [0, 1]\)
+Let \(p_1, p_2, ..., p_k > 0\) with \(\sum_{i=1}^{k} p_i = 1\) and set
+
+\(a_1 = F^{-1}(p_1)\)
+\(a_2 = F^{-1}(p_1 + p_2), ..., a_k = F^{-1}(1)\)
+
+With \(a_0 = -\infty\) define strata
+
+\(A_1 = (a_0, a_1], A_2 = (a_1, a_2], ..., A_k = \begin{cases}
+(a_{k-1}, a_k], & \text{if } a_k < \infty \\
+(a_{k-1}, \infty), & \text{otherwise}
+\end{cases}\)
+
+Then \(\mathbb{P}[Y \in A_i] = p_i\).
+If \(U \sim \text{unif}[0, 1]\), then \(F^{-1}(V) \sim \mathcal{L}(Y | Y \in A_i)\) with \(V = p_1 + \dots + p_{i-1} + U \cdot p_i\).
+The empirical distribution of stratified samples provides a better approximation of the original distribution than the empirical distribution of iid-samples of the original distribution.
+
+If we denote by \( V_i \) the event \( Y|X \in A_i \) then the special case of \( F = \text{unif}[0, 1] \) is given by
+\( V_i = \frac{i-1}{n} + \frac{U_i}{n}\), where \( U_i \sim \text{unif}[0, 1]\) and sampled once for each \( A_i \).
+
+Estimate: \(\mu := \mathbb{E}[Y]\)
+Strata: \(\{X \in A_i\}, i = 1, \dots, k \rightarrow n_i\) samples \(Y_{ij}\) of 
+\(\mathcal{L}(Y|X \in A_i), i = 1, \dots, k,\ n = \sum_{i=1}^k n_i,\ q_i = \frac{n_i}{n},\ \mathbb{P}[X \in A_i] = p_i\)
+
+Estimator: \(\hat{Y} = \sum_{i=1}^k p_i \sum_{j=1}^{n_i} Y_{ij} = \frac{1}{n} \sum_{i=1}^k \frac{p_i}{q_i} \sum_{j=1}^{n_i} Y_{ij}\)
+\(\mathbb{E}[\hat{Y}] = \mu\)
+
+If \(n\) is increased such that \(q_i \sim\) const., then convergence to \(\mu\).
+
+Variance:
+Set \(\mu_i := \mathbb{E}[Y_{ij}] = \mathbb{E}[Y | X \in A_i]\)
+Then \(\sigma_i^2 := \text{Var}(Y_{ij}) = \text{Var}(Y | X \in A_i)\)
+Then 
+\(\text{Var}(\hat{Y}) = \sum_{i=1}^k p_i^2 \text{Var} \left( \frac{1}{n_i} \sum_{j=1}^{n_i} Y_{ij} \right)\) 
+\(= \sum_{i=1}^k \frac{p_i^2 \sigma_i^2}{n_i} = \frac{1}{n} \sum_{i=1}^k \frac{p_i^2 \sigma_i^2}{q_i} \)
+\(= \frac{\sigma^2(q)}{n}\) with \(\sigma^2(q) = \sum_{i=1}^k \frac{p_i^2}{q_i}\sigma_i^2  \)
+
+Using the example of the uniform distribution on a high-dimensional unit hyper-
+cube, explain the curse of dimensionality.
+
+Stratification creates problems in higher dimensions.
+Consider a d-dimensional hypercube \([0, 1]^d\) and a uniform distribution on \([0, 1]^d\).
+Method:
+j-th coordinate \(\rightarrow K_j\) intervals of equal length
+Form of each stratum: \(\prod_{i=1}^d \left[ \frac{j_i - 1}{K_i}, \frac{j_i}{K_i} \right) =: A\) with probability \(\frac{1}{K_1 \dotsm K_d}\)
+If \(Y \sim \text{unif}[0, 1]^d\), then \(\mathcal{L}(Y | Y \in A) = \text{unif } A\).
+
+Sampling: \(U_1, \dots, U_d \sim \text{unif}[0, 1]\), \(V_j = \frac{j_i - 1 + U_j}{K_j}, j = 1, \dots, d \Rightarrow V \sim \text{unif } A\)
+Problem: \(K_1 \dotsm K_d\) strata \(\rightarrow\) too many in high dimensions (\(d > 5\))
+
+
+Optimize the constant of the variance for stratified r.v. by choosing optimal proportions. 
+This allocation depends on probabilities of strata and the variances of the samples on the strata. 
+Discuss this.
+
+We know
+\( \text{Var}(\hat{Y}) = \frac{\sigma^{2}(q)}{n} \)
+and \( \sigma^{2}(q) = \frac{p_i^2}{q_i}\sigma_i^2 \).
+
+
+Optimization leads to \(q_i^* = \frac{p_i \sigma_i}{\sum_{l=1}^k p_l \sigma_l}, i = 1, ..., k,\) with \(\sigma^2(q^*) = \left( \sum_{l=1}^k p_l \sigma_l \right)^2\) 
+\(\sigma^2(p) - \sigma^2(q^*) = \sum_{i=1}^k p_i \sigma_i^2 - \left( \sum_{i=1}^k p_i \sigma_i \right)^2 = \sum_{i=1}^k p_i (\sigma_i - \sum_{j=1}^k p_j \sigma_j)^2\)
+Results: When the probability-weight fluctuations of the standard deviations \(\sigma_i\) across the strata become large, the improvement when choosing the optimal 
+\(q^*\) is also larger.
+
+Computation cost: possible not uniform across strata \(\Rightarrow\) efficiency requires a more complete analysis 
+
+Explain the stratification of Brownian motion based on its terminal value.
+
+Or more generally this methods is coined terminal stratification:
+Motivation: stochastic price process and option that possibly depends on the whole path, 
+but terminal price is a good stratification variable
+
+Example: Stratify Brownian Motion based on its terminal value
+time points \(0 = t_0 < t_1 < ... < t_m = \) terminal time
+sample \(W(t_1), W(t_2), ..., W(t_m)\)
+   stratify \(W(t_m)\) using the inverse transform method
+   generate intermediate values \(W(t_1), W(t_2), ..., W(t_m)\) by Brownian bridge sampling
+
+Specific example: k equiprobable strata and a proportional allocation of samples
+\(U_1, U_2, ..., U_k \sim \text{unif}[0, 1]\) iid, \(V_i = \frac{i-1}{k} + \frac{U_i}{k}\)
+\(\Rightarrow \sqrt{t_m} \Phi^{-1}(V_1), ..., \sqrt{t_m} \Phi^{-1}(V_k)\) stratified samples of \(W(t_m)\)
+   gaps are filled by Brownian bridge construction:
+\(j < k < l: \mathcal{L}(W(t_k) | W(t_j), W(t_l)) \sim\)
+\(\mathcal{N} \left( \frac{(t_l - t_k) W(t_j) + (t_k - t_j) W(t_l)}{t_l - t_j},\ \frac{(t_l - t_k)(t_k - t_j)}{t_l - t_j} \right) \)
+
+Aim: Estimate \(\mathbb{E}[Y]\) for some random variable Y
+Available: \((X_1, Y_1), (X_2, Y_2), \dots\) iid
+Standard estimator: \(\bar{Y}_n = \frac{1}{n} \sum_{i=1}^n Y_i \rightarrow \mathbb{E}[Y]\) for \(n \uparrow \infty\) by LLN
+
+What is poststratification?
+
+Poststratified estimator
+Define:
+\(N_{i,n} = \sum_{j=1}^n 1_{\{X_j \in A_i\}}, \ S_{i,n} = \sum_{j=1}^n 1_{\{X_j \in A_i\}} Y_j\)
+Then: \(\hat{Y} = \sum_{i=1}^k \frac{N_{i,n}}{n} \frac{S_{i,n}}{N_{i,n}}\) with \(\frac{N_{i,n}}{n} \rightarrow p_i = \mathbb{P}[X \in A_i]\) as \(n \uparrow \infty\)
+Suppose that \(p_i, i = 1, \dots, k\), are known or can be easily estimated, then the poststratified estimator 
+\(\hat{Y} = \sum_{i=1}^k p_i \frac{S_{i,n}}{N_{i,n}}\) 
+has a reduced variance.

@@ -11,17 +11,18 @@ If there is a chain homotopy \(P\), the chain maps \(f\) and \(g\) are said to b
 
 We have the following propositions:
 
-The chain map \(f\) is a chain homotopy equivalence if there is another chain map \(h: B_\bullet \to A_\bullet\) such that \(h \circ f \simeq \text{id}_{A_\bullet}\), 
-and \(f \circ h \simeq \text{id}_{B_\bullet}\). Such an \(h\) is called a chain homotopy inverse.
+If \( f, g : A_\bullet \to B_\bullet \) are chain homotopic, then \( f_{\ast} = g_{\ast} : H_n(A_\bullet) \to H_n(B_{\bullet})\)
+for every \( n \in \mathbb{Z} \).
 Proof. 
 Let \(P\) be a chain-homotopy between \(f\) and \(g\), so that \(f = g + d \circ P + P \circ d\). From the explicit description of \(f_*\) and \(g_*\), it follows
 
 \(f_*([a]) = [f(a)] = [g(a) + d(P(a)) + P(d(a))] = [g(a)] = g_*([a])\)
 for every \([a] \in H_n(A_\bullet)\). Here we have used that \(d(a) = 0\) (since \(a \in Z_n(A_\bullet) = \ker d_n\)) and that \(d(P(a)) \in B_n(B_\bullet)\), hence this summand does not change the homology class.
 
-If \( f, g : A_\bullet \to B_\bullet \) are chain homotopic, then \( f_{\ast} = g_{\ast} : H_n(A_\bullet) \to H_n(B_{\bullet})\)
-for every \( n \in \mathbb{Z} \).
 
+The chain map \(f\) is a chain homotopy equivalence if there is another chain map \(h: B_\bullet \to A_\bullet\) such that \(h \circ f \simeq \text{id}_{A_\bullet}\), 
+and \(f \circ h \simeq \text{id}_{B_\bullet}\). Such an \(h\) is called a chain homotopy inverse.
+Proof.
 Let \( h : B_\bullet \to A_\bullet \) be a chain hom. inv. of \( f_{\bullet} \). Then \( h \circ f \simeq \text{id}_{A_{\bullet}} \), \( f \circ h \simeq \text{id}_{B_{\bullet}} \) and the previous we have that \( (h_\ast \circ f_{\ast} = \text{id}_{H_n(A)} \), \( (f_\ast \circ h_{\ast} = \text{id}_{H_n(B)} \). The result follows.
 
 
@@ -83,7 +84,7 @@ If \(X\) is a contractible space, i.e. \(\text{id}_X\) is homotopic to a constan
 If \(X\) is homotopic to a constant map, then \(X\) is homotopy equivalent to a point \(\{p\}\) whose Homology group is the stated one and since the homotopy
 from the contraction is invertible, \( H_n(X) \sigmeq H_n(\{p\})\), by the previous.
 
-One a more abstract note, the theorem asserts that the homology \( H_n \) is a functor between the homotopy category \( \textbf{HTop} \) 
+On a more abstract note, the theorem asserts that the homology \( H_n \) is a functor between the homotopy category \( \textbf{HTop} \) 
 (topological spaces with homotopy classes of cont. maps as morphisms) and \( \text{AbGrp} \).
 
 A consequence
@@ -176,7 +177,7 @@ and then \( \alpha^{-1} \cdot \gamma \cdot \alpha \) is a loop starting/ending a
 The last part is rather involved, although one direction \( \pi_1(X)^{\text{ab}} \subseteq \text{ker} h\) is trivial.
 
 
-Define affine (singular) simplices, the cone operator and the barycentry subdivision operator
+Define affine (singular) simplices, the cone operator and the barycentric subdivision operator
 with std. facts.
 
 Remember that affine maps are invariant under convexity, meaning, if \(f : M \to M'\) (both domain/codomain convex)
@@ -222,7 +223,7 @@ The affine barycentric subdivision \( \mathcal{B} : A_\bullet(M) \to A_\bullet(M
 
 Define the group hom. \( \mathcal{T}_n : A_n(M) \to A_{n+1}(M) \) by 
 \( \mathcal{T}_n = 0 \) for \( n \leq 0 \)
-and otherwise \( \mathcal{T}_{n}(\sigma) \coloneqq \mathcal{C}_{b(\sigma}(\sigma -  \mathcal{T}_{n-1}(\partial \sigma)) \) extend it linearly for arbitrary chains.
+and otherwise \( \mathcal{T}_{n}(\sigma) \coloneqq \mathcal{C}_{b(\sigma)}(\sigma -  \mathcal{T}_{n-1}(\partial \sigma)) \) extend it linearly for arbitrary chains.
 Then \( \mathcal{T} \) is a chain homotopy between \( \text{id} \) and \( \mathcal{B} \) so \( \partial \circ \mathcal{T} + \mathcal{T} \circ \partial = \text{id} - \mathcal{B} \).
 
 Build up the prerequisites for the theorem of small chains and state it.
@@ -250,10 +251,10 @@ and \(\iota \circ p \simeq \text{id}_{C_\bullet(X)}\).
 
 In particular, \(\iota_*: H_n(C^{U}_\bullet(X)) \to H_n(X)\) is an isomorphism.
 The proof goes along the following lines:
-Since \( U_i \) cover \( X \) \( \sigma^{-1}(U_i) \) is a cover of \( \Delta^n \) for each \( \sigma \),
+Since \( U_i \) cover \( X \), \( \sigma^{-1}(U_i) \) is a cover of \( \Delta^n \) for each \( \sigma \),
 by a standard theorem of analysis there is the Lebesgue number \( \lambda \) s.t. for each \( p \in \Delta^n \)
-the open ball \( B_\lambda(p) \subset U_i \) for some \( i \). Thus there is some \( m \) such that
-the iterated barycentric subdivision \( \mathcal{S}^m(\sigma) = \sigma_{\sharp}(\mathcal{B}^m(\Delta^n)) \)is \( \mathcal{U} \)-small.
+he open ball around it, is contained as in \( B_\lambda(p) \subset U_i \) for some \( i \). Thus there is some \( m \) such that
+the iterated barycentric subdivision \( \mathcal{S}^m(\sigma) = \sigma_{\sharp}(\mathcal{B}^m(\Delta^n)) \) is \( \mathcal{U} \)-small.
 Define then \( D_n(\sigma) \coloneqq h^{(m(\sigma))} \), then with a lot of effort it can be shown that \( \rho \coloneqq \text{id} - \partial \circ D - D \circ \partial \)
 is the desired chain map and \( D_n \) the chain homotopy.
 

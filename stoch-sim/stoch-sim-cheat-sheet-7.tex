@@ -1,0 +1,310 @@
+Explain how Latin hypercube sampling works:
+
+Also answers:
+Why does it not suffer from the curse of dimensionality? But why is it nevertheless
+not a good general purpose method?
+
+
+Let the dimension be \( d \) and the sample size \( k \) :
+For sample \( i = 1, \dots, d \rightarrow V_i^{(j)} \sim unif[\frac{j-1}{k}, \frac{j}{k}], j = 1, \dots, k \) independently.
+Then \( V_1^{(1)}, \dots, V_i^{(j)} \)are equiprobable strata for \( \text{unif}[0,1] \)
+
+\(
+\begin{array}{cccc}
+V_1^{(1)} & V_2^{(1)} & \dots & V_d^{(1)} \\
+\vdots & \vdots & \dots & \vdots \\
+V_1^{(k)} & V_2^{(k)} & \dots & V_d^{(k)} 
+\end{array}
+\)
+
+The samples fall into subcubes along the diagonal
+
+One can further improve the quality by permuting the strata for each sample
+according to a draw from the Laplace distribution on \( \Pi = \{\text{permutations of } 1, \dots, k \}\)
+so we have
+
+\(
+\begin{array}{cccc}
+V_1^{\pi_1(1)} & V_2^{\pi_2(1)} & \dots & V_d^{\pi_d(1)} \\
+\vdots & \vdots & \dots & \vdots \\
+V_1^{\pi_1(k)} & V_2^{\pi_2(k)} & \dots & V_d^{\pi_d(k)} 
+\end{array}
+\)
+each row \( \sim \text{unif}[0, 1]^d \), but rows not independent
+projections of \( k \) samples on any coordinate are stratified sample of \( \text{unif}[0, 1] \).
+
+Goal: estimate of \( \alpha_f = \int_{[0,1]^d} f(u) du,\ f \in L^2([0,1]^d) \)
+
+Standard Monte Carlo estimator: \( U_1, U_2, U_2, \dots \sim \text{unif}[0,1] \) independent 
+
+\( \hat{\alpha}_f = \frac{1}{k} \sum_{j=0}^{k-1} f(U_{j \cdot d + 1}, U_{j \cdot d + 2}, \dots, U_{j \cdot d + d})\) with 
+\(\text{Var}(\hat{\alpha}_f) = \frac{\sigma^2}{k} = \frac{\text{Var}(f(U_1, \dots, U_d))}{k} \)
+
+Comparison to Latin Hypercube sampling:
+
+\( U_i^{(j)} \sim unif[0,1], i = 1, \dots, d, j = 1, \dots, k\) independent \( \pi_1, \dots, \pi_d \sim \text{unif}(\Pi)\)
+\( V_i^{(j)} = \frac{\pi_i(j) - 1 + U_i^{(j)}}{k} \)
+Latin hypercube samples:
+
+These are used for the linear hypercube estimator \( \hat{\alpha}_f = \frac{1}{k} \sum_{j=1}^{k} f(V^{(j)}) \)
+
+McKay, Conover & Beckman (1979) showed that
+
+\( \text{Var}(\hat{\alpha}_f) = \frac{\sigma^2}{k} + \frac{k-1}{k} \text{Cov}(f(V^{(1)}), f(V^{(2)})) \leq \frac{\sigma^2}{k-1} \)
+
+Variance reduction of \( \text{Cov}(f(V^{(1)}), f(V^{(2)})) \) is negative, for example, if f is monotone in each coordinate. Note that \( V^{(j)} \) and \(V^{(k)}\) 
+avoid each other.
+
+Latin hypercube sampling permutes marginal strata such that the number of samples grows only linearly in
+the dimension.
+Assessing a priori its variance reduction is typically a complex problem.
+
+Explain moment matching through path adjustments.
+
+Asset model under risk-neutral measure:
+savings account \( \beta: d\beta(t) = r\beta(t) dt \)
+asset without dividends \( S \)
+Risk-neutral valuation: \( \mathbb{E}[S(t)] = e^{rt}S(0) \)
+
+Simulation:
+
+\( n \) independent copies \( S_1, \dots, S_n \) of price process, sample mean process: \( \overline{S}(t) = \frac{1}{n}\sum_{i=1}^{n}S_{i}(t) \)
+Due to the randomness of the samples, typically \( e^{-rt}\overline{S}(t) \neq S(0) \)
+Idea: manipulate samples and use adjusted samples for derivative pricing
+
+\( \tilde{S}_i(t) = S_i(t) \cdot \frac{\mathbb{E}[S(t)]}{S(t)}, i = 1, \dots, n \), or
+\( \tilde{S}_i(t) = S_i(t) + \mathbb{E}[S(t)] - S(t), i = 1,\dots, n \)
+
+Consequence: \( \frac{1}{n}\sum_{i=1}^{n}\tilde{S}_i(t) = \mathbb{E}[S(t)] = e^{rt}S(0) \)
+
+Adjustments change law of process and typically introduce into computations bias \( \mathcal{O}(\frac{1}{\sqrt{n}}) \)
+
+
+
+Explain weighted Monte Carlo. What is the solution for an entropy penalty?
+
+Opposed the moment matching, do not change the value of the samples, but their weight / 'probability'
+Simulations \( S_1(t), \dots, S_n(t) \rightarrow \) Change 'weights' to \( w_i \) such that \( \sum_{i=1}^{n} w_i S_i(t) = e^{rt} S(0) \)
+
+Pricing application
+
+time \( t \) payoff \( X \) with corresponding simulations \( X_i \)
+
+Price estimate:
+\( e^{-rt} \frac{1}{n} \sum_{i=1}^{n} X_i = e^{-rt} \sum_{i=1}^{n} w_i X_i \)
+More general formulation: \( Y \) random variable with unknown mean \(mu_Y \)
+\( X\) \(d\)-dimensional random vector with known mean \(\mu_X \in \mathbb{R}^d \).
+
+Simulate independently: \( (X_i, Y_i) \sim (X, Y), i = 1, \dots, n\)
+Aim: Find weights \( w_1, \dots, w_n\) such that \(\sum_{i=1}^{n} w_i X_i = \mu_X\). 
+Estimate expectation of \( Y \) by \(\sum_{i=1}^{n} w_i Y_i \).
+
+Remark: Constraint \( \sum_{i=1}^{n} w_i = 1\) 
+can be implemented by setting one component of the \( X_i \) equal to 1.
+
+Typically, the constraint does not uniquely determine \( w_1, \dots, w_n \).
+
+Method:
+
+Choose objective function \( H: \mathbb{R}^n \rightarrow \mathbb{R} \).
+Minimize \( H(w_1,..., w_n) \) subject to the constraint \(\sum_{i=1}^{n} w_i X_i = \mu_X\)
+Immediate consequences are \( H \) convex and symmetric in \(w_1,\dots, w_n\) penalize deviations from uniformity in the weights.
+
+One solution are the maximum entropy weights
+
+(Negative) entropy function: \( H(w_1, ..., w_n) = \sum_{i=1}^{n} w_i \log w_i \)
+
+Constraints: \(\sum_{i=1}^{n} w_i X_i = \mu_X\) and \( \sum_{i=1}^{n} w_i = 1 \)
+
+Positive solution exists, then its feasible \( \text{co}(X_1, \dots, X_n) \ni \mu_X \) for sufficiently large \( n \) with probability \( 1 \).
+Constrained optimization problem:
+For solving the constrained optimization problem, we form the Lagrangian
+\( \sum_{i=1}^{n} w_i \log w_i - \nu \cdot (\sum_{i=1}^{n} w_i - 1) - \lambda^T \sum_{i=1}^{n} w_i X_i \),
+where \( \nu \in \mathbb{R},\ \lambda \in \mathbb{R}^d\).
+The solution is then
+\( \Rightarrow w_i = e^{\nu - 1} \exp(\lambda^T X_i) \Rightarrow w_i = \frac{e^{\lambda^T X_i}}{\sum_{j=1}^{n} e^{\lambda^T X_j}} \)
+
+Finally \( \lambda \) is determined numerically from the condition
+\( \frac{\sum_{i=1}^{n} e^{\lambda^T X_i} X_i}{\sum_{j=1}^{n} e^{\lambda^T X_j}} = \mu_X \)
+
+Viewed as a probability distribution on \( \{X_1, \dots, X_n\} \), the weights \( (w_1, \dots, w_n) \)  correspond to an exponential
+change of measure applied to the uniform distribution \( (\frac{1}{n}, \dots, \frac{1}{n}) \), i.e. the empirical distribution of the samples.
+
+Explain concisely the importance sampling method.
+
+Idea: change probability of scenarios
+
+Example: Estimate \( \alpha = \mathbb{E}[h(X)] = \int_{\mathbb{R}^d} h(x)f(x) dx \),
+where \( X \) is a random vector in \( \mathbb{R}^d \) with density \( f, h: \mathbb{R}^d \rightarrow \mathbb{R} \).
+
+Standard Monte Carlo estimator: \( X_1, X_2, \dots, X_n \) independent draws from \( f \).
+
+\( \hat{\alpha} = \hat{\alpha}(n) = \frac{1}{n} \sum_{i=1}^{n} h(X_i) \)
+
+Importance sampling: Let \( g \) be another density on \( \mathbb{R}^d \) with \( f > 0 \iff g > 0\) . Then:
+\( \alpha = \int_{\mathbb{R}^d} h(x) \frac{f(x)}{g(x)} g(x) dx \) i.e.
+\( \alpha = \tilde{\mathbb{E}} \left[ h(X) \frac{f(X)}{g(X)} \right] \) with \( \frac{d \tilde{\mathbb{P}}}{d \mathbb{P}} = \frac{g}{f} \)
+i.e. \( X \sim g \) under \( \tilde{\mathbb{P}} \).
+\( X_1, \dots, X_n \) independent draws from \( g \).
+
+\( \hat{\alpha}_g = \hat{\alpha}_g(n) = \frac{1}{n} \sum_{i=1}^{n} h(X_i) \frac{f(X_i)}{g(X_i)} \) = likelihood ratio evaluated at \( X_i \)
+
+Obviously \( \mathbb{E} [\hat{\alpha}_g] = \alpha \), i.e. \( \hat{\alpha}_g \) is an unbiased estimator of \( \alpha \).
+
+The weight \( \frac{f(X_i)}{g(X_i)} \) is the likelihood ratio or Radon-Nikodym derivative
+evaluated at \( X_i \).
+
+It follows that \( \mathbb{E}[\hat{\alpha}_g] = \alpha \) and thus that \( \hat{\alpha}_g \) is an unbiased
+estimator of \( \alpha \).
+
+Derive the zero-variance estimator
+
+(question cont.), a benchmark that is typically not directly ac-
+cessible in realistic application. How does the zero-variance estimator provide
+intuition when importance sampling is potentially useful?
+
+\( \hat{\alpha}_g = \hat{\alpha}_g(n) = \frac{1}{n} \sum_{i=1}^{n} h(X_i) \frac{f(X_i)}{g(X_i)} \) = likelihood ratio evaluated at \( X_i \)
+
+To compare variances with and without importance sampling
+it therefore suffices to compare second moments. With importance sampling
+we have \( \mathbb{E} \left[ \left( h(X) \frac{f(X)}{g(X)} \right)^2 \right] = \mathbb{E} \left[ h(X)^2 \frac{f(X)}{g(X)} \right] \).
+
+This could be larger or smaller than the second moment \( \mathbb{E}[h(X)^2] \) without
+importance sampling; indeed, depending on the choice of \( g \) it might even be
+infinitely larger or smaller. Successful importance sampling lies in the art of
+selecting an effective importance sampling density \( g \).
+
+Consider the special case in which \( h \) is nonnegative. The product \( h(x) f(x) \)
+is then also nonnegative and may be normalized to a probability density.
+Suppose \( g \) is this density. Then
+
+\( g(x) \propto h(x) f(x) \)
+, \quad (4.76) 
+
+and \( h(X_i) \frac{f(X_i)}{g(X_i)} \) equals the constant of proportionality in (4.76) regardless
+of the value of \( X_i \); thus, the importance sampling estimator \( \hat{\alpha}_g \)
+provides a zero-variance estimator in this case. Of course, this is useless in
+practice: to normalize \( h f \) we need to divide it by its integral, which is \( \alpha \)
+the zero-variance estimator is just \( \alpha \) itself.
+
+Nevertheless, this optimal choice of \( g \) does provide some useful guidance: in
+designing an effective importance sampling strategy, we should try to sample
+in proportion to the product of \( h \) and \( f \).
+
+
+State the formulation of importance sampling in the context of Markov processes,
+recursive functions with independent innovations, and for random time horizons.
+
+
+Consider a Markov process such that \( \mathcal{L}(S(t_i) | S(t_{i-1}) = x) \) has density \( f_i(x, \cdot) \).
+
+Possible choice for change of measure: transition density \( f_i \) is replaced by transition density \( g_i \):
+\( LR = \prod_{i=1}^m \frac{f_i(S(t_{i-1}), S(t_i))}{g_i(S(t_{i-1}), S(t_i))} \)
+\( \mathbb{E} \) = expectation under original measure, \( \widetilde{\mathbb{E}} \) = expectation under the new measure
+
+Equation (1):
+\(\Rightarrow \mathbb{E}[h(S(t_1), \dots, S(t_m))]\) 
+\(= \widetilde{\mathbb{E}} \left[ h(S(t_1), \dots, S(t_m)) \prod_{i=1}^m \frac{f_i(S(t_{i-1}), S(t_i))}{g_i(S(t_{i-1}), S(t_i))} \right]\)
+
+Here, it was assumed that \( S(t_0) \) is deterministic.
+
+If \( S(t_0) \) is random with density \( f_0 \) that is changed to \( g_0 \) then there is an additional factor 
+\( \frac{f_0(S(t_0))}{g_0(S(t_0))} \) in the Likelihood Ratio.
+
+Special case with \( S(t_{i+1}) = G(S(t_i), X_{i+1}), X_1, X_2, \dots, X_m \) i.i.d.
+
+Setup: \( X_i \)'s have common density \( f \), changed to \( g \) preserving independence of innovations
+\( \Rightarrow LR = \prod_{i=1}^m \frac{f(X_i)}{g(X_i)} \)
+Equation (2):
+\( \mathbb{E}[h(S(t_1), \dots, S(t_m))] = \widetilde{\mathbb{E}} \left[ h(S(t_1), \dots, S(t_m)) \prod_{i=1}^m \frac{f(X_i)}{g(X_i)} \right] \)
+\text{Random horizon:} 
+Equations (1) and (2) can be extended to random horizons.
+
+Consider functions \( h_n: \mathbb{R}^n \rightarrow \mathbb{R}, n \in \mathbb{N} \)
+and let \( \tau \) be a stopping time.
+
+As above, we consider a change of the distribution of the innovations from \( f \) to \( g \) but for an 
+infinite time horizon. Then:
+
+\( \mathbb{E}[h_\tau(S(t_1), \dots, S(t_\tau)) 1_{\{\tau < \infty\}}] = \widetilde{\mathbb{E}} \left[ h_\tau(S(t_1), \dots,  S(t_\tau)) \prod_{i=1}^\tau \frac{f(X_i)}{g(X_i)} 1_{\{\tau < \infty\}} \right] \)
+
+\text{Application area: barrier options, ruin theory} 
+
+Setting: 
+
+\( F \) cumulative distribution function
+Cumulant generating function of \( F \): \( \psi(\vartheta) = \log \int_{-\infty}^\infty e^{\vartheta x} dF(x) \) moment generating function
+
+\( \Theta = \{\vartheta: \psi(\vartheta) < \infty\} \) Assumption: \( \Theta \neq \emptyset \).
+\( \{F_\vartheta: \vartheta \in \Theta\} \) exponential family of measures with distribution functions
+\( F_\vartheta(x) = \int_{-\infty}^x e^{\vartheta u - \psi (\vartheta)} dF(u) = \int_{-\infty}^x \frac{dF_\vartheta}{dF}(u) dF(u) \)
+Specific case:
+
+\( X_1, \dots, X_n \sim F = F_0\) i.i.d.
+
+Change of measure to \( F_\vartheta \) preserving independence \( LR = \prod_{i=1}^n \frac{dF_\vartheta(x_i)}{dF_0(x_i)} = \exp(-\vartheta \sum_{i=1}^n X_i + n \psi(\vartheta)) \) 
+
+Families: Normal distribution, Gamma distribution, Poisson distribution, Binomial distribution
+
+
+Discuss the details of the importance sampling example in the context of ruin
+theory:
+
+How does the model look like? How can the estimation problem of the ruin
+probability be restated based on a random walk? 
+
+What is implied by the net profit
+condition? How can a convenient exponential measure change be constructed?
+Prove the exponential decay of the ruin probability in the size of the initial reserve.
+
+In the context of acturial mathematics a standard model is the following:
+
+Premiums at rate p per unit of time
+Claims arrive at jumps of Poisson process \( N \) with rate \( \lambda \), size of i-th claim is \( Y_i \), \( i \in \mathbb{N} \)
+Initial reserve: x
+Net payout over \( [0, t \) is \( \sum_{i=1}^{N(t)} Y_i + pt \)
+
+The possibility of ruin can be modelled as 
+
+Ruin event: \( \{ \sum_{i=1}^{N(t)} Y_i - pt > x \} \) occurs at jump of \( N \).
+\( \xi_1, \xi_2, \dots \) interarrival times, i.e., exponentially distributed with mean \( \frac{1}{\lambda} \)
+net payout between \( (n-1) \)-th and \( n \)-th claim is \( X_n = Y_n - p \xi_n \)
+Ruin occurs at claim
+
+\( \tau_x = \inf \{ n \ge 0 : S_n > x \} \)
+with \( S_n = X_1 + \dots + X_n \)
+
+Exponential measure changes:
+
+Recall the nest profit condition: 
+\( X_1, X_2, \dots \) iid, \(0 < \mathbb{P}[X_i > 0] < 1\), \( \mathbb{E}[X_i] < 0 \),
+and \( S_n = \sum_{i=1}^n X_i, n \in \mathbb{N} \),
+
+Assume: \( \psi_X(\vartheta) = \log \int_{-\infty}^\infty e^{\vartheta u} dF(u) \) finite in neighborhood of 0, \( \Theta = \{ \vartheta \in \mathbb{R} : \psi_X(\vartheta) < \infty \} \).
+
+Exponential measure changes of distributions of \( X_i \): \( \mathbb{P}_\vartheta, \mathbb{E}_\vartheta, \vartheta \in \Theta \).
+
+\( \Rightarrow \mathbb{P}[\tau_x < \infty] = \mathbb{E}_\vartheta [\exp(-\vartheta S_{\tau_x} + \psi_X (\vartheta) \tau_x) 1_{\{\tau_x < \infty\}}] \) (*)
+
+Properties of the cumulant generating function:
+
+\( \psi \) convex \( \psi(0) = 0, \psi'(\vartheta) = \mathbb{F_{\vartheta}} \), \( \psi''(\vartheta) = \text{Var}[F_\vartheta] \)
+In particular \(  \psi_X(0) = 0, \psi_X'(0) = \mathbb{E}[X_n] < 0 \)
+We assume that we are in a situation as displayed (positive parabola with minimum at \( \vartheta_{\text{min}} \)): 
+\( \exists \vartheta > 0: \psi_X (\vartheta) > 0 \)
+\( \Rightarrow \vartheta > \vartheta_{\min}: \mathbb{E}_\vartheta[X_n] = \psi_X'(\vartheta) > 0 \)
+
+From now on, consider \( \vartheta > \vartheta_{\min} \):
+
+For all \( n: \mathbb{E}_\vartheta[X_n] > 0 \Rightarrow (S_n)_{n \in \mathbb{N}} \) has positive drift \( \Rightarrow \mathbb{P}_\vartheta[\tau_x < \infty] = 1 \).
+\( \Rightarrow \mathbb{P}[\tau_x < \infty] = \mathbb{E} [e^{-\vartheta S_{\tau_x} + \psi_X(\vartheta) \tau_x} 1_{\{\tau_x < \infty\}}] \)
+\( = \mathbb{E}_\vartheta [e^{-\vartheta S_{\tau_x} + \psi_X(\vartheta) \tau_x}]\)
+
+Particularly convenient is \( \psi_X'(\vartheta_\ast) = 0 \).
+
+\( \mathbb{P}[\tau_x < \infty] = \mathbb{E}_{\vartheta_\ast} \left[ e^{-\vartheta_\ast S_{\tau_x}} \right]\) 
+\( = e^{-\vartheta_\ast x} \mathbb{E}_{\vartheta_\ast} \left[ e^{-\vartheta_\ast (S_{\tau_x} - x)} \right] \leq e^{-\vartheta_\ast x}\) 
+
+where \( \mathbb{E}_{\vartheta_\ast} \left[ e^{-\vartheta_\ast (S_{\tau_x} - x)} \right] \in (0, 1]\) since \( S_{\tau_x} - x \geq 0 \)
+One can show that in terms of variance reduction \( \mathbb{P}_{\vartheta_\ast} \) is a good candidate for importance sampling. 
+For \( x \rightarrow \infty \), it is 'asymptotically optimal'.

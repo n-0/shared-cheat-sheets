@@ -147,7 +147,7 @@ the singular complex with coefficients in \( G \) has the form
 \(\cdots \xrightarrow{} G \xrightarrow{\text{id}_G} G \xrightarrow{0} G \xrightarrow{\text{id}_G} G \xrightarrow{0} G \xrightarrow{} 0, \)
 
 so that \(H_0(\{p\}; G) = G[p]\) and \(H_n(\{p\}) = 0\) for \(n \neq 0\). 
-The augmented version gives \(H_n(\{p\}) = 0\) for all \(n \in \mathbb{Z}\).
+The augmented version gives \(\tilde{H}_n(\{p\}) = 0\) for all \(n \in \mathbb{Z}\).
 
 Thus contractible spaces also have \( H_0(X;G) \simeq G \) and \( 0 \) otherwise.
 
@@ -185,14 +185,9 @@ was given by multiplication by \( 1 + (-1)^k \). This computation in turn follow
 \( A : S^{k-1} \to S^{k-1} \) has degree \(\text{deg } A = (-1)^k\). Since degrees do not change with coefficients, this still holds for any \( G \), 
 so the cellular chain complex for \(\mathbb{P}^n(\mathbb{R})\) with coefficients in \( G \) also looks like
 
-\(
-0 \longrightarrow G \longrightarrow G \xrightarrow{0} G \longrightarrow G \xrightarrow{2} G \longrightarrow \dotsb \longrightarrow G \xrightarrow{0} G \longrightarrow G \longrightarrow 0
-\)
+\(0 \longrightarrow G \xrightarrow{2} G \xrightarrow{0} G \dotsb \longrightarrow G \xrightarrow{2} G \xrightarrow{0} G \longrightarrow 0\)
 if \( n \) is even, and
-
-\(
-0 \longrightarrow G \longrightarrow G \xrightarrow{2} G \xrightarrow{0} G \longrightarrow \dotsb \longrightarrow G \xrightarrow{2} G \xrightarrow{0} G \longrightarrow 0
-\)
+\(0 \longrightarrow G \xrightarrow{0} G \xrightarrow{2} G \dotsb \longrightarrow G \xrightarrow{2} G \xrightarrow{0} G \longrightarrow 0\)
 
 if \( n \) is odd.
 
@@ -217,10 +212,10 @@ is a chain map, and
 
 is a short exact sequence of chain complexes.
 
-where \( \psi_\sharp \) is the induced map by the covering \( \psi: S^n \to \mathbb{P}^n(\mathbb{R}) \) and 
-\( \psi(\sigma) = \sigma_v + \sigma_{-v} = \sigma_v + A_{\sharp}(\sigma)_v\), where \( A: S^n \to S^n \) is the antipodal map
-and \( \sigma_v : \Delta^n \to S^n \) the lift of some \( \sigma \in \Delta^k \to \mathbb{P}^n(\mathbb{R}) \), that is a map 
-s.t. for \( v \in \phi^{-1}(\sigma(e_0)) \).
+where \( \varphi_\sharp \) is the induced map by the covering \( \varphi: S^n \to \mathbb{P}^n(\mathbb{R}) \) and 
+\( \psi(\sigma) = \sigma_v + \sigma_{-v} = \sigma_v + A_{\sharp}(\sigma_v)\), where \( A: S^n \to S^n \) is the antipodal map
+and \( \sigma_v : \Delta^k \to S^n \) the lift of some \( \sigma \in \Delta^k \to \mathbb{P}^n(\mathbb{R}) \), that is a map 
+s.t. for \( v \in \varphi^{-1}(\sigma(e_0)) \) it holds \( \sigma_v(e_0) = v \).
 
 This can be used to prove the proposition
 Let \(n \in \mathbb{Z}_{\geq 0}\) and \(f : S^n \to S^n\) an odd continuous map (i.e. \(f(-x) = -f(x)\) for every \(x \in S^n\)). 
@@ -237,11 +232,11 @@ f_* : H_n(S^n; \mathbb{Z}/2\mathbb{Z}) \to H_n(S^n; \mathbb{Z}/2\mathbb{Z})
 is not the zero map. One then constructs from the SES a LES with connecting homomorphism \( \phi_n \) from which one can derive that 
 
 \( H_n(\mathbb{P}^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \to H_n(S^n; \mathbb{Z}/2\mathbb{Z}) \)
-is an isomorphisms and also 
+is an isomorphism and also 
 \( \phi_n : H_n(\mathbb{P}^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \to H_{n-1}(\mathbb{P}^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \) 
-\( \varphi_\ast : H_0(S^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \to H_{0}(\mathbb{P}^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \) 
+\( \varphi_\ast : H_0(S^n; \mathbb{Z}/2\mathbb{Z}) \to H_{0}(\mathbb{P}^n(\mathbb{R}); \mathbb{Z}/2\mathbb{Z}) \) 
 
-and last a commutative diagram (and similarly for \( \phi_n, \varphi_\ast \), which forces 
+and last a commutative diagram (and similarly for \( \phi_n, \varphi_\ast \)), which forces 
 \( f \) to be a an isomorphism and non trivial
 (INSERT diagram (8.12) page 70 Proposition 8.2.3.)
 
@@ -249,5 +244,5 @@ and last a commutative diagram (and similarly for \( \phi_n, \varphi_\ast \), wh
 Finally we have the theorem of Borsuk-Ulam:
 Let \(n > 0\) and \(f : S^n \to \mathbb{R}^n\) be a continuous map. 
 
-1. If \( f \) is odd, then there is a \( p \in S^n \) such that \( f(p) = 0 \). 
-2. In any case, there is \( p \in S^n \) such that \( f(p) = f(-p) \).
+1. There is some \(p \in S^n\) s.t. \(f(p) = f(-p)\)
+2. Additionally if \(f\) is odd, there is a \(q \in S^n\) with \(f(q) = 0\)

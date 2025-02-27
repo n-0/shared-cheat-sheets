@@ -103,18 +103,20 @@ Proposition.
 Let \( G \) be a finite abelian group of order \( n \) with identity \( e \). 
 Let \(\hat{G}\) be the character group of \( G \) with identity \(\chi_0\). Then the following hold.
 
-(i) For \( x \in G, \quad \sum_{\chi \in \hat{G}} \chi(x) \) equals \( n \) if \( x = x_0 \) and 0 otherwise.
-(ii) For \( g \in G, \quad \sum_{x \in G} \chi(x) \) equals \( n \) if \( g = e \) and 0 otherwise.
+(i) For \( \chi \in \hat{G}, \quad \sum_{g \in G} \chi(g) \) equals \( n \) if \( \chi = \chi_0 \) and 0 otherwise.
+(ii) For \( g \in G, \quad \sum_{\chi \in \hat{G}} \chi(g) \) equals \( n \) if \( g = e \) and 0 otherwise.
 
 Proof. 
 
-(i) If \( x = x_0 \), then \(\sum_{\chi \in \hat{G}} \chi(x) = n\). Suppose \( x \neq x_0 \). Therefore there exists \( z \in G \) such that \( \chi(z) \neq 1 \). As \(\chi\) runs over all the elements of \( G \) so does \( g z \). Thus 
+(i) If \( \chi = \chi_0 \), then \(\sum_{g \in G} \chi(g) = n\). Suppose \( \chi = \chi_0 \). Therefore there exists \( z \in G \) such that \( \chi(z) \neq 1 \). As \(\chi\) runs over all the elements of \( G \) so does \( g z \). Thus 
 \[
-\sum_{\chi \in G} \chi(x) = \sum_{\chi \in G} \chi(g z) = \chi(z) \sum_{\chi \in G} \chi(x) = 0.
+\sum_{g \in G} \chi(g) = \sum_{g \in G} \chi(g z) = \chi(z) \sum_{g \in G} \chi(g).
 \]
-(ii) If \( g = e \), then clearly \(\sum_{x \in G} \chi(x) = |\hat{G}| = n\). If \( g \neq e \), then by a Corollary, there exists a character 
+
+implying \( \sum_{g \in G} \chi(g) = 0 \) by assumption on \( \chi(z) \).
+(ii) If \( g = e \), then clearly \(\sum_{\chi \in \hat{G}} \chi(x) = |\hat{G}| = n\). If \( g \neq e \), then by a Corollary, there exists a character 
 \(\chi'\) of \( G \) such that \(\chi'(g) \neq 1\). As \( \chi \) runs over all the elements of \( \hat{G} \), so does \( \chi\chi' \).
-Thus \(\sum_{x \in \hat{G}} \chi(x) = \sum_{x \in G} \chi'(g) = \chi'(g) \sum_{x \in G} \chi(x).\) Since \(\chi'(g) \neq 1,\) \\
+Thus \(\sum_{\chi \in \hat{G}} \chi(g) = \sum_{\chi \in \hat{G}} \chi\chi'(g) = \chi'(g) \sum_{\chi \in \hat{G}} \chi(g).\) Since \(\chi'(g) \neq 1,\) 
 we have \(\sum_{x \in \hat{G}} \chi(x) = 0.\) \(\quad \Box\)
 
 

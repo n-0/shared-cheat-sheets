@@ -149,6 +149,16 @@ Suppose that \(L^2(\Omega, \mathcal{F}, P)\) is separable. In this case, a conve
 with penalty function \(\beta_{\min}(\mu) = \sup_{X \in A_{\rho}} \int_{(0,1]} AV@R_{\lambda}(X) \mu(d\lambda)\).
 
 
+
+TODO 
+
+Define the risk measures average value at risk. State key properties of this risk
+measure. Prove that it dominates V@R at the same level. What is its robust
+representation?
+• State its OCE-representation?
+(This is particularly important for Markowitz-type portfolio problems!)
+
+
 Derive a formula for the AV@R of normal random variables. How does this compare
 to V@R?
 
@@ -159,8 +169,12 @@ where \(\varphi\) denotes the density of the standard normal distribution.
 Derivation:
 Use that \(V@R_{\lambda}(X) = E_P[X] - \Phi^{-1}(\lambda) \sigma_P(X)\) combined with the substitution \(x = \Phi^{-1}(\alpha)\) and \(\varphi'(x) = -x\varphi(x)\):
 
-\begin{align*}
-AV@R_{\lambda}(X) &= \frac{1}{\lambda} \int_0^{\lambda} V@R_{\alpha}(X) d\alpha = E_P[-X] + \left( \frac{1}{\lambda} \int_0^{\lambda} -\Phi^{-1}(\alpha) d\alpha \right) \sigma_P(X) \\
-&= E_P[-X] + \left( \frac{1}{\lambda} \int_{-\infty}^{\Phi^{-1}(\lambda)} -x\varphi(x) dx \right) \sigma_P(X) \\
-&= E_P[-X] + \frac{1}{\lambda} \varphi(\Phi^{-1}(\lambda)) \sigma_P(X)
-\end{align*}
+\[
+AV@R_{\lambda}(X) &= \frac{1}{\lambda} \int_0^{\lambda} V@R_{\alpha}(X) d\alpha = E_P[-X] + \left( \frac{1}{\lambda} \int_0^{\lambda} -\Phi^{-1}(\alpha) d\alpha \right) \sigma_P(X)
+\]
+\[
+= E_P[-X] + \left( \frac{1}{\lambda} \int_{-\infty}^{\Phi^{-1}(\lambda)} -x\varphi(x) dx \right) \sigma_P(X) \\
+\]
+\[
+= E_P[-X] + \frac{1}{\lambda} \varphi(\Phi^{-1}(\lambda)) \sigma_P(X)
+\]

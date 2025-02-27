@@ -1,0 +1,112 @@
+State Ito's Formula and some general
+facts about stochastic integrals
+
+
+Let \( f(t, x) \) be a cont. function with cont. partial derivatives
+\( \frac{df}{dt}, \frac{df}{dx}, \frac{d^{2}f}{dx^2} \), then
+\( f(t, W_t) = f(a, W(a)) + \int_{a}^{t} \frac{df}{dx}(s, W(s) dW_s + \int_{a}^{t} \frac{df}{dt}(s, W_s) + \frac{1}{2} \frac{d^{2}f}{dx^2}(s, W_s) ds\)
+
+Additionally we have Ito's product formula (requires \( X_t, Y_t \) to be diffusions/Ito processes)
+
+\( X_tY_t = X_aY_a + \int_{a}^{t} Y_s dX_s + \int_{a}^{t} X_s dY_s + \int_{a}^{t} dX_s dY_s \)
+
+(Not important in the lecture but) more generally for cadlag, square-integrable martingales \( M_t \) 
+e.g. compensated Poisson processes, we have for 
+
+\((f(M_t) = f(M_a) + \int_{a}^{t} F'(M_{s-}) dM_s + \frac{1}{2}\int_{a}^{t}F''(M_s) d[M]^{c}_s + \sum_{a < s \leq t} (F(M_s) - F(M_{s-}) - F'(M_s-)\Delta M_s\)
+where \( [M]^c_s \) is the cont. part of \( [M]_s \) and \( \Delta M_s = M_s - M_{s-} \) and \( [M_t] = \lim_{\|\delta_n\| \to 0} \sum_{i}^{n} (M_{t_i} - M_{t_{i-1}})^2 \)
+is the quadratic variation process (for cont. Martingales, this is the variance).
+
+Let \( f \in L^2[a, b] \). The wiener integral of \( f \), \( \int{a}^{b} f(t) d_Wt \) is a Gaussian random variable
+with mean \( 0 \) and variance \( \|f\|^2 = \int_{a}^{b} f^2 dt \).
+The last part is a special case of Ito's isometry, which states
+\( \mathbb{E}[(\int_{0}^{T} X_t dW_t)^2] = \mathbb{E}[\int_{0}^{T} X_t^2 dt] \)
+for stochastic processes on the same space \( \Omega \) defined as \( W_t \)
+and the probability measure for the expectation is the Wiener measure.
+
+
+Elaborate on 
+
+How can a noncentral \( \chi^2 \)-distribution be obtained from a Poisson-distribution and
+\( \chi^2 \)-distributions? How can this be used for an exact simulation of a square-root
+diffusion?
+
+This also answers
+More generally, how can a noncentral \( \chi^2 \) -distribution be constructed from a \( \chi^2 \)-
+distribution and a normal? How can this be used for an exact simulation of a
+square-root diffusion?
+
+How is a \( \chi^2 \)-distribution related to normals if its degree of freedom is a natural
+number? How can a noncentral \( \chi^2 \)-distribution be constructed similarly?
+
+Feller \& Cox determined that the conditional distribution of square-root diffusion \( r(t) \)
+given \( r(u) \) is a non-central chi-square distribution with a certain set of parameters (which are quite complex and not requested).
+
+A chi-square distr. is typically defined as the distribution
+of the following r.v.
+\( Q = \sum_{i=1}^{k} Z_i^2 \), where \( Z_i \sim \mathcal{N}(0, 1) \) are i.i.d.
+and \( k \) are the referred to as the degree of freedoms.
+
+In turn a non-central \( \chi^2 \)-distr. with parameter \( \lambda \) is defined similarly but this time \( Z_i \sim \mathcal{N}(\mu_i, 0) \)
+and \( \lambda = \sum_{i=1}^k \mu_i^2 \).
+
+Its distribution is given by the rather complex term
+
+\( \mathbb{P}[\chi^2_{k}(\lambda) \leq y = e^{\frac{\lambda}{2}}b\sum_{j=0}^{\infty} \frac{\frac{1}{j!}(\frac{1}{2}\lambda)^j}{2^{\frac{k}{2}+j}\Gamma(\frac{k}{2}+j)} \int_{0}^{y} z^{\frac{k}{2} + j -1} e^{-\frac{z}{2}}dz \)
+
+Its simulation however is not as bad as it looks:
+For example it holds for \( k > 1 \)
+
+\( \chi^2_k(\lambda) = (Z + \sqrt{\lambda})^2 + \chi^2_{k-1} \)
+so it suffices to simulate central \( \chi^2 \) and normal distr.
+
+Another way is to use a Poisson distribution, which still works for \( k \leq 1 \)
+namely to simulate first a Poisson variable \( N \) with parameter \( \frac{\lambda}{2} \)
+and then a central \( \chi^2 \)-square with \( k + 2N \) degrees of freedom.
+
+In tandem these 2 methods allow for a complete simulation of a square-root process.
+
+Last the gamma distribution can be leveraged for the central chi-square distr., since \( X \sim \Gamma(\frac{k}{2}, 2) \iff X \sim \chi^2{k}\),
+which enjoys a quite symmetric structure.
+In particular the pdf of the Gamma distr. \( \Gamma(\alpha, \beta) \) is
+\( \frac{1}{\Gamma(\alpha)\beta^k}x^{\alpha-1}e^{-\frac{x}{\beta}} \)
+with mean \( \alpha\beta \) and variance \( \alpha\beta^2 \) and for a sum of independent \( X_i \sim \Gamma(k_i, \beta)\)
+we have \( \sum_{i=1}^{N} X_i \sim \Gamma(\sum_i k_i, \beta) \) and multiplying some \( X \sim \Gamma(\alpha, \beta) \) with a constant \( c > 0 \)
+gives \( cX \sim \Gamma(\alpha, c\beta) \), so it suffices to be able to simulate \( \Gamma(\alpha, 1) \) for \( \alpha \in (0, 1] \) 
+(in the lecture we also consider this for \( a > 1 \), but this complicates things unnecessarily).
+additionally it is enough to only simulate \( \Gamma \)
+
+
+Correction to (t,s)-sequences
+The set \( \{x_{kb^m}, x_{kb^m + 1}, \dots, x_{(k+1)b^{m} - 1}\}\) is a \( (t, m, s) \)-net in base \( b \)
+
+van der Corput sequence
+The \(b\)-ary representation of the positive integer \(n \ge 1\) is
+\( n = \sum_{k=0}^{L-1} d_k(n) b^k = d_0(n) b^0 + \dots + d_{L-1}(n) b^{L-1} \);
+where \(b\) is the base in which the number \(n\) is represented, and \(0 \le d_k(n) < b\); that is, the \(k\)-th digit in the \(b\)-ary expansion of \(n\). The \(n\)-th number in the van der Corput sequence is
+\( g_b(n) = \sum_{k=0}^{L-1} d_k(n) b^{-k-1} = d_0(n) b^{-1} + \dots + d_{L-1}(n) b^{-L} \).
+
+E.g. for \( b = 10 \) we have \( 1 = 1 \cdot 10^0,\ 2 = 2 \ \dot{c} 10^{0}, \dots, 11 = 1 \cdot 10^0 + 1 \cdot 10^1, \dots \) thus
+the van der Corput sequence reads
+\( \frac{1}{10}, \frac{2}{10}, \dots, \frac{1}{10} + \frac{1}{100} = \frac{11}{100}, \dots \).
+
+
+Hardy-Krause variation depends only on the function which is chosen as the inte-
+grand; just take it as given. State the Koksma-Hlawka bound. Why does it imply
+a better rate for QMC in comparison to MC, if the star discrepancy of the sequence
+of used points converges to zero at the best conjectured rate?
+
+We won't go into detail, defining the Hardy-Krause variation \( V(f) \)
+of a function \( f \), because its rather awful.
+The Koksma-Hlawka bound exists if \( V(f) < \infty \)
+and states
+\( |\frac{1}{n}\sum_{i=1}^n f(x_i) - \int_{[0, 1]^d} f(u) du| \leq V(f)D^{\ast}(x_1, \dots, x_n) \)
+while according to the central limit theorem for \( U_i \sim \text{unif}[0, 1]^{d} \) and \( \sigma^{2}_f = \text{Var}(f(U)) \)
+we have
+\( |\frac{1}{n}\sum_{i=1}^{n} f(U_i) - \int_{[0, 1]^d} f(u)du| \leq z_{\delta/2} \frac{\sigma_f}{\sqrt{n} } \)
+with probability \( 1 - \delta \) and \( -z_{\frac{\deta}{2}} \) is the \( \frac{\delta}{2} \)-quantile of the normal distribution.
+
+While the Koksma-Hlawka is inpractiable due to the complexity of determining \( V(f) \), which is usually straightforward for \( \sigma^{2}_f \)
+It provides theoretically a better bound if \( D^{\ast}(x_1, x_2, \dots, x_n) \to 0 \) and this happens faster than \( \mathcal{O}(\frac{1}{\sqrt{n}} \)
+which is at least the case for \( \mathcal{O}(\frac{\log(n)^{d}}{n}), \ d \geq 3 \) (which we determined earlier for \( D* \)).
+

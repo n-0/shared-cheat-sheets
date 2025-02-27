@@ -1,0 +1,219 @@
+# Cyclotomic Extensions in Galois Theory: Reference Sheet
+
+## Definitions
+
+### Cyclotomic Field
+A cyclotomic field is a number field obtained by adjoining a primitive \( n \)-th root of unity, \(\zeta_n\), to the field of rational numbers \(\mathbb{Q}\):
+\[ \mathbb{Q}(\zeta_n) \]
+where \(\zeta_n = e^{2\pi i / n}\).
+
+### Cyclotomic Polynomial
+The \( n \)-th cyclotomic polynomial \(\Phi_n(x)\) is defined as:
+\[ \Phi_n(x) = \prod_{\substack{1 \leq k \leq n \\ \gcd(k, n) = 1}} \left( x - \zeta_n^k \right) \]
+where the product is over the primitive \( n \)-th roots of unity. \(\Phi_n(x)\) is an irreducible polynomial over \(\mathbb{Q}\).
+
+## Properties
+
+### Degree of the Cyclotomic Field
+The degree of the cyclotomic field \(\mathbb{Q}(\zeta_n)\) over \(\mathbb{Q}\) is:
+\[ [\mathbb{Q}(\zeta_n) : \mathbb{Q}] = \varphi(n) \]
+where \(\varphi\) is the Euler totient function.
+
+### Galois Group
+The Galois group of \(\mathbb{Q}(\zeta_n)\) over \(\mathbb{Q}\) is isomorphic to the multiplicative group of integers modulo \( n \), \((\mathbb{Z}/n\mathbb{Z})^*\):
+\[ \text{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \cong (\mathbb{Z}/n\mathbb{Z})^* \]
+An automorphism \(\sigma\) in this Galois group is determined by:
+\[ \sigma(\zeta_n) = \zeta_n^k \]
+for some \( k \in (\mathbb{Z}/n\mathbb{Z})^* \).
+
+### Discriminant
+The discriminant of \(\mathbb{Q}(\zeta_n)\) is given by:
+\[ \Delta(\mathbb{Q}(\zeta_n)) = (-1)^{\varphi(n)/2} \frac{n^{\varphi(n)}}{\prod_{p \mid n} p^{\varphi(n)/(p-1)}} \]
+where the product is over all prime numbers \( p \) dividing \( n \).
+
+## Examples
+
+### Example 1: \(\mathbb{Q}(\zeta_3)\)
+- Cyclotomic Polynomial: \(\Phi_3(x) = x^2 + x + 1\)
+- Degree: \([\mathbb{Q}(\zeta_3) : \mathbb{Q}] = \varphi(3) = 2\)
+- Galois Group: \(\text{Gal}(\mathbb{Q}(\zeta_3)/\mathbb{Q}) \cong \mathbb{Z}/2\mathbb{Z}\)
+- Discriminant: \(\Delta(\mathbb{Q}(\zeta_3)) = -3\)
+
+### Example 2: \(\mathbb{Q}(\zeta_4)\)
+- Cyclotomic Polynomial: \(\Phi_4(x) = x^2 + 1\)
+- Degree: \([\mathbb{Q}(\zeta_4) : \mathbb{Q}] = \varphi(4) = 2\)
+- Galois Group: \(\text{Gal}(\mathbb{Q}(\zeta_4)/\mathbb{Q}) \cong \mathbb{Z}/2\mathbb{Z}\)
+- Discriminant: \(\Delta(\mathbb{Q}(\zeta_4)) = -4\)
+
+### Example 3: \(\mathbb{Q}(\zeta_5)\)
+- Cyclotomic Polynomial: \(\Phi_5(x) = x^4 + x^3 + x^2 + x + 1\)
+- Degree: \([\mathbb{Q}(\zeta_5) : \mathbb{Q}] = \varphi(5) = 4\)
+- Galois Group: \(\text{Gal}(\mathbb{Q}(\zeta_5)/\mathbb{Q}) \cong \mathbb{Z}/4\mathbb{Z}\)
+- Discriminant: \(\Delta(\mathbb{Q}(\zeta_5)) = 625\)
+
+## Key Theorems
+
+### Kronecker-Weber Theorem
+Every finite abelian extension of \(\mathbb{Q}\) is contained in a cyclotomic field. Specifically, if \( K/\mathbb{Q} \) is a finite abelian extension, then there exists an \( n \) such that \( K \subseteq \mathbb{Q}(\zeta_n) \).
+
+### Hilbert's Theorem 90
+For a cyclic Galois extension \( L/K \) with Galois group \( \text{Gal}(L/K) = \langle \sigma \rangle \), and for any element \( \alpha \in L^* \) such that \( N_{L/K}(\alpha) = 1 \), there exists a \(\beta \in L^*\) such that \(\alpha = \beta / \sigma(\beta)\).
+
+## Important Concepts
+
+### Norm and Trace
+For a field extension \( L/K \):
+- The norm \( N_{L/K}(x) \) of an element \( x \in L \) is the product of all its Galois conjugates over \( K \).
+- The trace \( \text{Tr}_{L/K}(x) \) of an element \( x \in L \) is the sum of all its Galois conjugates over \( K \).
+
+### Ramification
+A prime \( p \) in \(\mathbb{Q}\) is said to ramify in \(\mathbb{Q}(\zeta_n)\) if it divides \( n \). The extent of ramification can be determined by examining the factorization of \( p \) in the ring of integers of \(\mathbb{Q}(\zeta_n)\).
+
+## References
+- I. N. Herstein, "Topics in Algebra"
+- J. S. Milne, "Algebraic Number Theory"
+- S. Lang, "Algebra"
+
+This sheet covers the essential aspects of cyclotomic extensions in Galois theory. For deeper study, the references provided include comprehensive treatments of the subject.
+
+
+To show that "if a polynomial is solvable by radicals, then its Galois group is a solvable group," we can outline the main intuitions behind the proof. This involves understanding the connection between solving polynomials by radicals and the structure of their Galois groups. Here's a step-by-step outline of the key ideas:
+
+### Intuitions Behind the Proof
+
+1. **Definition of Solvable by Radicals**:
+   - A polynomial \( f(x) \) is said to be solvable by radicals if its roots can be expressed using a finite number of field operations (addition, subtraction, multiplication, division) and the extraction of roots (square roots, cube roots, etc.).
+
+2. **Field Extensions and Roots**:
+   - Consider a polynomial \( f(x) \) over the field of rational numbers \( \mathbb{Q} \).
+   - If \( f(x) \) is solvable by radicals, there exists a chain of field extensions:
+     \[
+     \mathbb{Q} = K_0 \subset K_1 \subset K_2 \subset \cdots \subset K_n
+     \]
+     where each \( K_{i+1} = K_i(\alpha_i) \) with \( \alpha_i \) being a root of some polynomial \( x^{m_i} - a_i \in K_i[x] \).
+
+3. **Galois Groups and Field Extensions**:
+   - The Galois group of the splitting field \( L \) of \( f(x) \) over \( \mathbb{Q} \) is denoted by \( \text{Gal}(L/\mathbb{Q}) \).
+   - The intermediate fields \( K_i \) correspond to subgroups of the Galois group \( \text{Gal}(L/\mathbb{Q}) \).
+
+4. **Chain of Subgroups**:
+   - The extensions \( K_{i+1} = K_i(\alpha_i) \) suggest that the corresponding subgroups form a chain:
+     \[
+     \text{Gal}(L/L) \supseteq \text{Gal}(L/K_1) \supseteq \text{Gal}(L/K_2) \supseteq \cdots \supseteq \text{Gal}(L/K_n) \supseteq \text{Gal}(L/\mathbb{Q})
+     \]
+     where each \( \text{Gal}(L/K_{i+1}) \) is a normal subgroup of \( \text{Gal}(L/K_i) \), and the factor groups are abelian.
+
+5. **Solvable Groups**:
+   - A group \( G \) is solvable if there exists a chain of subgroups:
+     \[
+     G = G_0 \supset G_1 \supset G_2 \supset \cdots \supset G_m = \{e\}
+     \]
+     such that each \( G_{i+1} \) is a normal subgroup of \( G_i \), and the factor groups \( G_i/G_{i+1} \) are abelian.
+
+6. **Connecting Field Extensions to Group Structure**:
+   - The chain of field extensions \( K_i \) indicates that each corresponding subgroup in the Galois group chain has an abelian factor group.
+   - Since each \( K_{i+1} \) is obtained by adjoining a root (which involves solving an equation by radicals), the corresponding subgroup structure reflects the process of solving the polynomial step-by-step by radicals.
+
+7. **Conclusion**:
+   - Thus, the Galois group of the polynomial \( f(x) \), which has a chain of subgroups with abelian factor groups, is by definition a solvable group.
+   - Hence, if a polynomial is solvable by radicals, its Galois group must be a solvable group.
+
+### Summary
+The essence of the proof lies in showing that the process of solving a polynomial by radicals corresponds to a series of field extensions where each step involves adjoining a root of a simpler polynomial (typically a power equation). This corresponds to a chain of subgroups in the Galois group with each factor group being abelian, thereby making the Galois group solvable.
+
+
+When does the Galois group \(\text{Gal}(K/F)\) of a splitting field \(K\) act transitively on the roots?
+
+Iff. the separable polynomial \(f\) of which \(K\) is the splitting field is irreducible (can't be factored
+into two non-constant polynomials, which are in \(F[X]\)), then \(\text{Gal}(K/F)\) acts transitively.
+
+Suppose \(g\) would be a irreducible factor of \(f\) containing the root \(\alpha\) and \(\sigma \in \text{Gal}(K/F)\) with \(\sigma(\alpha) = \beta\)
+for some other root \(\beta\) of \(f\) then \(\sigma(g(\alpha)) = \sigma(0) = 0\) but also \(\sigma(g(x)) = g(\sigma(x))\) so \(g(\beta) = 0\), and by arbitrariness
+of \(\sigma, \alpha\) one can repeat this for all roots of \(f\).
+
+Conversely if \(\alpha, \beta\) are roots of \(f\), then \(F[\alpha], F[\beta]\) are stem fields, which are always \(F\)-isomorphic say by \(\sigma\),
+then clearly \(\sigma \in \text{Gal}(K/F)\)
+
+
+
+Lagrange's Theorem: For a finite group $G$ and $H \leq G$,
+The order of $H$ divides the order of $G$, and,
+The number of left cosets of $H$ in $G$ equals $\frac{|G|}{|H|}$
+Some important results
+If $G$ is a finite group and $x \in G$, then the order of $x$ divides the order of $G$, and $x^{|G|}=e\ \forall\ x \in G$
+If $G$ is a group of prime order, then $G$ is cyclic
+
+
+Cauchy's Theorem: If $G$ is a finite group and $p$ is a prime dividing $|G|$ then $G$ has an element of order $p$.
+
+p-group: is defined as a group of order $p^a$ for some $a \geq 1$. Sub-groups of $G$ which are p-groups are called p-subgroups.
+Sylow p-group is defined as a group of order $p^am$, where $p \nmid m$, a subgroup of order $p^a$ is called a Sylow p-subgroup of $G$. $Syl_p(G)$ is the set of Sylow p-subgroups of $G$.
+First Sylow Theorem:
+If $p$ divides $|G|$, then $G$ has a Sylow p-subgroup.
+Second Sylow Theorem:
+All Sylow p-subgroups of $G$ are conjugate to each other for a fixed $p$.
+Third Sylow Theorem:
+$n_p \equiv 1 (\text{mod}\ p)$, where $n_p$ is the number of Sylow p-subgroups of G.
+
+State Lagrange's, Cauchy's and Sylow's theorems
+
+Lagrange's Theorem: For a finite group \(G\) and \(H \leq G\),
+The order of \(H\) divides the order of \(G\), and,
+The number of left cosets of \(H\) in \(G\) equals \(\frac{|G|}{|H|}\)
+Some important results
+If \(G\) is a finite group and \(x \in G\), then the order of \(x\) divides the order of \(G\), and \(x^{|G|}=e \forall x \in G\)
+If \(G\) is a group of prime order, then \(G\) is cyclic
+
+Cauchy's Theorem: If \(G\) is a finite group and \(p\) is a prime dividing \(|G|\) then \(G\) has an element of order \(p\).
+
+p-group: is defined as a group of order \(p^a\) for some \(a \geq 1\). Sub-groups of \(G\) which are p-groups are called p-subgroups.
+Sylow p-group is defined as a group of order \(p^am\), where \(p \nmid m\), a subgroup of order \(p^a\) is called a Sylow p-subgroup of \(G\). \(\text{Syl}_p(G)\) is the set of Sylow p-subgroups of \(G\).
+First Sylow Theorem:
+If \(p\) divides \(|G|\), then \(G\) has a Sylow p-subgroup.
+Second Sylow Theorem:
+All Sylow p-subgroups of \(G\) are conjugate to each other for a fixed \(p\).
+Third Sylow Theorem:
+\(n_p \equiv 1 (\text{mod}\ p)\), where \(n_p\) is the number of Sylow p-subgroups of \(G\).
+
+
+State some general identies & theorems of ideals
+
+\( I + J = I \cup J \) and is always an ideal (left or right depending on what both \( I, J \) satisfy),
+and it is the smallest containing both of them.
+
+For two-sided ideals we have
+\( IJ = \sum_{k} i_k j_k \subset I \cap J\) that is \( ij, i \in I, j \in J \) is not an ideal, but if we allow arbitrary
+sums, it is. Equality \( IJ = I \cap J \) holds in particular if \( I + J = (1) \).
+
+For two-sided ideals the distributive law holds \( A(B + C) = AB + AC \)
+
+The Ideal correspondence: 
+Given a surjective ring homomorphism
+Given a surjective ring homomorphism \( f: R \to S \), there is a bijective order-preserving correspondence between the left (resp. right, two-sided) ideals of \( R \) containing the kernel of \( f \) and the left (resp. right, two-sided) ideals of \( S \): the correspondence is given by \( I \mapsto f(I) \) and the pre-image \( J \mapsto f^{-1}(J) \). Moreover, for commutative rings, this bijective correspondence restricts to prime ideals, maximal ideals, and radical ideals.
+
+This is related to the concept of expansions and contractions of ideals:
+Let \(A, B\) be commutative rings,
+the extension \( \mathfrak{a}^e \) of \( \mathfrak{a} \) in \( B \) is defined to be the ideal in \( B \) generated by \( f(\mathfrak{a}) \). Explicitly,
+\( \mathfrak{a}^e = \Big\{ \sum y_if(x_i) : x_i \in \mathfrak{a}, y_i \in B \Big\} \).
+
+If \( \mathfrak{b} \) is an ideal of \( B \), then \( f^{-1}(\mathfrak{b}) \) is always an ideal of \( A \), called the contraction \( \mathfrak{b}^c \) of \( \mathfrak{b} \) to \( A \).
+
+Assuming \( f : A \to B  \) is a ring homomorphism, \( \mathfrak{a} \) is an ideal in \( A \), \( \mathfrak{b} \) is an ideal in B, then:
+* \( \mathfrak{b} \) is prime in \( B \Rightarrow \mathfrak{b}^c\) is prime in \( A \).
+* \( \mathfrak{a}^{ec} \supseteq \mathfrak{a}\)
+* \( \mathfrak{b}^{ce} \subseteq \mathfrak{b}\)
+
+A prime ideal \( \mathfrak{p} \) is a contraction of a prime ideal if and only if \( \mathfrak{p} = \mathfrak{p}^{ec} \).
+
+Define an irreducible ideal and state some properties:
+
+An ideal is said to be irreducible if it cannot be written as an intersection of ideals that properly contain it.
+Every prime ideal is irreducible.
+Every irreducible ideal of a Noetherian ring is a primary ideal.
+Every primary ideal of a principal ideal domain is an irreducible ideal.
+Every irreducible ideal is primal.
+
+In algebraic geometry, if an ideal 
+\( I \) of a ring \( R \) is irreducible, then 
+\( V(I) \) is an irreducible subset in the Zariski topology on the spectrum 
+\( \text{Spec}(R) \). The converse does not hold.

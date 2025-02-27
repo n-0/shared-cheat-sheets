@@ -65,7 +65,7 @@ where \(\text{Var}[\mu(\theta_i) | X_i] := E[(\mu(\theta_i) - E[\mu(\theta_i) | 
 
 The Theorem shows that the estimator \(\hat{\mu}^{\ast}\) for \(\mu(\theta_i)\) given the claims experience \( X_1, \dots, X_r \) of all risks only
 depends on the individual claims experience \( X_i = (X_{i,1}, \dots, X_{i, n_i})^\top \) of risk \( i \).
-To explicitly calculate the Bayes estimator, we need to know the (posterior) distribution of \( \thea_i|\mathcal{X}_i \).
+To explicitly calculate the Bayes estimator, we need to know the (posterior) distribution of \( \theta_i|\mathcal{X}_i \).
 
 Discuss Bayesian estimators in the context of credibility theory with the Poisson sampling model.
 
@@ -131,6 +131,7 @@ i.e., we want to find an estimator
 \hat{Z}_L^{\ast} \in \mathcal{C}' := \{ \hat{Z} \mid \hat{Z} = a_0 + a^T Y \text{ with } a_0 \in \mathbb{R}, a \in \mathbb{R}^m \}
 \]
 that minimizes \(E[(X - \hat{Z})^2]\) over all \(\hat{Z} \in \mathcal{C}'\).
+
 
 Describe the general characterization of a best linear estimator. Note that this
 involves only moments up to order 2.

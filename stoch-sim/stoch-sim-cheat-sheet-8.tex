@@ -1,0 +1,173 @@
+Define ordinary and star discrepancy and state how they bound each other.
+
+Collection of points \( \{x_1, x_2, ..., x_n\} \)
+Collection of subsets \( \mathcal{A} \)
+
+A common notion of discrepancy is
+
+\( D(x_1, x_2, \dots, x_n; \mathcal{A}) = \sup_{A \in \mathcal{A}} \left| \frac{\# \{x \in A\}}{n} - vol(A) \right| \)
+Examples:
+Ordinary (extreme) discrepancy \( D \quad \mathcal{A} = \left\{ \prod_{j=1}^d [u_j, v_j) : 0 \le u_j < v_j \le 1 \right\} \)
+Star discrepancy \( D^\ast \quad \mathcal{A} = \left\{ \prod_{j=1}^d [0, u_j) : 0 < u_j \le 1 \right\} \)
+
+and we have the bounds
+\( D^\ast(x_1, x_2, \dots, x_n) \leq D(x_1, x_2, \dots, x_n) \leq 2^d D^\ast(x_1, x_2, \dots, x_n) \)
+
+Additionally we include the answer to:
+What is the best conjectured rate at which the star discrepancy converges to 0 for
+flexible n, i.e., for increasing sequences of points? How does this compare to the
+Monte Carlo rate?
+
+In \( d = 1 \) we have for fixed \( n \) 
+\( D^\ast(x,\dots,x_n) \geq \frac{1}{2n},\ D(x_1, \dots, x_n) \geq \frac{1}{n} \)
+i.e. \( x_i = \frac{2i - 1}{2n},\ i \in \mathbb{N} \) with dependence on \( n \).
+for flexible \( n \) it holds for a sequence \( \{x_n\}_{n \in \mathbb{N}}\) s.t. \( D(x_1, \dots, x_n), D^\ast(x_1, \dots, x_n) \)
+decrease to \( 0 \) with a good rate \(D(x_1, \dots, x_n) \geq D^\ast(x_1, \dots, x_n) \geq \frac{c\log{n}}{n}\)
+for constant \( c \).
+
+Dimension \( d \geq 2\)
+for fixed \( n \) (conjecture): \( \quad D^\ast(x_1, \dots, x_n) \ge c_d \cdot \frac{(\log n)^{d-1}}{n} \)
+for flexible \( n \) (conjecture): \( \quad D^\ast(x_1, \dots, x_n) \ge c_d' \cdot \frac{(\log n)^d}{n} \) 
+
+
+What is a \( (t, m, s) \)-net? What is the quality parameter? Define a \( (t, s) \)-sequence.
+
+Let \( [0, 1)^{s} \) be the half-open unit cube of dimension \( s \) and suppose numerical com-
+putation is to be done in base \( b \geq 2 \). An elementary interval in base \( b \) in \( [0, 1)^{s} \) is
+a Euclidean set of the form
+\( E = \Pi^s_{i=1} [\frac{a_i}{b^{d_i}}, \frac{a_i + 1}{b^{d_i}} \)
+where each integer \( d_i \geq 0 \) and for each \( i \) the 
+the integer \( a_i \) satisfies \( 0 \geq a_i < b \).
+Clearly \( \text{Vol}(E) = b^{-\Sigma d_i} \).
+
+Let \( s \geq 1, b \geq 2 \) and \( m \geq t \geq 0 \) be integers. A \( (t, m, s) \)-net in base \( b \)
+is a multiset \( \mathcal{N} \) of \( b^m \) points im \( [0, 1)^s \) with the property that every elementary 
+interval in base \( b \) of volume \( b^{t-m} \) contains precisely \( b^t \) points from \( \mathcal{N} \).
+
+The parameter \( t \) is called the quality parameter. Small \( t \) corresponds to better uniformity.
+\( k = m - t \) is called the strength. The goal is to construct nets with large strength.
+
+Let \( s \geq 1 \), \( b \geq 2 \) and \( t \geq 0 \) be integers. A \( (t,s) \)-sequence in base \( b \) is an infinite
+sequence \( X_0, X_1, X_2, \dots \) of points in \( [0,1] \) with the property that, for every \( m > t \)
+and every \( k \geq 0 \), the set
+\( \mathcal{N} = \{ [x_i] : kb^m \le i < (k+1)b^m \} \)
+is a \( (t, m, s) \)-net in base \( b \).  Here, \( [x] \) represents the point obtained by truncating
+each coordinate of \( x \) \( m \) digits of accuracy in a fixed prescribed \(b\)-adic expansion
+of it.
+
+Example van der Corput sequence: Fix a base \( b \geq 2 \) and, for an integer \( n \geq 0\), write
+\( n = \sum_{j=0}^\infty a_j b^j \) with \( 0 \leq a_j < b \) and take the rational number \( x_n = \sum_{j=0}^\infty a_j b^{-j-1} \)
+Then \( x_0, x_1, x_2, \dots \) is a \((0,1)\)-sequence in base \( b \).
+
+Answers also the question:
+For one dimension, a sequence with the best rate is the van der Corput sequence.
+How is it constructed?
+
+For any \( (t, s) \)-sequence in base \( b \) we have the discrepancy bound
+\( D^\ast(x_1, \dots, x_n) \leq C(s,b)b^t \frac{(\log n)^s}{n} + \mathcal{O}(\frac{b^t(\log n)^{s-1}}{n} \)
+for \( n \geq 2 \).
+
+How can (t, s)-sequences be constructed?
+
+We first describe how \( (t, m, s) \)-nets can be constructed and then how to generalize
+them to \( (t,s) \)-sequences.
+
+Given: \( C_1, C_2, ..., C_s \in \mathbb{Z}_b^{m \times m} \) generating matrices of the digital net
+Construct \( P = \{\mathbf{t}_0, \mathbf{t}_1, ..., \mathbf{t}_{b^m - 1}\} \) with \( \mathbf{t}_i = (t_{i,1}, ..., t_{i,s})^T \in [0,1)^s \)
+\text{Digital net}
+Given \(i = 0, 1, ..., b^m - 1\), write \( i \) in its base \( b \) representation:
+\( i = (i_m ... i_2 i_1)_b = i_1 + i_2 b + ... + i_m b^{m-1} \)
+
+Compute in \( \mathbb{Z}_b^m \) (finite field):
+\( (y_1, y_2, ..., y_m) = C_j (i_1, i_2, ..., i_m)^T \)
+
+Compute the radical inverse of \( (y_m, ..., y_1)_b \)
+\( t_{i,j} = (0.y_1 ... y_m)_b = \frac{y_1}{b} + \frac{y_2}{b^2} + ... + \frac{y_m}{b^m}, \quad j = 1, 2, ..., s \)
+
+The set \( P = \{\mathbf{t}_0, \mathbf{t}_1, ..., \mathbf{t}_{b^m - 1}\} \), \( \{t_0, t_1, \dots, t_{b^m - 1}\}\) is called a digital net over \(\mathbb{Z}_b\). 
+
+A digital sequence on the other hand is created by homomorphisms \( C_i \in \mathbb{Z}^{\mathbb{N} \times \mathbb{N}}_b \),
+which can be written as a matrix with infinitely entries but each row has only finitely many non-zero entries.
+
+The rest is exactly the same except one is not limited by the precision \( b^m - 1 \) (in theory).
+For example the matrix generating the Van der Corput sequence is the infinite dimensional identity matrix.
+
+According to question sheet:
+Answer: suitable digital construction schemes - description of digitial net and
+sequence generalizing van der Corput sequences on the basis of additional linear
+transformations; a powerful approach is Niederreiter’s construction (1987); a spe-
+cial case are Sobol sequences (1967) for which also other formulations for their
+implementation can be specified. Additional explanations of the constructions are
+optional in the exam.)
+
+
+Define rank-r lattice rules. How does the lattice rule error look like for rank-1
+lattice rules? Derive this result. Discuss the role of a) good lattice points and b)
+high-frequency oscillations.
+
+Here \( x \bmod 1 \) stands for the non integer part of a number (e.g. \( 1.112 \bmod 1 = 0.112\)).
+Consider a hypercube \( [0, 1)^d \subset \mathbb{R}^d \) where \( d \) is the dimension.
+
+Rank-1 lattice rule of \( n \) points
+
+\( \mathcal{L} = \left\{ \frac{k}{n} \cdot \mathbf{v} \bmod 1 : k = 0, 1, 2, \dots, n - 1 \right\}, \quad \mathbf{v} \in \mathbb{N}_0^d \)
+
+Rank- r lattice rule of \( n \) points
+\( \mathcal{L} \left\{ \sum_{i=1}^r \frac{k_i}{n_i} \mathbf{v}_i \bmod 1 : k_i = 0, 1, 2, \dots, n_i - 1, i = 1, 2, \dots, r\)
+\( \mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_r \in \mathbb{N}_0^d\) linearly independent, \(n_1, n_2, \dots, n_r \geq 2, \Pi_{i=1}^r n_i = n \)
+
+
+There is an interesting connection between Fourier analysis and this construction.
+Let us analyze the error of rank-1 lattice rules
+
+\( f(x) = \sum_{h \in \mathbb{Z}^d} \hat{f}(h) e^{2 \pi i h \cdot x} \)
+\( \hat{f}(h) = \int_{[0,1)^d} f(x) e^{-2 \pi i h \cdot x} dx \)
+
+with \(i = \sqrt{-1}\). Observe that such a function is 1-periodic in each variable.
+
+We compute the approximation of the integral of \( f \) over the hypercube by a lattice rule
+
+\( \int_{[0,1)^d} f(x) dx \approx \frac{1}{n} \sum_{k=0}^{n-1} f \left( \frac{k}{n} \mathbf{v} \bmod 1 \right) \)
+\(= \frac{1}{n} \sum_{k=0}^{n-1} \sum_{h \in \mathbb{Z}^d} \hat{f}(h) e^{2 \pi i h \cdot \frac{k}{n} \mathbf{v}} \)
+\(= \sum_{h \in \mathbb{Z}^d} \hat{f}(h) \frac{1}{n} \sum_{k=0}^{n-1} (e^{2 \pi i h \cdot \frac{\mathbf{v}}{n}})^k \)
+\( = \hat{f}(0) \)
+
+\The expression \( \bmod 1 \) can be skipped due to the assumption that the function \( f \)  is 1-periodic.
+
+As it turns out the term \( \frac{1}{n}\sum_{k=0}^{n-1} (e^{\frac{1}{n}2\pi i \langle h, v\rangle})^k \)
+becomes \( 1 \) if \( \langle h, v\rangle = 0 \bnmod n \) and \( 0 \) otherwise thus
+the term simplifies to 
+\( \sum_{h \in \mathbb{Z}^d} \hat{f}(h) \) with the restriction that \( \langle h, v\rangle = 0 \bnmod n\).
+
+which at the same times is our error term since \( \int_{[0, 1)^{d}} f(x) dx = \hat{f}(0) \)
+
+The literature discusses good choices of v , known as good lattice points.
+In this case, the approximation is reasonable, if the Fourier coefficients \( |\hat{f}(h)| \) decay fast, as \(|h|\) gets large.
+That means that high-frequency oscillations are not contributing too much to \( f \).
+
+When approaching a simulation task, how would you try to combine efficient MC
+methods and QMC?
+
+Combine good features of MC & QMC
+MC allows for tractable error estimates
+QMC may improve accuracy
+In addition, if integrands are very smooth, under certain conditions randomness may improve accuracy
+
+Some methods are:
+Random shift
+The original set is \( \{x_i : i = 1, 2, ..., n\} \) 
+The shifted set is \(\{x_i + U \bmod 1, i = 1, 2, \dots, n\}  \) for random \( U \in \mathbb{R}^d \).
+Observe: due to the dependence on the specific position of elementary intervals, shifted \( (t, m, d) \)-nets are typically not \( (t, m, d) \)-nets
+
+Random permutation of digits:
+Given is a set of points \( \{x_i : i = 1, 2, ..., n\} \) and \( \Pi = \{ \text{permutation of } \{0, 1, ..., b-1\}\}\)
+Choose \( \pi_1, \pi_2, \pi_3, \dots \) independently from a Laplace distribution on \( \Pi \)
+for all \( i = 1, 2, \dots, b \); the number in base- \( b \) representation
+\( x_i = 0.a_1(i) a_2(i) ... \) 
+is replaced by the number with base-\( b \) representation
+\( \tilde{x}_i = 0.\pi_1(a_1(i)) \pi_2(a_2(i)) \dots \)
+\( (t, m, d) \)-nets in base \( b \) are transformed into \( (t, m, d) \)-nets
+
+Linear permutation of digits:
+Randomly selecting multiple permutations is computationally expensive;
+apply random linear transformation \( \bmod b \) to a base-\( b \) expansion instead

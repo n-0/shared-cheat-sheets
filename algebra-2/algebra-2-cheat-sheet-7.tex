@@ -1,0 +1,36 @@
+State Kronecker’s theorem (existence of algebraic extensions containing a root)
+
+Kronecker’s theorem
+If \( F \) is a field and \( g \) is a monic irreducible polynomial in \( F[X] \), then there exists a field extension \( K \) of \( F \) with an element \( \alpha \) in \( K \) such that \( \alpha \) is algebraic over \( F \) and \( g \) is its minimal polynomial.
+
+Proof. Since \( g \) is irreducible, Proposition 4.60 says that the quotient ring \( F[X]/(g) \) is a field, which we call \( K \).
+There is the canonical projection:
+\[
+\varphi : F[X] \to K, \quad \text{where } f \mapsto f + \langle g \rangle \text{ in } K.
+\]
+
+The restriction of \( \varphi \) to the field \( F \) of constant polynomials inside \( F[X] \) is injective, because the kernel of \( \varphi \) 
+restricted to \( F \), being an ideal in the field \( F \), is the zero ideal in \( F \). 
+Thus \( \varphi(F) \) is a subfield of \( K \) isomorphic to \( F \).
+Put \( \alpha = \varphi(X) \). The rest follows with some work. 
+One can identify \( \phi(F) \) with \( F \) to obtain that \(\psi F[X]/(g) \simeq F(\alpha), f(X) + \langle g \rangle \mapsto f(\alpha) \).
+It holds \( [F(\alpha):F] = \text{deg}(g) \).
+
+
+State the isomorphism lifting lemma for field extensions and the theorem enabling the transitive property on roots 
+for automorphisms.
+
+Isomorphism lifiting lemma
+If
+\( \varphi : E_1 \to E_2 \) is an isomorphism of fields,
+\( f \) is a polynomial in \( E_1[X] \) of positive degree,
+\( \varphi(f) \) is the \( \varphi \)-transfer of \( f \) into \( E_2[X] \),
+\( K_1 \) is a splitting field for \( f \), and \( K_2 \) is a splitting field for \( \varphi(f) \),
+then \( \varphi \) can be lifted (i.e., extended) to an isomorphism \( \psi : K_1 \to K_2 \).
+
+Transitive property enabler:
+1. \( \varphi : F \to E \) is an isomorphism of fields,
+2. \( \alpha \) is in a field extension of \( F \) with minimal polynomial \( g \) in \( F[X] \), and
+3. \( \beta \) is in a field extension of \( E \) with minimal polynomial \( \varphi(g) \) in \( E[X] \).
+Then there is an isomorphism \( \psi : F[\alpha] \to E[\beta] \) such that
+\( \psi \) extends \( \varphi \), i.e. \( \psi(a) = \varphi(a) \) for all \( a \) in \( F \), and \( \psi(\alpha) = \beta \).

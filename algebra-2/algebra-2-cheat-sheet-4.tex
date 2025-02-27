@@ -1,0 +1,324 @@
+Name some essential properties of prime ideals:
+
+
+A proper ideal \( P \) in a commutative ring \( R \) with unity is called a **prime ideal** if whenever \( a, b \in R \) such that \( ab \in P \), then either \( a \in P \) or \( b \in P \).
+\(
+P \text{ is prime } \iff ab \in P \Rightarrow a \in P \text{ or } b \in P
+\)
+
+In the ring of integers \(\mathbb{Z}\), the prime ideals are of the form \( (p) \) where \( p \) is a prime number.
+\(
+P \subseteq \mathbb{Z} \text{ is prime } \iff P = (p) \text{ for some prime } p
+\)
+
+Prime Ideal in a Polynomial Ring
+If \( P \) is a prime ideal in a commutative ring \( R \), then \( P[x] \) is a prime ideal in \( R[x] \).
+\(
+P \text{ is prime in } R \Rightarrow P[x] \text{ is prime in } R[x]
+\)
+
+Localization
+If \( P \) is a prime ideal in a commutative ring \( R \), then the localization \( R_P \) has a unique maximal ideal, which is \( PR_P \).
+\(
+P \text{ is prime in } R \Rightarrow PR_P \text{ is the unique maximal ideal of } R_P
+\)
+
+Intersection of Prime Ideals
+The intersection of all prime ideals containing a given ideal \( I \) in a ring \( R \) is called the radical of \( I \), denoted \( \sqrt{I} \).
+\(
+\sqrt{I} = \bigcap_{\substack{P \supseteq I \\ P \text{ prime}}} P
+\)
+
+Correspondence Theorem
+There is a one-to-one correspondence between the prime ideals of \( R/I \) and the prime ideals of \( R \) that contain \( I \).
+\(
+P \text{ is prime in } R/I \iff P \text{ is prime in } R \text{ and } I \subseteq P
+\)
+
+Prime Avoidance Lemma
+If \( P_1, P_2, \ldots, P_n \) are prime ideals in a ring \( R \), and \( I \) is an ideal such that \( I \subseteq \bigcup_{i=1}^n P_i \), then \( I \subseteq P_i \) for some \( i \).
+\(
+I \subseteq \bigcup_{i=1}^n P_i \Rightarrow I \subseteq P_i \text{ for some } i
+\)
+
+Nilradical and Prime Ideals
+The nilradical of a ring \( R \), denoted by \( \sqrt{(0)} \), is the intersection of all prime ideals in \( R \).
+\(
+\sqrt{(0)} = \bigcap_{\substack{P \text{ prime}}} P
+\)
+
+Quotient Rings
+If \( P \) is a prime ideal in \( R \), then the quotient ring \( R/P \) is an integral domain.
+\(
+P \text{ is prime in } R \Rightarrow R/P \text{ is an integral domain}
+\)
+
+Extension and Contraction
+Let \( R \to S \) be a ring homomorphism. If \( P \) is a prime ideal in \( R \), then its extension \( P^e \) in \( S \) is also a prime ideal if the homomorphism is injective.
+\(
+P \text{ is prime in } R \text{ and } R \to S \text{ is injective} \Rightarrow P^e \text{ is prime in } S
+\)
+
+
+Give some examples of prime ideals in selected rings:
+
+Prime Ideals in \(\mathbb{Z}\)
+In the ring of integers \(\mathbb{Z}\), the prime ideals are of the form \( (p) \) where \( p \) is a prime number. For example:
+\(
+(2), (3), (5), (7), \ldots
+\)
+
+Prime Ideals in Polynomial Rings \(\mathbb{Z}[x]\)
+- The ideal \((2)\) in \(\mathbb{Z}[x]\) is a prime ideal.
+- The ideal \((x)\) in \(\mathbb{Z}[x]\) is also a prime ideal because \(\mathbb{Z}[x]/(x) \cong \mathbb{Z}\), which is an integral domain.
+
+Prime Ideals in Polynomial Rings over Fields \(\mathbb{K}[x]\)
+- If \(\mathbb{K}\) is a field, then the ideal \((x-a)\) in \(\mathbb{K}[x]\) for any \(a \in \mathbb{K}\) is a prime ideal because \(\mathbb{K}[x]/(x-a) \cong \mathbb{K}\), which is a field and hence an integral domain.
+- The ideal \((x^2 + 1)\) in \(\mathbb{R}[x]\) is a prime ideal because \(\mathbb{R}[x]/(x^2 + 1) \cong \mathbb{C}\), which is a field.
+
+Prime Ideals in Rings of Integers in Number Fields
+- In the ring of Gaussian integers \(\mathbb{Z}[i]\), the ideal \((1+i)\) is a prime ideal because \(\mathbb{Z}[i]/(1+i) \cong \mathbb{F}_2\), which is a field.
+- In the ring of Eisenstein integers \(\mathbb{Z}[\omega]\), where \(\omega = e^{2\pi i / 3}\), the ideal \((1 - \omega)\) is a prime ideal.
+
+Prime Ideals in \(\mathbb{Z}/6\mathbb{Z}\)
+- The ideal \((2)\) in \(\mathbb{Z}/6\mathbb{Z}\) is a prime ideal because \((\mathbb{Z}/6\mathbb{Z})/(2) \cong \mathbb{Z}/3\mathbb{Z}\), which is a field.
+- Similarly, the ideal \((3)\) in \(\mathbb{Z}/6\mathbb{Z}\) is a prime ideal because \((\mathbb{Z}/6\mathbb{Z})/(3) \cong \mathbb{Z}/2\mathbb{Z}\), which is a field.
+
+Prime Ideals in Noncommutative Rings
+- In the ring of \(n \times n\) matrices over a field \(\mathbb{K}\), \(M_n(\mathbb{K})\), the only prime ideal is \((0)\) when \(n > 1\).
+
+These examples illustrate various contexts in which prime ideals appear, showcasing their importance in different areas of algebra.
+
+
+Give some examples of 
+Intersection of Ideals \(I \cap J\)
+- The intersection of two ideals \(I\) and \(J\) in a ring \(R\) is always an ideal of \(R\).
+\(
+I \cap J = \{ r \in R \mid r \in I \text{ and } r \in J \}
+\)
+
+Sum of Ideals \(I + J\)
+- The sum of two ideals \(I\) and \(J\) in a ring \(R\) is always an ideal of \(R\).
+\(
+I + J = \{ r \in R \mid r = i + j \text{ for some } i \in I \text{ and } j \in J \}
+\)
+
+Product of Ideals \(IJ\)
+- The product of two ideals \(I\) and \(J\) in a ring \(R\) is always an ideal of \(R\).
+\(
+IJ = \left\{ \sum_{k=1}^n a_k b_k \mid a_k \in I, b_k \in J, n \in \mathbb{N} \right\}
+\)
+
+Quotient of Ideals
+- If \(I \subseteq J\), then the quotient \(J/I\) forms an ideal in the quotient ring \(R/I\).
+
+Radical of an Ideal \(\sqrt{I}\)
+- The radical of an ideal \(I\) in a ring \(R\) is an ideal of \(R\).
+\(
+\sqrt{I} = \{ r \in R \mid r^n \in I \text{ for some } n \in \mathbb{N} \}
+\)
+
+Extended and Contracted Ideals
+- Let \(f: R \to S\) be a ring homomorphism. If \(I\) is an ideal of \(R\), the extended ideal in \(S\) is defined as:
+ \(
+ I^e = f(I)S = \{ s \in S \mid s = f(i) \cdot s' \text{ for some } i \in I \text{ and } s' \in S \}
+ \)
+ - The contraction of an ideal \(J\) in \(S\) is defined as:
+ \(
+ J^c = f^{-1}(J) = \{ r \in R \mid f(r) \in J \}
+ \)
+ Both the extension and contraction are ideals in \(S\) and \(R\), respectively.
+
+Union of Ideals \(I \cup J\)
+- The union of two ideals \(I\) and \(J\) is not necessarily an ideal unless one ideal is contained in the other, i.e., \(I \subseteq J\) or \(J \subseteq I\).
+\(
+I \cup J \text{ is an ideal if and only if } I \subseteq J \text{ or } J \subseteq I
+\)
+
+
+Describe and relate principal ideal rings, unique factorization domains, euclidean domains.
+
+Definitions
+
+Principal Ideal Domain (PID)
+A ring \( R \) is a principal ideal domain if every ideal in \( R \) is principal, i.e., can be generated by a single element.
+\( 
+R \text{ is a PID} \iff \forall \text{ ideal } I \subseteq R, \exists a \in R \text{ such that } I = (a)
+\) 
+
+Unique Factorization Domain (UFD)
+A ring \( R \) is a unique factorization domain if every element can be factored into irreducibles uniquely, up to units and order.
+\( 
+R \text{ is a UFD} \iff \forall a \in R \setminus \{0\}, \exists \text{ irreducibles } p_1, p_2, \ldots, p_n \in R \text{ such that } a = u p_1 p_2 \cdots p_n
+\) 
+where \( u \) is a unit, and the factorization is unique up to order and units.
+
+Euclidean Domain (ED)
+A ring \( R \) is a Euclidean domain if there exists a Euclidean function \( \phi: R \setminus \{0\} \to \mathbb{N} \) such that for any \( a, b \in R \) with \( b \neq 0 \), there exist \( q, r \in R \) such that:
+\( 
+a = bq + r \quad \text{with either} \quad r = 0 \quad \text{or} \quad \phi(r) < \phi(b)
+\) 
+
+All of them are noetherian (this property is lost 
+by GCD domains which contains the previous categories)
+
+Examples
+- **Euclidean Domain**: \(\mathbb{Z}\), \( \mathbb{F}[x] \) where \( \mathbb{F} \) is a field.
+- **Principal Ideal Domain**: \(\mathbb{Z}\), \( \mathbb{F}[x] \), but not \(\mathbb{Z}[x]\).
+- **Unique Factorization Domain**: \(\mathbb{Z}\), \( \mathbb{F}[x] \), \(\mathbb{Z}[x]\), , where \( \mathbb{F} \) is a field.
+
+### Summary Diagram
+\( \text{Euclidean Domain (ED)} \subseteq \text{Principal Ideal Domain (PID)} \subseteq \text{Unique Factorization Domain (UFD)}\) 
+
+
+Define the prerequisites of an affine/projective algebraic variety and itself.
+
+
+For an algebraically closed field \(K\) and a natural number \(n\), let \(A^n\) be an affine \(n\)-space over \(K\), identified to 
+\(K^{n}\). For each set \(S\) of polynomials in \(K[x_1, \dots, x_n]\), define the zero-locus \(Z(S)= \{ x\in \mathbf{A} ^{n}\mid f(x)=0{\text{ for all }}f\in S\}\).
+A subset \(V\) of \(A^n\) is called an affine algebraic set if \(V = Z(S)\) for some \(S\).
+A nonempty affine algebraic set \(V\) is called irreducible, if it cannot be written as the union of two proper algebraic subsets.
+An irreducible affine algebraic set is also called an affine variety.
+
+For a projective variety, the underlying space is \(A^{n+1}\) after identifying points \(x \sim x' \iff x = \lambda x, \lambda \in K\), for an arbitrary \(f \in K[x_1, \dots, x_n]\) this creates an issue since there can be such equivalent points \(x \sim x'\) with \(f(x) = 0\), but \(f(x') \neq 0\) (e.g. \(K = \mathbb{R}, f(x) = (x - 2)^2\), \(f(1) = 1, f(2 \cdot 1) = 0\), this can be remedied by enforcing \(f\) to be homogenous, hence \(S\) may only contain such polynomials. Ceteris paribus \(V = Z(S)\) irreducible, is a projective variety.
+
+
+
+the only issue arises that \(f = \lambda f, \forall \lambda \in K\), therefore we need to be able to factor out arbitrary constant
+out of the polynomial, which requires them to be homogenous
+
+
+
+Define the Zariski topology for affine 
+
+
+through the choice of an affine coordinate system. 
+
+Let \(f \in K[x_1, \dots, x_n]\) can be viewed as \(K\)-valued functions on \(A^{n}\) by evaluating \(f\) at the points in \(A^n\), i.e. by choosing values in \(K\) for each \(x_i\). 
+\(Z(S)\) to be the set of points in \(A^n\) on which the functions in \(S\) simultaneously vanish, that is to say
+
+
+
+State and proof the existence and uniqueness of the tensor product of modules:
+
+Let \( R \) be a commutative ring and \( M \) and \( N \) be \( R \)-modules. The tensor product of \( M \) and \( N \), denoted \( M \otimes_R N \), is an \( R \)-module equipped with a bilinear map \( \otimes: M \times N \to M \otimes_R N \) satisfying the following universal property:
+
+For any \( R \)-module \( P \) and any bilinear map \( f: M \times N \to P \) (i.e., a map that is \( R \)-linear in each argument), there exists a unique \( R \)-linear map \( \bar{f}: M \otimes_R N \to P \) such that the following diagram commutes:
+\[
+\begin{array}{ccc}
+M \times N & \xrightarrow{\otimes} & M \otimes_R N \\
+ & \searrow f & \downarrow \bar{f} \\
+ & & P
+\end{array}
+\]
+This means \( f = \bar{f} \circ \otimes \).
+
+To show the existence of the tensor product, we construct it explicitly. Consider the free \( R \)-module \( F \) generated by the set \( M \times N \). Let \( F \) be the free \( R \)-module with basis elements \( [m, n] \) for \( m \in M \) and \( n \in N \). Define a submodule \( K \) of \( F \) generated by the elements of the following forms:
+1. \( [m_1 + m_2, n] - [m_1, n] - [m_2, n] \) for all \( m_1, m_2 \in M \) and \( n \in N \),
+2. \( [m, n_1 + n_2] - [m, n_1] - [m, n_2] \) for all \( m \in M \) and \( n_1, n_2 \in N \),
+3. \( [rm, n] - r[m, n] \) for all \( r \in R \), \( m \in M \), and \( n \in N \),
+4. \( [m, rn] - r[m, n] \) for all \( r \in R \), \( m \in M \), and \( n \in N \).
+
+Define \( M \otimes_R N \) as the quotient module \( F / K \). Let \( \otimes: M \times N \to M \otimes_R N \) be the map sending \( (m, n) \) to the equivalence class \( [m, n] + K \). 
+
+### Verification of the Universal Property
+
+Let \( P \) be any \( R \)-module, and let \( f: M \times N \to P \) be a bilinear map. We need to show that there is a unique \( R \)-linear map \( \bar{f}: M \otimes_R N \to P \) such that \( f = \bar{f} \circ \otimes \).
+
+Define \( \bar{f}: F \to P \) on the basis elements by \( \bar{f}([m, n]) = f(m, n) \). This map \( \bar{f} \) is \( R \)-linear because \( f \) is bilinear. We can straightforward verify that \( \bar{f} \) annihilates the submodule \( K \) by checking it for the generators of \( K \).
+
+Hence it induces a well-defined map \( \bar{f}: M \otimes_R N \to P \). By construction, \( \bar{f}([m, n]) = f(m, n) \), so \( f = \bar{f} \circ \otimes \).
+
+For the uniqueness,
+suppose \( M \otimes'_R N \) is another \( R \)-module with a bilinear map \( \otimes': M \times N \to M \otimes'_R N \) satisfying the universal property. There exists a unique \( R \)-linear map \( \phi: M \otimes_R N \to M \otimes'_R N \) such that \( \phi \circ \otimes = \otimes' \).
+
+Similarly, there exists a unique \( R \)-linear map \( \psi: M \otimes'_R N \to M \otimes_R N \) such that \( \psi \circ \otimes' = \otimes \).
+
+Consider \( \phi \circ \psi: M \otimes'_R N \to M \otimes'_R N \). Since \( \phi \circ \psi \circ \otimes' = \phi \circ \otimes = \otimes' \), and by the uniqueness part of the universal property, \( \phi \circ \psi \) must be the identity on \( M \otimes'_R N \). Similarly, \( \psi \circ \phi \) must be the identity on \( M \otimes_R N \). Thus, \( \phi \) and \( \psi \) are isomorphisms, proving the uniqueness up to isomorphism of \( M \otimes_R N \).
+
+
+
+Prove some natural isomorphisms of the tensor product, like the associative, symmetry and direct product ones. 
+
+For \(A\)-modules \(M, N\) there is a natural isomorphism
+\(M \otimes N \simeq N \otimes\), which is \(\phi(m \otimes n) = n \otimes m\) (note that this does not imply commutativity of the elementary tensors).
+Proof:
+\(\kappa : M \times N \to N \otimes M, \kappa((m, n)) = n \otimes m \) is bilinear, by the universal property \(\phi : M \otimes N \to N \otimes M\) must then exist, similarly \(\kappa^{\text{op}}(n, m) = m \otimes n\) exist as well and the induced \(\phi^{\text{op}}\) is readily seen to be invers to \(\phi\).
+
+For \(A\)-modules \(L, M, N\) there is a natural isomorphism
+\(L \otimes (M \otimes N) \simeq (L \otimes M) \otimes N\), which is \(\phi(l \otimes (m \otimes n)) = (l \otimes m) \otimes n\).
+Proof:
+\(f_s : M \times N \to (L \otimes M) \otimes N, f_s(m, n) = (s \otimes m) \otimes n\) is bilinear, so by the universal property there is some
+\(\tilde{f}_s : (M \otimes N) \to (L \otimes M) \otimes N\) matching \(f_s\) and further this can be extended to some \(\tilde{f} : L \times (M \otimes N) \to (L \otimes M) \otimes N\), which becomes the isomorphism from \(L \otimes (M \otimes N)\) in question via the universal property.
+
+Let \(f : M \to M'\), \(g : N \to N'\) be \(A\)-linear maps, then there exists a unique map \(h : M \otimes N \to M' \otimes N'\) with \(h(m \otimes n) = f(m) \otimes g(n)\).
+Clearly \(\bar{h}\) is linear (here the domain is still \(M \times N\)), so there is a unique bilinear map \(h\) satisfying the required.
+
+For the direct sum of modules \(\bigoplus N_i\) it holds \(\bigoplus_{i} M \otimes N_i \simeq M \otimes \bigoplus N_i\).
+
+Consider the family of morphisms \(\psi_i : M \otimes N_i \to M \otimes \bigoplus N_i, \psi_i (m \otimes n_i) = m \otimes (0, \dots, n_i, \dots, 0)\), clearly this
+family is linear so by the universal property of the direct sum there is a unique \(\theta : \bigoplus_{i} M \otimes N_i \to M \otimes \bigoplus N_i\), which restricts to each of the \(\psi_i\). Conversely \(\phi_i : M \otimes \bigoplus N_i \to M \otimes N_i, \phi_i(m \otimes (n_1, n_2, \dots, n_i, \dots)) = m \otimes n_i \) extends
+by the universal property of the direct product (which holds also for direct sums) these also extends to some \(\gamma : M \otimes \bigoplus_i N_i \to \bigoplus M \otimes N_i\) and its readily seen that \(\theta^{-1} = \gamma\).
+
+
+
+Prove and state the general theorem behind \(V^{*} \otimes V \simeq \text{Mat}_n(K)\).
+
+There is a canonical homomorphism \(\mu : M* \otimes N \to \text{Hom}_A(M, N)\), where \(M^{*}\) is the dual modul.
+In fact if \(M\) is free of finite rank, then \(\mu\) is an isomorphism.
+
+Let the homomorphism be defined pointwise via \(\mu(m* \otimes n)(x) = m*(x) n\) then this is a linear map from \(M* \times N \to \text{Hom}_A(M, N)\) so by the universal
+property the desired \(\mu\) exists. Additionally if \(M\) is free with basis \(\{m_j\}_{j \in [J]}\), \(M^{*}\) has a dual basis \(\{m^{*}_j\}_{j \in [J]}\), s.t.
+\(m^{*}_j(m_i) = \delta_{ij}\). let \(\mu' : \text{Hom}_A(M, N) \to M* \otimes N\) be defined as \(\mu'(f) = \sum_{j \in [J]} m^{*}_j f(x_j)\), it follows that \(\mu'\)
+is inverse to \(mu\).
+
+
+How does the tensor product act on free modules?
+
+Let \(M\) be a \(A\)-module (potentially not free) and \(N\) free with basis \(\{n_j\}_{j \in J}\)
+then every element in \(M \otimes N\) has unique representation of the shape
+\(\sum_{j \in J} m_j \otimes n_j\) with \(m_j = 0\) for nearly all \(j\).
+
+If \(|J| = 1\) its easy to see that \(M \otimes N \simeq N\) and otherwise \(N = \bigoplus_{j \in J} A n_j\)
+thus by the distributivity over direct sums the rest follows.
+
+In particular if \(M\) is also free with basis \(\{m_i\}_{i \in I}\) then \(\{m_i \otimes n_j\}_{(i, j) \in I \times J}\) is a
+basis of \(M \otimes N\), which a free \(A\)-module of rank \(|I||J|\).
+
+Let \(f: M \times N \to P\) be an \(A\)-bilinear mapping. For each \(m \in M\) the mapping
+\(n \to f(m, n)\) of \(N\) into \(P\) is \(A\)-linear, hence \(f\) gives rise to a mapping 
+\(M \to \text{Hom}(N, P)\) which is \(A\)-linear because \(f\) is linear in the variable \(m\). Conversely
+any \(A\)-homomorphism \(\phi: M \to \text{Hom}_A(N, P)\) defines a bilinear map, namely
+\(\psi: M \times N \to P, (m, n) \mapsto \phi(x)(y)\). Hence the set \(S\) of A-bilinear mappings \(M \times N \to P\) is in
+natural one-to-one correspondence with \(\text{Hom}(M, \text{Hom}(N, P))\). On the other
+hand \(S\) is in one-to-one correspondence with \(\text{Hom}(M \otimes N, P)\), by the de-
+fining property of the tensor product. Hence we have a canonical isomorphism
+\(\text{Hom}(M \otimes N, P) \simeq \text{Hom}(M, \text{Hom}(N, P))\).
+
+Given the exact sequence
+\(M' \to M \to M'' \to 0\) with \(f : M' \to M\), \(g : M \to M''\) then the sequence \(M' \otimes N \to M \otimes N \to M'' \otimes N \to 0\) is exact
+with modified morphisms \(f \otimes \text{id}\), \(g \otimes \text{id}\). 
+Let \(E\) be the SES then \(\text{Hom}(E, \text{Hom}(N, P)\) is exact by the previous and via the isomorphism \(\text{Hom}(E \times N, P)\) is exact implying
+\(E \times N\) is exact, where we used the arbitrariness of \(P\) (only if the sequence is exact for all \(P\) the left-argument of Hom is also exact).
+
+In particular covariant \(\text{Hom}(X, -)\) is a right exact functor if and only if \(X\) is projective and contravariant \(\text{Hom}(-, X)\) left exact iff. \(X\) 
+is injective.
+
+Note that this does not imply the exactness of \(0 \to M' \to M \to M'' \to 0\) tensored with \(N\). However this does hold if the sequence is split.
+
+Let \(f : R \to S\) be an R-algebra and M be an R-module. We consider the \(R\)-module
+\( S \otimes_{R} M\), sometimes called \(f_{*}M\), and equip it with an \(S\)-module structure via
+\(s (s' \otimes m) = ss' \otimes m\), which is the extension of scalars.
+
+Similar for \(m\) an \(S\)-module one can construct the restriction of scalars.
+
+This enjoys the following universal property:
+
+Let \(S\) be an \(R\)-algebra via \(f : R \maps S\) and let \(N\) be an \(S\)-module and suppose there
+is an \(R\)-linear map \(\phi : M \to N\). Then there is a unique \(S\)-linear map \(\Phi : S \otimes_{R} M \to N\) so that
+\(\phi = \Phi \circ \iota\), where \(\iota : M \to S \otimes_{R} M\) is the natural inclusion.
+
+If \(S\) is commutative, then we only need to require that \(f\) is a ring homomorphism which already implies \(f(R) \subset Z(S)\).
+In particular if \(M\) is a free \(A\)-module then \(S \otimes B\) is again free with basis \(\{m_i \otimes 1_{S}\}_{i \in I}\).
+
+A classical example is \(S \otimes A[x] \simeq S[x]\).

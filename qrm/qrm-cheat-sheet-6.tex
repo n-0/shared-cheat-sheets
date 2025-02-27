@@ -442,28 +442,28 @@ Let \(\alpha, \beta > 0\).
 Risk Measure
 \(\text{V@R}_{\alpha}\)
 \[
-    \psi(x) = 
-    \begin{cases} 
-    0, & 0 \leq x \leq \alpha \\ 
-    1, & \alpha < x 
-    \end{cases}
+\psi(x) = 
+\begin{cases} 
+0, & 0 \leq x \leq \alpha \\ 
+1, & \alpha < x 
+\end{cases}
 \]
 \(\text{AV@R}_{\beta}\)
 \[
-    \psi(x) = 
-    \begin{cases} 
-    \frac{x}{\beta}, & 0 \leq x \leq \beta \\ 
-    1, & \beta < x 
-    \end{cases}
+\psi(x) = 
+\begin{cases} 
+\frac{x}{\beta}, & 0 \leq x \leq \beta \\ 
+1, & \beta < x 
+\end{cases}
 \]
 \(\text{RV@R}_{\alpha, \beta}\)
 \[
-    \psi(x) = 
-    \begin{cases} 
-    0, & 0 \leq x \leq \alpha \\ 
-    \frac{x - \alpha}{\beta}, & \alpha < x \leq \alpha + \beta \\ 
-    1, & \alpha + \beta < x 
-    \end{cases}
+\psi(x) = 
+\begin{cases} 
+0, & 0 \leq x \leq \alpha \\ 
+\frac{x - \alpha}{\beta}, & \alpha < x \leq \alpha + \beta \\ 
+1, & \alpha + \beta < x 
+\end{cases}
 \]
 
 
@@ -623,3 +623,10 @@ between a certain present amount \(\eta\) and the uncertain future amount \(X - 
 Denote by \(g(z) := \sup_{x \in \mathbb{R}} \{xz - l(x)\}\) the convex conjugate function of the loss function \(l\) associated to 
 \(u\) via \(l(x) = -u(-x)\). Then the variational identity yields \(S_u(X) = -\rho_g(X)\),
 i.e., the optimized certainty equivalent coincides, up to a change of sign, with the divergence risk measure \(\rho_g\).
+
+
+Explain why risk measurements can quantitatively capture diversification effects
+
+-- TODO
+if they are quasi-convex. How is quasi-convexity related to convexity for general
+functions? And what holds in the case of monetary risk measures?
