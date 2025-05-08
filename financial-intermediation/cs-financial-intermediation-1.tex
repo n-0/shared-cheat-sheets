@@ -1,0 +1,406 @@
+What comprises the bank business?
+
+the acceptance of funds from others as deposits or of other
+unconditionally repayable funds from the public, unless the
+claim to repayment is securitised in the form of bearer or
+order bonds, irrespective of whether or not interest is paid
+(deposit business)
+
+the granting of money loans and acceptance credits (credit
+business)
+
+the purchase of financial instruments at the credit
+institution's own risk for placing in the market or the
+assumption of equivalent guarantees (underwriting
+business)”
+
+They should be differentiated from financial service institutions
+(e.g. investment banks, venture capitalist funds) and 
+financial undertakings (special purpose vehicles).
+
+
+What are the transformation functions of a Bank?
+
+Lot Size transformation
+▪ Take many smaller deposits, lend larger amounts
+
+Maturity transformation
+▪ Deposits have very short maturities (e.g. can be withdrawn any time). 
+However, given the many depositors, most of the time there‘s enough capital 
+for long term loans.
+▪ Banks may issue long-term bonds and grant short-term overdraft loans to customers.
+
+Major Risks:
+▪ Liquidity risk
+▪ Interest rate risks
+
+Risk transformation
+Rather impressive: Banks turn risky loans into almost
+riskless deposit liabilities.
+
+A bank does so by:
+▪ Diversification
+▪ Using Equity as buffer
+
+
+Derive the profit of banks in perfect markets
+and the optimization problems of investors/firms.
+
+The setup:
+INSERT SLIDE 22
+
+Assumptions are
+Perfect Financial Market:
+No frictions such as taxes or transaction costs
+Goods are infinitely divisible and tradable
+You can lend and borrow any amount of money
+informationally efficient
+Agents maximize \( \mathbb{E}[u(X)] \)
+
+The investors problem is
+\( \text{max} u(C_1, C_2) \)
+s.t. 
+\( C_1 + B_l + D^{+} = W_1 \)
+\( C_2 = \pi_F + \pi_B (1 + r)B_l + (1 + r_D)D^{+} \)
+Profit by Firm \( \pi_F \) and Bank \( \pi_B \) 
+Securities earn interest at \( r \).
+therefore deposits must also earn at least the same amount \( r_D = r \).
+
+The firms problem
+\( \text{max} \pi_F = f(I) - (1+r)B_f - (1+r_L)L^{-} \)
+s.t. \( I = B_F + L^{-} \)
+Firm maximizes profit \( \pi_F \) which depends on production function \( f \).
+Issued Securities must be paid back with interest rate \( r \)
+Loans must be paid back with interest rate \( r_L \)
+Since Loans and Securities are riskless \( r = r_L \).
+
+The banks problem
+
+\( \text{max}\pi_B = r_L L^{+} - rB_B - r_D D^{-} \)
+s.t. \( L^{+} = B_B + D^{-} \)
+Bank maximizes profit \( \pi_B \)
+Issued Securities must be paid back with interest rate \( r \)
+Deposits must be paid back with interest rate \( r_D \), \( \implies \) \( r = r_D \)
+
+
+The equilibrium solution in the perfect market is
+\( I = S \)
+\( D^{+} = D^{-} \)
+\( L^{+} = L^{-} \)
+\( B_l = B_F + B_B \)
+Therefore Banks make zero profit! More importantly, investor‘s
+or firm‘s decision are not affected by banks.
+
+
+State the axioms of expected utility theory
+and \( CE, RP \).
+
+Def. of expected utility
+In the discrete case
+\( \mathbb{E}[u(X)] = \sum_{i=1}^n \mathbb{P}(\omega_i)u(X(\omega_i)) \)
+otherwise
+\( \mathbb{E}[u(X)] = \int_\Omega u(X)d\mu \)
+
+Complete Ordering
+• Completeness:
+\( \forall X, Y, X \geq Y \) or \( Y \geq X \).
+• Transitivity:
+\( X \geq Y \text{and} Y \geq Z \implies X \geq Z \).
+Continuity
+if \( X \geq Y \geq Z \), then there exists some probability \( p \)
+such that: \( b \sim pX + (1-p)Z \)
+Independence
+if \( X \geq Y \) it must hold for each lottery \( Z \) and probability \( p \).
+\( pX + (1-p)Z \geq pY + (1-p)Z \).
+
+Certainty equivalent 
+Let it be denoted by \( c = CE(X) \) then it satisfies
+\( u(c) = \mathbb{E}[u(X)] \).
+
+Risk premium
+Let the initial wealth level be \( w \) then the risk premia \( RP(X, w) \) must satisfy 
+\( u(w + \mathbb{E}[X] - RP) = \mathbb{E}[u(w + X)] \).
+
+Tabularize the Arrow Pratt risk attitudes and corresponding utility functions
+and define ARA, RRA.
+
+\begin{tabular}{|l|l|l|l|}
+\hline
+Arrow Pratt risk attitude & Utility function & \( RP = EV - CE \) & Risk attitude \\ \hline
+\( ARA(x) = 0, \forall x > 0 \) & Linear: \(u_{\text{RN}}\) & \( RP(X) = 0, \forall X \) & Risk neutral \\ \hline
+\(ARA(x) > 0 \forall x > 0\) & Concave: \(u_{\text{RA}}\) & \(RP(X) > 0 \forall X\) & Risk averse \\ \hline
+\(ARA(x) < 0 \forall x > 0\) & Convex: \(u_{\text{RP}}\) & \(RP(X) < 0 \forall X\) & Risk prone \\ \hline
+\end{tabular}
+
+\begin{tabular}{|l|l|l|l|}
+\hline
+Arrow Pratt risk attitude & Utility function & $ RP = EV - CE $ & Risk attitude \\ \hline
+$ ARA(x) = 0, \forall x > 0 $ & Linear: $u_{\text{RN}}$ & $ RP(X) = 0, \forall X $ & Risk neutral \\ \hline
+$ARA(x) > 0 \forall x > 0$ & Concave: $u_{\text{RA}}$ & $RP(X) > 0 \forall X$ & Risk averse \\ \hline
+$ARA(x) < 0 \forall x > 0$ & Convex: $u_{\text{RP}}$ & $RP(X) < 0 \forall X$ & Risk prone \\ \hline
+\end{tabular}
+
+The Arrow/Pratt measure of risk aversion
+\( \text{ARA}(x) = - \frac{u''(x)}{u'(x)} \)
+\( \text{RRA}(x) = x\text{ARA}(x)\)
+
+
+What are the 2 important classes of utility functions?
+
+
+CARA (constant absolute risk aversion)
+\( \text{ARA}(x) = \gamma, \forall x \)
+Which is equivalent to
+\( u(x) = \alpha + \beta e^{-\gamma x}, \beta < 0 \)
+It can be interpreted as
+CARA investors do not become more risk averse or risk prone if their levels of wealth
+change (or equivalently: if we add some fix amount of money to every lottery outcome).
+For an initial level of wealth \( w \) and amount of money \( a \), lottery \( l \) it holds
+\( \text{max}_a \mathbb{E}[u(w - a + al)] = u(W) \text{max}_a \mathbb{E}[u(-a + al)] \),
+so the optimal choice of investment does not depend on the wealth.
+
+CRRA (constant relative risk aversion)
+\( \text{RRA}(x) = c, \forall x \)
+\( u(x) = \alpha + \beta g(x) \) where
+\[
+g(x) = \begin{cases}
+\frac{x^{1-\gamma}}{1 - \gamma} & \text{if} \gamma \neq 1 \\
+\ln(x) & \text{else}
+\end{cases} 
+\]
+For a relative amount \( aw \) of investment the optimum satisfies
+
+\[
+\text{max}_a \mathbb{E}[u(w((1-a) + al))] = \begin{cases}
+u(w)\text{max}_{a}\mathbb{E}[u((1-a) + al)] & \text{if} \gamma \neq 1 \\
+u(w) + \text{max}_{a}\mathbb{E}[u((1-a) + al)]& \text{else}
+\end{cases} 
+\]
+Therefore the invested amount \( aw \) is proportional to the investor‘s wealth \( w \).
+
+How is the repayment function for an optimal contract with symmetric information
+determined?
+
+Risky earnings \( \tilde{y} \) from project.
+Observable to both parties (lender and borrower)
+
+Optimal contract between lender and borrower is determined if we specify repayment function \(R(\tilde{y})\)
+Repayment \(R(\tilde{y})\) to lender given some realization \(\tilde{y}\)
+Lender requires minimum utility level \(U_L^0\)
+Borrower retains \(\tilde{y} - R(\tilde{y})\)
+
+Thus, solve:
+\[
+\begin{aligned}
+    & \max_{R(\cdot)} Eu_B(\tilde{y} - R(\tilde{y})) \\
+    & \text{s.t.} \\
+    & \quad Eu_L(R(\tilde{y})) \geq U_L^0 \\
+    & \quad 0 \leq R(\tilde{y}) \leq \tilde{y}
+\end{aligned}
+\]
+with the help of the Lagrangian we derive
+\( 𝐿 = 𝑢_𝐵(𝑦 − 𝑅) + 𝜆(𝑢_𝐿(𝑅) − 𝑈_𝐿^0 ) \)
+\( R'(y) = \frac{\text{ARA}_B(y - R(y))}{\text{ARA}_B(y - R(y)) + \text{ARA}_L(R(y))} \)
+
+For a given probability space, this differential equation may admit a solution,
+the initial conditions are then determined via 
+\( \mathbb{E}[u_L(R(\tilde{y}))] = \sum_i \mathbb{P}[\omega_i]u(R(\omega_i) = U^{0}_L \).
+
+
+Give examples of asymmetric information
+
+Ex ante uncertainty
+Hidden information
+Hidden characteristic
+
+Ex interim uncertainty
+Moral Hazard (firm exerts less effort than promised)
+Hidden action 
+
+Ex post uncertainty
+Costly state verification
+
+
+Give an example for agency costs
+
+Agency costs are costs that arise when there are conﬂicts of
+interest between stakeholders.
+Since managers often hold shares of the firm's equity, a conﬂict
+of interest exists if investment decisions have diﬀerent
+consequences for the value of equity and the value of debt
+
+% TODO do this with a negative starting value
+% such that the initial debt is partially repaid for the safe option
+% and compare it to a risky bet with outcomes (completely paid vs. (more debt)), 
+% to handle the leveraged case.
+
+As a concrete example, suppose the firm's equity is \( 30$ \)
+and there are the following return options
+\( \mathbb{P}[\omega_1] = \mathbb{P}[\omega_2] = 0.5\)
+\[
+\forall \omega \in \Omega, X_1(\omega) = 60\$
+\]
+\[
+X_2 = \begin{cases}
+    0\$ & \omega_1 \\
+    100\$ & \omega_2
+\end{cases}
+\]
+Supposedly the upfront cost for both is \( \$40 \), now suppose the company takes on dept
+to finance this endeavor at an interest rate of \( 10\% \) (this doesn't really matter for the example).
+Suppose 
+Then for equity holders the expected payoffs are
+\( \pi_E(X_i) = \mathbb{E}[\max(X_i - 44, 0)] \)
+thus \( \pi_E(X_1) = 16, \pi_E(X_2) = 28 \).
+Now for the lenders this payoff is
+\( \pi_L(X_i) = \mathbb{E}[\text{min}(44\%, 30\% + X_i)] - 40 \)
+thus \( \pi_L(X_1) = 4, \pi_L(X_2) = -3 \).
+
+When a ﬁrm faces ﬁnancial distress, shareholders can gain by
+making suﬃciently risky investments, even if they have
+negative NPV.
+
+
+
+As a concrete example, suppose the firm's own equity is \( 30\$ \)
+and debt \( -50\$ \) payable to the next period.
+The firm can choose one of two investments, with the following profile
+\( \mathbb{P}[\omega_1] = \mathbb{P}[\omega_2] = 0.5\)
+\[
+\forall \omega \in \Omega, X_1(\omega) = 50\$
+\]
+\[
+X_2 = \begin{cases}
+    0\$ & \omega_1 \\
+    100\$ & \omega_2
+\end{cases}
+\]
+Supposedly the upfront cost for both is \( 30\$ \).
+Then for equity holders the expected payoffs are
+\( \pi_E(X_i) = \mathbb{E}[\max(X_i - 50, 0)] \)
+thus \( \pi_E(X_1) = 0, \pi_E(X_2) = 50\).
+
+Now for the lenders the payoffs are
+\( \pi_L(X_i) = \mathbb{E}[\text{min}(50\$, X_i)] - 50 \)
+thus \( \pi_L(X_1) = 0, \pi_L(X_2) = -25\).
+
+When a firm faces financial distress, shareholder can gain by making
+sufficiently risky investments, even if they have NPV.
+
+
+Summarize the debt overhang problems (too high leverage ratio)
+
+Underinvestment problems by
+▪ Foregoing positive NPV project (agency cost example)
+▪ Disinvesting
+▪ Excessive payout
+    Stock buy-back programs instead of dividends
+    wages for manager-owned firms
+    Selling assets and immediately turning them into dividens (and not payback loans)
+Overinvestment problems by
+▪ Asset substitution (riskier projects)
+▪ Executing negative NPV projects
+
+
+How can financial strength be signaled with debt
+Assume
+\( \mathbb{P}[\omega_1] = \mathbb{P}[\omega_2] = 0.5\)
+and let the firms value be \( V(\omega_1) = 100, V(\omega_2) = 50 \).
+Suppose the equity owners know due to insider information that \( \omega_1 \)
+will happen with absolute certainty.
+
+Of course, debt holders know about these problems
+Thus, they demand discounts on debt claims, e.g. they pay less
+for bonds
+Debt holders try to discipline managers by preferring short term
+over long term debt
+More likely that equity holders gain advantage over debt
+holder in case of long term debt rather than short term debt
+Also: multi-stage financing with debt
+
+TODO those points are not really clear.
+
+
+When should debt be forgiven, restructured or let be?
+
+Restructuring in this context is meant as extending maturity (in general restructuring
+also refers to debt forgiveness).
+
+Company is in distressed because of negative demand shocks
+→ restructure
+Defaulting on debt due to debt overhang and resulting
+underinvestment or excessive payout is a strategic default
+→ beneficial to forgive debt to solve debt overhang problems
+
+However the kind of signals to use, to differentiate between liquidity default and strategic default
+are not obvious.
+Low prior cash holdings and prior operating performance are not great indicators.
+(Snow example with Ski hotels in Australia)
+
+
+Why are SEOs a bad signal
+
+If managers/insiders can assess true equity value better than
+outside investors, they are likely to sell equity when equity is
+overvalued.
+
+SEO (Seasoned equity offerings) is an implicit signal that stock prices are too high.
+Thus, stock price typically decreases when SEOs are
+announced.
+To reduce the adverse selection / lemmon problem, firms
+prefer to announce SEO when there is least asymmetric
+information, i.e. after earnings announcements, for example
+
+Implications for banks in Financial Crisis
+▪ High uncertainty in bank assets
+▪ Raising additional equity (SEO) is bad signal
+▪ Combination of high uncertainty and large SEO scares off existing
+and new shareholders because
+▪ equity likely to be overvalued in management‘s view, i.e.
+more/higher future losses expected
+▪ future losses to be shared with new shareholders
+▪ Consequence: devaluation of existing equity→ more severe crisis!
+▪ Solution:
+▪ forced equity infusion by regulator/central bank or
+▪ open books (create symmetric information) to sovereign
+wealth funds or large private investor
+
+Elaborate on the free banking era in the US (1837-1864)
+
+Anyone could open a bank: no charter or permission required
+
+State banking authority set operating rules and capital
+requirements:
+Banks had to post collateral in form of government bonds
+Banks could issue their own money (banknotes)
+Each banknote dollar had to be collateralized by one dollar
+of state or federal bond deposited at the state banking
+authority
+Banknotes constituted a bank‘s promise to redeem hard
+currency (gold or silver coins; called specie) on demand
+
+Banknotes circulated among the population, next to gold coins,
+as a form of paper money. But:
+They traded at discounts relative to their par value of specie
+Discounts, thus, signaled default risk of bank
+
+
+A wildcat bank is broadly defined as one that prints more currency than it is capable of continuously redeeming in specie. 
+A more specific definition, applies the term to free banks whose notes were backed by overvalued securities – 
+bonds which were valued at par by the state, but which had a market value below par.
+
+Since the valuation varied from state to state (market value vs. par value), this allowed for the following scheme:
+If possible buy discounted bonds for, say, $90 and deposit it with bank authority
+Lend out $100 banknotes (=par value of bond) and acquire assets worth $100. 
+Sell those assets and close doors of bank 
+short term profit of $10 for wildcat bankers and loss for banknote holders (in terms of liquidity).
+
+However, this is seen as unlikely since most bonds traded at par value.
+
+Most bank failures occured when state bond prices fell
+The risk of posted collateral (state bonds) made banks
+vulnerable to runs
+Lesson learned for today:
+- Free entry need not be a problem
+- Don‘t treat risky collateral as riskless (Italian or Greek Sovereign Bonds?)
+Discounts on banknotes discipline banks‘ risk taking, together, reputation and redemption limited wildcat banking.

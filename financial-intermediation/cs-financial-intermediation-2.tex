@@ -1,0 +1,93 @@
+Describe in the Diamon-Dyvbig the market solution
+
+Suppose we have two types of investors with time dependent utility functions
+\( u_1(t, X), u_2(t, X) \) and consider 3 discrete time points \( t \in \{0, 1, 2\} \)
+it holds \( u_1(1, c) > u_1(2, c) \) for all \( c \) and \( u_2(2, c_2) \geq u_1(1, c_1) \)
+for all \( c_2 < c_1 \)
+\( u_1(1, X), u_2(t, X) \)
+Let \( x \) denote the share invested in an illiquid asset with return \( R \) 
+(also referred to as productive technology)
+Let \( y \) denote the share invested in cash (liquid), (also referred to as storage)
+It holds
+\( x + y = 1 \)
+
+Suppose we have two types of investors \( i = 1, 2 \) and consider 3 discrete time points \( t \in \{0, 1, 2\} \).
+Assume that type \( 1 \) needs liquidity more at \( t = 1 \) than at \( t = 2 \), while the \( 2 \) is indifferent.
+At \( t = 0 \) each investor can choose between a long term investment in productive technology
+and a short-term in storage, let \( x, y \) be the respective shares of the capital.
+It holds 
+\( x + y = 1 \)
+At \( t = 1 \)  each investor can either buy or sell claims on the long-term project at price \( \pi \).
+Let \( c_1, c_2 \) be the returns of the investors, they're
+\( c_1 =  y + \pi x \), 
+(\( i = 1 \) sells the claim on their share of the long term investment)
+\( c_2 = (x + \frac{y}{\pi})R\) 
+(\( i = 2 \) buys claims with the money from storage and increase their return on the long term investment)
+
+However what is the fair price \( \pi \)?
+If \( \pi > 1 \), everyone would invest in the long term project, because
+at \( t = 1 \), it's more profitable to sell a claim on it and becoming liquid
+again, instead of having the same amount of money in storage.
+
+If \( \pi < 1 \), everyone would put their money into storage, for \( i = 1 \) it's obvious,
+but for \( i = 2 \) it follows as it is cheaper to buy a claim at \( t = 1 \) than directly investing
+at \( t = 0 \) long term project,.
+
+
+Describe in the Diamon-Dyvbig the Pareto optimal solution
+and contrast it with the market solution.
+
+We want to maximize utility for all types of investors, let the share 
+of \( i = 1 \) investors be \( \alpha \) then the optimization problem is
+\( \max_{c_1, c_2} \alpha u(c_1) + (1 - \alpha)\rho u(c_2) \) 
+(this is just the present value of the portfolio, where \( \rho \) is the 
+discount factor)
+
+under the condition \( \alpha c_1 + (1 - \alpha) \frac{c_2}{R} = 1 \)
+using the Lagrange approach we derive the first order condition (FOC)
+\( u'(c_1) = \rho R u'(c_2) \).
+For a given utility function this 
+
+Plotting the indifference curves and intersecting them with the constraint
+can yield a different optimum than the market solution.
+
+INSERT IMAGE FROM SLIDE 12 CHAPTER 4A
+
+Inserting the market solution (\(c_1 = 1, c_2 = R\)) in the FOC yields
+\( -R \frac{u''(R)}{u(R)} = 1 \) which is CRRA \( u(c) = a + b\log(c), b > 0 \).
+
+
+How do banks achieve in the Diamon-Dyvbig the Pareto optimal solution?
+How can bankruns negatively affect the solution?
+
+
+Let \( c_i^\ast \) be the pareto optimal solution (compatible with constraints).
+Assume a bank knows at \( t = 0 \) the fraction \( \alpha \) of \( i = 1 \) investors,
+and puts \( \alpha c_1^\ast \) into storage and \( (1 - \alpha) \frac{c_2^\ast}{R} \) into long term production technology
+note that the latter is worth \( (1 - \alpha) \frac{c_2^\ast}{R}R = (1 - \alpha)c_2^\ast \), so this is indeed optimal.
+
+However suppose the bank underestimated \( \alpha \) at \( t = 0 \), then it can't pay out all the money investors want
+to withdraw. In particular from the view of investors there are 2 Nash equilibrium's in regard to their actions
+either they exactly follow the estimation \( \alpha \) or all try to withdraw at \( t = 1 \), the latter is a bank run
+and gives a suboptimal solution in regard to utility.
+
+
+
+A banks knows there are \( \alpha \)
+
+
+
+we 
+Let 
+
+N
+Thus \( \pi = 1 \).
+On the other hand at \( t = 2 \)
+
+
+
+
+Suppose we have two types of investors with time dependent utility functions
+\( u_1(t, X), u_2(t, X) \) and consider 3 discrete time points \( t \in \{0, 1, 2\} \)
+it holds \( u_1(1, c) > u_1(2, c) \) for all \( c \) and \( u_2(2, c_2) \geq u_1(1, c_1) \)
+for all \( c_2 < c_1 \)
