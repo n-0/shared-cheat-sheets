@@ -67,39 +67,39 @@ The future value was also called terminal value in the lecture
 
 The basic formula's are \\
 PV of $ 1 $ Due in $ t $ Years: \\
-$ PV = \frac{1}{a(t)} = (1 + i)^{-t} = v^t = e^{-\delta t} = (1 - d)^t $ \\
+$ PV = \frac{1}{a(t)} = (1 + i)^{-t} = v^t = e^{-\delta t} = (1 - d)^t $
 $ = \left( 1 + \frac{i^{(m)}}{m} \right)^{-mt} = \left( 1 - \frac{d^{(m)}}{m} \right)^{mt} $ \\
-$ FV = a(t) = (1 + i)^t = e^{\delta t} = (1 - d)^{-t} = \left( 1 + \frac{i^{(m)}}{m} \right)^{mt}$ \\
-$\left( 1 - \frac{d^{(m)}}{m} \right)^{-mt}$ \\
+$ FV = a(t) = (1 + i)^t = e^{\delta t} = (1 - d)^{-t} = \left( 1 + \frac{i^{(m)}}{m} \right)^{mt}$
+$= \left( 1 - \frac{d^{(m)}}{m} \right)^{-mt}$ \\
 
-Annuity-Immediate (in advance) \\
-(PV one period before first payment, FV at time of last payment) \\
+Annuity-Immediate (in arrears) \\
+(PV one period before first payment, FV at time of last payment) aka payments are made at the end of a period, \\
 
 $ PV = \ax{\angl n} = \sum_{i=1}^n v^i = \frac{1 - v^n}{i} $ \\
 $ FV = \sx{\angl n} = \sum_{j=0}^{n-1} (1 + i)^j = \frac{(1 + i)^n - 1}{i} = \ax{\angl n}(1 + i)^n$ \\
-Annuity-Due (in arrears) \\
-(PV at time of first payment, FV one period after last payment) \\
-$PV = \ax**{\angl n} = \sum_{j=0}^{n-1} v^j = \frac{1-v^n}{d} = (1 + i)\ax{\angl n}$ \\
-$ = (\frac{i}{d}\ax{\angl n} = 1 + a{\angl{n -1}}$ \\
-
-$ FV = \sx**{\angl n} = \sum_{j=0}^{n} (1 + i)^j = \frac{(1 + i)^n - 1}{d}$ \\
-$ = (1+i)\sx{\angl n} = (\frac{i}{d})\sx{\angln} = \sx{\angl{n+1}} - 1 $ \\
-
-and the intra monthly versions are
-
-in advance \\
-$ \ax**{\angl n}[(m)] = \sum^{nm-1}_{t = 0} \frac{1}{m}v^{\frac{t}{m}} = \frac{1}{m}\frac{(1 - v^n)}{1 - v^{\frac{1}{m}}}$ \\
+\\
+Annuity-Due (in advance) \\
+(PV at time of first payment, FV one period after last payment) aka payments are made at the start of a period,\\
+$PV = \ax**{\angl n} = \sum_{j=0}^{n-1} v^j = \frac{1-v^n}{d} = (1 + i)\ax{\angl n}$
+$ = (\frac{i}{d})\ax{\angl n} = 1 + a_{\angl{n -1}}$ \\
+$ FV = \sx**{\angl n} = \sum_{j=1}^{n} (1 + i)^j = \frac{(1 + i)^n - 1}{d} = (1+i)\sx{\angl n} = (\frac{i}{d})\sx{\angln} = \sx{\angl{n+1}} - 1 $ \\
+\\
+and the intra monthly versions are \\
 in arrears \\
 $\ax{\angl n}[(m)] = \sum^{nm}_{t = 1} \frac{1}{m}v^{\frac{t}{m}} = \frac{1}{m}v^{\frac{1}{m}}\frac{(1 - v^n)}{1 - v^{\frac{1}{m}}}$ \\
-
+in advance \\
+$ \ax**{\angl n}[(m)] = \sum^{nm-1}_{t = 0} \frac{1}{m}v^{\frac{t}{m}} = \frac{1}{m}\frac{(1 - v^n)}{1 - v^{\frac{1}{m}}}$ \\
+\\
 In case of a deferred annuity \\
-
-Annuity-Immediate (in advance) \\
+in arrears \\
+$\ax[m|]{\angl n} = \sum_{t=m+1}^{n + m} v^t = v^m \frac{1 - v^n}{i} = \ax**[m+1|]{\angl n} = v^m \ax{\angl n} = \ax{\angl{m+n}} - a_{\angl{m}}$ \\
+in advance \\
 $ \ax**[m|]{\angl n} = \sum_{t=m}^{n + m -1} v^t = v^m\frac{1 - v^n}{1 - v}$ \\
-
-Annuity-Due (in arrears) \\
-$\ax[m|]{\angl n} = \sum_{t=m+1}^{n + m} v^t = v^m \frac{1 - v^n}{i}$ \\
-$= \ax**[m+1|]{\angl n} = v^m \ax{\angl n} = \ax{\angl{m+n}} - a{\angl{m}}$ \\
+\\
+Continuous analogs \\
+$ PV = \int_0^n f(t)e^{-\int_{0}^{t} \delta_\tau d\tau} dt = \int_{0}^n f(t)e^{-\delta t} dt $  \\
+$ FV = \int_0^n f(t)e^{-\int_{t}^{n} \delta_\tau d\tau} dt = \int_{0}^n f(t)e^{-\delta (n-t)} dt $ \\
+where the second eq. holds if the force of interest is constant.
 
 
 
@@ -201,6 +201,11 @@ Let \( c_0 \geq 0 \)
 and for
 \( 0 \leq c_0 \leq \tilde{c}_0 \), \( \psi_t(\tilde{c}_0) \leq \psi_t(c_0), t \in \mathbb{N}_0, \psi(\tilde{c}_0) \leq \psi(c_0) \).
 
+A more involved result, which sometimes allows the explicit derivation is
+\( \psi_{t+1}(c_0) = 1 - F(c_0) + \int_{-\infty}^{c_0} \psi_t(c_0 - y)dF(y) \)
+\( \psi(c_0) = 1 - F(c_0) + \int_{-\infty}^{c_0} \psi(c_0 - y)dF(y) \)
+where \( F \) is the distribution of \( S_1 - \pi_1 \).
+
 
 State the Net Profit Condition (NPC) and the motivating Proposition.
 
@@ -275,7 +280,7 @@ Suppose \( H \) is subexponential. Then
 then one can deduce with Choquets representation of the expectation
 \( \mathbb{E}[X] = \int_{0}^\infty \mathbb{P}(X > x)dx \),
 that
-\( \mathbb{E}[e^{r(S_1 - \pi_1)}] = \mathbb{E}[e^{r\pi_1} r\int_{\mathbb{R}} e^{rk}(1 - H(k)) dk = \infty\),
+\( \mathbb{E}[e^{r(S_1 - \pi_1)}] = \mathbb{E}[e^{-r\pi_1}] r\int_{\mathbb{R}} e^{rk}(1 - H(k)) dk = \infty\),
 where \( k = \frac{\log(x)}{r}, dk = \frac{dx}{rx} \),
 thus Lundberg coefficients can't exists.
 

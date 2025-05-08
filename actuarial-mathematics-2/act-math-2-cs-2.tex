@@ -1,0 +1,170 @@
+\documentclass[11pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{actuarialangle, actuarialsymbol}
+
+
+\begin{document}
+
+Summarize the terms involved in run-off pattern estimations
+
+The run-off pattern for quotas is defined as
+
+\( \vartheta = (\vartheta_0, \dots, \vartheta_n) \in \mathbb{R}^{n+1} \)
+\( \vartheta_k = \frac{\mathbb{E}[Z_{i,k}]}{\mathbb{E}[S_{i,n}]} \)
+thus 
+\( \sum_{k=0}^n \vartheta_k = 1 \)
+
+The run-off pattern for loss ratios is defined as
+
+\( \gamma_k = \frac{\mathbb{E}[S_{i,k}]}{\mathbb{E}[S_{i,n}]} \)
+\( \gamma_k = \sum_{l=0}^k \vartheta_l \), \( \gamma_n = 1 \)
+Usually \( \gamma_0 < \dots < \gamma_n \)
+
+The run off pattern for factors (which come from the chain ladder method) is
+
+\( \varphi_k = \frac{\mathbb{E}[S_{i,k}]}{\mathbb{E}[S_{i,k-1}]}  \)
+Hence
+\( \varphi_k = \frac{\gamma_k}{\gamma_{k-1}} \)
+
+\( \gamma_k = \prod_{l=k+1}^n  \frac{1}{\varphi_l} \)
+\( \varphi_k \)
+
+run-off pattern for loss ratio developments are for given premia \( \pi = (\pi_0, \dots, \pi_n) \)
+
+\( \zeta_k(\pi) = \frac{\mathbb{E}[Z_{i,k}]}{\pi_i} \)
+\( \vartheta_k = \frac{\zeta_k(\pi)}{\sum_{l=0}^n \zeta_l(\pi)} \)
+
+\( \gamma_k = \frac{\sum_{l=0}^k \zeta_l(\pi)}{\sum_{l=0}^n \zeta_l(\pi)} \)
+
+
+Describe the Bornhuetter-Ferguson family used to estimate run-off patterns
+Ansatz:
+\(
+\mathbb{E}[S_{i,k}] = \alpha_i \gamma_k, \quad i, k \in [n],
+\),
+\(
+\gamma_n = 1
+\)
+\\
+Hence:
+\(
+\mathbb{E}[S_{i,n}] = \alpha_i \frac{\mathbb{E}[S_{i,k}]}{\mathbb{E}[S_{i,n}]} = \gamma_k \implies \gamma \text{ run-off pattern for loss ratios}
+\)
+\\
+\(
+\forall k \ge n-i: \mathbb{E}[S_{i,k}] = \mathbb{E}[S_{i,n-i}] + (\mathbb{E}[S_{i,k}] - \mathbb{E}[S_{i,n-i}]) = \mathbb{E}[S_{i,n-i}] + (\gamma_k - \gamma_{n-i})\alpha_i.
+\)
+\\
+\(\widehat{\gamma} = (\widehat{\gamma}_0, \widehat{\gamma}_1, \dots, \widehat{\gamma}_n)$ estimator for $\gamma$ with $\widehat{\gamma}_n = 1\)\\
+\(\widehat{\alpha} = (\widehat{\alpha}_0, \widehat{\alpha}_1, \dots, \widehat{\alpha}_n)$ estimator for $\alpha$ (equivalently $(\mathbb{E}[S_{0,n}], \dots, \mathbb{E}[S_{n,n}])\) \\
+\(\longrightarrow\) Estimate \(S_{i,k}\) with \\
+\(
+\widehat{S}_{i,k}^{BF}(\widehat{\alpha}, \widehat{\gamma}) := S_{i,n-i} + (\widehat{\gamma}_k - \widehat{\gamma}_{n-i})\widehat{\alpha}_i, \quad k \ge n-i
+\)
+
+Describe the Loss-Development method for run-off patterns and relate it to the Bornhuetter-Ferguson family
+
+Consider run-off pattern for loss ratios \( \gamma \), i.e.,
+\(
+\gamma_k = \frac{\mathbb{E}[S_{i,k}]}{\mathbb{E}[S_{i,n}]}, \quad i, k \in [n]
+\)
+Hence: \(\mathbb{E}[S_{i,k}] = \gamma_k \mathbb{E}[S_{i,n}] = \frac{\gamma_k}{\gamma_{n-i}} \mathbb{E}[S_{i,n-i}].\) 
+
+If \(\widehat{\gamma} = (\widehat{\gamma}_0, \widehat{\gamma}_1, \dots, \widehat{\gamma}_n)\) estimator for run-off pattern for loss ratios with 
+\(\widehat{\gamma}_n = 1\), estimate \(S_{i,k}\) with
+\(
+\widehat{S}_{i,k}^{LD}(\widehat{\gamma}) := \frac{\widehat{\gamma}_k}{\widehat{\gamma}_{n-i}} S_{i,n-i}, \quad k \ge n-i
+\)
+
+
+\[
+\widehat{S}_{i,k}^{LD}(\widehat{\gamma}) = \frac{\widehat{\gamma}_k}{\widehat{\gamma}_{n-i}} S_{i,n-i}
+\]
+\[
+= S_{i,n-i} + \left(\frac{\widehat{\gamma}_k}{\widehat{\gamma}_{n-i}} - 1\right) S_{i,n-i}
+\]
+\[
+= S_{i,n-i} + (\widehat{\gamma}_k - \widehat{\gamma}_{n-i}) \cdot \frac{1}{\widehat{\gamma}_{n-i}} S_{i,n-i}
+\]
+\[
+= S_{i,n-i} + (\widehat{\gamma}_k - \widehat{\gamma}_{n-i}) \cdot \widehat{S}_{i,n}^{LD}(\widehat{\gamma})
+\]
+Hence:
+\[
+\widehat{S}_{i,k}^{LD} = \widehat{S}_{i,k}^{BF}(\widehat{\gamma}, \widehat{S}_{i,n}^{LD}(\widehat{\gamma}))
+\]
+
+
+Describe the Cape-Cod method for run-off patterns and relate it to the Bornhuetter-Ferguson family
+
+Ansatz: There is volume vector $\pi \in (0, \infty)^{n+1}$ and constant $\kappa$ s.t.
+\[
+\kappa = \mathbb{E}\left[\frac{S_{i,j}}{\pi_j}\right], \quad i \in [n].
+\]
+$\gamma \in \mathbb{R}^{n+1}$ run-off pattern for loss ratios
+\textbf{Hence:}
+\[
+\mathbb{E}[S_{i,k}] = \gamma_k \mathbb{E}[S_{i,n}] = \gamma_{n-i} \mathbb{E}[S_{i,n-i}] + (\gamma_k - \gamma_{n-i}) \mathbb{E}[S_{i,n}]
+\]
+\[
+= \mathbb{E}[S_{i,n-i}] + (\gamma_k - \gamma_{n-i}) \mathbb{E}[S_{i,n}]
+\]
+\textbf{Also observe:}
+\[
+\sum_{j=0}^n \frac{\mathbb{E}[S_{i,n-j}]}{\pi_j \gamma_{n-k}} = \sum_{j=0}^n \frac{\pi_{j} \gamma_{n-j}}{\pi_j \gamma_{n-k}} \cdot \frac{\mathbb{E}[S_{i,n-j}]}{\pi_j \gamma_{n-j}} = \sum_{j=0}^n \frac{\gamma_{n-j}}{\gamma_{n-k}} \cdot \kappa
+\]
+\[
+= \frac{\sum_{j=0}^n \pi_j \gamma_{n-j}}{\sum_{k=0}^n \pi_k \gamma_{n-k}} \cdot \frac{\mathbb{E}[S_{i,n}]}{\pi_j} = \frac{\sum_{j=0}^n \pi_j \gamma_{n-j}}{\sum_{k=0}^n \pi_k \gamma_{n-k}} \cdot \kappa = \kappa
+\]
+\textbf{Cod method}
+Estimator $\widehat{\gamma} = (\widehat{\gamma}_0, \widehat{\gamma}_1, \dots, \widehat{\gamma}_n)$ of $\gamma$
+Estimate $\kappa$ with
+\[
+\widehat{\kappa}^{CC}(\pi, \widehat{\gamma}) := \frac{\sum_{j=0}^n S_{j,n-j}}{\sum_{k=0}^n \pi_k \widehat{\gamma}_{n-k}}
+\]
+Then estimate $\mathbb{E}[S_{i,k}]$ with
+\[
+\widehat{S}_{i,k}^{CC}(\pi, \widehat{\gamma}) = S_{i,n-i} + (\widehat{\gamma}_k - \widehat{\gamma}_{n-i}) \pi_i \widehat{\kappa}^{CC}(\pi, \widehat{\gamma}), \quad k > n-i
+\]
+$\implies$ For $\widehat{\alpha}^{CC}(\pi, \widehat{\gamma}) := \pi_i \widehat{\kappa}^{CC}(\pi, \widehat{\gamma}), i \in [n]$, we see
+\[
+\widehat{S}_{i,k}^{CC}(\pi, \widehat{\gamma}) = \widehat{S}_{i,k}^{BF}(\widehat{\alpha}^{CC}, \widehat{\gamma})
+\]
+
+
+Describe the incremental-loss-ratio method for run-off patterns and relate it to the Bornhuetter-Ferguson family
+
+\textbf{Ansatz:} Volume vector $\pi \in (0, \infty)^{n+1}$, run-off pattern $\zeta(\pi) \in \mathbb{R}^{n+1}$ for loss ratio development, i.e.
+\[
+\zeta_k(\pi) = \mathbb{E}\left[\frac{Z_{i,k}}{\pi_k}\right], \quad i, k \in [n]
+\]
+\textbf{Hence:}
+\[
+\mathbb{E}[S_{i,k}] = \mathbb{E}[S_{i,n-i}] + \pi_i \sum_{l=n-i+1}^k \zeta_l(\pi), \quad k \ge n-i
+\]
+\textbf{Also observe:}
+\[
+\sum_{j=0}^{n-k} \frac{\mathbb{E}[Z_{j,k}]}{\pi_j} = \sum_{j=0}^{n-k} \frac{\pi_j}{\pi_j} \cdot \frac{\mathbb{E}[Z_{j,k}]}{\pi_j} = \sum_{j=0}^{n-k} \zeta_k(\pi) = (n-k+1) \zeta_k(\pi), \quad k \in [n]
+\]
+\textbf{Additive method}
+$\implies$ Estimate $\zeta(\pi)$ and $S_{i,k}$ with
+\[
+\widehat{\zeta}_k^{AD}(\pi) = \frac{\sum_{j=0}^{n-k} Z_{j,k}}{\sum_{j=0}^{n-k} \pi_j}, \quad k \in [n]
+\]
+\[
+\widehat{S}_{i,k}^{AD} = S_{i,n-i} + \pi_i \sum_{l=n-i+1}^k \widehat{\zeta}_l^{AD}(\pi), \quad k \ge n-i
+\]
+\textbf{Special case of Bornhuetter-Ferguson:}
+\[
+\widehat{S}_{i,k}^{AD} = S_{i,n-i} + \pi_i \sum_{l=n-i+1}^k \widehat{\zeta}_l^{AD}(\pi) = S_{i,n-i} + \pi_i \left( \sum_{l=0}^k \widehat{\zeta}_l^{AD}(\pi) - \sum_{l=0}^{n-i} \widehat{\zeta}_l^{AD}(\pi) \right)
+\]
+\[
+= S_{i,n-i} + \left( \frac{\sum_{j=0}^k \widehat{Z}_{j,0}}{\sum_{j=0}^k \pi_j} - \frac{\sum_{j=0}^{n-i} \widehat{Z}_{j,0}}{\sum_{j=0}^{n-i} \pi_j} \right) \cdot \left( \pi_i \frac{\sum_{j=0}^n \widehat{Z}_{j,0}}{\sum_{j=0}^n \pi_j} \right), \quad i, k \in [n]
+\]
+\[
+\implies \widehat{S}_{i,k}^{AD}(\pi) = \widehat{S}_{i,k}^{BF}\left( \pi_i \frac{\sum_{j=0}^n \widehat{\zeta}_0^{AD}(\pi)}{\sum_{j=0}^{n-i} \widehat{\zeta}_0^{AD}(\pi)}, \frac{\sum_{l=0}^k \widehat{\zeta}_l^{AD}(\pi)}{\sum_{l=0}^{n-i} \widehat{\zeta}_l^{AD}(\pi)} \right)
+\]
+
+
+\end{document}

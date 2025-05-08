@@ -1,0 +1,249 @@
+Motivate tariffication and the selection of relevant criteria
+
+Insurer: Serves collective of policyholders
+Has to cover total claims
+Have discussed: (random) total claim size \( S \mapsto \pi(S) \)
+Individual or collective model of risk explain \( S \)
+Question: How do we split \( \pi(S) \) among policyholders?
+Simple answer: Homogeneous insurance portfolio → individual premium contribution
+\( \frac{\pi(S)}{\text{# insured risks}} \)
+Problem: Homogeneity of collective fails
+Insurance sums differ, Individual behaviour of policyholders more or less risk seeking
+
+→ Tariffication: individual premium contribution should reflect quality of specific
+insurance policy (e.g. individual risk profile)
+
+Goal: Sort insurance contracts in a number of different groups — risk cells or risk classes
+Within each group: Policyholders share similar traits/features
+Groups not too small! (“Law of large numbers should apply”)
+→ (approximately) homogeneous individual claim size distributions
+Individual premium contribution uniform in each risk cell
+
+Important distinction:
+tariff criteria vs. risk criteria
+Risk criteria: Features of policyholder/insured object with predictive value for risk a
+specific contract poses/claim size it produces
+Tariff criteria: Features of policyholder/insured object actually used for tariffication
+Ideally: Tariff criteria selected from risk criteria (but this isn't always the case)
+
+Statistical significance?
+Are risk criteria uncorrelated or correlated, therefore redundant?
+Is insurer allowed to use risk criterion as discriminatory tool in tariffication?
+
+
+Formulate the framework of tariffication quantitatively
+and describe the method of marginal averages.
+
+
+For \(\ell \in \mathbb{N}: [\ell] := \{1, 2, ..., \ell\}\)
+\(r \in \mathbb{N} \widehat{=}\) number of tariff criteria
+\(M_k \widehat{=}\) kth tariff criterion, \(k \in [r]\)
+\(n_k \in \mathbb{N} \widehat{=}\) number of characteristics of \(M_k\)
+\(a_{jk} \widehat{=}\) jth characteristic of \(M_k,\ j \in [n_k]\)
+
+Vector \((j_1, ..., j_r) \in \prod_{k=1}^r [n_k] \widehat{=}\) particular risk cell
+\(t := \prod_{k=1}^r n_k \widehat{=}\) total number of risk cells
+\(n := \sum_{k=1}^r n_k \widehat{=}\) total number of characteristics of tariff criteria
+\(\bar{b} \widehat{=}\) basic premium
+\(b_{j_1, ..., j_r} \widehat{=}\) individual premium contribution in risk cell \((j_1, ..., j_r)\)
+
+In a mult. model the marginal factors \( u_{kj_k}_{k \i [r],j_k \in [n_k]} \) s.t.
+\( b_{j_1, \dots, j_r} = \bar{b}\cdot\prod^r_{k=1} u_{kj_k} \)
+
+Shall focus on the case of two tariff criteria, \(M_1\) and \(M_2\) (\(r=2\))
+\(n_1 := I \in \mathbb{N}\), \(n_2 := K \in \mathbb{N}\)
+
+Computation of marginal factors uses data about claims and volume
+Fix cell \((i, j) \in [I] \times [K]\)
+\(s_{ij} > 0\) total claims in cell \((i, j)\)
+\(v_{ij} > 0\) total volume in cell \((i, j)\)
+\(v_{ij} \widehat{=}\) total insurance sum or units per year
+
+Abbreviate
+\(
+x_i := u_{1i}, \quad y_j := u_{2j}, \quad (i, j) \in [I] \times [K].
+\)
+
+Shall consider volume-adjusted quantity
+\[
+z_{ij} := \frac{s_{ij}}{v_{ij}}, \quad (i, j) \in [I] \times [K],
+\]
+called claims requirement (in case of units per year) or claims rate (in case of insurance sums), \((i, j) \in [I] \times [K]\)
+Set
+\[
+\mu := \frac{\sum_{(i, j) \in [I] \times [K]} s_{ij}}{\sum_{(i, j) \in [I] \times [K]} v_{ij}} \widehat{=} \frac{\text{total losses}}{\text{total volume}}.
+\]
+This shall serve as basic premium: \(\bar{b} = \mu\)
+Akin to pure risk premium (expected claim size)
+
+The method of marginal averages prescribes the following marginal factors:
+\[
+x_i := \frac{\sum_{j=1}^K s_{ij}}{\mu \sum_{j=1}^K v_{ij}}, \quad i \in [I],
+\]
+
+\[
+y_j := \frac{\sum_{i=1}^I s_{ij}}{\mu \sum_{i=1}^I v_{ij}}, \quad j \in [J].
+\]
+
+The resulting individual premium charged in cell \((i, j) \in [I] \times [J]\) is given by
+\[
+b_{ij} = \mu x_i y_j.
+\]
+
+
+State the method of total marginal sums from Bailey & Jung
+
+The method of marginal averages has a tendency for over/underestimation,
+a potential solution is given by the alternative marginal factors:
+
+\( x_i = \frac{\sum^K_{j=1} s_{ij}}{\mu \sum_{j=1}^K v_{ij}y_j}, i \in [I] \)
+\( y_j = \frac{\sum^l_{i=1} s_{ij}}{\mu \sum_{i=1}^l v_{ij}x_j}, j \in [K] \)
+
+Usually numerical methods are required to solve this system of equations,
+by hand this can be mimicked by choosing initial \( y_j \) (hopefully close to the actual solution)
+determining \( x_i \), with them new \( y_j \) and repeating this iteratively until the value stabilizes.
+
+
+Build up the framework for Bonus-Malus Systems (BMS) via Markov Chains
+
+Primary differentiation of premia: 
+Using risk cells, collective is sorted into
+approximately homogeneous subcollectives
+Secondary differentiation of premia: 
+Adjustment of premia according to individual loss experiences
+
+BMS corresponds to the secondary case.
+Advantage: Incentivise risk-averse behaviour of policyholders
+Reward absence of losses in one period with lower premium in subsequent one,
+Penalise losses in one period with higher premium in subsequent one.
+
+Let there be \( m \)-BM cells (or classes), \( \mathcal{C} = \{c_0, \dots, c_{m-1}\} \)
+with \( c_1 < \dots < c_m \) and let \( \{X_t\}_{t \in \mathbb{N}} \) be the classification process
+for an individual.
+Initially put all individuals into one cell e.g. \( X_0 = c_0 \).
+The BM rule assigns new cells \( \phi : \mathcal{C} \times \mathbb{N}_0 \to \mathcal{C} \)
+\( \forall k, k' \in \mathbb{N}_0 : k \leq k' \implies \phi(c, k') \leq \phi(c, k) \),
+the corresponding premium is \( \mu \pi(c_i) \), where \( \mu \) is some base premium.
+
+A (discrete) Markov chain is characterized by two objects
+The matrix of transition probabilities 
+\( Q(t) = Q^t : \mathbb{R}^{|\mathcal{C}|} \times \mathbb{R}^{|\mathcal{C}|}\)
+with entries
+\( q_{cc'}(t)_{(c,c') \in \mathcal{C} \times \mathcal{C}} = \mathbb{P}[X_{t+1} = c' |X_t = c] \),
+if \( \mathbb{P}[X_t = c] > 0 \) and otherwise \( 0\).
+The initial distribution \( p := \mathbb{P}_{X_0} \)
+
+It holds
+\( \sum_{j \in \mathcal{C}} q_{ij} = 1 \) for all \( i \).
+\( \mathbb{P}[X_t = c] = (p^TQ^t)_c = \sum_{i=1}^m p(i)(Q^t)_{ic} \)
+
+Let \( N_t \) be the number of claims with individual claim sizes \( Y_i^t \)
+then define \( Q^{(k)}_{c,c'} = \mathbf{1}_{\phi(c,k)}(c') \), it holds
+that \( Q = \sum_{k=0}^\infty \mathbb{P}[N_0 = k] Q^{(k)} \) defines a transition matrix.
+
+A typical example is \( \phi(c, 0) = c + 1 \wedge c_m \) and \( \phi(c, k) = c - 1 \vee 1 \) for \( k > 0 \),
+e.g.
+
+
+State methods to determine the base premium for BMS
+
+Let \( Z_t = \mu\pi(X_t) \), then 
+\( \mathbb{E}[Z_t] = \mu \sum{i=1}^m \pi(i)\mathbb{P}[X_t = i] = \mu \sum_{(c,i)}^m \pi(i)p(c)Q^t_{c,i} \)
+The approaches are
+1. \( \mathbb{E}[Z_u] = \mathbb{E}[S_u] \) for fixed \( u \).
+2. \( \sum_{t=0}^{n-1} \mathbb{E}[Z_t] = \sum_{t=0}^{n-1}\mathbb{E}[S_t] \)
+in the second \( \mu \) becomes dependend on the number of observations \( n \).
+
+Let \( \alpha = \mathbb{E}[N_u], \beta = \mathbb{E}[Y^{0}_1] \)
+
+Consider the basic premia \(\mu_u\), \(u \in \mathbb{N}_0\), defined by approach 1. and \(\mu(n)\), \(n \in \mathbb{N}\), from approach 2.
+If \(p\) is a \(Q\)-invariant initial distribution, i.e. \(p^T = p^T Q\), then
+\(
+\forall n \in \mathbb{N} \forall u \in \mathbb{N}_0 : \mu_u = \mu(n) = \mu(1) = \frac{\alpha \beta}{\sum_{c=1}^m p(c) \pi(c)}.
+\)
+If \(Q\) is weakly ergodic, i.e. there is \(p_\infty \in \mathbb{R}^m\) such that, for all unit vectors \(e_c\), \(c \in [m]\),
+\(
+\lim_{t \to \infty} e_c^T Q^t = p_\infty^T,
+\)
+we have
+\[
+\lim_{u \to \infty} \mu_u = \lim_{n \to \infty} \mu(n) = \frac{\alpha \beta}{\sum_{c=1}^m p_\infty(c) \pi(c)}.
+\]
+
+
+Describe the relevant steps for constructing a mortality table. 
+Assuming stationarity, explain how survival probabilities can be derived.
+Name an approach for modelling the remaining lifespan analytically.
+
+Derivation of mortality tables:
+• The population is first divided according to certain risk characteristics: Age,
+gender, region, smoker or non-smoker, . . . (The more risk characteristics are
+taken into account, the smaller the homogeneous subclasses (sample size).)
+• Mortality tables are derived in a three-stage process:
+– Estimate the raw mortality probabilities
+– smoothing of raw mortality probabilities
+– Estimation of safety margins
+• In practice, mortality trends must also be recognised and predicted accurately.
+Condition for a stationary process: In practice, it is often assumed that the condition
+for a stationary process
+\( \mathbb{P}[T_{x+s} > t] = \mathbb{P}[Tx > s + t| Tx > s] \), \( s, t, x \geq 0 \)
+is fulfilled for the distribution of future lifespans. 
+Implication: In particular, the condition for a stationary process implies
+\( {}_t p_x = \mathbb{P}[T_x > t] = \mathbb{P}[T_0 > x + t|T_0 > x] = \frac{{}_{t+x}p_0}{{}_{x} p_0} \)
+
+which means that the distribution of future lifespans of an \( x \)-year old person is
+already fixed by the distribution of future lifespans of a newborn.
+
+Assumption: The future lifetime follows a natural law (mortality law) that can be
+expressed through a simple formula for the distribution function \( G_x \) with only a few
+parameters.
+De Moivre:
+\( \mu(x+t) = (\omega - x - t)^{-1}, g_x(t) = (\omega - x)^{-1}, G_x(t) = tg_x(t) \), \( 0 \leq x < \omega \)
+Has a maximum age \( \omega \) and distributes \( T_x \) uniformly on \( [0, \omega-x] \) and mortality increases with \( t \).
+Weibull
+\( \mu(x+t) = k(x+t)^n, s(x) = e^{-ux^{n+1}} \), \( k > 0, n > 0, x \geq 0 \)
+
+Define the total losses of an insurance company using an individual model of risk.
+What assumptions does a homogeneous portfolio satisfy? How does the collective
+model differ from the individual model?
+
+total claim size: \( S = \sum_{i=1}^n Y_i \) with random individual claims \( Y_1, \dots, Y_n \) and
+deterministic number of risks n in the portfolio (Typically, \( \mathbb{P}[Y_i = 0] > 0 \)P
+(no claim with pos. probability))
+• homogeneous portfolio: individual claim sizes \( Y_i \) are independent and
+identically distributed
+• Distinctive features of collective model: Only consider risks that produce claims
+and acknowledge their number is random
+
+Nennen Sie den Zweck von Bonus-Malus-Systemen bei der Gestaltung von Prämien.
+
+Bonus-Malus-Systeme dienen der Prämiendifferenzierung basierend auf beobachteter Schadenvergangenheit, 
+d.h. gute / schadenfreie Risiken zahlen eine günstigere Prämie als schlechtere / schadenbehaftete Risiken.
+
+
+
+What are assumptions for fractional ages or interpolations of life table entries?
+
+
+Let \( t \in [0, 1] \) and \( x \in \mathbb{N}_0 \), to interpolate the survival probabilities of discrete entries of a life
+table the following  assumptions are common:  
+1. Linear interpolation: 
+\( S(x + t) = (1 - t) S(x) + t S(x + 1) \). 
+This is known as the uniform distribution or, perhaps more properly, a uniform distribution of deaths assumption within each year of age. Under this assumption \( {}_t p_x \) is a linear function.  
+2. Exponential interpolation, or linear interpolation on 
+\( \log S(x + t) \): \(\log S(x + t) = (1 - t) \log S(x) + t \log S(x + 1).\) 
+This is consistent with the assumption of a constant force of mortality within each year of age. Under this assumption \( {}_t p_x \) is exponential.  
+3. Harmonic interpolation: 
+\(\frac{1}{S(x + t)} = (1 - t) \frac{1}{S(x)} + t \frac{1}{S(x + 1)}.\) 
+This is what is known as the hyperbolic (historically \textit{Balducci}) assumption, for under it \( \, ^t p_x \) is a hyperbolic curve.
+
+One can then derive the remaining magnitudes e.g. for the uniform assumption we have
+
+\( {}_t q_x = \frac{S(x) - S(x+t}{S(x)} = \frac{S(x) - ((1-t)S(x) + tS(x+1))}{S(x)} = \frac{tS(x) - tS(x+1)}{S(x)} = tq_x \)
+
+The corresponding forces of mortality are given by
+1. \( \mu(x+t) = \frac{q_x}{1 - tq_x} \)
+2. \( \mu(x+t) = - \log p_x \)
+3. \( \mu(x+t) = \frac{q_x}{1 - (1-t)q_x} \)
+
+

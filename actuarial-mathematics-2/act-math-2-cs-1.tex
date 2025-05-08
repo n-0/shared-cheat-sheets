@@ -1,0 +1,86 @@
+\documentclass[11pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{actuarialangle, actuarialsymbol}
+
+
+\begin{document}
+Describe the setup of the chain ladder method and determining its factors.
+
+
+Time window of \( n + 1 \) years (\( n \in \mathbb{N} \))
+\(\rightarrow n + 1 \) potential years of occurrence
+Each claim settled ...
+• either in its year of occurrence ...
+• or in one of the \( n \) years thereafter
+\[
+[n] := \{0, 1, 2, \ldots, n\}, \quad n \in \mathbb{N}
+\]
+Claims occurring in year \( i \) settled in year \( k \) thereafter lead to random payment \( Z_{i,k} \),  
+\( i, k \in [n] \)
+\[
+i + k \leq n \Longrightarrow \text{value } Z_{i,k} \text{ known (cf. triangle)}
+\]
+\[
+i + k > n \Longrightarrow \text{value of } Z_{i,k} \text{ not known yet!}
+\]
+
+Goal: Add estimates for the values of \( Z_{i,k},\ i + k > n \), to triangle
+
+Cumulation −→ losses
+−→ random variables \( S_{i,k} , i, k ∈ [n] \), \( S_{i,k} := \sum_{l=0} Z_{i,l}\)
+As before: \( S_{i,k} \) known if \( i+k \leq n \), not yet known if \( i + k > n \)
+
+
+Best-known claims reserving method
+Idea 1: All accident years behave similarly
+Idea 2: \( S_{i,k} \approx \text{factor}_k S_{i,k-1} \)
+
+Consider the quantities
+\(
+F_{i,k} := \frac{S_{i,k}}{S_{i,k-1}}, \quad i, k \in [n], \quad k \ne 1
+\)
+
+Known if \( i + k \le n \)
+Note: For \( i + k > n \), we have
+\(
+S_{i,k} = \underbrace{S_{i,n-i}}_{\text{observable}} \prod_{l = n - i + 1}^{k} F_{i,l}
+\)
+Estimate the unknown factors!
+First step: Estimate \( F_{i,k} \) with
+\[
+\hat{\varphi}_k^{CL} := \frac{\sum_{j=0}^{n-k} S_{j,k}}{\sum_{j=0}^{n-k} S_{j,k-1}} = \sum_{j=0}^{n-k} \frac{S_{j,k-1}}{\sum_{l=0}^{n-k} S_{l,k-1}} \cdot F_{j,k}
+\]
+(weighted arithmetic mean, no dependence on \( i \)!)
+Second step: Estimate \( \mathbb{E}[S_{i,k}] \) for \( i \in [n] \) and \( k = n - i, \ldots, n \) by
+\[
+\hat{S}_{i,k}^{CL} := S_{i,n-i} \prod_{l = n - i + 1}^{k} \hat{\varphi}_l^{CL}
+\]
+
+Chain-ladder reserve for year of occurence \( i: \hat{R}_{i}^{CL} := \hat{S}_{i,n}^{CL} - S_{i,n} \)
+Total chain-ladder reserve: \( \hat{R}^{CL} = \sum_{i=0}^n \hat{R}_{i}^{CL} \)
+
+
+Describe the setup of the crossing up method and determine its factors.
+
+Reserves only depend on unobservable information about \(S_{i,n}\), \(i \in [n]\)
+Alternative: Estimate \(S_{i,n}\) directly with grossing-up method
+Set \(\gamma_{i,n-1} = \frac{S_{i,n-1}}{S_{i,n}}\), \(i \in [n]\)
+Trivial: 
+\(S_{i,n} = \frac{S_{i,n-1}}{\gamma_{i,n-1}}\) 
+Compute 
+\(\gamma_{i,n-1}\)'s iteratively starting with \(i = 0\): 
+\[\hat{\gamma}_{n-i}^{GU} :=
+\begin{cases}
+1 & i = 0 \\
+\frac{\sum_{j=0}^{i-1} S_{j,n-i}}{\sum_{j=0}^{i-1} \hat{S}_{j,n}^{GU}} & i > 0
+\end{cases}\] 
+
+\(
+\hat{S}_{i,n}^{GU} := \frac{S_{i,n-i}}{\hat{\gamma}_{n-i}^{GU}}, \quad i \in [n]
+\)
+Grossing-up reserve for year of occurence \( i: \hat{R}_{i}^{GU} := \hat{S}_{i,n}^{GU} - S_{i,n-i} \)
+Total grossing-up reserve \( \hat{R}_{i}^{GU} := \sum_{i=0}^n \hat{R}_{i}^{CL} \)
+
+\end{document}
+

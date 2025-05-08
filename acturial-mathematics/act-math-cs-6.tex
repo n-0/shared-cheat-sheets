@@ -1,0 +1,228 @@
+State some observations about aggregate models and special cases for certain distributios.
+
+Individual risk model:  
+\(
+S = X_1 + X_2 + \cdots + X_n \rightarrow \mathbb{E}[S] = n\mathbb{E}[X]
+\)
+\(
+\text{Var}(S) = n \text{Var}(X)
+\)
+
+Collective risk model:  
+\(
+S = X_1 + X_2 + \cdots + X_N \rightarrow \mathbb{E}[S] = \mathbb{E}[N]\mathbb{E}[X]
+\)
+\(
+\text{Var}(S) = \mathbb{E}[N] \text{Var}(X) + \text{Var}(N) \mathbb{E}[X]^2
+\)
+
+Normal Distribution:  
+\(
+X_i \overset{iid}{\sim} N(\mu, \sigma^2) \rightarrow S^L = X_1 + X_2 + \cdots + X_n \sim N(n\mu, n\sigma^2)
+\)
+Exponential Distribution:  
+\(
+X_i \overset{iid}{\sim} Exp(\theta) \rightarrow S^L = X_1 + X_2 + \cdots + X_n \sim Gamma(\alpha = n, \theta)
+\)
+
+Normal approximation:  
+\(
+S \sim N(\mu = \mathbb{E}[S], \sigma^2 = \text{Var}(S)) \rightarrow \Pr(S \leq k) \approx N\left( \frac{k - \mu}{\sigma} \right)
+\)
+
+
+State the general version, how to determine the distribution of aggregated claims
+
+Let \( S = \sum_{i=1}^N X_i \), where \( X_i \) are i.i.d. and \( N \) is independent of the \( X_i \) and discrete, then
+\( \mathbb{P}[S \leq s] = \sum_{n=0}^\infty f_N(n)\mathbb{P}[\sum_{i=1}^N X_i \leq s|N=n] = \sum_{n=0}^\infty f_N(n)F^{\ast n}_X(s)\)
+\( \mathbb{P}[S = s] = \sum_{n=0}^\infty f_N(n)f^{\ast n}_X(s)\)
+where \( F^{\ast n}(s) \) is the \( n \)-th convolution power, and \( f^{\ast 0}(k) = \delta(k), f^{\ast 1}(k) = f(k) \)
+
+Recall that the distribution of the sum of two r.v. \( X + Y = Z \) is given by the convolution via:
+\( f_Z(n) = \sum_{k+m=n} = f_X(k)f_Y(m) = \sum_{k=0}^n f_X(k)f_Y(n-k) \)
+\( F_Z(n) = \sum_{k=0}^n = f_X(k)F_Y(n-k) = \sum_{k=0}^n F_X(k)f_Y(n-k) \)
+and in the continuous case
+\( f_Z(s) = \int_{0}^s f_X(x)f_Y(s - x)dx \)
+\( F_Z(s) = \int_{0}^s f_X(x)F_Y(s - x)dx \)
+Note that convolution is commutative, so one can exchange \( x,s-x \) in the arguments. 
+
+
+Define Panjer distributions and give the corresponding recursion scheme
+
+Let \(\mathbf{p} = (p_k)_{k \in \mathbb{N}_0}\) be a sequence of probability weights, i.e.,
+\(\forall k \in \mathbb{N}_0: p_k \ge 0\)
+\(\sum_{k=0}^\infty p_k = 1\)
+\(\mathbf{p}\) is a Panjer distribution if
+\(p_0 > 0\)
+\(\exists a, b \in \mathbb{R}\) s.t. \(\forall k \in \mathbb{N}: p_k = p_{k-1} \left(a + \frac{b}{k}\right)\)
+\(\mathbf{p}\) is degenerate if \(p_0 = 1\).
+
+Some interesting cases are
+Binomial
+\( a = \frac{-p}{1-p}, b = \frac{p(n+1)}{1-p} \)
+Poisson
+\( a = 0, b = \lambda \)
+NB
+\( a = 1-p, b = (1-p)(r-1) \)
+
+\((N, (Y_n)_{n \in \mathbb{N}})\) insurance portfolio from collective model of risk
+\(S := \sum_{n=1}^N Y_n\)
+\( N \) has nondegenerate Panjer distribution with constants \(a, b \in \mathbb{R}\), \(\mathbf{p} = (\mathbb{P}(N=k))_{k \in \mathbb{N}_0}\)
+\(\mathbb{P}_{Y_1}\) supported on \(\mathbb{N}_0\)
+\(f_k := \mathbb{P}(S=k)\), \(g_k := \mathbb{P}(Y_1 = k)\), \(k \in \mathbb{N}_0\)
+Then
+\[
+\mathbb{P}(S=r) = f_r = 
+\begin{cases}
+    \sum_{k=0}^\infty p_k g_0^k & r=0 \\
+    \frac{1}{1-ag_0} \sum_{k=1}^r \left(a + \frac{b k}{r}\right) g_r f_{r-k} & r \in \mathbb{N}
+\end{cases}
+\]
+
+Give examples of compound distributions from the lecture
+
+
+\(N\) has binomial distribution with parameters \(v, p\) (\(N \sim \text{Bin}(v, p)\)) if
+\[
+\mathbb{P}(N=n) = \binom{v}{n} p^n (1-p)^{v-n}, \quad n \in \mathcal{A},
+\]
+where \(\mathcal{A} := \{0, 1, ..., v\}\)
+
+Suppose in the collective model that \(Y_1 \sim G\). 
+If \(N \sim \text{Bin}(v, p)\), we say \(S\) has compound binomial distribution (\(S \sim \text{CompBin}(v, p, G)\)).
+
+It's characteristic function is given by \( \phi_S(t) = (p\phi_{Y_1}(t) + 1 - p)^v \).
+
+Let \( v > 0 \) be the deterministic volume and \( \lambda > 0 \) the claims frequency.
+
+\(N\) has Poisson distribution with parameter \(\lambda v > 0\) (\(N \sim \text{Poi}(\lambda v)\)) if
+\[
+\mathbb{P}(N=n) = e^{-\lambda v} \frac{(\lambda v)^n}{n!}, \quad n \in \mathcal{A},
+\]
+where \(\mathcal{A} := \mathbb{N}_0\)
+
+Suppose in the collective model that \(Y_1 \sim G\). 
+If \(N \sim \text{Poi}(\lambda v)\), we say \(S\) has compound Poisson distribution (\(S \sim \text{CompPoi}(\lambda v, G)\)).
+
+
+Define Maximum Likelihood Estimation (MLE) and state some special cases
+
+Idea: Given observations \(N_1, ..., N_T\), take parameter under which it is most likely/typical
+For \(t = 1, ..., T\) consider
+\(
+\mathbb{N}_0 \ni k \mapsto p_k^t(\vartheta) := \mathbb{P}^\vartheta(N_t = k)
+\)
+\(
+\Rightarrow \Omega \ni \omega \mapsto p_{N_t(\omega)}^t(\vartheta) \text{ random quantity}
+\)
+Likelihood function:
+\(
+L(N_1, ..., N_T, \vartheta) := \prod_{t=1}^T p_{N_t}^t(\vartheta)
+\)
+Log-likelihood function:
+\(
+\ell(N_1, ..., N_T, \vartheta) := \log(L(N_1, ..., N_T, \vartheta))
+\)
+\(
+\widehat{\vartheta}(\omega) := \arg \max_{\vartheta \in \Theta} L(N_1, ..., N_T, \vartheta)\) is the MLE.
+
+In case that \( N_1, \dots, N_T \) are independent, then
+\( N_t \sim \text{Bin}(v_t, p) \), \( \hat{p} = \frac{\sum_{t=1}^T N_t}{\sum_{t=1}^T v_t} \)
+\( N_t \sim \text{Pois}(\lambda v_t) \), \( \hat{\lambda} = \frac{\sum_{t=1}^T N_t}{\sum_{t=1}^T v_t} \)
+where \( v_t \) is the volume of policies.
+
+These also coincide with the variance minimizing estimators, which are derived from
+\( \hat{\lambda} = \left(\sum_{t = 1}^T \frac{1}{\tau^2_t}\right)^{-1}\sum_{t=1}^T \frac{N_t/v_t}{\tau^2_t} \)
+where \( \lambda = \mathbb{E}[\frac{N_t}{v_t}] \) and \( \tau_t^2 = \text{Var}[\frac{N_t}{v_t}] \).
+This estimator can't be used directly typically as \( \tau_t^2 \) is not known. 
+The corresponding variances for above are
+\( \text{Var}[\hat{p}] = \frac{p(1-p)}{\sum_{t=1}^T v_t} \)
+\( \text{Var}[\hat{\lambda}] = \frac{\lambda}{\sum_{t=1}^T v_t} \).
+
+
+
+Describe the Method of Moments for parameter estimation
+
+The Method of Moments (MoM) estimates parameters \(\theta\) of a probability distribution by equating theoretical moments to sample moments.  
+General Procedure:
+1. Compute the theoretical moments \( m_k \) in terms of parameters \( \theta \).  
+\(
+m_k = E[X^k]
+\)
+2. Compute the sample moments \( \hat{m}_k \) from observed data \( X_1, X_2, ..., X_n \).  
+\(
+\hat{m}_k = \frac{1}{n} \sum_{i=1}^{n} X_i^k
+\)
+3. Solve the system of equations: 
+\(m_k(\theta_1, \theta_2, \dots, \theta_r) = \hat{m}_k, \quad k = 1, 2, \dots, r\) 
+to obtain parameter estimates \( \hat{\theta} \).
+## **Examples**  
+
+Example Normal Distribution:
+\( X \sim N(\mu, \sigma^2) \)  
+Theoretical moments:  
+\(
+E[X] = \mu, \quad E[X^2] = \mu^2 + \sigma^2
+\)
+Sample moments:  
+\(
+\hat{m}_1 = \frac{1}{n} \sum X_i, \quad \hat{m}_2 = \frac{1}{n} \sum X_i^2
+\)
+Solve for parameters:  
+\(
+\hat{\mu} = \hat{m}_1
+\)
+\(
+\hat{\sigma}^2 = \hat{m}_2 - \hat{m}_1^2
+\)
+Example Gamma Distribution:
+\( X \sim \text{Gamma}(\alpha, \beta) \)  
+Theoretical moments:  
+\(
+E[X] = \frac{\alpha}{\beta}, \quad E[X^2] = \frac{\alpha(\alpha+1)}{\beta^2}
+\)
+Sample moments:  
+\(
+\hat{m}_1 = \frac{1}{n} \sum X_i, \quad \hat{m}_2 = \frac{1}{n} \sum X_i^2
+\)
+Solve:  
+\(
+\hat{\beta} = \frac{\hat{m}_1}{\hat{m}_2 - \hat{m}_1^2}, \quad \hat{\alpha} = \hat{\beta} \hat{m}_1
+\)
+
+Key Properties
+Consistency: As \( n \to \infty \), \( \hat{\theta} \to \theta \) if moments exist and are unique.  
+Bias: MoM estimators may be biased.  
+Efficiency: MoM is generally less efficient than MLE but simpler.  
+
+
+Describe the procedure of Layering in insurance
+
+Recall layering from discussion of compound Poisson distribution
+\(S = \sum_{i=1}^N Y_i \sim \text{CompPoi}(\lambda v, G), G(M) \in (0, 1) \text{ for } M > 0\)
+Then
+\[
+S_1 := \sum_{i=1}^N Y_i \mathbf{1}_{\{Y_i \le M\}} \text{ and } S_2 := \sum_{i=1}^N Y_i \mathbf{1}_{\{Y_i > M\}}
+\]
+independent CompPoi-distributed random variables
+Importance of layering in insurance: Reinsurance available for different layers.
+Fitting claim size data with a single distribution from above potentially not
+satisfactory.
+
+Key idea: Fit small and large claims separately
+Step 1: Choose \(M > 0\) large s.t. many observed claims \(Y_i\) satisfy \(Y_i \le M\)
+Step 2: Fit truncated (i.e. conditioned to \((0, M]\)) distribution from the classes introduced above to data or use empirical distribution
+Step 3: Estimate \(G(M)\), e.g. \(G(M) = \frac{\# \text{ claims } \le M}{\# \text{ all claims}}\)
+Step 4: Fit Pareto\((M, \alpha)\)-distribution to claims \(Y_i\) with \(Y_i > M\)
+Comments on Step 4:
+
+Pareto distribution has heaviest tail
+Pareto\((\theta, \alpha)((-\infty, \theta]) = 0\)
+Only need to estimate one parameter \(\alpha\) to describe tail
+
+Recall that the Pareto distribution is given by:
+\( f_X(x) = \frac{\alpha M^\alpha}{x^{\alpha+1}} \) for \( x \geq M \) otherwise it's \( 0 \)
+\( F_X(x) = 1 - (\frac{M}{x})^\alpha \) for \( x \geq M \) otherwise it's \( 0 \)
+with
+\( \mathbb{E}[X] = \frac{\alpha M}{\alpha - 1} \quad \text{Var}[X] = \frac{\alpha M^2}{(\alpha - 1)^2(\alpha - 2}\) 
+for \( \alpha > 1, \alpha > 2 \) respectively otherwise \( \infty \).

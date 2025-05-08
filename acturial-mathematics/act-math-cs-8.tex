@@ -1,0 +1,39 @@
+Explain the methodology for goodness-of-fit tests
+
+\( (N_1, \dots, N_T) \) claim count data
+\( (v_1, \dots, v_T) \) associated known volumes
+Null hypothesis \( H_0 \): \( N_1, \dots, N_T \) independent; \( N_t \sim \text{Poi}(\lambda v_t) \)
+Test hypothesis with a \( \chi^2 \)-goodness-of-fit test
+Suppose \( (X_i^t)_{i \in \mathbb{N}} \) i.i.d. \( \text{Poi}(\lambda) \)-distributed
+\( \forall t = 1, \dots, T \): If \( H_0 \) holds, then
+\[
+N_t \overset{d}{=} \sum_{i=1}^{v_t} X_i^t
+\]
+For large \( v_t \), using the Central Limit Theorem:
+\[
+\frac{N_t - \lambda v_t}{\sqrt{\lambda v_t}} \overset{d}{=} \frac{\sum_{i=1}^{v_t} X_i^t - \lambda v_t}{\sqrt{\lambda v_t}} \overset{d}{\approx} \mathcal{N}(0,1)
+\]
+It follows that:
+\[
+\chi^2 := \sum_{t=1}^{T} \frac{(N_t - \lambda v_t)^2}{\lambda v_t} \approx \sum_{t=1}^{T} Z_t^2, \text{ where } Z_1, \dots, Z_T \text{ i.i.d. } \mathcal{N}(0,1) \text{-distributed}
+\]
+A hypothesis test can therefore conducted, assert \( H_0 \sum_{t=1}^{T} Z_t^2 \sim \chi^2  \) with statistic \( \sum_{t=1}^{T} Z_t^2 < F^{-1}_{\chi^2}(1 - \alpha) \) at level \( \alpha \).
+
+
+
+What is the Kolmogorov-Smirnov statistic?
+
+\((Y_n)_{n \in \mathbb{N}}\) i.i.d. random variables on \((\Omega, \mathcal{F}, \mathbb{P})\)
+\(Y_1 \sim G\)
+Statistics: \(D_N := D_N(Y_1, \dots, Y_N) := \sup_{x \in \mathbb{R}} |\hat{G}_N(x) - G(x)|\)
+where \( \hat{G}_N(x) = \frac{1}{N}\sum_{n=1}^N \mathbf{1}_{Y_i \leq x} \)
+Then: \(D_N \xrightarrow{P-a.s.} 0\)
+If \(G\) is continuous, then \(\sqrt{N}D_N \xrightarrow{d} K\)
+\(K\): Kolmogorov distribution with cdf \(K(x) := \left(1 - 2 \sum_{j=1}^\infty (-1)^{j+1} e^{-2j^2 x^2} \right) \mathbb{1}_{(0, \infty)}(x), \quad x \in \mathbb{R}\).
+
+Construct test for \( H_0 \) vs. \( H_1 \) under additional assumption \( G_0 \) continuous
+\( K \) strictly increasing on \( (0, \infty) \) and continuous
+\( q_{\bullet} \) quantile function of \( K \) 
+Under \( H_0 \):
+\( \mathbb{P}[D_N \leq \frac{q_{1-\alpha}}{\sqrt{N}}] = \mathbb{P}[\sqrt{N}D_N \leq q_{1-\alpha}] \approx K((\infty, q_{1-\alpha})) = 1 - \alpha \).
+⇒ Reject \( H_0 \) with significance level \( \alpha \) if \( D_N > \frac{q_{1-\alpha}}{\sqrt{N}} \)

@@ -76,8 +76,151 @@ where
 \(
 \tau_n^2 = \frac{1}{\frac{1}{\tau_0^2} + \frac{n}{\varsigma^2}} \quad \text{and} \quad \mu_n = \frac{\frac{1}{\tau_0^2} \mu_0 + \frac{n}{\varsigma^2} \bar{x}}{\frac{1}{\tau_0^2} + \frac{n}{\varsigma^2}}.
 \)
+Proof:
+By Bayes’ theorem, the posterior distribution is proportional to the product of the prior and the likelihood:
+\(
+p(\theta \mid x_1,\dots,x_n)
+\;\propto\;
+p(\theta)
+\;\times\;
+\prod_{i=1}^n p(x_i \mid \theta).
+\)
+Prior: Since \(\theta \sim \mathcal{N}(\mu_0, \tau_0^2)\),
+  \[
+  p(\theta)
+  \;=\;
+  \frac{1}{\sqrt{2\pi\,\tau_0^2}}
+  \,\exp\!\Bigl(\!-\frac{1}{2\tau_0^2}\,\bigl(\theta - \mu_0\bigr)^2\Bigr).
+  \]
 
-ADD REMAINING PROOF (LEFT AS EXERCISE)
+Likelihood: Since \(X_i \mid \theta \sim \mathcal{N}(\theta, s^2)\),
+\[
+p(x_i \mid \theta)
+\;=\;
+\frac{1}{\sqrt{2\pi\,s^2}}
+\,\exp\!\Bigl(\!-\frac{1}{2s^2}\,\bigl(x_i - \theta\bigr)^2\Bigr).
+\]
+Hence
+\[
+\prod_{i=1}^n p(x_i \mid \theta)
+\;=\;
+\bigl(2\pi\,s^2\bigr)^{-n/2}
+\,\exp\!\Bigl(\!-\frac{1}{2s^2}\,\sum_{i=1}^n\bigl(x_i - \theta\bigr)^2\Bigr).
+\]
+
+Therefore,
+\[
+p(\theta \mid x_1,\dots,x_n)
+\;\propto\;
+\exp\!\Bigl(\!-\frac{1}{2\tau_0^2}\,(\theta - \mu_0)^2\Bigr)
+\;\times\;
+\exp\!\Bigl(\!-\frac{1}{2s^2}\,\sum_{i=1}^n (x_i - \theta)^2\Bigr).
+\]
+
+Combine the exponents into a single quadratic form in \(\theta\):
+
+\(
+-\frac{1}{2\tau_0^2}\,(\theta - \mu_0)^2
+\;-\;
+\frac{1}{2s^2}\,\sum_{i=1}^n (x_i - \theta)^2.
+\)
+
+We expand each square:
+
+1. \((\theta - \mu_0)^2 = \theta^2 \;-\; 2\,\theta\,\mu_0 \;+\; \mu_0^2.\)
+2. \(\sum_{i=1}^n (x_i - \theta)^2
+   = \sum_{i=1}^n (x_i^2 \;-\; 2\,\theta\,x_i \;+\; \theta^2)
+   = \sum_{i=1}^n x_i^2 \;-\; 2\,\theta\sum_{i=1}^n x_i \;+\; n\,\theta^2.\)
+
+Hence, the exponent becomes
+\[
+-\frac{1}{2}\Bigl[
+\frac{1}{\tau_0^2}\,\bigl(\theta^2 - 2\,\theta\,\mu_0 + \mu_0^2\bigr)
+\;+\;
+\frac{1}{s^2}\,\Bigl(\sum_{i=1}^n x_i^2 - 2\,\theta\sum_{i=1}^n x_i + n\,\theta^2\Bigr)
+\Bigr].
+\]
+Collect the terms in \(\theta^2\) and \(\theta\). The expression becomes
+\[
+-\frac{1}{2}\Bigl[
+\bigl(\tfrac{1}{\tau_0^2} + \tfrac{n}{s^2}\bigr)\,\theta^2
+\;-\;
+2\,\Bigl(\tfrac{\mu_0}{\tau_0^2} + \tfrac{\sum x_i}{s^2}\Bigr)\,\theta
+\;+\;
+\text{(terms independent of }\theta\!)\Bigr].
+\]
+
+We focus on the *\(\theta\)-dependent* part:
+\[
+\bigl(\tfrac{1}{\tau_0^2} + \tfrac{n}{s^2}\bigr)\,\theta^2
+\;-\;
+2\,\Bigl(\tfrac{\mu_0}{\tau_0^2} + \tfrac{\sum x_i}{s^2}\Bigr)\,\theta.
+\]
+Let
+\[
+B \;=\; \frac{1}{\tau_0^2} + \frac{n}{s^2},
+\quad
+A \;=\; \frac{\mu_0}{\tau_0^2} + \frac{\sum x_i}{s^2}.
+\]
+Then the expression above is
+\[
+B\,\theta^2 \;-\; 2\,A\,\theta
+\;=\;
+B\,\bigl[\theta^2 \;-\; 2\,\tfrac{A}{B}\,\theta\bigr]
+\;=\;
+B\,\Bigl[\bigl(\theta - \tfrac{A}{B}\bigr)^2 - \bigl(\tfrac{A}{B}\bigr)^2\Bigr].
+\]
+Hence
+\[
+B\,\bigl(\theta - \tfrac{A}{B}\bigr)^2
+\;-\;
+B\,\bigl(\tfrac{A}{B}\bigr)^2
+\;=\;
+B\,\bigl(\theta - \tfrac{A}{B}\bigr)^2
+\;-\;
+\frac{A^2}{B}.
+\]
+
+Thus, up to a constant (in \(\theta\)), the posterior density in \(\theta\) has the form
+\[
+\exp\!\Bigl(\!-\tfrac{1}{2}\,B\,(\theta - \tfrac{A}{B})^2\Bigr).
+\]
+This is the kernel of a normal distribution in \(\theta\) with:
+
+- **Precision** \(B = \frac{1}{\tau_0^2} + \frac{n}{s^2}\),
+- **Mean** \(\frac{A}{B} = \frac{\tfrac{\mu_0}{\tau_0^2} + \tfrac{\sum x_i}{s^2}}
+                                 {\tfrac{1}{\tau_0^2} + \tfrac{n}{s^2}}\).
+
+Recalling that \(\sum_{i=1}^n x_i = n\,\bar{x}\), we rewrite:
+
+Posterior variance:
+  \[
+  \tau_n^2
+  \;=\;
+  B^{-1}
+  \;=\;
+  \Bigl(\tfrac{1}{\tau_0^2} + \tfrac{n}{s^2}\Bigr)^{-1}.
+  \]
+Posterior mean:
+  \[
+  \mu_n
+  \;=\;
+  \frac{A}{B}
+  \;=\;
+  \frac{\tfrac{\mu_0}{\tau_0^2} + \tfrac{n\,\bar{x}}{s^2}}
+       {\tfrac{1}{\tau_0^2} + \tfrac{n}{s^2}}
+  \;=\;
+  \frac{\tfrac{1}{\tau_0^2}\,\mu_0 \;+\; \tfrac{n}{s^2}\,\bar{x}}
+       {\tfrac{1}{\tau_0^2} \;+\; \tfrac{n}{s^2}}.
+  \]
+
+Therefore, the posterior distribution is exactly
+\[
+\theta \;\big|\; x_1,\dots,x_n,\;s^2
+\;\sim\;
+\mathcal{N}\!\bigl(\mu_n,\;\tau_n^2\bigr),
+\]
+as was to be shown.
 
 
 Define the notion of precision. State the posterior distribution of the mean, conditionally on the sampling variance. 

@@ -26,8 +26,9 @@ ATTENTION: The net risk premium is not sufficient:
 - A similar result holds in a one-period setting: Letting the portfolio size \(n\) tend to infinity, the one-period 'ruin probability'
 \[P \left[ \pi n(L) - \sum_{i=1}^n L_i < 0 \right] = P \left[ \frac{\sum_{i=1}^n (L_i - E[L])}{\sqrt{n} \sigma(L)} < 0 \right]\]
 converges to 1/2 (Central Limit Theorem).
-
 Conclusion: An (explicit or implicit) safety loading is necessary!
+
+Let \(K^u_n = u + n\pi + \sum_{i=1}^n L_i\)
 By the strong law of large numbers, the random walk \(Z_n := \sum_{i=1}^n (\pi + L_i)\), \(n \in \mathbb{N}\), satisfies
 \[\lim_{n \rightarrow \infty} \frac{1}{n} Z_n = \pi + E[L_1] \quad P\text{-a.s..}\]
 \(\pi < E[L_1]\): For any \(u\), this implies

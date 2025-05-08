@@ -284,6 +284,30 @@ The following properties hold if the model is correctly specified, but without a
 
 Gauss-Markov-Theorem: The LSE has the smallest variance among all linear and unbiased estimators of \(\beta\).
 
+Suppose that
+\[
+  \lim_{n \to \infty} \frac{1}{n} \mathbf{X}_n^T \mathbf{X}_n = \mathbf{V} \qquad (1)
+\]
+with \( \mathbf{V} \in \mathbb{R}^{p,p} \) positive definite with \( p = k + 1 \) and \( \mathbf{X}_n \) is the design matrix with
+\( n \)-observations.
+then it holds:
+The LS estimator \( \hat{\beta}_n \) and REML estimator \( \hat{\sigma}^2_n \) are consistent for \( \beta \) and \( \sigma^2 \), respectively.
+The LS estimator \( \hat{\beta}_n \) is asymptotically normal with
+\[
+\sqrt{n} (\hat{\beta}_n - \beta) \xrightarrow{d} N(0, \sigma^2 \mathbf{V}^{-1}).
+\]
+This implies that for large \( n \) the estimator \( \hat{\beta}_n \) possesses approximately the normal distribution
+\[
+  N\left( \beta, \hat{\sigma}^2_n (\mathbf{X}_n^T \mathbf{X}_n)^{-1} \right).
+\]
+
+The assumption (1) is satisfied if the covariates \(\mathbf{x}_i\) are i.i.d.
+A counterexamples are covariates with a trend e.g. in 1D, \( x_i = i \implies \frac{1}{n}\frac{1}{n} X_n^T X_n = \sum_{i=1}^n i^2 \), 
+The weaker assumptions,
+\( (\mathbf{X}_n^\top\mathbf{X}_n)^{-1} \xrightarrow 0 \) gives consistency
+\( \sup_i \mathbf{x}_i^\top(\mathbf{X}_n^\top\mathbf{X}_n)^{-1}\mathbf{x}_i \xrightarrow 0 \) gives asymptotic normality
+actually give the same result and resolve this issue.
+
 The following properties hold if additionally \(\varepsilon \sim N(0, \sigma^2 \mathbf{I})\):
 Distribution of the response variable: \(y \sim N(\mathbf{X}\beta, \sigma^2 \mathbf{I})\)
 Distribution of LSE: \(\hat{\beta} \sim N(\beta, \sigma^2 (\mathbf{X}^\top \mathbf{X})^{-1})\)

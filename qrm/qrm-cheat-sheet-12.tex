@@ -84,6 +84,9 @@ entities?
 
 Systemic risk is measured by the set of allocations of additional capital that lead to acceptable outcomes.
 
+Let \( \mathcal{Y} \) be the space of non-decreasing random fields \( Y : \mathbb{R}^l \to L^\infty(\Omega, \mathbb{R}) \),
+they represent cash flow or value models (CVM). Relevant examples are \( Y_k = e_0(X + k) \) as in Eisenberg and Noe. 
+
 Letting \(\mathcal{P}(\mathbb{R}^n; \mathbb{R}_+) := \{ B \subseteq \mathbb{R}^n \mid B = B + \mathbb{R}^n_+ \}\) 
 be the collection of upper sets with ordering cone \(\mathbb{R}_+\), we call the function 
 
@@ -95,6 +98,8 @@ a systemic risk measure, if for some acceptance set \(\mathcal{A} \subseteq \mat
 Elementary Properties:
 1. Cash-invariance:  \( R(Y; k) + m = R(Y; k - m) \)
 2. Monotonicity:  \( Y \geq Z \implies (\forall k \in \mathbb{R}^n: R(Y; k) \supseteq R(Z; k)) \)
+
+The boundary of \( R(Y; k) \) is also referred to as \( \text{Min}\ R(Y;k) := \{m \in \mathbb{R} | (m - \mathbb{R}^l_{+}) \cap R(Y;k) = \{m\}\} \).
 
 
 Let \(\mathcal{P}(\mathbb{R}^l)\) be the power set of \(\mathbb{R}^l\). A mapping
@@ -116,9 +121,19 @@ Cash-invariance:
 k^*(Y; k) + m = k^*(Y; k - m)
 \)
 
+EAR can be characterized
+as minimizers of the total weighted cost among all acceptable allocations, if we assign a price of regulatory capital to each entity,
+While typical examples are usually single-valued,
+efficient cash-invariant allocation rules may admit multiple values in non-generic circumstances.
+
+Define the recession cone as of a systemic risk measure as 
+\( \text{recc} R(y) = \{w \in \mathbb{R}^l | \forall \alpha > 0 : \alpha m + R(Y) \subseteq R(Y) \} \)
+which are the directions within the risk measure in which an arbitrary amount of capital can be
+added.
+
 
 Let \( R : \mathcal{Y} \times \mathbb{R}^l \to \mathcal{P}(\mathbb{R}^l; \mathbb{R}^l_+) \) be a systemic risk measure with convex values. 
-For \( w : \mathcal{Y} \to \mathbb{R}^l_{++} \) such that
+For \( w : \mathcal{Y} \to \mathbb{R}^l_{++} = (0, \infty)^{++} \) such that
 \(
 w(Y) \in \operatorname{recc} R(Y;0)^+,
 \)
@@ -134,3 +149,6 @@ k^*(Y; k) \subseteq \hat{k}(Y; k) \quad \text{for all } Y \in \mathcal{Y} \text{
 \)
 
 The lemma provides examples of EARs via a specific choice of the regulatory price of capital \( w \).
+The vector \( w(Y) \in \mathbb{R}^l_{++} \) can be interpreted as a vector of prices of the
+capital requirements of the firms that is chosen by the regulator. For firm \( i \) the component \( w(Y)_i \)
+signifies the price that the regulator assigns to one unit of regulatory capital of firm \( i \).

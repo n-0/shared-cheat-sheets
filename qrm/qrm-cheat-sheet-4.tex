@@ -65,6 +65,108 @@ The methods available for ARMA processes can be exploited for the analysis of GA
 Beyond our previous discussion on estimation, we will also discuss likelihood methods.
 
 
+Describe how likelihood methods can be applied for the estimation of a GARCH(1,1) process.
+
+
+The multivariate density can be expressed in terms of conditional densities:
+\(
+f_{\varepsilon_0, \varepsilon_1, \dots, \varepsilon_n}(x_0, x_1, \dots, x_n) = 
+f_{\varepsilon_0}(x_0) \prod_{t=1}^{n} f_{\varepsilon_t | \varepsilon_{t-1}, \dots, \varepsilon_0} (x_t | x_{t-1}, \dots, x_0).
+\)
+The identity \( \varepsilon_t = \sigma_t Z_t \) and the independence of \( Z_t \) and \( \varepsilon_{t-1}, \dots, \varepsilon_0 \) implies
+\(
+f_{\varepsilon_t | \varepsilon_{t-1}, \dots, \varepsilon_0} (x_t | x_{t-1}, \dots, x_0) = g\left( \frac{x_t}{\sigma_t} \right) \frac{1}{\sigma_t}
+\)
+with density \( g \) of \( Z_t \) and \( \sigma_t = \sqrt{\alpha_0 + \alpha_1 x_{t-1}^2 + \beta_1 \sigma_{t-1}^2} \) 
+(note how this recursive structure allows us to determine all \( \sigma_t \), if \( \sigma_0, \alpha_i \) is known)
+In summary, we obtain
+\(
+f_{\varepsilon_0, \varepsilon_1, \dots, \varepsilon_n}(x_0, x_1, \dots, x_n) = f_{\varepsilon_0}(x_0) \prod_{t=1}^{n} g\left( \frac{x_t}{\sigma_t} \right) \frac{1}{\sigma_t}.
+\)
+
+Unfortunately, the density \( f_{\varepsilon_0} \) and \( \sigma_0^2 \) are unknown. As a simplification, 
+one approximates the likelihood by the conditional density given \( \varepsilon_0 \) and chooses a fixed value for \( \sigma_0^2 \), 
+e.g. the sample variance of \( x_0, x_1, \dots, x_n \). 
+This provides an approximate likelihood function which is used for estimation:
+\(
+L(\alpha_0, \alpha_1, \beta_1, x_0, x_1, \dots, x_n) := f_{\varepsilon_1, \dots, \varepsilon_n | \varepsilon_0} (x_1, \dots, x_n) = \prod_{t=1}^{n} g\left( \frac{x_t}{\sigma_t} \right) \frac{1}{\sigma_t}.
+\)
+
+Due to the multiplicative structure of the approximated likelihood, the log-likelihood function is more convenient:
+\(
+\log L(\alpha_0, \alpha_1, \beta_1, x_0, x_1, \dots, x_n) = \sum_{t=1}^{n} \log \left\{ g\left( \frac{x_t}{\sigma_t} \right) \frac{1}{\sigma_t} \right\}.
+\)
+
+The maximum likelihood estimators can be numerically determined from the first order conditions:
+\(
+\frac{\partial}{\partial \alpha_0} \log L = 0,\frac{\partial}{\partial \alpha_1} \log L = 0,\frac{\partial}{\partial \beta_1} \log L = 0
+\)
+
+
+How can conditional risk measurements based on coherent monetary risk measures
+be computed in GARCH models?
+
+
+Let \( V_t \) be the value of a portfolio at time \( t \geq 0 \).  
+The time series of the portfolio value induces a sequence of returns with flipped sign:
+\(
+\varepsilon_t := -\frac{V_t - V_{t-1}}{V_{t-1}}.
+\)
+
+Assume that this time series can be described by a GARCH(p,q) model \( \varepsilon_t = \sigma_t Z_t \). The estimation is based on historical data.  
+On the basis of this approach, the losses in period \([t, t+1]\) are
+\(
+L_{t+1} = -(V_{t+1} - V_t) = V_t \varepsilon_{t+1} = V_t \sigma_{t+1} Z_{t+1}.
+\)
+
+Conditional loss distribution:
+\(
+\mathbb{P}[L_{t+1} \leq l \mid \mathcal{F}_t] = \mathbb{P}[Z_{t+1} \leq \frac{l}{V_t \sigma_{t+1}} \mid \mathcal{F}_t] = G\left( \frac{l}{V_t \sigma_{t+1}} \right)
+\)
+The distribution function of \( Z_{t+1} \) is denoted by \( G \).
+Conditional Value at Risk:
+\(
+\operatorname{V@R}^{t}_{\alpha} (L_{t+1}) := \inf \{ l \in \mathbb{R} \mid \mathbb{P}[L_{t+1} > l \mid \mathcal{F}_t] \leq 1 - \alpha \}
+\)
+\(
+= V_t \sigma_{t+1} \operatorname{V@R}^{t}_{\alpha} (Z_{t+1}) = V_t \sigma_{t+1} G^{(-1)} (\alpha)
+\)
+Conditional Average Value at Risk:
+\(
+\operatorname{AV@R}^{t}_{\alpha} (L_{t+1}) := \frac{1}{1 - \alpha} \int_{\alpha}^{1} \operatorname{V@R}^{t}_{u} (L_{t+1}) \, du = V_t \sigma_{t+1} \frac{1}{1 - \alpha} \int_{\alpha}^{1} G^{(-1)} (u) \, du
+\)
+
+Explain the motivation for EGARCH and TARCH and provide their definitions.
+
+Volatility increases with the size of shocks.
+But there is also an empirically documented asymmetry between positive and negative shocks. Negative
+shocks lead to larger volatility than positive shocks.
+A potential rational for this observation, the leverage effect.
+A resolution is available via the EGARCH, TARCH models:
+
+EGARCH
+\(
+\log \sigma_t^2 = w_t + \sum_{k=1}^{\infty} \beta_k g(Z_{t-k}), \quad g(Z_t) = \theta Z_t + \gamma |Z_t|
+\)
+
+with deterministic coefficients \( w_t, \beta_k, \theta, \gamma \) and strict white noise \( Z = (Z_t) \) with expectation 0 and variance 1.
+Sign effect:  
+The parameter \( \theta \) is typically negative, and the term \( \theta Z_t \) increases volatility the more, the smaller \( Z_t \).
+Size effect:  
+The parameter \( \gamma \) is typically positive, and the term \( \gamma |Z_t| \) increases volatility proportionally 
+to the absolute value of the shocks.
+
+Threshold ARCH (TARCH) simply checks, if the shocks take negative values using an indicator function. 
+Apart from this, the dependence on the past returns or squared returns is simply linear:
+\(
+\sigma_t^{\delta} = w + \sum_{i=1}^{q} \alpha_i \varepsilon_{t-i}^{\delta} + \sum_{i=1}^{q} \alpha_i^{-} \varepsilon_{t-i}^{\delta} \mathbb{1}_{\{\varepsilon_{t-i}<0\}}
+\)
+with deterministic parameters \( w, \alpha_i, \alpha_i^{-} \) and \( \delta = 1,2 \).
+The model can be extended by adding lagged conditional variances or standard deviations as regressors; such a model is called TGARCH.
+
+
+
+
 Define copulas
 
 

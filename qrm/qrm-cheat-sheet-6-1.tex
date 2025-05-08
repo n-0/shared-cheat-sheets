@@ -25,13 +25,17 @@ State the robust representation theorem for convex monetary risk measures for \(
 and \( L^p \). Discuss an economic interpretation in terms of Knightian uncertainty and
 penalized losses.
 
+Let \( \mathcal{M}_1(\mathbb{P}) ) \) denote all probability measures on which are abs. cont. with respect to \( \mathbb{P} \), so \( Q \ll \mathbb{P} \)
+and the Radon-Nikodym derivative \( \frac{dQ}{d\mathbb{P}} \) exists.
+
 Robust Representation of Risk Measures on \( L^\infty(\Omega, \mathcal{F}, \mathbb{P}) \)
 
 Let \(\rho\) be a convex risk measure on \(\mathcal{X} = L^\infty(\Omega, \mathcal{F}, \mathbb{P})\). In this case, \(\rho\) admits a robust representation
 \[
 \rho(X) = \sup_{Q \in \mathcal{M}_1(\mathbb{P})} \left\{ \mathbb{E}_Q[-X] - \alpha(Q) \right\}
 \]
-with penalty function \(\alpha(Q) = \sup_{X \in A} \mathbb{E}_Q[-X]\), \(Q \in \mathcal{M}_1(\mathbb{P})\), if and only if one of the equivalent conditions holds:
+with penalty function \(\alpha(Q) = \sup_{X \in A} \mathbb{E}_Q[-X]\), \(Q \in \mathcal{M}_1(\mathbb{P})\), \( A \) the acceptance set.
+if and only if one of the equivalent conditions holds:
 
  \(\rho\) is continuous from above, i.e., \(\rho(X_n) \searrow \rho(X)\) whenever \(X_n \searrow X\) \(\mathbb{P}\)-a.s.
  \(\rho\) has the Fatou property:

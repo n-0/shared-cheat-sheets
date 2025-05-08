@@ -1,0 +1,243 @@
+\documentclass[11pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{actuarialangle, actuarialsymbol}
+\usepackage{bbm}
+
+
+\begin{document}
+
+State the different forms of reinsurance and associated probabilities
+
+$ X $ is the loss of the original insurance policy.
+$ Y $ is the insurer’s retained loss after reinsurance.
+$ Z $ is the reinsurer’s covered loss.
+
+To find the associated probability distributions one can use the usual $ Y = g(x) \implies f_y(y) = f(g^{-1}(y))|\frac{dg^{-1}(y)}{dy}| $.
+The expectation is usually easier to determine by LOTUS.
+
+1. Quota-Share Reinsurance:
+The insurer cedes a fixed proportion $ q $ of every loss to the reinsurer.
+Insurer’s loss:
+$
+Y = (1 - q)X
+$
+Reinsurer’s loss:
+$
+Z = qX
+$
+
+2. Surplus Reinsurance:
+The insurer retains losses up to a certain level $ r $, and the reinsurer covers the rest.
+Insurer’s loss:
+$ Y = \min(X, R) $
+Reinsurer’s loss:
+$Z = \max(0, X - R)$
+
+3. Excess-of-Loss Reinsurance:
+The reinsurer covers losses exceeding a retention $ r $, up to a limit $ m $.
+Insurer’s loss:
+$  Y = \min(X, a) + \max(0, X - (a + b)) $
+Reinsurer’s loss:
+$ Z = \max(0, \min(X - a, b)) $
+
+The corresponding pdf's/cdf's are given by
+1.
+Insurer's loss:
+PDF: $ f_Y(y) = \frac{1}{1 - q} f_X\left(\frac{y}{1 - q}\right) $
+CDF: $ F_Y(y) = F_X\left(\frac{y}{1 - q}\right) $
+Reinsurer’s loss:
+PDF: $ f_Z(z) = \frac{1}{q} f_X\left(\frac{z}{q}\right) $
+CDF: $ F_Z(z) = F_X\left(\frac{z}{q}\right) $
+2.
+Insurer's loss:
+PDF:
+\[
+f_Y(y) =
+\begin{cases}
+f_X(y), & y \leq R, \\
+0, & y > R
+\end{cases}
+\]
+CDF:
+\[
+f_Y(y) =
+\begin{cases}
+F_X(y), & y \leq R, \\
+1, & y > R
+\end{cases}
+\]
+Reinsurer's loss
+PDF:
+$f_Z(z) = f_X(r + z), z \geq 0$
+CDF:
+$F_Z(z) = F_X(r + z), z \geq 0$
+3.
+Insurer's loss:
+PDF:
+\[
+f_Y(y) =
+\begin{cases}
+f_X(y), & y < r, \\
+F_X(r + m) - F_X(r), & y = r \\
+f_X(y + m), & y > r \\
+\end{cases}
+\]
+CDF:
+\[
+F_Y(y) =
+\begin{cases}
+F_X(y), & y < r, \\
+F_X(m), & y = r \\
+F_X(y + m), & y > r 
+\end{cases}
+\]
+Reinsurer's loss
+PDF:
+\[
+f_Z(y) =
+\begin{cases}
+F_X(r), & 0 = y, \\
+f_X(y + r), & 0 < y \leq m, \\
+0, & y > m
+\end{cases}
+\]
+CDF:
+\[
+F_Z(y) =
+\begin{cases}
+F_X(r), & 0 = y, \\
+F_X(y + r), & 0 < y < m, \\
+1, & y \geq m
+\end{cases}
+\]
+
+
+$f_Z(z) = f_X(r + z), z \geq 0$
+CDF:
+$F_Z(z) = F_X(r + z), z \geq 0$
+
+
+State the formulas for probabilities and related objects in life insurance/survival analysis.
+
+Complete future lifetime: \\
+$T_x$ $\rightarrow$ The pdf of $T_x$ is $f_x(t) = \px[t]{x} \mu_{x+t}$. 
+\newline
+Curtate future lifetime: \\
+$K_x = [T_x]$ $\rightarrow$ The pmf of $K_x$ is $\Pr(K_x = k) =  \px[k]{x} q_{x+k}$.
+\newline
+Survival function: $S_x(t) = \Pr(T_x > t)$ \\
+Formulas: \\
+$S_x(u+t) = S_x(u) S_{x+u}(t)$ $\rightarrow$ $S_{x+u}(t) = \frac{S_x(u+t)}{S_x(u)}$ \\
+$S_0(x+t) = S_0(x) S(t)$ $\rightarrow$ $S(t) = \frac{S_0(x+t)}{S_0(x)}$
+\newline
+
+Three conditions: \\
+(1) $S_x(0) = 1$ \\
+(2) $\lim_{t \to \infty} S_x(t) = 0$ \\
+(3) $S_x(t)$ must be a non-increasing function of $t$. \\
+\newline
+Acturial Notation: \\
+Survival probability: $ \px[t]{x} = \Pr(T_x > t) $ \\
+Mortality probability: $ \qx[t]{x} = 1 - \px[t]{x} = \Pr(T_x \leq t) $ \\
+Formulas: \\
+$ \px[t+u]{x} = \px[t]{x} \px[u]{x+t} $ \\
+$ \qx[t+u]{x} = \qx[t]{x} + \px[t]t{x} \qx[u]{x+t}$ \\
+$ \qx[t|u]{x} = \px[t]{x}\qx[u]{x+t} = \px[t]{x} - \px[t+u]{x} = \qx[t+u]{x} - \qx[t]{x} $ \\
+
+
+State the formula's related to life tables
+
+Number of lives: $ \lx{x} $ \\
+Number of deaths: $ \dx[t]{x} = \lx{x} - \lx{x+t} $ \\
+Formulas: \\
+$ \px[t]{x} = \frac{\lx{x+t}}{\lx{x}} $ \\
+$ \qx[t]{x} = \frac{\dx[t]{x}}{\lx{x}} = \frac{\lx{x} - \lx{x+t}}{\lx{x}} $ \\
+$ \qx[t|u]{x} = \frac{\dx[u]{x+t}}{\lx{x}} = \frac{\lx{x + t} - \lx{x+t+u}}{\lx{x}} $
+
+State the formula's related to the force of mortality
+
+Definition: $ \mu_x(t) = \mu_{x+t} = \frac{f_x(t)}{S_x(t)} = - \frac{d}{dt}\log S_x(t) $ \\
+where $ f_x(t) = \mathbb{P}(T(x) = t) $ and $ S_x $ the corresponding survival function.
+Condition: $ \lim_{t \to \infty} \int_{0}^t \mu_s ds = \infty $ \\
+Formulas: \\
+$ \px[t]{x} = e^{-\int{0}^t \mu_{x+s}ds} = e^{-\int{x}^{x+t} \mu_s ds} $ \\
+$ \qx[t]{x} = \int{0}^t \px[s]{x} \mu_{x+s}ds $ \\
+$ \qx[t|u]{x} = \int_{t}^{t+u} \px[s]{x}\mu{x+s} ds $
+
+
+Give expressions for the different kinds of expected future lifetime
+
+Expectations: \\
+Complete expectation of life (time (so not necessarily in units year) completed prior death)
+$E[T_x] = \eringx{x} = \int_0^\infty t \px[t]{x} \mu_{x+t} dt = \int_0^\infty \px[t]{x} dt$ \\
+Curtate Future Lifetime (number of years (so it's integer) completed prior death)
+$E[K_x] = e_x = \sum_{k=1}^\infty k \px[k]{x} q_{x+k} = \sum_{k=1}^\infty \px[k]{x}$ \\
+$E[\min(T_x, n)] = \eringx_{x:\angln} = \int_0^n t \px[t]{x} \mu_{x+t} dt + n \px[n]{x} = \int_0^n \px[t]{x} dt$ \\
+$E[\min(K_x, n)] = e_{x:\angln} = \sum_{k=1}^{n-1} k \px[k]{x} q_{x+k} + n \px[n]{x} = \sum_{k=1}^n \px[k]{x}$ \\
+\newline
+Second moments: \\
+$E[T_x^2] = \int_0^\infty t^2 \px[t]{x} \mu_{x+t} dt = \int_0^\infty 2t \px[t]{x} dt$ \\
+$E[K_x^2] = \sum_{k=1}^\infty k^2 \px[k]{x} q_{x+k} = \sum_{k=1}^\infty (2k-1) \px[k]{x} = 2 \sum_{k=1}^\infty k \px[k]{x} - e_x$
+\newline
+Variance:
+$Var(T_x) = E[T_x^2] - E[T_x]^2$ \\
+$Var(K_x) = E[K_x^2] - E[K_x]^2$
+\newline
+Recursive formulas: \\
+$\eringx{x}= \eringx{\endowxn} + \px[n]{x} \eringx{x+n}$ \\
+$e_x = e_{x:\angln} + \px[n]{x} e_{x+n} \quad \rightarrow \quad e_x = p_x + p_x e_{x+1}$ \\
+$\overset{\circ}{e}_{x:\overline{m}|} = \overset{\circ}{e}_{x+m:\overline{n-m}|} + m {}_m p_x \overset{\circ}{e}_{x+m:\overline{n-m}|} \text{ for } m < n$ \\
+$e_{x:\overline{m}|} = e_{x+m:\overline{n-m}|} + m {}_m p_x e_{x+m:\overline{n-m}|} \text{ for } m < n \quad \rightarrow \quad e_{x:\overline{n}|} = p_x + p_x e_{x+1:\overline{n-1}|}$
+
+
+State Wald's identity and derive it
+
+Wald’s identity \\
+Let $ T, X_1, X_2, \dots $ be independent real random variables in $ \mathcal{L}^1(\mathbb{P}) $. \\
+Let $ \mathbb{P}[T \in \mathbb{N}_0] = 1 $ and assume that $ X_1, X_2, \dots $ are identically distributed. \\
+Define
+$$
+S_T := \sum_{i=1}^{T} X_i.
+$$
+Then $ S_T \in \mathcal{L}^1(\mathbb{P}) $ and $ \mathbb{E}[S_T] = \mathbb{E}[T] \mathbb{E}[X_1] $. \\
+
+\newline
+Proof: Define $ S_n = \sum_{i=1}^{n} X_i $ for $ n \in \mathbb{N}_0 $. \\
+Then 
+$$
+S_T = \sum_{n=1}^{\infty} S_n \mathbbm{1}_{(T=n)}.
+$$
+By Remark 2.15, the random variables $ S_n $ and $ \mathbbm{1}_{(T=n)} $ are independent for any $ n \in \mathbb{N} $ and thus uncorrelated. This implies (using the triangle inequality; see Theorem 5.3(v)) \\
+$$
+\mathbb{E}[S_T] = \sum_{n=1}^{\infty} \mathbb{E}[S_n \mathbbm{1}_{(T=n)}] 
+= \sum_{n=1}^{\infty} \mathbb{E}[S_n] \mathbb{E}[\mathbbm{1}_{(T=n)}]
+$$
+$$
+\leq \sum_{n=1}^{\infty} \mathbb{E}[X_1] n \mathbb{P}[T = n] = \mathbb{E}[X_1] \mathbb{E}[T].
+$$
+The same computation without absolute values yields the remaining part of the claim.
+
+Derive Blackwell-Girshicks (Wald's) identity for compound variance 
+
+Let $T, X_1, X_2, \dots$ be independent real random variables in $\mathcal{L}^2(\mathbb{P})$. \\
+Let $\mathbb{P}[T \in \mathbb{N}_0] = 1$ and let $X_1, X_2, \dots$ be identically distributed. \\
+Define 
+$$ S_T := \sum_{i=1}^{T} X_i. $$  
+Then $S_T \in \mathcal{L}^2(\mathbb{P})$ and  
+$$ \textbf{Var}[S_T] = \mathbb{E}[X_1]^2 \text{Var}[T] + \mathbb{E}[T] \text{Var}[X_1]. $$
+Proof: \\
+Define $S_n = \sum_{i=1}^{n} X_i$ for $n \in \mathbb{N}$. Then (as in the proof of Wald’s identity) $S_n$ and $\mathbbm{1}_{(T=n)}$ are independent; \\
+hence $S_n^2$ and $\mathbbm{1}_{(T=n)}$ are uncorrelated and thus \\
+$$ \mathbb{E}[S_T^2] = \sum_{n=0}^{\infty} \mathbb{E}[\mathbbm{1}_{(T=n)} S_n^2] $$  
+$$ = \sum_{n=0}^{\infty} \mathbb{E}[\mathbbm{1}_{(T=n)}] \mathbb{E}[S_n^2] $$  
+$$ = \sum_{n=0}^{\infty} \mathbb{P}[T = n] (\text{Var}[S_n] + \mathbb{E}[S_n]^2) $$  
+$$ = \sum_{n=0}^{\infty} \mathbb{P}[T = n] (n \text{Var}[X_1] + n^2 \mathbb{E}[X_1]^2) $$  
+$$ = \mathbb{E}[T] \text{Var}[X_1] + \mathbb{E}[T^2] \mathbb{E}[X_1]^2. $$  
+
+By Wald’s identity (Theorem 5.5), we have $\mathbb{E}[S_T] = \mathbb{E}[T] \mathbb{E}[X_1]$; hence 
+$$ \text{Var}[S_T] = \mathbb{E}[S_T^2] - \mathbb{E}[S_T]^2 = \mathbb{E}[T] \text{Var}[X_1] + (\mathbb{E}[T^2] - \mathbb{E}[T]^2) \mathbb{E}[X_1]^2$$
+
+
+
+\end{document}
