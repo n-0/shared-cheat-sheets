@@ -1,0 +1,111 @@
+What are solutions to the bankrun problem and explain the simpler ones
+
+- Suspension of convertibility
+- Narrow Banking
+- Deposit insurance
+- Lender of Last Resort (LLR)
+
+Suspension of convertibility
+No more withdrawals allowed after some threshold fraction \( \hat{f} \) of
+withdrawals
+- Suspension need not be applied if announced reliably!
+- Type 2 depositors won't run because they then "know" that bank has sufficient funds to repay them.
+
+Solution not practical if fraction of early consumers \( \alpha \) is not
+known upfront (e.g. 𝛼 is stochastic), ironically because if there are then more type 2
+investors than expected there is not enough money allocated for them (as this smaller amount was supposed to go to type 1).
+
+Narrow Banking
+Restrict (risk and) maturity transformation by banks
+Banks only allowed to invest into riskless and highly liquid money market instruments
+=> Decreases GDP growth
+
+
+Explain the pro's and cons of deposit insurance
+
+Fraction of deposits is insured by some deposit insurance fund, which is typically Government financed,
+since the Government as taxation authority, and is therefore less likely to default.
+Alternatively a private deposit insurance fund, which is financed with annual fees by banks is possible.
+
+This introduces Moral hazard:
+Depositors have no incentive to monitor riskiness of bank activities and banks could increase risk without 
+paying depositors higher interest rates.
+
+In Germany Deposit insurance is required by law since 1998 with min. of 100k.
+
+Regarding the private fund solution, should Banks pay a flat fee? 
+No, they it should be based on risk.
+Should depositors be provided with full insurance or some
+deductible? Deductible, since full insurance is unreachable.
+
+
+The incentives are in regard to moral hazards are modelled as follows:
+
+Recall that we can simplistically model the bank (or a company generally) via its balance sheet 
+at \( t = 0 \) as 
+Aktiva 
+\( S_0 \)
+Passiva
+Own capital
+\( C(K, T) \)
+Debt
+\( \frac{K}{(1 + r)^T} - P(K, T) \)
+
+and at \( t = T \) (maturity of debt) as
+Aktiva 
+\( S_T \)
+Passiva
+Own capital 
+\( \text{max}\{S_T - K, 0\} \)
+Debt
+\( K - \text{max}\{K - S_T, 0\} \)
+
+Therefore the equity holders of a bank hold a call option
+if we consider the the debt \( K \) as the promised return to depositors,
+and a Deposit insurance fund behaves like a put option, both with strike \( K \).
+
+
+What is a Lender of Last Resort and how is it involved in bank runs
+
+
+Typically, Central Banks act as lender of last resort:
+They provide liquidity to illiquid, but otherwise solvent banks
+(at least in theory)
+Problems
+distinguish between insolvent banks and illiquid banks
+Moral hazard issue
+price stability
+exchange rate stability
+(run on bank and currency Æ often ineffective)
+asset price bubbles
+
+The classical LOLR theory is Bagehot (1873):
+lend early and freely (i.e., without limit) to solvent firms
+against good collateral (collateral which in normal times is
+considered good collateral)
+at high rates
+
+anks borrow from LOLR to substitute funding losses from
+bank runs (or, more generally, when liquidity problems arise)
+Changes only on Equity and Liability side of the balance sheet
+Total assets stay the same!
+Aimed to help illiquid, but solvent banks.
+Ideally: Just announcing a LOLR solution should suffice to avoid bank runs.
+
+In the ECB and often interbank market case, 
+such business is done via Sale-and-repurchase agreement (repo)
+E.g.
+ECB buys asset (the collateral) with market value \( $100 \) for \( $80 \)
+Bank agrees to repurchase next day for \( $88 \).
+The repo rate is then \( \frac{88 - 80}{80} = 10\% \)
+The repo rate is then \( \frac{100 - 80}{100} = 20\% \)
+Haircut does not depend on borrower, but on collateral.
+
+
+What is the Risk taking incentive theory / Risk shifting for Lenders of Last Resort?
+
+Banks close to default want to take higher risk because Equity holders have no down side risk, 
+but upside potential increases with risk taking
+therefore they buy additional risky securities, i.e. extend total assets of the balance sheet.
+Typically those assets reap high interest rates/returns on the risk without equity holder bearing the down side risk
+and default also when the bank defaults (which creates even more risk due to correlation).

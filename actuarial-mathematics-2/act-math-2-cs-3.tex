@@ -1,0 +1,237 @@
+\documentclass[11pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{actuarialangle, actuarialsymbol}
+
+\begin{document}
+Define exponential family and its components
+
+A distribution belongs to the exponential family if its PDF is of the form
+\(
+f(y) = c(y, \phi) \exp \left\{ \frac{y\theta - a(\theta)}{\phi} \right\},
+\)
+where \(\theta\) and \(\phi\) are parameters. 
+\(\theta\): canonical parameter 
+\(\phi\): dispersion parameter. 
+\( c(y, \phi) \): roughly a normalization factor
+
+Their moments are given via
+\( E(y) = \dot{a}(\theta), \quad \text{Var}(y) = \phi \ddot{a}(\theta) \).
+One defines \( V(\mu) = \ddot{a}(\theta) \) the variance function.
+
+Some define dispersion as \( \frac{\phi}{w} \) with weight \( w \), this is typical in a context of frequency.
+
+Examples:
+
+INSERT IMAGE FROM slide 40 
+
+
+Describe the Method of Moments for parameter estimation
+
+The Method of Moments (MoM) estimates parameters \(\theta\) of a probability distribution by equating theoretical moments to sample moments.  
+General Procedure:
+1. Compute the theoretical moments \( m_k \) in terms of parameters \( \theta \).  
+\(
+m_k = E[X^k]
+\)
+2. Compute the sample moments \( \hat{m}_k \) from observed data \( X_1, X_2, ..., X_n \).  
+\(
+\hat{m}_k = \frac{1}{n} \sum_{i=1}^{n} X_i^k
+\)
+3. Solve the system of equations: 
+\(m_k(\theta_1, \theta_2, \dots, \theta_r) = \hat{m}_k, \quad k = 1, 2, \dots, r\) 
+to obtain parameter estimates \( \hat{\theta} \).
+## **Examples**  
+
+Example Normal Distribution:
+\( X \sim N(\mu, \sigma^2) \)  
+Theoretical moments:  
+\(
+E[X] = \mu, \quad E[X^2] = \mu^2 + \sigma^2
+\)
+Sample moments:  
+\(
+\hat{m}_1 = \frac{1}{n} \sum X_i, \quad \hat{m}_2 = \frac{1}{n} \sum X_i^2
+\)
+Solve for parameters:  
+\(
+\hat{\mu} = \hat{m}_1
+\)
+\(
+\hat{\sigma}^2 = \hat{m}_2 - \hat{m}_1^2
+\)
+This simplifies in the GLM via \( \dot{a}(\theta) = \bar{\mu}, \phi\ddot{a}(\theta) = \hat{\sigma}^2 \).
+
+Key Properties
+Consistency: As \( n \to \infty \), \( \hat{\theta} \to \theta \) if moments exist and are unique.  
+Bias: MoM estimators may be biased.  
+Efficiency: MoM is generally less efficient than MLE but simpler.  
+
+
+Describe MLE for exponential family distributions
+
+Under the i.i.d. assumption, the probability of observing the vector \( y \) of outcomes is:
+\( f(y; \theta, \phi) = \prod_{i=1}^n f(y_i;\theta,\phi) \)
+which is usually easier to maximize via
+\( l(\theta, \phi) = \sum^n_{i=1} \ln f(y_i;\theta,\phi) \)
+In particular for exp. families
+
+\(
+\sum_{i=1}^{n} \left\{ \ln c(y_i, \phi) + \frac{y_i \theta - a(\theta)}{\phi} \right\} = \frac{n \left\{ \bar{y} \theta - a(\theta) \right\}}{\phi} + \sum_{i=1}^{n} \ln c(y_i, \phi).
+\)
+
+Differentiating \(\ell(\theta, \phi)\) with respect to \(\theta\) and equating to zero leads to the first order condition for 
+likelihood maximization
+\(
+\frac{n \{\bar{y} - \dot{a}(\theta)\}}{\phi} = 0 \quad \Rightarrow \quad \dot{a}(\theta) = \bar{y}.
+\)
+
+Hence the MLE of \(\theta\) is obtained by finding \(\theta\) such that \(\dot{a}(\theta) \equiv \mu\) equals the sample mean \(\bar{y}\). 
+Thus for any exponential family distribution, \(\hat{\mu} = \bar{y}\).
+
+
+What are characteristics of the MLE method?
+
+Invariance: If \( h \) is a monotonic function and \( \hat{\theta} \) is the MLE of \( \theta \), then \( h(\hat{\theta}) \)
+is the MLE of \( h(\theta) \).
+
+Asymptotically unbiased: The expected value \( \mathbb{E}[\hat{\theta}] \) approaches \( \theta \) as the
+sample size increases.
+
+Consistent: As the sample size increases the probability distribution \( \hat{\theta} \) collapses on \( \theta \).
+Minimum variance: In the class of all estimators, for large samples, \( \hat{\theta} \) has the minimum variance and 
+is therefore the most precise estimate possible.
+
+Small-sample bias. For small \( n, \hat{\theta} \) is often biased. However for large sample sizes, this is neglible.
+Computationally difficult. MLEs are not always in closed form, in which case they need to be computed iteratively.
+However on modern equipment this is rarely an issue.
+
+
+State the classical linear model (CLM) in vector notation
+
+In order to determine the unknown parameters \(\beta\), we collect data
+\[ y_i, \; \mathbf{x}_i = (1, x_{i1}, \ldots, x_{ik})^\top, \]
+with error observations according to
+\[ y_i = \mathbf{x}_i^\top \boldsymbol{\beta} + \epsilon_i, \quad i = 1, 2, \ldots, n. \]
+Vector notation is appropriate:
+
+\[ 
+\mathbf{y} = \begin{pmatrix}
+y_1 \\
+\vdots \\
+y_n
+\end{pmatrix}, \quad \boldsymbol{\epsilon} = \begin{pmatrix}
+\epsilon_1 \\
+\vdots \\
+\epsilon_n
+\end{pmatrix}, \quad \mathbf{X} = \begin{pmatrix}
+\mathbf{x}_1^\top \\
+\vdots \\
+\mathbf{x}_n^\top
+\end{pmatrix} = \begin{pmatrix}
+1 & x_{11} & \cdots & x_{1k} \\
+\vdots & \vdots & \ddots & \vdots \\
+1 & x_{n1} & \cdots & x_{nk}
+\end{pmatrix}.
+\]
+
+\(\mathbf{X}\) is the design matrix. One assumes that \(\text{rk} \mathbf{X} = k + 1 = p \leq n\).
+
+
+The model
+\( y = X \boldsymbol{\beta} + \epsilon \)
+\( y \mid X \sim \mathcal{N}(X\beta, \sigma^2 I)  \)
+is called the classical linear regression model, if the following assumptions hold:
+
+\( \epsilon \sim \mathcal{N}(0, \sigma^2 I) \)
+The correlation structure is also referred to as homoscedastic
+while different variances for different observiations (so \( \text{Var}[\epsilon]_{i,j} \neq 0,\ i \neq j \)) would be heteroscedastic.
+One says that these assumptions about \( \epsilon \) are conditionally on \( X \).
+Further the errors are then uncorrelated.
+\[ \text{rk}(X) = k + 1 = p \leq n \]
+
+
+Derive the simple least squares estimator
+
+This is a method for assigning values to \(\beta_0\) and \(\beta_1\) in \( y \approx \beta_0 + \beta_1x \), 
+given a sample of \(n\) pairs of measurements or observations on \(y\) and \(x\) denoted \((y_i, x_i), i = 1, \ldots, n.\)
+In particular, least squares determines \(\beta_0\) and \(\beta_1\) by minimizing the error sum of squares criterion:
+\(
+\sum_{i=1}^{n} \{y_i - (\beta_0 + \beta_1 x_i)\}^2.
+\)
+Using calculus, the values of \(\beta_0\) and \(\beta_1\) that minimize (4.2) are 
+\(
+\hat{\beta}_1 = \frac{\sum_{i=1}^{n} x_i y_i - n x \bar{y}}{\sum_{i=1}^{n} x_i^2 - n x^2}, \quad \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x},
+\)
+where \(\bar{y} = \sum_{i=1}^{n} y_i / n\) and \(\bar{x} = \sum_{i=1}^{n} x_i / n\). 
+Predicted values based on the fit are \(\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i,\) and goodness of fit is typically measured using
+\(
+R^2 \equiv 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}.
+\)
+
+It can be shown \(0 \leq R^2 \leq 1\) with \(R^2 = 1\) indicating a perfect linear fit. 
+The \(R^2\) statistic is much abused and misinterpreted.
+
+
+Derive the optimal estimator for the classical linear model (CLM) and relate it to the log-likelihood.
+
+
+Minimization of \(LS\) can be achieved by inspecting the first-order conditions: 
+\(\frac{\partial LS(\beta)}{\partial \beta} \bigg|_{\beta = \hat{\beta}} = -2\mathbf{X}^\top \mathbf{y} + 2 \mathbf{X}^\top \mathbf{X} \hat{\beta} \stackrel{!}{=} 0.\)
+
+This is equivalent to the normal equations: 
+\(\mathbf{X}^\top \mathbf{X} \hat{\beta} = \mathbf{X}^\top \mathbf{y}.\)
+
+Due to the condition of full rank, the normal equations possess a unique solution, the least squares estimator, 
+\(\hat{\beta} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}.\)
+
+Under the condition of normally distributed errors, i.e., \(\varepsilon \sim N(0, \sigma^2 I)\), 
+the maximum likelihood estimator (MLE) equals the LSE.
+This can be verified by minimizing the likelihood \(L(\beta, \sigma^2) = \frac{1}{(2\pi\sigma^2)^{n/2}} \exp \left( -\frac{1}{2\sigma^2} (y - \mathbf{X}\beta)^\top (y - \mathbf{X}\beta) \right),\)
+
+or, equivalently, the log-likelihood
+
+\(l(\beta, \sigma^2) = (\text{terms independent of } \beta) - \frac{1}{2\sigma^2} (y - \mathbf{X}\beta)^\top (y - \mathbf{X}\beta).\)
+
+
+What is the optimal estimator in weighted least squares? 
+
+The precision \(w_i\) of case \(i\) is signalled through \(\text{Var}(\epsilon_i) = \sigma^2 / w_i\). 
+Thus \(w_i \to 0\) indicates no precision and \(w_i \to \infty\) indicates complete precision. 
+Multiplying case \(i\) by \(\sqrt{w_i}\) yields 
+\(y_i^* = \beta_0 \sqrt{w_i} + \beta_1 x_{i1}^* + \cdots + \beta_p x_{ip}^* + \epsilon_i^*\)
+where
+\(y_i^* \equiv \sqrt{w_i} \, y_i, \quad x_{ij}^* \equiv \sqrt{w_i} \, x_{ij}, \quad \epsilon_i^* \equiv \sqrt{w_i} \, \epsilon_i.\)
+Thus the weighted observations are homoskedastic since \(\text{Var}(\epsilon_i^*) = \sigma^2\). Regressing \(y_i^*\) on the \(x_{ij}^*\) yields 
+\(\hat{\beta}^* = (X^{*'} X^*)^{-1} X^{*'} y^* = (X'WX)^{-1}X'Wy,\)
+
+where \(W\) is the diagonal matrix with diagonal entries \(w_i\). The estimator \(\hat{\beta}^*\) is called the weighted least squares estimator. 
+
+Since \(\hat{\beta}^*\) is the least squares estimator computed relative to the model \(y^* = X^*\beta + \epsilon^*\) it follows that
+\(\hat{\beta}^* \sim \mathcal{N} \left\{ \beta, \sigma^2 (X'WX)^{-1} \right\}.\)
+
+
+
+State the properties of the optimal estimator for the CLM
+
+The following properties hold if the model is correctly specified, but without any specific distributional assumptions (regarding \( \epsilon \):
+\(\mathbb{E}(\hat{\beta}) = \beta\) (unbiased)
+\(
+\text{Cov}(\hat{\beta}) = \sigma^2 (\mathbf{X}^\top \mathbf{X})^{-1} \quad \text{with estimator} \quad \widehat{\text{Cov}}(\hat{\beta}) = \hat{\sigma}^2 (\mathbf{X}^\top \mathbf{X})^{-1}, \quad \hat{\sigma}^2 = \frac{1}{n-p} \hat{\varepsilon}^\top \hat{\varepsilon}
+\)
+This implies that for large \( n \) the estimator \( \hat{\beta}_n \) possesses approximately the normal distribution
+\(
+  N\left( \beta, \hat{\sigma}^2_n (\mathbf{X}_n^T \mathbf{X}_n)^{-1} \right).
+\)
+For Gaussian errors as in the CLM, the distribution of weighted distance:
+\(
+\frac{(\hat{\beta} - \beta)^\top (\mathbf{X}^\top \mathbf{X})(\hat{\beta} - \beta)}{\sigma^2} \sim \chi^2_p
+\)
+Gauss-Markov-Theorem: The LSE has the smallest variance among all linear and unbiased estimators of \(\beta\).
+
+
+
+TODO: Check if Model selection was a topic
+
+
+\end{document}

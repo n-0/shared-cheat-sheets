@@ -1,0 +1,84 @@
+Describe the setting of the Generalized Linear Model (GLM)
+
+\( g(\mathbb{E}[y|X]) = X\beta = \nu\)
+
+We will denote as usual \( \mu = \mathbb{E}[y|X] \).
+\( \nu \) is called the linear predictor.
+The choice of \( g(\mu) \), called the link, determines how the mean is related
+to the explanatory variables \( x \). \( g^{-1} \) is known as activation function in ML.
+
+In the classical linear model, \( g = \text{id} \).
+In the GLM, this is generalized to a \( g \) which is a monotonic,
+differentiable function (such as log or square root).
+
+Given \( X \), \( \mu \) is determined through \( g(\mu) \). 
+Given \( \mu, \theta \) is determined through \( \dot{a}(\theta) = \mu \). 
+Finally given \( \theta \), the outcomes \( y \) are determined as a draw 
+from the exponential density specified in \( a(\theta) \).
+
+Give a list of link functions and explain offsets
+
+INSERT IMAGE FROM 67
+
+
+Modeling counts such as the number of claims or deaths in a risk group
+requires correction for the number \( n \) exposed to risk. If \( \mu \) is the mean of the
+count \( y \), then the occurrence rate \( \frac{\mu}{n} \) of interest and \( g(\frac{\mu}{n}) = X\beta \).
+When \( g = \log \) then \( \log(\frac{\mu}{n}) = X\beta \equiv \log(\mu) = \log(n) + X\beta \).
+
+
+Derive the MLE equations for the GLM
+
+\(\ell(\beta, \phi) = \sum_{i=1}^{n} \ln f(y_i; \beta, \phi) = \sum_{i=1}^{n} \left\{ \ln c(y_i, \phi) + \frac{y_i \theta_i - a(\theta_i)}{\phi} \right\},\)
+
+which assumes independent exponential family responses \(y_i\). Consider the MLE of \(\beta_j\). To find the maximum, \(\ell(\beta, \phi)\) is differentiated with respect to \(\beta_j\): 
+\(\frac{\partial \ell}{\partial \beta_j} = \sum_{i=1}^{n} \frac{\partial \ell}{\partial \theta_i} \frac{\partial \theta_i}{\partial \beta_j}.\)
+where
+\[
+\frac{\partial \ell}{\partial \theta_i} = \frac{y_i - \dot{a}(\theta_i)}{\phi} = \frac{y_i - \mu_i}{\phi}, \quad \frac{\partial \theta_i}{\partial \beta_j} = \frac{\partial \theta_i}{\partial \eta_i} \frac{\partial \eta_i}{\partial \beta_j} = \frac{\partial \theta_i}{\partial \eta_i} x_{ij}.
+\]
+
+Here \(\eta_i = x_i' \beta\) and \(x_{ij}\) is component \(i\) of \(x_j\). Setting \(\partial \ell/\partial \beta_j = 0\) yields 
+the first order conditions for likelihood maximization:
+\[
+\sum_{i=1}^{n} \frac{\partial \theta_i}{\partial \eta_i} x_{ij} (y_i - \mu_i) = 0 \quad \Leftrightarrow \quad X'D(y - \mu) = 0,
+\]
+where \(D\) is the diagonal matrix with diagonal entries \(\partial \theta_i/\partial \eta_i\),
+\[
+\left(\frac{\partial \theta_i}{\partial \eta_i}\right)^{-1} = \frac{\partial \eta_i}{\partial \theta_i} = \frac{\partial \eta_i}{\partial \mu_i} \frac{\partial \mu_i}{\partial \theta_i} = g'(\mu_i) \dot{a}(\theta_i) = g'(\mu_i) V(\mu_i).
+\]
+Thus \(D\) is diagonal with entries \(\{g'(\mu_i) V(\mu_i)\}^{-1}\). 
+The equations in (5.4) are often called the estimation equations for \(\beta\). 
+Note \(\beta\) is implicit in these equations, working implicitly through \(\mu\) and \(D\).
+
+Defining the diagonal matrices \(G\) and \(W\) with diagonal entries \(g'(\mu_i)\) and \(\{g'(\mu_i)^2 V(\mu_i)\}^{-1}\), respectively, 
+then \(D = WG\) and (5.4) is equivalent to
+\[
+X'WG(y - \mu) = 0.
+\]
+
+
+Describe the Newton-Raphson method for likelihood maximization
+
+Suppose \(\phi\) is known and so write \(\ell(\beta)\) to denote the log-likelihood as a function of the unknown parameter vector \(\beta\). 
+If \(\beta\) contains a single parameter then the quadratic Taylor series approximation at any point \(\beta\) is 
+\(\ell(\beta + \delta) \approx \ell(\beta) + \dot{\ell}(\beta)\delta + \frac{\delta^2}{2} \ddot{\ell}(\beta).\)
+
+Differentiating the right-hand side as a function of \(\delta\) and equating to zero yields 
+\(\dot{\ell}(\beta) + \delta \ddot{\ell}(\beta) = 0 \quad \Rightarrow \quad \delta = - \{\ddot{\ell}(\beta)\}^{-1} \dot{\ell}(\beta).\)
+
+With \(\beta\) given and \(\delta\) as specified, a higher point thus appears to be \(\beta - \dot{\ell}(\beta)/\ddot{\ell}(\beta)\). 
+Denoting \(\beta^{(m)}\) as the value for \(\beta\) at iteration \(m\), the update equation is
+\(\beta^{(m+1)} = \beta^{(m)} - \{\ddot{\ell}(\beta^{(m)})\}^{-1} \dot{\ell}(\beta^{(m)}). \qquad (5.8)\)
+
+For a maximum \(\ddot{\ell}(\beta) < 0\). 
+Iteration of this equation, each time revising \(\beta\), leads to a sequence which, as stated above, often rapidly converges.
+
+The approach can be adapted when \(\beta\) is vector. In this case a quadratic approximation is made to the surface \(\ell(\beta)\), 
+and it is this quadratic surface that is maximized. The update equation is as in (5.8) with the inverse interpreted as matrix inversion 
+and where \(\dot{\ell}(\beta)\) is the vector of partial derivatives \(\partial \ell / \partial \beta_k\). 
+
+The vector \(\dot{\ell}(\beta)\) is called the "score" vector, and \(\ddot{\ell}(\beta)\), the matrix of cross partial derivatives 
+\(\partial^2 \ell/\{\partial \beta_j \partial \beta_k\}\), the "Hessian" matrix. 
+The condition for a maximum is that the Hessian is non-positive definite, i.e., \(-\ddot{\ell}(\beta)\) is non-negative definite. 
+The procedure of repeated application of the score and Hessian matrix to equation (5.8) is called score function iteration.
