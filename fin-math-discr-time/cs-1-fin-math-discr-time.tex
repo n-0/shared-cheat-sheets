@@ -1,0 +1,130 @@
+Definition 2.4.1 (Trading Strategy and Value Process)
+In a one-period market, a trading strategy or portfolio is a vector
+\[
+\vartheta = (\vartheta^0, \vartheta^1, \ldots, \vartheta^d)^\top \in \mathbb{R}^{d+1}. 
+\]
+The value \( \vartheta^i \) corresponds to the quantity of shares of the \( i \)-th asset held 
+during the period between 0 and 1.
+Value process:
+Initial value: 
+\(
+V_0^\vartheta = \vartheta^0 S_0^0 + \vartheta^1 S_0^1 + \ldots + \vartheta^d S_0^d 
+\)
+Terminal value:
+\(
+V_1^\vartheta = \vartheta^0 S_1^0 + \vartheta^1 S_1^1 + \ldots + \vartheta^d S_1^d 
+\)
+\( V^\vartheta = (V_0^\vartheta, V_1^\vartheta) \) is called value process of the trading strategy.
+
+A trading strategy \( \vartheta \in \mathbb{R}^{d+1} \) is called an arbitrage opportunity if 
+\(
+V_0^\vartheta \leq 0, \ V_1^\vartheta \geq 0 \ \mathbb{P}\text{-a.s.} \ \text{and} \ \mathbb{P}[V_1^\vartheta > 0] > 0.
+\)
+A market model which does not admit arbitrage opportunities is called arbitrage-free.
+
+Theorem 2.4.5 (Radon-Nikodym)
+A probability measure \(\mathbb{P}_1\) is absolutely continuous with respect to \(\mathbb{P}_2\) on 
+\(\mathcal{F}\) if and only if there exists a \(\mathcal{F}\)-measurable function \(Z \geq 0\) such that 
+\(
+\mathbb{P}_1[A] = \int_A Z \, d\mathbb{P}_2 \quad \text{for all } A \in \mathcal{F}.
+\)
+
+Definition 2.4.6 (Radon-Nikodym Density)
+The random variable \(Z\) is called the Radon-Nikodym derivative or density of \(\mathbb{P}_1\) 
+with respect to \(\mathbb{P}_2\), and we will use the common notation
+\[
+\frac{d\mathbb{P}_1}{d\mathbb{P}_2} := Z.
+\]
+
+If \(X\) is a \(\mathcal{F}\)-measurable random variable, then (by measure theoretical induction)
+\(
+\mathbb{E}_{\mathbb{P}_1}[X] = \mathbb{E}_{\mathbb{P}_2}\left[ \frac{d\mathbb{P}_1}{d\mathbb{P}_2} \cdot X \right].
+\)
+
+Corollary 2.4.7
+If \(\mathbb{P}_1 \ll \mathbb{P}_2\), then \(\mathbb{P}_1 \approx \mathbb{P}_2\) if and only if 
+\(\frac{d\mathbb{P}_1}{d\mathbb{P}_2} > 0\) \(\mathbb{P}_2\)-a.s. 
+In this case, the Radon-Nikodym derivative of \(\mathbb{P}_2\) with respect to \(\mathbb{P}_1\) is given by
+\(
+\frac{d\mathbb{P}_2}{d\mathbb{P}_1} = \left( \frac{d\mathbb{P}_1}{d\mathbb{P}_2} \right)^{-1}.
+\)
+
+Arbitrage-free market models can be characterized in terms of the set of equivalent risk-neutral measures:
+\(
+\mathcal{Q} := \{ \mathbf{Q} \mid \mathbf{Q} \text{ is a risk-neutral measure with } \mathbf{Q} \approx \mathbb{P} \}
+\)
+
+Theorem 2.4.8 (1. Fundamental Theorem of Asset Pricing (FTAP))
+A market model is arbitrage-free if and only if \(\mathcal{Q} \neq \emptyset\). 
+In this case, there exists a \(\mathbf{Q} \in \mathcal{Q}\) which has a bounded density \(d\mathbf{Q}/d\mathbb{P}\).
+
+
+\textbf{Lemma 2.4.10 (Law of One Price)}
+Suppose that the market model is arbitrage-free and that a payoff \(C_1 \in \mathcal{V}\) can be written as \(C_1 = V_1^\vartheta = V_1^\xi\) \(\mathbb{P}\)-a.s. for two different trading strategies \(\vartheta, \xi \in \mathbb{R}^{d+1}\). Then, \(V_0^\vartheta = V_0^\xi\).
+
+\textbf{Proof.}
+Equivalence of measures yields \(V_1^\vartheta = V_1^\xi\) \(\mathbf{Q}\)-a.s. for any \(\mathbf{Q} \in \mathcal{Q}\), and so we have
+\[
+V_0^\vartheta = S_0^0 \mathbb{E}_\mathbf{Q} \left[ \frac{V_1^\xi}{S_1^0} \right] = S_0^0 = V_0^\xi.
+\]
+
+Consider a finite sample space \(\Omega = \{\omega_1, \ldots, \omega_k\}, \ k \in \mathbb{N}\), and let \(C_1\) be a replicable payoff.
+In this case, the replicating strategy \(\vartheta \in \mathbb{R}^{d+1}\), defined by \(C_1 = V_1^\vartheta\) \(\mathbb{P}\)-a.s., is determined by the following linear system of equations:
+\[
+\begin{align*}
+C_1(\omega_1) &= \vartheta^0 S_1^0(\omega_1) + \vartheta^1 S_1^1(\omega_1) + \ldots + \vartheta^d S_1^d(\omega_1) \\
+C_1(\omega_2) &= \vartheta^0 S_1^0(\omega_2) + \vartheta^1 S_1^1(\omega_2) + \ldots + \vartheta^d S_1^d(\omega_2) \\
+&\vdots \\
+C_1(\omega_k) &= \vartheta^0 S_1^0(\omega_k) + \vartheta^1 S_1^1(\omega_k) + \ldots + \vartheta^d S_1^d(\omega_k)
+\end{align*}
+\]
+'Handbook' of linear algebra: Existence and uniqueness of a replicating trading strategy are determined by
+\begin{itemize}
+    \item the number of equations \(k\) (number of scenarios)
+    \item the number of variables \(d + 1\) (number of assets).
+\end{itemize}
+
+
+Suppose that the set \(\mathcal{Q}\) of equivalent risk-neutral measures for the original market model is non-empty. 
+Then the set of arbitrage-free prices of a contingent claim \(C_1\) is non-empty and given by
+\[
+C_0 := \left\{ S_0^0 \mathbb{E}_\mathbf{Q} \left[\frac{C_1}{S_1^0}\right] \Big| \mathbf{Q} \in \mathcal{Q} \text{ such that } \mathbb{E}_\mathbf{Q}[C_1/S_1^0] < \infty \right\}.
+\]
+
+Remarks:
+- The set \(C_0\) of arbitrage-free prices of a contingent claim is convex and hence an interval.
+- The lower and the upper bounds
+\[
+C_0^{\inf} := \inf_{\mathbf{Q} \in \mathcal{Q}} S_0^0 \mathbb{E}_\mathbf{Q} \left[\frac{C_1}{S_1^0}\right] \quad \text{and} \quad C_0^{\sup} := \sup_{\mathbf{Q} \in \mathcal{Q}} S_0^0 \mathbb{E}_\mathbf{Q} \left[\frac{C_1}{S_1^0}\right]
+\]
+are often called arbitrage bounds for the contingent claim \(C_1\).
+
+A contingent claim \( C_1 \) is called replicable (or attainable) if
+\( C_1 = V_1^\vartheta \),  \( \mathbb{P} \)-a.s. for some \( \vartheta \in \mathbb{R}^{d+1} \).
+Such a trading strategy \( \vartheta \) is said to be a replicating strategy or replicating portfolio for
+\( C_1 \).
+
+Suppose that the market model is arbitrage-free, and let \( C_1 \) be a contingent claim.
+1. \( C_1 \) is replicable if and only if it admits a unique arbitrage-free price.
+2. Conversely, if \( C_1 \) is not replicable, then \( C^{\text{inf}}_0 < C^{\text{sup}}_0 \)
+and the set \( \mathcal{C}_0 \) of arbitrage-free prices equals the open interval
+\( \mathcal{C}_{0} = (C^{\text{inf}}_0, C^{\text{sup}}_0) \)
+
+Theorem 2.4.14 (Dual Characterization of Arbitrage Bounds)
+Suppose that the market model is arbitrage-free. Then, the arbitrage bounds of a contingent claim \(C_1\) are given by
+\[
+C_0^{\inf} = \max\{m \in [0, \infty) \mid \exists \vartheta \in \mathbb{R}^{d+1} \text{ with } V_0^\vartheta = m \text{ and } V_1^\vartheta \leq C_1 \ \mathbb{P}\text{-a.s.}\},
+\]
+\[
+C_0^{\sup} = \min\{m \in [0, \infty) \mid \exists \vartheta \in \mathbb{R}^{d+1} \text{ with } V_0^\vartheta = m \text{ and } V_1^\vartheta \geq C_1 \ \mathbb{P}\text{-a.s.}\}.
+\]
+
+
+Definition 2.4.17 (Complete and Incomplete Markets)
+An arbitrage-free market model is called complete if every contingent claim is replicable.
+Otherwise the arbitrage-free model ist said to be incomplete.
+
+
+Theorem 2.4.18 (2. Fundamental Theorem of Asset Pricing)
+An arbitrage-free market model is complete if and only if there exists exactly one
+equivalent risk-neutral measure, i. e., |Q| = 1.

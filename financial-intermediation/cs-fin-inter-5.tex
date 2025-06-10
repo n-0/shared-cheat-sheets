@@ -1,0 +1,105 @@
+How\'s the probability of default defined? 
+How can the value of equity be found?
+
+
+The probability of default (PD) is defined as
+\( \text{PD}^P_t = \mathbb{P}[A_T < K|\mathcal{F}_t] = \Phi(-d_2) \)
+and \( d_2 = \frac{\log{\frac{A_t}{K}} + (\mu - \frac{\sigma^2}{2}(T - t)}{\sigma\sqrt{T - t}} \)
+(which is modified to \( \mu = r \) under the risk neutral measure). 
+
+The value of equity is 
+\( E_t = A_t \Phi(d_1) - e^{-r(T-t)}K\Phi(d_2) \)
+where \( d_1 = d_2 + \sigma\sqrt{T - t} \) and we use the risk neutral measure.
+To calibrate the model the unknown Value of assets and volatility is required.
+With the help of the volatility of the equity (which is publicly traded),
+one can simultaneously solve the defining equation for \( E_t \) and
+\( \sigma_E E_t = \frac{\partial E_t}{\partial A_t}\sigma A_t = \Phi(d_1)\sigma A_t \).
+
+
+The difference between this discount rate and the risk-free rate
+is the Yield Spread
+
+\( D_t = e^{-(r + YS_t)(T - t)}K \)
+\( YS_t = \frac{1}{T - t}\log{\frac{K e^{-r(T-t)}}{D_t}} \)
+
+
+Solve a discrete example for finding the probability of default 
+and the credit/yield spread
+
+
+INSERT IMAGE 13, 05b
+
+Bonds A and B have face value of \( 1 \), but can default. What is the PD
+for Bond A? What is the PD for Bond B?
+
+Risk free rate is \(\log \left( \frac{1}{0.4 + 0.3 + 0.2} \right) = 10.536\%\)
+Bond A and B both have a PD of \(1/3\)
+Price of Bond A: \(0.3 + 0.2 = 0.5\)
+\[\Rightarrow \$0.5 = e^{-(10.536\% + Y_SA) \cdot 1 \, \text{year}} \cdot \$1\]
+\[\Rightarrow Y_SA = -( \log(0.5) + 0.10536) = 58.779\%\]
+Price of Bond B: \(0.4 + 0.3 = 0.7\)
+\[\Rightarrow \$0.7 = e^{-(10.536\% + Y_SB) \cdot 1 \, \text{year}} \cdot \$1\]
+\[\Rightarrow Y_SB = -( \log(0.7) + 0.10536) = 25.131\%\]
+Bond B defaults in a good state with low marginal utility. 
+Bond A defaults in a state where marginal utility is high, i.e. where the default hurts most. 
+This leads to differential pricing and thus yield spreads.
+In particular: pricing solely based on credit ratings is senseless!
+
+
+
+Model incentive compatible contracts to reduce the issue
+of asymmetric information in financing
+
+Use non-monetary/non-pecuniary penalty
+e.g. 
+- Borrower‘s time spent on bankruptcy proceedings
+Why non-monetary?
+
+▪ Because it does not increase financier‘s utility ex post
+▪ Avoid negative consumption for borrower
+
+Important: penalty must not be too high (valuable project won‘t
+be executed then) and not too low
+
+Let the optimal penalty function be \( \phi^\ast \), the repayment \( z(y) \),
+\( R \) the accumulated (not discounted) payback
+then
+\( \phi^\ast(z(y)) = \max{R - z(y), 0}  \)
+Financiers want to have repayment of \( I \), on average. That is
+choose \( R \) such that
+\( \mathbb{E}[z(y)] = I \iff \mathbb{P}[y < R]\mathbb{E}[y|y < R] + \mathbb{P}[y \geq R]R = I \)
+
+
+Show how monitoring implies the existence of financial intermediators
+
+Monitoring is again a mechanism to reduce assymmetric information
+
+Let \( m \) be the number monitors, each with cost \( c \)
+\( n \) entrepreneurs/capital seekers with i.i.d. cash flows (the independent part is somewhat problematic)
+
+Then, financial intermediation (=delegated monitoring)
+dominates direct lending if number of projects, \( n \), is large
+enough.
+
+Proof.
+
+The total cost of direct lending:
+\( n m c  \)
+Total cost delegated 
+\( nc + \mathbb{E}[\phi^\ast(z(y_1, \dots, y_n)] = nc \mathbb{E}[\max{n\cdot R^n_{\text{Deposit}} - \sum_i^n y_i - c, 0}] \)
+Dividing by \( n \) and \( n \to \infty \) yields
+\( mc > c + \mathbb{E}[\max{I + c - \frac{1}{n} \sum_i^n y_i, 0}] \to c \)
+
+
+There is a tendency for banks to grow big (i.e. lend to many
+entrepreneurs)
+▪ Banks (ideally) turn risky loans into much less risky deposits.
+▪ If perfect diversification is not possible (small 𝑛), reduction of
+risk in deposits is possible:
+▪ Bank uses equity as buffer identical cash flow distributions
+Using a central entity for monitoring introduces the issue of conspiracy
+with hazarduous borrowers.
+
+
+Prove the following statement (which is a step in determining the fair price for american puts): 
+Set $L^\ast = \frac{\lambda_{-}}{\lambda_{-} -1}K$ and $\frac{1}{\sigma^2}(\lambda_{-} = -(r - \delta - \frac{\sigma^2}{2}) - \sqrt{(r - \delta - \frac{\sigma^2}{2})^2 + 4r\frac{\sigma^2}{2}})$ and $ f_L(x) = \mathbb{E}[e^{-r\tau_L}(K - S_{\tau_L})_{+}|S_0 = x]$ where $\tau_L = \inf \{u | S_u \leq L\}$. As usual $K$ is the strike, $S_t$ the price of an asset (which pays dividends $\delta$) and $r$ the risk free interest rate etc. Show with the help of Ito's Lemma that $t \mapsto e^{-rt}f_{L^\ast}(S_t)$ is a supermartingale.

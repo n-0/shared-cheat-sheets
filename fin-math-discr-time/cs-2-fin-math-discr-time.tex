@@ -1,0 +1,203 @@
+Describe the setup for the CRR model
+and its conditions to be arbitrage free
+
+
+The binomial model, also known as the CRR (Cox-Rubinstein-Ross).
+Take a riskless bond  \( S^0_t = (1 + r)^t \) for \( t = 0, \dots, T,\ r > -1 \)
+and a risky asset \( S^1 \) with return \( R_t = \frac{S_t - S_{t-1}}{S_{t-1}} \)
+and assume \( -1 < a < b \) s.t. the return only takes on \( (1 + a) \) or \( (1 + b) \).
+
+Let the sample space be \( \Omega = \{-1, 1\}^T = \{\omega = (y_1, \dots, y_T) | y_i \in \{-1, 1\}\} \)
+it can be seen that \( R_t(\omega) = a\frac{1 - Y_t(\omega)}{2} + b a\frac{1 + Y_t(\omega)}{2} \) where \( Y_t \)
+is the projection on the \( t \)-th coordinate.
+
+It holds
+\( S_t = S_0 \prod_{k=1}^t (1 + R_k) \) and let \( X_t = \frac{S_t}{S^0_t} \)
+
+Theorem:
+The CRR model is arbitrage-free if and only if \( a < r < b \). In this
+case, the CRR model is complete, and there is a unique martingale measure \( \mathbb{P}^\ast \) . The
+martingale measure is characterized by the fact that the random variables \( R_1, \dots, R_T \) 
+are independent under \( \mathbb{P}^\ast \)  with common distribution
+
+\[
+    \mathbb{P}^\ast[R_t = b] = p^\ast := \frac{r-a}{b-a}
+\]
+
+A measure \(Q\) on \((\Omega, \mathcal{F})\) is a martingale measure if and only if the discounted price process is a martingale under \(Q\), i.e.,
+
+\[
+X_t = \mathbb{E}_Q[X_{t+1} \mid \mathcal{F}_t] = X_t \, \mathbb{E}_Q \left[ \frac{1 + R_{t+1}}{1 + r} \bigg| \mathcal{F}_t \right] \quad \text{Q-a.s.}
+\]
+
+for all \(t \leq T-1\). This identity is equivalent to the equation
+
+\[
+r = \mathbb{E}_Q[R_{t+1} \mid \mathcal{F}_t] = b \cdot Q[R_{t+1} = b \mid \mathcal{F}_t] + a \cdot (1 - Q[R_{t+1} = b \mid \mathcal{F}_t]),
+\]
+
+i.e., to the condition
+
+\[
+Q[R_{t+1} = b \mid \mathcal{F}_t](\omega) = p^* = \frac{r-a}{b-a} \quad \text{for Q-a.e. } \omega \in \Omega.
+\]
+
+But this holds if and only if the random variables \(R_1, \ldots, R_T\) are independent under \(Q\) with common distribution \(Q[R_t = b] = p^*\). In particular, there can be at most one martingale measure for \(X\).
+
+
+If the market model is arbitrage-free, then there exists an equivalent martingale measure \(P^*\). 
+The condition \(P^* \approx P\) implies
+\[
+p^* = P^*[R_1 = b] \in (0, 1),
+\]
+
+which holds if and only if \(a < r < b\).
+
+Conversely, if \(a < r < b\) then we can define a measure \(P^* \approx P\) on \((\Omega, \mathcal{F})\) by
+
+\[
+P^*[\{\omega\}] := (p^*)^k \cdot (1 - p^*)^{T-k} > 0
+\]
+
+where \(k\) denotes the number of occurrences of \(+1\) in \(\omega = (y_1, \ldots, y_T)\). Under \(P^*\), \(Y_1, \ldots, Y_T\), and hence \(R_1, \ldots, R_T\), are independent random variables with common distribution \(P^*[Y_t = 1] = P^*[R_t = b] = p^*\), and so \(P^*\) is an equivalent martingale measure. \(\square\)
+
+
+
+What is the general formula for pricing an attainable claim
+in the CRR model?
+
+
+The value process
+\[
+V_t = \mathbb{E}^*[H \mid \mathcal{F}_t], \quad t = 0, \ldots, T,
+\]
+of a replicating strategy for \(H = h(S_0, \dots, S_T) = \frac{C_T}{S^0_T} \) is of the form
+\[
+V_t(\omega) = v_t(S_0, S_1(\omega), \ldots, S_t(\omega)),
+\]
+where the function \(v_t\) is given by
+\[
+v_t(x_0, \ldots, x_t) = \mathbb{E}^*\left[ h\left( x_0, \ldots, x_t, \frac{S_1}{S_0}, \ldots, \frac{S_{T-t}}{S_0} \right) \right]. \quad (5.24)
+\]
+Proof. Clearly,
+\[
+V_t = \mathbb{E}^* \left[ h \left( S_0, S_1, \ldots, S_t, \frac{S_{t+1}}{S_t}, \ldots, \frac{S_T}{S_t} \right) \mid \mathcal{F}_t \right].
+\]
+and each \( \frac{S_{t+s}}{S_t}\) is independent of \( \mathcal{F}_t \) and has under \( P^\ast \) the same distr. as \( \frac{S_{s}}{S_0} \)
+and the result follows from the prop. of the cond. exp.
+
+Since \(V\) is characterized by the recursion
+\[
+V_T := H \quad \text{and} \quad V_t = \mathbb{E}^*[V_{t+1} \mid \mathcal{F}_t], \quad t = T-1, \ldots, 0,
+\]
+
+we obtain a recursive formula for the functions \(v_t\) defined in (5.24):
+\[
+v_T(x_0, \ldots, x_T) = h(x_0, \ldots, x_T), \quad (5.25)
+\]
+\[
+v_t(x_0, \ldots, x_t) = p^* \cdot v_{t+1}(x_0, \ldots, x_t, x_t \hat{b}) + (1 - p^*) \cdot v_{t+1}(x_0, \ldots, x_t, x_t \hat{a}),
+\]
+where
+\[
+\hat{a} := 1 + a \quad \text{and} \quad \hat{b} := 1 + b.
+\].
+
+In particular if the derivative is only dependent on the terminal \( S_T \) then this simplifies to
+\( \t_t(H_t) = \sum_{t=0}^{T-t} h(S_0 \hat{a}^{T-t-k}\hat{b}^k \binom{T-t}{k}(p^\ast)^k(1-p^\ast)^{T-t-k} \)
+
+
+
+In the CRR model, what is the general formula for the hedging position?
+
+Proposition 5.45. The hedging strategy is given by
+\[
+\xi_t(\omega) = \Delta_t(S_0, S_1(\omega), \ldots, S_{t-1}(\omega)),
+\]
+where
+\[
+\Delta_t(x_0, \ldots, x_{t-1}) := \frac{(1+r)^t v_t(x_0, \ldots, x_{t-1}, x_{t-1}\hat{b}) - v_t(x_0, \ldots, x_{t-1}, x_{t-1}\hat{a})}{x_{t-1}\hat{b} - x_{t-1}\hat{a}}.
+\]
+
+
+
+State the reflection principle, under what condition is it applicable?
+
+Under the assumption \( \hat{a} = \frac{1}{\hat{b}} \), we can find closed-form expressions.
+
+One can write
+\( S_t(\omega) = S_0 \hat{b}^{Z_t(\omega)} \) with \( Z_0 = 0, \ Z_t = \sum_{i=1}^t Y_i \)
+
+under the uniform distr. \( \mathbb{P}[Y_t = 1] = \frac{1}{2} \) and
+\( \mathbb{P}[Z_t = k] = 2^{-t}\binom{t}{\frac{t+k}{2}} \) if \( t + k \) is even
+otherwise \( 0 \). Define \( M_t = \max_{0 \leq s \leq t} Z_s \).
+
+(The reflection principle).
+For all \( k \in \mathbb{N}, l \in \mathbb{N}_0 \) 
+
+\( \mathbb{P}[M_T \geq k, \mathbb{Z}_T = k - l] = \mathbb{P}[Z_T = k + l] \)
+and 
+\( \mathbb{P}[M_T = k, \mathbb{Z}_T = k - l] = 2\frac{k + l + 1}{T + 1}\mathbb{P}[Z_{T+1} = 1 + k + l] \)
+
+
+Formula (5.27) changes as follows if we replace the uniform distribution \( \mathbb{P} \) by our martingale measure \( P^* \), 
+described in Theorem 5.40:
+\[
+P^*[Z_t = k] = 
+\begin{cases} 
+(p^*)^{\frac{t+k}{2}} (1-p^*)^{\frac{t-k}{2}} \binom{t}{\frac{t+k}{2}}, & \text{if } t+k \text{ is even,} \\ 
+0, & \text{otherwise.} 
+\end{cases}
+\]
+
+Let us now show how the reflection principle carries over to \( P^* \).
+
+Lemma 5.49 (Reflection principle for \( P^* \)). For all \( k \in \mathbb{N} \) and \( l \in \mathbb{N}_0 \),
+
+\[
+P^*[M_T \geq k, \, Z_T = k-l] = \left( \frac{1-p^*}{p^*} \right)^l P^*[Z_T = k+l]
+\]
+\[
+= \left( \frac{p^*}{1-p^*} \right)^k P^*[Z_T = -k-l],
+\]
+
+and
+
+\[
+P^*[M_T = k, \, Z_T = k-l]
+= \frac{1}{p^*} \cdot \left( \frac{1-p^*}{p^*} \right)^l \cdot \frac{k+l+1}{T+1} P^*[Z_{T+1} = 1+k+l]
+\]
+\[
+= \frac{1}{1-p^*} \cdot \left( \frac{p^*}{1-p^*} \right)^k \cdot \frac{k+l+1}{T+1} P^*[Z_{T+1} = -1-k-l].
+\]
+
+
+
+Price a lookback option with the reflection principle
+
+See Example 5.24. 
+In the CRR model, the discounted arbitrage-free price of \( C^{\text{put}}_{\max} \) is given by
+
+\[
+\pi \left( C^{\text{put}}_{\max} \right) = \frac{1}{(1+r)^T} E^* \left[ \max_{0 \leq t \leq T} S_t \right] - S_0.
+\]
+The expectation of the maximum can be computed as
+\[
+E^* \left[ \max_{0 \leq t \leq T} S_t \right] = S_0 \sum_{k=0}^{T} b^k P^*[M_T = k]
+\]
+Lemma 5.49 yields
+\[
+P^*[M_T = k] = \sum_{l \geq 0} P^*[M_T = k, \, Z_T = k-l]
+\]
+\[
+= \sum_{l \geq 0} \frac{1}{1-p^*} \left( \frac{p^*}{1-p^*} \right)^k \frac{k+l+1}{T+1} P^*[Z_{T+1} = -1-k-l]
+\]
+\[
+= \frac{1}{1-p^*} \left( \frac{p^*}{1-p^*} \right)^k \frac{1}{T+1} E^*[-Z_{T+1}; Z_{T+1} \leq -1-k].
+\]
+Thus, we arrive at the formula
+\[
+\pi \left( C^{\text{put}}_{\max} \right) + S_0 = \frac{S_0}{(1+r)^T (1-p^*)(T+1)} \cdot \sum_{k=0}^{T} b^k \left( \frac{p^*}{1-p^*} \right)^k E^*[-Z_{T+1}; Z_{T+1} \leq -1-k].
+\]
+
+As before, one can give explicit formulas for the expectations occurring on the right. \(\diamondsuit\)

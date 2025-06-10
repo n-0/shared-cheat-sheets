@@ -1,0 +1,110 @@
+List some factors contributing to the financial crisis 2007-2008
+
+- Lower borrower quality (subprime mortgages)
+- Shorter and shorter term financing of the banking sector
+- Regulatory arbitrage
+- More supply of financing subprime mortgages due to structured
+products
+- Top credit ratings for structured products based on subprime
+loans
+
+Vicious circle: lower prices, less collateral, more concerns
+about solvency, and ever increasing haircuts
+
+A 20\% haircut in a \$10 trillion market
+means a shortage
+of financing as
+high as \$2 trillion.
+
+What made the situation even riskier in 2008 than in earlier disruptions was the
+rapid growth in the use of overnight repos
+This movement toward shorter term financing meant that a greater portion of the
+primary dealers funding was rolled over each day - risky development in a
+market subject to the "repo run" dynamics. 
+
+A second factor that made conditions in 2008 particularly precarious was the
+resort to less liquid collateral in repo agreements
+
+Asset Backed Commercial Papers (ABCP)
+ABCP is typically a short-term instrument that matures between 1 and 270 days (average of 30 days),
+is issued by an Asset-backed commercial paper program, such as a Conduit.
+The financial assets that serve as collateral for ABCP are ordinarily a mix of many different assets, 
+mostly asset-backed securities (ABS), CDO's. Most of the assets are AAA-rated.
+
+Banks may be vulnerable to runs not based in fundamentals suggests
+that ABCP programs may be vulnerable as well.
+
+
+How do changes in interest rates affect banks balance sheet?
+
+Banks assets
+- typically long term assets
+- Higher interest rates lead to lower values
+
+Banks liabilities
+- typically short term
+- Higher interest rates lead to lower values
+- low sensitivity to interest rate changes
+
+Banks equity value (difference between assets and
+liabilities) changes with interest rate if sensitivities of assets
+and liabilities do not match due to maturity transformation.
+
+
+How's duration defined in particular in the context of bonds.
+
+\( \Delta P = P_{\text{post}} -  P_{\text{pre}}\)
+\( \Delta r = r_{\text{post}} -  r_{\text{pre}}\)
+
+\( P(r) = \sum_{t=1}^n C_t (1 + r)^{-t} \)
+\( \partial_r P = \sum_{t=1}^n C_t (-t)(1 + r)^{-t-1} \)
+\( - \partial_r P = \frac{1}{1+r} \sum_{t=1}^n t C_t (1 + r)^{-t} = D_{\text{abs}}(r)\)
+absolute duration.
+It holds approximately
+\( \Delta P(r) \approx - D_{\text{abs}}(r) \delta r \)
+
+(Macaulay) Duration
+relative price change \( \frac{\Delta P(r)}{P(r)} \)
+\( D = (\sum_{t=1}^n \frac{t C_t(1+r)^{-t}}{P(r)} = \sum_{t=1}^n t \frac{C_t(1+r)^{-t}}{\sum_{t=1}^n C_t(1+r)^{-t}} \)
+
+Interpretation:
+Weighted average of maturities (in years) with fraction of
+present value of cash flows being the weights.
+
+The duration of a portfolio can be calculated by taking the present
+value weighted mean of the durations of the bonds in the portfolio.
+Example:
+Asset MarketValue Duration
+Cash 10 0
+AutoLoans 120 2
+Mortgages 170 8
+Liabilities MarketValue Duration
+Checking\&Savings 120 0
+CertificatesofDeposit 90 1
+Long-Term-Financing 75 12
+
+Duration of Assets:
+\( \frac{10}{300}\cdot 0 + \frac{170}{300}\cdot 8 = 5.33 \)
+Duration of Liabilities:
+\( \frac{120}{285}\cdot 0 + \frac{90}{285}\cdot 1 + \frac{75}{285}\cdot 12 = 3.47 \)
+Therefore, if market interest rate increases, assets will decrease
+faster than liabilities.
+It holds
+\( \frac{\Delta P}{P} \approx - D \cdot \frac{\partial r}{1 + r} \)
+
+\( \frac{E - 15}{15} \approx -40.67 \cdot \frac{0.055 - 0.05}{1.05} \implies E = 12.095 \)
+
+
+Give an example of Immunization 
+
+Duration of Liabilities:
+\( \frac{120}{285}\cdot 0 + \frac{90}{285}\cdot 1 + \frac{75}{285}\cdot 12 = 3.47 \)
+
+\( D_{\text{Equity}} = \frac{300}{300 - 285}\cdot D_{\text{Asset}} - \frac{285}{300-285}\cdot 3.47 = 0 \)
+\( D_{\text{Assets}} = \frac{285\cdot 3.47}{300} = 3.3 \)
+
+Let \( x \) be the PV of cash, PV \( y \) of mortgages.
+\( \frac{x}{300}\cdot 0 + \frac{120}{300} \cdot 2 + \frac{y}{300}\cdot 8 = 3.3 \)
+\( x + y = 180 \)
+It follows that \( 170 - y \) of mortgage value should be transformed into cash (sold).
+

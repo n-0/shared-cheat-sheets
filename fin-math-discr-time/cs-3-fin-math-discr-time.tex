@@ -1,0 +1,55 @@
+Sketch out the convergence of the CRR
+model to the geometric Brownian Motion
+and relate it to the BSM
+
+Split \( [0, T] \) into \( N \) parts, assume that
+\( \lim_{N \to \infty} (1 + r_N)^N = e^{rT} \)
+\( \lim_{N \to \infty} Nr_N = rT \)
+where \( r_N \) is the rate of the riskless bond.
+
+Assume further that
+\( R^{(N)}_k = \frac{S^{(N)}_k - S^{(N)}_{k-1}}{S^{(N)}_{k-1}} \)
+are i.i.d. and satisfy \( -1 < \alpha_N \leq R^{(N)}_k \leq \beta_N \)
+s.t. \( \lim_{N \to \infty} \alpha_N = \lim_{N \to \infty} \beta_N = 0 \),
+additionally \( \sigma_N^2 = \frac{1}{T} \sum_{k}^N \text{var}_N(R^{(N)}_k) \to \sigma^2 \).
+
+Theorem 5.53. Under the above assumptions, the distributions of \( S^{(N)}_N \) under \( P^\ast_N \) converge weakly to the 
+log-normal distribution with parameters \(\log S_0 + rT - \frac{1}{2} \sigma^2 T\) and \(\sigma \sqrt{T}\), i.e., to the distribution of
+\[
+S_T := S_0 \exp \left( \sigma W_T + \left( r - \frac{1}{2} \sigma^2 \right) T \right),
+\]
+where \( W_T \) has a centered normal law \( N(0,T) \) with variance \( T \).
+
+Example 5.55. Suppose the approximating model in the \( N \)th stage is a CRR model with interest rate
+\[
+r_N = \frac{r \, T}{N},
+\]
+and with returns \( R^{(N)}_k \), which can take the two possible values \( a_N \) and \( b_N \); see Section 5.5. We assume that
+\[
+\hat{a}_N = 1 + a_N = e^{-\sigma \sqrt{T/N}} \quad \text{and} \quad \hat{b}_N = 1 + b_N = e^{\sigma \sqrt{T/N}}
+\]
+for some given \(\sigma > 0\). Since
+\[
+\sqrt{N} r_N \to 0, \quad \sqrt{N} a_N \to -\sigma \sqrt{T}, \quad \sqrt{N} b_N \to \sigma \sqrt{T} \quad \text{as} \quad N \to \infty,
+\]
+we have \( a_N < r_N < b_N \) for large enough \( N \). 
+Theorem 5.40 yields that the \( N \)th model is arbitrage-free and admits a unique equivalent martingale measure \( P^*_N \). 
+The measure \( P^*_N \) is characterized by
+\[
+P^*_N \left[ R^{(N)}_k = b_N \right] =: p^*_N = \frac{r_N - a_N}{b_N - a_N}.
+\]
+and we obtain from (5.30) that
+\[
+    \lim_{N \to \infty} p^\ast_N = \frac{1}{2}
+\]
+Moreover \( E^\ast_N[R^{(N)}_k] = r_N \) and
+\( \sum_{k=1}^N \text{var}_N(R^{(N)}_k) \to \sigma^2T \).
+
+For a derivative \( C^{(N)} = f(S^{(N)}_N) \), one obtains then in the limit
+for bounded and a.s. cont. \( f \), 
+\( \lim_{N \to \infty} E^\ast_N [ \frac{C^{(N)}}{(1 + r_N)^N}] = \frac{e^{-rT}}{\sqrt{2\pi}} \int_{-\infty}^\infty f(S_0 e^{\sigma \sqrt{T}y + rT - \frac{\sigma^2 T}{2}}) e^{-\frac{y^2}{2}} \).
+
+
+In particular for the price of an option we obtain the Black-Scholes formula
+\( v(x, T) = x \Phi(d_{+}(x, T)) - e^{-rT}K\Phi(d_{-}(x, T)) \)
+
