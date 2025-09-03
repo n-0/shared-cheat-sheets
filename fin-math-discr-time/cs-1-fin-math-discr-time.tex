@@ -1,4 +1,6 @@
-Definition 2.4.1 (Trading Strategy and Value Process)
+Define a trading stategy, value process and arbitrage stategies
+
+Definition 2.4.1
 In a one-period market, a trading strategy or portfolio is a vector
 \[
 \vartheta = (\vartheta^0, \vartheta^1, \ldots, \vartheta^d)^\top \in \mathbb{R}^{d+1}. 
@@ -16,11 +18,24 @@ V_1^\vartheta = \vartheta^0 S_1^0 + \vartheta^1 S_1^1 + \ldots + \vartheta^d S_1
 \)
 \( V^\vartheta = (V_0^\vartheta, V_1^\vartheta) \) is called value process of the trading strategy.
 
+A trading strategy \(\vartheta\) is called self-financing if 
+\(V^\vartheta_t = \sum_{i=0}^{d} \vartheta^i_t S^i_t = \sum_{i=0}^{d} \vartheta^i_{t+1} S^i_t = P^\vartheta_t  \quad \text{for all } t = 1, \ldots, T - 1.\)
+this is equivalent to \( \sum_{i=0}^d \vartheta_t^i S^i_t = \sum_{i=0}^d \vartheta_{t+1}^i S^i_t \) for all \( t \in \{1, \dots, T-1\} \)
+\(\vartheta\) is self-financing if and only if 
+\(V^\vartheta_t = V^\vartheta_0 + G^\vartheta_t \quad \text{where } G^\vartheta_0 = 0, \quad G^\vartheta_t = \sum_{k=1}^{t} \sum_{i=0}^{d} \vartheta^i_k (S^i_k - S^i_{k-1}), \quad t = 1, \ldots, T,\) denotes the cumulated gains process.
+
+
 A trading strategy \( \vartheta \in \mathbb{R}^{d+1} \) is called an arbitrage opportunity if 
 \(
 V_0^\vartheta \leq 0, \ V_1^\vartheta \geq 0 \ \mathbb{P}\text{-a.s.} \ \text{and} \ \mathbb{P}[V_1^\vartheta > 0] > 0.
 \)
 A market model which does not admit arbitrage opportunities is called arbitrage-free.
+
+
+
+
+
+State the results of Radon-Nikodym
 
 Theorem 2.4.5 (Radon-Nikodym)
 A probability measure \(\mathbb{P}_1\) is absolutely continuous with respect to \(\mathbb{P}_2\) on 
@@ -48,6 +63,8 @@ In this case, the Radon-Nikodym derivative of \(\mathbb{P}_2\) with respect to \
 \(
 \frac{d\mathbb{P}_2}{d\mathbb{P}_1} = \left( \frac{d\mathbb{P}_1}{d\mathbb{P}_2} \right)^{-1}.
 \)
+
+State FTAP in discrete time
 
 Arbitrage-free market models can be characterized in terms of the set of equivalent risk-neutral measures:
 \(
@@ -85,6 +102,14 @@ C_1(\omega_k) &= \vartheta^0 S_1^0(\omega_k) + \vartheta^1 S_1^1(\omega_k) + \ld
 \end{itemize}
 
 
+Define replicable claims and determine their prices
+
+A contingent claim \( C_1 \) is called replicable (or attainable) if
+\( C_1 = V_1^\vartheta \),  \( \mathbb{P} \)-a.s. for some \( \vartheta \in \mathbb{R}^{d+1} \).
+Such a trading strategy \( \vartheta \) is said to be a replicating strategy or replicating portfolio for
+\( C_1 \).
+
+
 Suppose that the set \(\mathcal{Q}\) of equivalent risk-neutral measures for the original market model is non-empty. 
 Then the set of arbitrage-free prices of a contingent claim \(C_1\) is non-empty and given by
 \[
@@ -98,11 +123,6 @@ Remarks:
 C_0^{\inf} := \inf_{\mathbf{Q} \in \mathcal{Q}} S_0^0 \mathbb{E}_\mathbf{Q} \left[\frac{C_1}{S_1^0}\right] \quad \text{and} \quad C_0^{\sup} := \sup_{\mathbf{Q} \in \mathcal{Q}} S_0^0 \mathbb{E}_\mathbf{Q} \left[\frac{C_1}{S_1^0}\right]
 \]
 are often called arbitrage bounds for the contingent claim \(C_1\).
-
-A contingent claim \( C_1 \) is called replicable (or attainable) if
-\( C_1 = V_1^\vartheta \),  \( \mathbb{P} \)-a.s. for some \( \vartheta \in \mathbb{R}^{d+1} \).
-Such a trading strategy \( \vartheta \) is said to be a replicating strategy or replicating portfolio for
-\( C_1 \).
 
 Suppose that the market model is arbitrage-free, and let \( C_1 \) be a contingent claim.
 1. \( C_1 \) is replicable if and only if it admits a unique arbitrage-free price.

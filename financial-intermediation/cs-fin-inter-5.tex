@@ -1,7 +1,6 @@
 How\'s the probability of default defined? 
 How can the value of equity be found?
 
-
 The probability of default (PD) is defined as
 \( \text{PD}^P_t = \mathbb{P}[A_T < K|\mathcal{F}_t] = \Phi(-d_2) \)
 and \( d_2 = \frac{\log{\frac{A_t}{K}} + (\mu - \frac{\sigma^2}{2}(T - t)}{\sigma\sqrt{T - t}} \)
@@ -14,7 +13,6 @@ To calibrate the model the unknown Value of assets and volatility is required.
 With the help of the volatility of the equity (which is publicly traded),
 one can simultaneously solve the defining equation for \( E_t \) and
 \( \sigma_E E_t = \frac{\partial E_t}{\partial A_t}\sigma A_t = \Phi(d_1)\sigma A_t \).
-
 
 The difference between this discount rate and the risk-free rate
 is the Yield Spread
@@ -64,7 +62,7 @@ be executed then) and not too low
 Let the optimal penalty function be \( \phi^\ast \), the repayment \( z(y) \),
 \( R \) the accumulated (not discounted) payback
 then
-\( \phi^\ast(z(y)) = \max{R - z(y), 0}  \)
+\( \phi^\ast(z(y)) = \max\{R - z(y), 0\} \)
 Financiers want to have repayment of \( I \), on average. That is
 choose \( R \) such that
 \( \mathbb{E}[z(y)] = I \iff \mathbb{P}[y < R]\mathbb{E}[y|y < R] + \mathbb{P}[y \geq R]R = I \)

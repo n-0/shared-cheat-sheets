@@ -53,3 +53,132 @@ for bounded and a.s. cont. \( f \),
 In particular for the price of an option we obtain the Black-Scholes formula
 \( v(x, T) = x \Phi(d_{+}(x, T)) - e^{-rT}K\Phi(d_{-}(x, T)) \)
 
+
+Explain the framework of state-space markets
+
+For simplicity, asset \( 0 \) is supposed to be a savings account with \( S_0^0 = 1 \) and with risk-free one-period interest rate \( r > -1 \) 
+such that \( S_1^0 = 1 + r \).
+
+Notation:
+
+Vector of initial prices: \( S_0 = (S_0^0, S_0^1, \ldots, S_0^d)^\top \)
+(Random) Vector of terminal prices: \( S_1 = (S_1^0, S_1^1, \ldots, S_1^d)^\top \)
+Payoff matrix:
+\[
+\boldsymbol{S}_1 = (S_1^i(\omega_k))_{1 \leq k \leq K, 0 \leq i \leq d} = 
+\begin{pmatrix}
+    S_1^0(\omega_1) & S_1^1(\omega_1) & \dots & S_1^d(\omega_1) \\
+    \vdots & \vdots & \ddots & \vdots \\
+    S_1^0(\omega_K) & S_1^1(\omega_K) & \dots & S_1^d(\omega_K)
+\end{pmatrix}
+\]
+
+The tuple \( (S_0, \boldsymbol{S}_1) \) is called a market model.
+A trading stategy is then given by \( \vartheta \in \mathbb{R}^{d+1} \),
+the initial investment \( V_0^{\vartheta} = S^\top_0 \vartheta \) and terminal wealth \( V_1^{\vartheta} = \boldsymbol{S}_1 \vartheta \)
+A claim 
+
+Replicating trading strategy:
+
+A contingent claim - defined as random variable \( C_1 : \Omega \to \mathbb{R} \) or in terms of the associated vector \( \boldsymbol{C}_1 \) of 
+realizations, respectively - is replicable, if there exists a trading strategy \( \vartheta \) such that
+  \[
+  C_1 = V_1^{\vartheta} = \boldsymbol{S}_1^\top \vartheta \quad \text{or in vector notation} \quad \boldsymbol{C}_1 = \boldsymbol{V}_1^{\vartheta} = \boldsymbol{S}_1 \vartheta.
+  \]
+In this case, \( \vartheta \) is called a replicating trading strategy.
+Note that \( \vartheta \) is a solution of the linear system of equations 
+\(\boldsymbol{C}_1 = \boldsymbol{V}_1^{\vartheta} = \boldsymbol{S}_1 \vartheta. \)
+
+Arbitrage
+
+A trading strategy \( \vartheta \) is called arbitrage strategy if \( V_0^{\vartheta} \leq 0 \) and 
+\( V_1^{\vartheta} = \boldsymbol{S}_1 \vartheta \geq 0 \) and there exists \( k \in \{1, \ldots, K\} \) such that \((V_1^{\vartheta})_k > 0. \)
+
+If all contingent claims are replicable a market is complete. From linear algebra, \( \text{rk}(S_1) = K \) implies market completeness.
+
+
+What are State-Price Vectors and how are they related to FTAP? 
+
+\( \psi \in \mathbb{R}^{K}_{>0} \) with \( S_0 = \mathbf{S}_1^\top \psi \) is a state price vector.
+It holds \( 1 = S^0_0 = (1+r)\sum_{k=1}^K \psi_k \) by construction.
+Extend the market with \( K \) so called Arrow-Debreu securities, which satisfy \( \hat{S}_0^k = \psi_k \) and \( \hat{S}_1^k = e_k \).
+Any replicable claim based on such securities, which maintains arbitrage freeness is characterized by
+\( S_0^\top \vartheta = \sum_{k=1}^K (\mathbf{S}_1 \vartheta)_k \psi_k = \psi^\top \mathbf{S}_1 \vartheta = \psi^\top \mathbf{V}_1^\vartheta \)
+implying \( S_0 = \mathbf{S}_1^\top \psi \), so they're state price vectors.
+Note that this linear system of equations can also be used to determine \( \psi \) (although not necessarily uniquely).
+
+Moreover there's a bijection between risk neutral probability measures \( \mathbb{Q} \) and state price vectors \( \psi \):
+For such \( \mathbb{Q} \) we have
+\[ S^\top_0 \vartheta = \frac{1}{1+r}\mathbb{E}_{\mathbb{Q}}[V_1^\vartheta] = \frac{1}{1+r}(\mathbb{Q}[\omega_1], \dots, \mathbb{Q}[\omega_k])^\top \mathbf{V}_1^\vartheta \]
+Conversely \( \psi \) defines \( \mathbb{Q} \) via \( \mathbb{Q}(\omega_k) = (1+r) \psi_k \), since
+\( \sum_{k=1}^{K} \mathbb{Q}[\omega_k] = (1 + r)\sum_{k=1}^{K} \mathbb{Q}[\psi_k] = \frac{1+r}{1+r} = 1 \).
+
+Even if \( \psi \) is not uniquely determined, it gives the bounds for arbitrage free prices of a claim \( \mathbf{C}_1 \)
+via \( (\text{inf}_{\psi} \psi^\top \mathbf{C}_1, \text{sup}_{\psi} \psi^\top \mathbf{C}_1) \)
+
+Therefore FTAP is reformulated as 
+
+1. Fundamental theorem of asset pricing:
+For a state-space market \( (S_0, \boldsymbol{S}_1) \), the following statements are equivalent:
+a) The market is arbitrage-free.
+b) There exists a state-price vector \( \psi \).
+c) There exists an equivalent risk-neutral measure \( \mathbb{Q} \).
+
+2. Fundamental theorem of asset pricing:
+Suppose that \( (S_0, \boldsymbol{S}_1) \) is an arbitrage-free state-space market. Then the following statements are equivalent:
+a) The market is complete.
+b) The state-price vector \( \psi \) is unique.
+c) There exists exactly one equivalent risk-neutral measure \( \mathbb{Q} \).
+
+
+
+Apply the State-Space Market model to determine arbitrage free prices
+
+Consider the following state space market with two primary assets and three scenarios 
+\(\Omega = \{\omega_1, \omega_2, \omega_3\}\), 
+\(\mathcal{F} = \mathcal{P}(\Omega)\), 
+\(\mathbb{P}[\{\omega_i\}] > 0\), \(i \in \{1, 2, 3\}\), defined by:
+
+\[
+\boldsymbol{S}_0 = \begin{pmatrix} 1 \\ 5 \end{pmatrix}, \quad \boldsymbol{S}_1 = \begin{pmatrix} 
+\frac{10}{9} & \frac{60}{9} \\
+\frac{9}{9} & \frac{40}{9} \\
+\frac{10}{9} & \frac{30}{9} 
+\end{pmatrix}
+\]
+
+Questions:
+
+1. Is the market model free of arbitrage? Determine all state-price vectors and the corresponding risk-neutral probability measures.
+2. What can you say about market completeness?
+3. Calculate the interval of arbitrage-free prices for the Contingent Claim \(C_1\), defined by
+
+\(C_1(\omega_1) = 75, \quad C_1(\omega_2) = 50, \quad C_1(\omega_3) = 25.\)
+
+Solving this linear system of equations yields 
+\(\psi_2 = -3 \psi_1 + \frac{9}{5}, \quad \psi_3 = 2 \psi_1 - \frac{9}{10}.\)
+
+Note that \(\psi_2 > 0, \psi_3 > 0\) if and only if \(\psi_1 \in \left( \frac{9}{20}, \frac{3}{5} \right)\). 
+Thus, the set of state-price vectors is non-empty and given by
+
+\[
+\psi = \{\psi \in \mathbb{R}^3: \psi_1 \in \left( \frac{9}{20}, \frac{3}{5} \right), \psi_2 = -3 \psi_1 + \frac{9}{5}, \psi_3 = 2 \psi_1 - \frac{9}{10} \},
+\]
+
+i.e., the market model is arbitrage-free. Multiplying the state-price vector with 
+\( (1 + r) = \frac{10}{9} \) yields the set of risk-neutral measures (\( q_i := \mathbb{Q}[\{\omega_i\}] \).
+
+\[
+\mathbb{Q} = \{\mathbb{Q}: q_1 = \frac{10}{9} \psi_1, q_2 = \frac{10}{9}(-3 \psi_1 + \frac{9}{5}), q_3 = \frac{10}{9}(2 \psi_1 - \frac{9}{10}), \psi_1 \in \left( \frac{9}{20}, \frac{3}{5} \right) \}
+\]
+\[
+= \{\mathbb{Q}_\alpha: q_1 = \alpha, q_2 = -3\alpha + 2, q_3 = 2\alpha - 1, \alpha \in \left(\frac{1}{2}, \frac{2}{3}\right) \}.
+\]
+
+An arbitrage-free state-space market is complete if and only if the state-price vector is unique. 
+The results of 1. thus show that the given state-space market is incomplete.
+The set of arbitrage-free prices is given by 
+\(\left( \inf_{\psi \in \psi} \psi^\top \boldsymbol{C}_1, \sup_{\psi \in \psi} \psi^\top \boldsymbol{C}_1 \right).\)
+Since 
+\(\psi^\top \boldsymbol{C}_1 = 75 \psi_1 + 50 \cdot \left(-3 \psi_1 + \frac{9}{5} \right) + 25 \cdot \left(2 \psi_1 - \frac{9}{10} \right) = -25 \psi_1 + 67.5\)
+and \(\psi_1 \in \left( \frac{9}{20}, \frac{3}{5} \right)\), we obtain the price interval \((52.5; 56.25).\)

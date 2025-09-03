@@ -53,8 +53,8 @@ and liabilities do not match due to maturity transformation.
 
 How's duration defined in particular in the context of bonds.
 
-\( \Delta P = P_{\text{post}} -  P_{\text{pre}}\)
-\( \Delta r = r_{\text{post}} -  r_{\text{pre}}\)
+\( \Delta P = P_{\text{post}} - P_{\text{pre}}\)
+\( \Delta r = r_{\text{post}} - r_{\text{pre}}\)
 
 \( P(r) = \sum_{t=1}^n C_t (1 + r)^{-t} \)
 \( \partial_r P = \sum_{t=1}^n C_t (-t)(1 + r)^{-t-1} \)
@@ -84,15 +84,18 @@ CertificatesofDeposit 90 1
 Long-Term-Financing 75 12
 
 Duration of Assets:
-\( \frac{10}{300}\cdot 0 + \frac{170}{300}\cdot 8 = 5.33 \)
+\( \frac{10}{300}\cdot 0 + 2\cdot\frac{120}{300} + \frac{170}{300}\cdot 8 = 5.33 \)
 Duration of Liabilities:
 \( \frac{120}{285}\cdot 0 + \frac{90}{285}\cdot 1 + \frac{75}{285}\cdot 12 = 3.47 \)
 Therefore, if market interest rate increases, assets will decrease
 faster than liabilities.
-It holds
+The overall duration is then given by 
+\( D_{\text{equity}} =  \frac{300}{300 - 285}\cdot 5.33 - \frac{285}{300 - 285}\cdot 3.47 = 40.67 \text{years} \)
+This can also be used to derive future value of the portfolio if interest changes, since it holds
 \( \frac{\Delta P}{P} \approx - D \cdot \frac{\partial r}{1 + r} \)
 
 \( \frac{E - 15}{15} \approx -40.67 \cdot \frac{0.055 - 0.05}{1.05} \implies E = 12.095 \)
+
 
 
 Give an example of Immunization 
