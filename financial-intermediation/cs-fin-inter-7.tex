@@ -1,0 +1,160 @@
+Solve an exercise for determining the optimal contract with symmetric information
+
+An entrepreneur has the opportunity to invest \( 100 \) monetary units (MU) in a technology generating the following
+returns after one year: With a probability of \( p_1 = 0.95 \)  the technology generates a revenue of \( y_1 = 150 \text{MU} \), with
+probability \( p_2 = 0.03 \) the revenue is \( y_2 = 100 \text{MU} \), and with probability \( p_3 = 0.02 \) the revenue is \( y_3 = 50 \text{MU} \). 
+The entrepreneur does not have any equity. A bank without market power offers a loan to the entrepreneur. As an
+alternative, the bank has the opportunity to invest its funds at the interbank market at a riskless interest rate of 10\%. 
+Calculate the nominal repayment value that the bank will claim from the entrepreneur, if the bank’s utility function is given by \( \text{U}_L(x) = 0.75x \) and the entrepreneur’s utility is \( \text{U}_B(x) = 0.5x \).
+How can the bank’s and entrepreneur’s risk preferences be described?
+
+The optimization problem is
+\( \max_R \mathbb{E}[U_B(y)] = \mathbb{E}[\frac{1}{2}\sqrt{y - R(y)}] \) s.t. \( \mathbb{E}[U_L(R(y))] > U^0_L \).
+It holds \( U^0_L = 0.75\sqrt{100\cdot 1.1} \). Denote \( R = R(y) \), then the constraint reads 
+\( \mathbb{E}[0.75\sqrt{R}] \geq 0.75\sqrt{100\cdot 1.1} \)
+Solving this for \( R \) with given probabilities yields \( R \geq 111.8391 \), therefore the borrowers utility
+is
+\( 0.95 \cdot 0.5 \cdot \sqrt{150 - 111.84} + 0.03\cdot 0 + 0.02 \cdot 0 = 2.934 \).
+Note the constraint \( y \geq R \) for the borrower (as otherways they wouldn't undertake the project as the cost is higher than the return).
+To analyze the their risk preferences, one does the usual first and second derivative of the \( U \)'s and checks convexity/concavity.
+
+
+Solve an exercise for determining the optimal contract with asymmetric information
+
+A borrower wants to finance her investment project exclusively via credit in the amount of 100 MU. If the project
+is successful, the profit will be 20, in case it is unsuccessful, there will be a loss of 20. The risk neutral lender
+knows that there are two types of borrowers - “safe” and “risky” ones. The safe borrowers’ probability of success
+is \( p_S = 1 \); however, the risky borrowers’ probability of success is only \( p_R = 0.9 \). Furthermore, the share of safe borrowers
+within the population is known \( \pi = 0.6 \) of all borrowers are safe and \( 1 - \pi \) are risky.
+Calculate the interest rate the lender will claim if he requires an expected interest of \( r_f = 0.04 \).
+
+Lenders constraint
+\( \pi(p_S\cdot R + (1-p_S)\cdot 80) + (1 - \pi)(p_r \cdot R + (1 - p_R)\cdot 80) = 100\cdot 1.04 \)
+Solving this for \( R \) leads to 
+\( R = 105 \) so \( r = \frac{R}{100} - 1 = 0.05 \).
+The required interest is higher than the alternative investment because it contains a risk premium that accounts for default risk.
+
+
+
+What is the solution for the option price in the binomial tree model? 
+What is the general approach? How to hedge a claim?
+
+Let the initial value of the asset be \( S_0 \), the risk-free interest rate \( r \) constant and for each \( t \in \{0, \dots, T\} \)
+\( S_t = S_0u^{i}d^{t-i} \) for some \( i \leq t \). A general claim \( C_t = f(S_t, t) \) can then be evaluated recursively
+by starting from \( S_T \) via \( C_t = e^{-rT}(\frac{e^{rT} - d}{u - d}C_{t+1,u} + \frac{u - e^{rT}}{u - d}C_{t+1,d} \)
+where \( C_{t+1,u} \) is the value of the claim at \( t+1 \) for an up-move of \( S_t \).
+
+The risk-neutral probability is \( q = \frac{e^{rT} - d}{u - d} \), thus an arbitrage free market satisfies \( d < e^{rT} < u \).
+
+The hedging portfolio with positions \( (\delta_t,B_t) \) in the asset and some savings account with rate \( r \)
+is \( C_t = S_t\delta_t + B_te^{rT}\). The solution is then
+\( \delta_t = \frac{C_{t+1,u} - C_{t+1,d}}{S_tu - S_td} \)
+\( B_t = \frac{C_{t+1,u} - \delta_t S_t u}{e^{rT}} \)
+
+under the assumptions of the Cox-Ross-Rubinstein model \( CRR \), that is \( u = e^{\sigma\sqrt{\frac{T}{N}}},\ d = \frac{1}{u} \),
+where \( T \) is the overall time and \( N \) the number of steps, the prices are recombinant, meaning \( S_t ud = S_t \) and
+the price for a call simplifies to
+\( C_t e^{-rT} \sum_{i=0}^N \binom{N}{i}q^i(1 - q)^{N-i}\max\{Su^id^{N-i} - K, 0\}\).
+
+
+
+What should you know in regards to the Black-Scholes-Merton model?
+
+Mostly the same as for advanced derivatives, therefore no extra anki cards are given.
+
+
+
+
+What is a coherent risk measure?
+
+Monetary Risk Measure:
+A mapping \(\rho : \mathcal{X} \to \mathbb{R}\) is called a monetary risk measure if it satisfies the following properties:  
+1. Inverse monotonicity: If \(\mathcal{X}(\omega) \leq \mathcal{Y}(\omega)\) for all \(\omega \in \Omega\), then 
+   \(\rho(\mathcal{X}) \geq \rho(\mathcal{Y})\).  
+2. Cash invariance: For any \(m \in \mathbb{R}\), \(\rho(\mathcal{X} + m) = \rho(\mathcal{X}) - m\).
+
+Interpretation:  
+1. Property 1 states that the risk of a position \(\mathcal{Y}\) is smaller than the risk of a position \(\mathcal{X}\), 
+   if the future value of \(\mathcal{Y}\) is at least as large as \(\mathcal{X}\) for any scenario.  
+2. Property 2 states that risk is measured on a monetary scale: if \(m\) are added to \(\mathcal{X}\), 
+   then the risk of \(\mathcal{X}\) is exactly reduced by this amount.
+
+A monetary risk measure \(\rho\) on \(\mathcal{X}\) is called a convex risk measure 
+if it is a convex functional and thus does not penalize diversification.
+A convex risk measure is called coherent if it satisfies in addition positive homogeneity, i.e.,
+\(
+\rho(\lambda X) = \lambda \rho(X) \quad \text{for all } X \in \mathcal{X} \text{ and } \lambda \geq 0.
+\)
+
+Remarks:
+Each coherent risk measure \(\rho\) is sub-additive, i.e.,
+\(
+\rho(X + Y) \leq \rho(X) + \rho(Y) \quad \text{for all } X, Y \in \mathcal{X}.
+\)
+Positive Homogeneity is a scaling property.
+- Note that this property might be inappropriate for risk measurement, due to concentration and liquidity risk.
+- This criticism motivated the notion of convex risk measures, introduced by Föllmer and Schied (2002).
+
+
+State some of the relevant risk measures in financial intermediation
+
+Value at Risk (not coherent, only monetary)
+\( \text{VaR}_{\alpha}(Y) = \inf\{y|F_Y(y) \geq \alpha\} = F^{-1}(\alpha) \)
+if the inverse exists.
+
+Economic capital (EC)
+is defined as the difference between the value-at-risk and the expected loss.
+\( \text{EC}_\alpha(L) = \text{VaR}_{\alpha}(L) - \mathbb{E}[L] \)
+
+The Conditional Value-at-Risk \( \text{CVaR}_{\alpha}(Y) \) of confidence level
+\( \alpha \in (0,1) \) quantifies the expected loss incurred in the \( (1 - \alpha)100 \)% worst cases.
+\( \text{CVaR}_{\alpha}(Y) = \int_{-\infty}^\infty z dG^\alpha_Y(z) \)
+where 
+\[ G^\alpha_Y = \begin{cases}
+    0, & z < \text{VaR}_\alpha(Y), \\
+    \frac{F_Y(z) - a}{1 - a},& \text{ else}
+\end{cases}
+\]
+
+This usually simplifies to
+\( \text{CVaR}_{\alpha}(Y) = \frac{1}{\alpha}\int_0^\alpha \text{VaR}_{\beta}(Y) d\beta \)
+
+
+
+Give an example how to determine the \( \text{CVaR}_{\alpha}^\pm \)
+
+Upper and Lower \( \text{CVaR}_{\alpha}^\pm \)
+\( \text{CVaR}_{\alpha}^{+} = \mathbb{E}[Y|Y > \text{VaR}_{\alpha}(Y) \)
+\( \text{CVaR}_{\alpha}^{-} = \mathbb{E}[Y|Y \geq \text{VaR}_{\alpha}(Y) \)
+
+If \( F_Y(\text{VaR}_\alpha(Y)) < 1 \), it holds 
+\( \text{CVaR}_{\alpha}(Y) = \lambda_\alpha(Y)\text{VaR}_\alpha(Y) + (1 - \lambda_\alpha)\text{CVaR}_{\alpha}^{+}\)
+where \( \lambda_\alpha = \frac{F_Y(\text{VaR}_\alpha(Y)) - \alpha}{1 - \alpha} \),
+else \( \text{VaR}_\alpha(Y) = \text{CVaR}_{\alpha}(Y) \).
+
+INSERT IMAGE 5e, 22 
+INSERT IMAGE 5e, 24
+
+Compare different risk measures qualitatively
+
+Expected Loss:
+(+) Information on average portfolio loss; direct connection to provisions; Coherent
+(-) No information on the shape of the loss distribution.
+Loss standard deviation:
+(+) Information on loss uncertainty / risk and scale of the loss distribution.
+(-) Less information for asymmetric distribution; not coherent.
+Value-at-Risk:
+(+) Intuitive and commonly used; confidence level interpretation; actively used in
+banks; capital calculations and risk-adjusted performance measures
+(-) No information on shape, only info on one percentile; difficult to compute and
+interpret at very high percentiles; not coherent (lacks subadditivity).
+Economic capital:
+(+) Intuitive and commonly used; confidence level interpretation; actively
+used in banks; capital calculations and risk-adjusted performance measures.
+(-) No information on shape, only info on one percentile; difficult to compute
+and interpret at very high percentiles; not coherent
+Conditional Value-at-Risk:
+(+) Coherent measure of risk at a given confidence level, increasingly
+popular in banks.
+(-) Less intuitive than VaR; only tail and distribution information for the
+given percentile; computational issues.

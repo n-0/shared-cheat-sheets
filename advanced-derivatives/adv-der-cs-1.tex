@@ -1,0 +1,230 @@
+What is the arbitrage free price for a forward rate agreement?
+
+A forward rate agreement (FRA) obligates one to enter an exchange of interests rates \( r_1, r_2 \) (say \( r_2 \)
+is the reference rate) on some nominal \( N \) during the period \( [T_1, T_2] \), which is in the future.
+The settlement can be at the beginning of the period at \( T_1 \) (1) or the end (2) \( T_2 \).
+The profit-loss is then given by
+(1) \( N\frac{(r_1 - r_2)\tau}{1 + r_2\tau} \)
+(2) \( N\frac{(r_1 - r_2)\tau} \)
+where \( \tau = T_2 - T_1 \).
+
+Let \( P_T(t) \) be the price at \( t \) of a ZCB maturing at \( T \)
+The forward rate is then given by 
+\( F = \frac{1}{\tau}(\frac{P_t(T_1)}{P_t(T_2)} - 1)\).
+
+The replicating argument to show it, goes for \( N = 1 \) like this:
+
+At inception short \( m = \frac{P_t(T_1)}{P_t(T_2)} \) units of \( P_t(T_2) \) 
+and buy one \( P_t(T_1) \).
+
+At \( T_1 \), we receive \( 1 \) MU from \( P_t(T_1) \) maturing and for case
+(1) buy back \( \frac{m}{1+r\tau} P_t(T_2) \) to close out the short.
+(2) buy \( (1+r_2\tau)P_{T_1}(T_2) \).
+
+At \( T_2 \) the value (rewriting it in terms of \( F \)) of the portfolio is then:
+(1) \( 1 - m\frac{1}{r\tau} = \frac{(r-F)\tau}{1 + r\tau} \)
+(2) \( 1 + r_2\tau - m = (r - F)\tau \).
+
+Note that at inception the portfolio had net value \( 0 = P_t(T_1) - mP_t(T_2) \) and therefore \( F \)
+must be the \( 0 \) rate.
+
+
+
+State the relevant Ito formulas
+
+Let \( f \in \mathcal{L}_{\text{ad}}(\Omega, L^2[a,b]) \) and \( g \in \mathcal{L}_{ad}(\Omega, L^1[a,b]) \)
+then an Ito process is any stochastic process of the shape 
+\( X_t = X_a + \int_a^t f(s) dW_s + \int_a^t g(s)ds \)
+It satisfies
+\( \mathbb{E}[X_t|\mathcal{F}_a] = X_a + \int_a^t g(s) ds \)
+and 
+\( \text{Var}[X_t|\mathcal{F}_a] = \int_a^t (f(s))^2 ds \)
+the latter following from the Ito isometry
+\( \mathbb{E}[(\int_0^T X_t dW_t)^2] = \mathbb{E}[\int_0^T X_t^2 dt]\)
+
+Suppose \( \theta(t,x) \) is cont. with cont. partial derivatives then it holds
+\[ 
+    \theta(t,X_t) = \theta(a, X_a) + \int_a^t \frac{\partial \theta}{\partial x}(s, X_s) dW_s + \int_a^t 
+    \frac{\partial \theta}{\partial t}(s, X_s) + \frac{\partial \theta}{\partial x}(s, X_s)g(s) + \frac{1}{2}\frac{\partial^2 \theta}{\partial^2 x}(s, X_s)f(s)^2 ds
+\]
+
+Ito's product rule states
+\( X_tY_t = X_aY_a + \int_a^t Y_s dX_s + \int_a^t X_s dYs + \int_a^t dX_sdY_s \),
+which simplifies usually via the rules \( dW_i(t)W_j(t) = \delta_{i,j}dt,\ dtdW_t = 0,\ dt^2 = 0 \).
+
+Some standard examples are:
+\( \int_0^t W_s dW_s = \frac{1}{2}W^2_t - \frac{1}{2}t \)
+\( \int_0^t s dW_s = tW_t - \int_0^t W_s ds \)
+\( \int_0^t e^{W_t} dW_s + \int_0^t \frac{1}{2}e^{W_s} ds = e^W_s \)
+
+
+
+What were the more relevant stochastic differential equation solved in the lecture?
+
+Geometric Brownian Motion Type
+\( \frac{dS_t}{S_t} = \mu dt + \sigma dW_t \)
+\( S_t = S_s e^{(\mu - \frac{1}{2}\sigma^2)(t - s) + \sigma(W_t - W_s)}\)
+It satisfies 
+\( (dS_t)^2 = \sigma^2 S_t^2 dt \)
+And its moments properties are derived by the fact that 
+\( e^{(\mu - \frac{1}{2}\sigma^2)(t - s) + \sigma(W_t - W_s)} \sim \text{LN}((\mu - \frac{1}{2}\sigma^2)(t - s), \sigma(t - s)) \)
+and it holds for \( X \sim LN(\alpha,\beta)  \)
+\( \mathbb{E}[X] = e^{\alpha + \frac{1}{2}\beta^2} \)
+\( \text{Var}[X] = e^{2\alpha + 2\beta^2} - e^{2\alpha + \beta^2} \).
+
+Ornstein-Uhlenbeck
+
+\( dr_t = \kappa(\mu - r_t)dt + \sigma dW_t  \)
+\( r_t = e^{-\kappa (t-s)}r_s + (1 - e^{-\kappa(t-s)})\theta + \sigma\int_s^t e^{-\kappa(t - u)}dW_u \)
+This immediately yields
+\( \mathbb{E}[r_t|\mathcal{F}_s] = e^{-\kappa (t-s)}r_s + (1 - e^{-\kappa(t-s)})\theta \)
+and with Ito's isometry
+\( \text{Var}[r_t|\mathcal{F}_s] = \frac{\sigma^2}{2\kappa}(1 - e^{-2 \kappa t}) \)
+
+The price of ZCB is then given by
+\( P(t, T) = e^{-\mathbb{E}[\int_t^T r_s ds] + \frac{1}{2}\text{Var}[\int_t^T r_s ds]} \)
+\( = \text{exp}(- \alphar_t - (T - t - \alpha)(\theta - \frac{\sigma^2}{2\kappa^2}) - \alpha^2 \frac{\sigma^2}{4\kappa} \)
+where \( \alpha = \frac{1 - e^{-\kappa(T - t)}}{\kappa} \).
+
+
+
+How to determine the value of warrants/employee options and the cost to the company?
+
+Assume we have \( N \) shares outstanding each worth \( S_0 \) now and \( M \) warrants with maturity \( T \)
+and strike \( K \).
+
+If the options are exercised this changes the equity of the company from \( NS_T \) to \( NS_T + MK\),
+the value of an individual share however depreciates to 
+\( \frac{NS_T + MK}{N + M} \) so the payoff due to exercise is \( \frac{NS_T + MK}{N + M} - K \),
+which simplifies to \( \frac{N}{N+M}(S_T - K) \)
+and is \( \frac{N}{N+M} \) of the price of a regular option.
+
+The total cost of the warrants is then to the company \( M\frac{N}{N+M}(S_T - K) \), which implies a reduction
+of \( \frac{M}{N+M}(S_T - K) \) for the share price.
+
+
+
+
+Explain how to incorporate dividends in the binomial tree model
+
+
+Suppose a continuous dividend yield \( \delta_i \) at \( i \Delta t \) in percent of the stock price,
+then for \( j\Delta t < i\Delta t\) the stock price is \( S_0 u^x d^{j-x} \) and after ex-dividend \( j\Delta t > i\Delta t \) 
+\( S_0 (1 - \delta_i)u^{y}d^{t-y} \), (\( x, y \) are just the updated number of up and down movements)
+
+INSERT IMAGE 21.7 (PAGE 460)
+
+If instead a discrete amount of dollars \( D \) should be paid out per share,
+for \( j\Delta t < i\Delta t\) the stock price is \( S_0 u^x d^{j-x} \) and after ex-dividend \( j\Delta t > i\Delta t \) 
+\(  ( S_0 u^y d^{i-y} - D)u^{z}d^{j - i - z}\), (\( z \) is the number of up and down movements between \( j\Delta t \)) and \( i\Delta t \).
+This has the unfortunate side effect in the CRR model (\( u = \frac{1}{d} \)) that the tree stops to be recombining, for example 
+\( ( S_0 u^{y-1}d^{i-y} - D)u \neq ( S_0 u^{y}d^{i-y} - D)d \), so one has to evaluate twice the number of paths.
+
+INSERT IMAGE 21.8
+
+
+One way around this, is to deduct the divident right from the beginning.  
+Define \( S^\ast = S \) when \( j\delta_t > i\delta_t \) and \( S^\ast = S - De^{-r(i - j)\Delta t} \) otherwise.
+One uses then the adjusted volatility \( \sigma^\ast \) to get different \( u,d \) 
+(in the lecture it was simplified to assume \( \sigma^ast = \sigma \)).
+This tree in \( S^\ast \) is recombining again. Adding the \(De^{-r(i - j)\Delta t\)} \) to each tree node, then gives a binomial 
+tree for \( S \).
+
+
+
+What should one keep in mind to evaluate options on futures?
+
+
+It holds Black's 76 model for a call \( C_t \) on a future \( F_t \)
+
+\( C_t = e^{-r(T-t)}(F_t \Phi(d_{+}) - K \Phi(d_{-}))\)
+with 
+\( d_{\pm} = \frac{\ln(\frac{F_t}{K}) + \frac{1}{2}\sigma^2(T - t)}{\sigma \sqrt{T-t}} \)
+
+Since futures are assumed to behave like assets with dividend \( q \) equal to the risk-free rate \( r \) their probability 
+of an up move is given by
+\( p = \frac{e^{(r - q)\Delta} - d}{u - d} = \frac{1 - d}{u - d} \).
+
+This is not for futures but also fits here, namely if there's a cost of carry \( c \) and/or a yield \( q \) on an asset
+in general we have to adjust \( p \) in the CRR model to
+
+\( p = \frac{e^{(r + c - q)\Delta} - d}{u - d} = \frac{1 - d}{u - d} \).
+
+Another trick, that was used in the homework is the insight that knowing the future prices allows one 
+to estimate the growth rate for different periods, namely for period \( [t, t + \Delta] \)
+\( \mathbb{E}[\mu_t|\mathcal{F}_s] = \frac{1}{\Delta t}\ln(\frac{F_s^{t + \Delta }}{F_s^{t})} \)
+Then one determines each \( p_t \) separately
+\( p_t = \frac{e^{\mathbb{E}[\mu_t|\mathcal{F}_s]\Delta } - d}{u - d} \).
+
+Insert SOLUTION 21.19 AND HW 4.4
+
+
+
+How to determine the hedging portfolio for a binomial tree and the Greeks
+
+The hedging portfolio \( \Pi_t = \alpha_t S_t + \beta_t M_t \) (where \( M_t \) is the riskless bond),
+can be recursively computed by 
+\[ 
+    \alpha_t uS_{t-1} + \beta_{t} M_{t} = \Pi_t^u  \\
+    \alpha_t dS_{t-1} + \beta_{t} M_{t} = \Pi_t^d
+\]
+which yields the solution
+\( \alpha_t = \frac{\Pi_t^u - \Pi_t^d}{S_{t-1}(u - d)} \)
+\( \beta_t = \frac{u\Pi_t^d - d\Pi_t^u}{(1+r)^n(u - d)} \).
+
+The greeks in the binomial model are derived via finite-difference schemes.
+In particular, for a financial derivate \( V_t \), \( \delta = \frac{\Partial V_t}{ \partial S_t} \) is given by
+\( \Delta_t = \frac{V_t^u - V_t^d}{S_t(u - d)} \) (so it coincides exactly with our \( \alpha_t \)
+and gamma is approximated by
+\( \Gamma = \frac{1}{h}(\frac{V_{t+2}^{uu} - V^{ud}_{t+2}}{S_t(u^2 - 1)} - \frac{V_{t+2}^{ud} - V^{dd}_{t+2}}{S_t(1 - d^2)}) \)
+where \( h = \frac{1}{2}S_t(u^2 - d^2) \).
+
+\( \Theta = \frac{V_{t+2}^{uu} - V_{t}}{2 \delta_t }  \)
+The most involved is vega for which one constructs a complete new tree with a slightly shifted volatility \( \sigma^\ast = \sigma + h \)
+let the price of the derivative for the new tree be \( V^\ast_t \) then
+\( \Nu = \frac{V^\ast_t - V_t}{\sigma^\ast - \sigma} \)
+
+
+
+Name the volatility models of the lecture
+
+Historical volatility
+
+\( r_t = \ln(\frac{S_t}{S_{t-1}}) \) then \( \sigma^2 = \frac{1}{m-1} \sum_{\tau=1}^m (r_{t - \tau} - \bar{r})^2 \) 
+
+The ARCH model without long term volatility is
+\( \sigma^2_t = \sum_{\tau=1}^m \alpha_\tau r^2_{t - \tau} \)
+where \( \sum_{\tau=1}^m \alpha_\tau = 1 \). 
+In particular the Exponentially Weighted Moving Average (EWMA) model \( \alpha_{\tau+1} = \lambda \alpha_\tau,\ \lambda \in [0, 1] \)
+is a favored choice. It has the a very simple approximation
+\( \sigma^2_t = \lambda \sigma^2_{t-1} (1 - \lambda)r^2_{t-1} \)
+
+Advantages of EWMA
+– Recent returns matter more than distant returns
+– Only one parameter
+– Only little data needs to be stored
+
+with long term volatility
+\( \sigma^2_t = \alpha_0 \sigma_L^2 + \sum_{\tau=1}^m \alpha_\tau r^2_{t - \tau} \)
+and \( \sum_{\tau=0}^m \alpha_\tau = 1 \)
+The generalization is the \( \text{GARCH}(p,q) \) with
+\( r_t = \mu_t + \sigma_t Z_t  \) with \( Z_t \) i.i.d normals, \( \mu_t \) some deterministic process and
+\( \sigma^2_t = \alpha_0\sigma_L + \sum_{i=1}^p \alpha_i (r_{t-i} - \mu_{t-i})^2 + \sum_{j=1}^q \beta_j \sigma^2_{t-j} \)
+
+A case of special interest was \( \text{GARCH}(1,1) \), which allows via the condition \( \alpha_0 + \alpha_1 + \beta_1 = 1 \)
+and if \( \omega = \alpha_0 \sigma_L \) is provided.
+
+The determination of the parameters is done via maximum likelihood estimation, e.g.
+\( L = \Prod_{t=1}^T \frac{1}{\sqrt{2\pi \sigma_t^2}} e^{- \frac{r^2_t}{2\sigma^2_t}} \)
+and inserting for \( r^2_t \) and taking the derivative with respect to the \( \alpha, \beta \) and setting this to \( 0 \).
+
+Heston process
+\( dS_t = \mu S_t dt + \sqrt{V_t} S_t dW_t^S \)
+\( dV_t = \kappa(\theta - V_t) dt + \sigma \sqrt{V_T} dW_t^V \)
+with usually inverse correlation between \( dW_t^S, dW_t^V \).
+(No closed form solution)
+
+Last implied volatility which is found by numerically approximating the \( \sigma \) in the BSM
+which would fit the option at a given strike and time. The volatility smile somewhat contradicts
+the uniqueness of volatility.
+In contrast to historical estimates, it is a forward looking measure of volatility

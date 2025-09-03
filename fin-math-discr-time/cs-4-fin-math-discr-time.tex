@@ -1,0 +1,129 @@
+State Doob's martingale decomposition theorem
+
+Let \( Y_t \in \mathcal{L}^1(Q) \) be adapted, then there exists a unique decomposition
+\( Y_t = M_t - A_t \), where \( M_t \) is a \( Q \)-martingale and \( A \) is an adapted process
+with \( A_0 = 0 \).
+Proof:
+\( A_t - A_{t-1} = -\mathbb{E}_Q[Y_t - Y_{t-1}|\mathcal{F}_{t-1}] \)
+Then \( A \) is predictable and \( M_t = Y_t + A_t \) is a \( Q \)-martingale.
+
+The continuous version (stated for completeness), the Doob-Meyer Decomposition theorem, is a little trickier:
+A cadlag supermartingale \( Z \) with \( Z_0 = 0 \) and \( \mathcal{Z} = \{Z_\tau | \tau < \infty \} \),
+where \( \tau \) is any stopping time, being uniformly integrable, has a unique decomposition 
+ \( Z_t = M_t - A_t \) of a predictable \( A_t \) with \( A_0 = 0 \) and uniform integrable martingale \( M_t \).
+
+Uniform integrability was the condition on a family of r.v. \( \mathcal{C} \), s.t. for all \( X \in \mathcal{C} \)
+1. \( \exists M < \infty, \mathbb{E}[|X|] \leq M \)
+2. \( \forall \varepsilon > 0, \exists \delta > 0, \forall A \in \mathcal{F}, Q[A] \leq \delta \implies \mathbb{E}[|X \mathbf{1}_A] \leq \varepsilon \).
+
+
+Define a stopping time and state some facts 
+
+A function \( τ : \Omega \mapsto \{0, 1, \dots, T \} \cup \{ \infty \} \) is called a stopping
+time if \( \{ \tau = t \} \in \mathcal{F}_t \) for \( t \in \{0, 1, \dots, T \} \).
+In particular \( \tau = c \) (constant) is a stopping time.
+It is easy to show that \(\forall t, \{ \tau = t \} \in \mathcal{F}_t  \) is equivalent to the definition.
+For \( 2 \) stopping times \( \tau, \sigma \) also \( \tau \wedge \sigma,\ \tau \vee \sigma, (\tau + \sigma) \wedge T \)
+are stopping times and in discrete time also \( \tau\sigma \). However \( \tau - \sigma \) is not one.
+
+Define the stopped martingale process \( Y^\tau_t(\omega) = Y_{t \wedge \tau}(\omega) \),
+there holds the famous Doob's stopping theorem.
+
+Let \( M \) be an adapted process s.t. \( M_t \in \mathcal{L}^1(Q) \) for each \( t \), then
+the following is equivalent
+
+1. \( M \) is a \( Q \)-martingale
+2. For any stopping time \( \tau \) the stopped process \( M^\tau \) is a \( Q \)-martingale
+3. \( \mathbb{E}_Q[M_{\tau \wedge T}] = M_0 \) for any stopping time.
+(This generalizes to sub and super martingales)
+
+
+What is the optimal stopping problem and the Snell envelope?
+
+Let \( \mathcal{T} = \{\tau | \tau \text{ is a stopping time with } \tau \leq T\} \),
+then the optimal stopping problem is
+\( \max_{\tau \in \mathcal{T}} \mathbb{E}[H_\tau] \)
+for some process \( H_t \) (usually some american claim).
+
+Define \( U_T = H_T \) and \( U_t = H_t \wedge E[U_{t+1}|\mathcal{F}_t] \)
+as the Snell envelope of \( H_t \).
+
+Let \( H \) be an adapted process with \( \mathbb{E}_Q[\max_{t \leq T} |H_t| < \infty \). 
+Then the Snell envelope \( U^Q \) of \( H \) with respect to \( Q \) is the smallest \( Q \)-supermartingale dominating \( H \):
+If is another \( Q \)-supermartingale such that \( \tilde{U}_t \geq H_t \) \( Q \)-a.s., then \( \tilde{U}_t \geq U_t^Q \) \( Q \)-a.s. 
+for all \( t \).
+
+Let \( \tau^{u}_{\text{min}} := \text{min}\{t \geq u| U_t = H_t\}\) with \( \tau_{\text{min}} \iff u = 0 \), it holds
+\( U_t = \mathbb{E}[H_{\tau^{u}_{\text{min}}}|\mathcal{F}_t] = \text{ ess sup }_{\tau \in \mathcal{T}_t} \mathbb{E}[H_\tau | \mathcal{F}_t ] \)
+In particular, \( U_0 = \mathbb{E}[H_{\tau_{\text{min}}}] = \sup_{\tau \in \mathcal{T}} \mathbb{E}[H_\tau] \).
+
+Thus we have a solution to our optimal stopping problem, actually this can be used to identify a solution: 
+\( \tau \in \mathcal{T} \) is optimal iff. \( H_\tau = U_\tau \) \( P \)-a.s. and if \( U^\tau \) is a martingale.
+Any optimal stopping time satisfies \( \tau \geq \tau_{\text{min}} \).
+
+Now define the stopping time:
+\( \tau_{\text{max}} = \inf \{ t \geq 0 | \mathbb{E}[U_{t+1} - U_t|\mathcal{F}_t] \neq 0 \} \wedge T = \inf \{t \geq 0 | A_{t+1} \neq 0 \} \wedge T \).
+The stopping time \( \tau_{\text{max}} \) is the largest optimal stopping time. Moreover, a stopping time \( \tau \) is optimal if and only if \( P \) -a.s. 
+\( \tau \leq \tau_{\text{max}} \) and \( U_\tau = H_\tau \).
+
+
+
+What is the relation between optimal stopping times and hedging/execution strategies
+
+Suppose an american type claim, then the optimal stopping problem is an optimal execution strategy for the buyer
+of the claim. Conversely the snell envelope describes the optimal hedge.
+More specifically,
+
+Let \( H \) be the discounted american claim with snell envelope \( U \) with respect so some EMM \( Q \). Then there exists a \( d \)-dimensional predictable \( \chi \) 
+s.t. 
+\( U_u + \sum_{k=u+1}^t \chi_k \cdot (X_k - X_{k-1}) \geq H_t \) for \( t \geq u \). 
+Any other dominating \( \tilde{U}_t \) for \( H_t \) satisfies \( \tilde{U}_t \geq U_t \) \( Q \)-a.s..
+Note that this can be interpreted as the Doob martingale decomposition for \( H_t \) and if we set \( u = 0 \) and take expectations it follows 
+that \( U_0 \) must be the arbitrage free price for \( H_t \) (it can be shown that \( \chi_k \) is self-financing).
+
+\( H_\tau \leq U_0 + \sum_{k=1}^\tau \chi_k \cdot (X_k - X_{k-1}) \) for all \( \tau \in \mathcal{T} \) \( Q \).a.s
+and equality holds iff. \( \tau \) is optimal with respect to \( Q \).
+
+Let \( V_t = \mathbb{E}_Q[H_T|\mathcal{F}_t] \) then \( U_t \geq V_t \) for all \( t \) and if \( V_t \)
+dominates \( H_t \) this is an equality.
+
+Example for such domination are found if \( H_t \) is a submartingale.:
+1. A convex \( f : \mathbb{R}^d \to [0, \infty) \) is applied 
+to the discounted market \( X \). By Jensen's inequality
+\( \mathbb{E}[f(X_{t+1})|\mathcal{F}_t] \geq f(E[X_{t+1}|\mathcal{F_t}] = f(X_t) \).
+2. For an american call \( H_t = (X^1_t - \frac{K}{S^0_t})_{+} \) it holds for increasing \( S^0_t \) that
+\( \mathbb{E}[H_{t+1}|\mathcal{F_t}] \geq H_t \), thus the Snell envelope coincides with \( V_t = \mathbb{E}_Q[H_T|\mathcal{F}_t] \)
+so the arbitrage free price \( U_0 \) coincides with the European type. (The same doesn't apply to Puts or if dividends exist)
+
+
+How's the Snell envelope constructed in the CRR model?
+
+Let \( H_t = h_t(S_t) \) be the american claim contingent on \( S_t \), then
+\( U_t = u(S_t) \) where
+\( u_T(x) = h_T(x) \) and \( u_t(x) = h_t(x) \wedge (u_{t+1}(x\hat{b})q + u_{t+1}(x\hat{a})(1 - q) \)
+then the space \( [0, T) \times [0, \infty) \) can be decomposed into the regions
+\( \mathcal{R}_c = \{ (t, x) | u_t(x) > h_t(x) \} \quad \mathcal{R}_s = \{ (t, x) | u_t(x) = h_t(x) \} \)
+and the minimal stopping time \( \tau_\text{min} \) can be described as first exit/entry time via 
+\( \tau_\text{min} = \text{min} \{t \geq 0| (t, S_t) \nin \mathcal{R}_c \} = \text{min} \{t \geq 0 | (t, S_t) \in \mathcal{R}_s \} \).
+
+
+Give the arbitrage bounds for american claims
+
+Note that for a specific stopping time \( \tau \), \( H_\tau \) can be treated like an European claim
+by noting that \( \tilde{H}_t = H_t \mathbf{1}_{\tau = t} \) is of european type with maturity \( T = \tau \).
+The arbitrage free prices are then given by
+\( \Pi(H_\tau) = \{ E[H_\tau|P \in \mathcal{P}, E[H_\tau] < \infty \} \).
+Therefore it would make sense to define arbitrage prices \( \pi \) for discounted american claims like this
+1. \( \pi \) is not too high, in the sense that there is \( \tau \in \mathcal{T} \) and \( \pi' \in \Pi(H_\tau) \) s.t. \( \pi \leq \pi' \)
+2. The price \( \pi \) is not too low in the sense that there exists no \( \tau' \in \mathcal{T} \) such that \( \pi < \pi' \)
+for all \( \pi' \in \Pi(H_{\tau'} \).
+It can be shown more rigorously then for the set of equivalent martingale measures \( \mathcal{P} \)
+\( \pi_{\text{inf}}(H) = \text{inf}_{P^\ast \in \mathcal{P}} \sup_{\tau \in \mathcal{T}} E_P[H_\tau] = \sup_{\tau \in \mathcal{T}} \inf_{P \in \mathcal{P}} E[H_\tau] \)
+\( \pi_{\text{sup}}(H) = \text{sup}_{P^\ast \in \mathcal{P}} \sup_{\tau \in \mathcal{T}} E_P[H_\tau] = \sup_{\tau \in \mathcal{T}} \sup_{P \in \mathcal{P}} E[H_\tau] \)
+Moreover, \( \Pi(H) \) either consists of one single point or does not contain its upper endpoint \( \pi_{\text{sup}}(H) \).
+
+A claim is attainable if there's a \( \tau \in \mathcal{T} \) and self-financing trading strategy \( \chi \) s.t. it satisfies \( P \)-a.s.
+\( V_t \geq H_t \) where \( V_t \) is the value process of \( \chi \).
+In particular \( \Pi(H) \) is then a singleton and \( \pi_{\text{sup}}(H) \in \Pi(H) \) (in fact this is an equivalence).
+
+

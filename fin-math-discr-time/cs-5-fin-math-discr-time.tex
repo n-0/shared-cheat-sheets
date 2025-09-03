@@ -1,0 +1,143 @@
+How to determine the set of arbitrage-free prices in the discrete time setting
+for a continuously distributed underlying?
+
+The support of a Borel probability measure \( \nu \) on \( \mathbb{R}^d \) is the smallest
+closed set \( A \subset \mathbb{R}^d \) such that \( \nu(A^c) = 0 \), and it will be denoted by \( \text{supp } \nu \).
+It holds
+\( \text{supp } \nu = \bigcap_{\nu(A^c)=0, A \text{ closed}} A \).
+
+Further let the convex hull of the support be
+\( \Gamma\ \mu := \text{conv } \text{supp } \mu = \{ \sum_{k=1}^n \alpha_k y_k | \alpha_k \geq 0 , \sum_k \alpha_k = 1, y_k \in \text{ supp } \mu \} \)
+
+This is usually determined by finding the extreme points (those points which don't are inside (but can be an endpoint) a line connecting two points in \( C \)) and connecting them in a manner such that no intersections occur.
+
+The relative interior is defined for a convex set \( C \subset \mathbb{R}^d \) as the set of \( x \in C \), s.t. for all \( y \in C \), 
+there is some \( \varepsilon > 0 \) with \( x - \epsilon(y - x) \in C \). The notation is \( \text{ri } C \).
+
+With considerable effort one can then derive: 
+Theorem:
+Let \( \mu \) be the distribution of the discounted price vector \( \frac{S}{(1 + r)} \) of
+the risky assets. Then the market model is arbitrage-free if and only if the price system \( \pi \) belongs 
+to the relative interior \( \text{ri }\Gamma\ \mu \) of the convex hull of the support of \( \mu \).
+
+Suppose \( (S^0, S^1, S^2) = \pi \) and \( S^2 \) does not satisfy the conditions above, then an arbitrage strategy is usually given
+by going long/short on \( S^2 \) (depending on if it's lower, higher than the arbitrage free price respectively) and doing the opposite 
+with the proceeds to \( S^1 \) s.t. the resulting portfolio is at least the upper envelope of \( \text{ri }\Gamma\ \mu \).
+
+If this is supposed to be minimal it needs to be exactly the upper envelope for all points. If \( S^2 \) is not linearly dependent on \( S^1 \)
+(that is we can't use a simple trading strategy in terms of \( S^1, S^0 \) to replicate \( S^2 \)), then we need to use the maximal linear part 
+of the upper envelope.
+
+
+Derive the price of a Chooser Option
+
+At \( T_1 \) the owner may choose to obtain an european Call or Put both with strike \( K \) and maturity \( T_2 \).
+Under the assumption that the holder of the option always chooses the option with higher value at \( T_1 \), we get
+via FTAP
+\( V_0 = \frac{1}{(1 + r)^T} \mathbb{E}[(S^1_{T_2} - K)_{+}|\mathcal{F}_0] + \mathbb{E}[K - S_{T_2}|\mathcal{F}_0, (C_{T_2,K})_{T_1} < (P_{T_2,K})_{T_1}] \)
+and with the Put-Call parity \( (C_{T_2,K})_{T_1} < (P_{T_2,K})_{T_1} \iff 0 < (P_{T_2,K})_{T_1} - (C_{T_2,K})_{T_1} = (1 + r)^{T_1 - T_2}K - S_{T_1} \)
+inserting it with \( A := \{ 0 < (1 + r)^{T_1 - T_2}K - S_{T_1} \} \) yields
+\( V_0 = (C_{T_2,K})_{0} + \frac{1}{(1+r)^T}\mathbb{E}[K - S_{T_2}|\mathcal{F}_0, A] \)
+Using on the latter summand the Tower-property 
+\( \frac{1}{(1+r)^T}\mathbb{E}[K - S_{T_2}|\mathcal{F}_0, A] = \mathbb{E}[\frac{1}{(1+r)^T}\mathbb{E}[K - S_{T_2}|\mathcal{F}_{T_1}]|\mathcal{F}_0, A] \)
+and applying FTAP on \( S_{T_2} \) simplifies this to
+\( \mathbb{E}[\frac{1}{(1+r)^{T_2}}K - \frac{1}{(1+r)^{T_2}}S_{T_1}|\mathcal{F}_0, A] \)
+\( = \frac{1}{(1+r)^{T_1}} \mathbb{E}[(1 + r)^{T_1 - T_2}K - S_{T_1}|\mathcal{F}_0, A] \)
+applying what we know from the conditioning on \( A \)
+\( = \frac{1}{(1+r)^{T_1}} \mathbb{E}[((1 + r)^{T_1 - T_2}K - S_{T_1})_{+}|\mathcal{F}_0] = (P_{T_1, (1+r)^{T_1 - T_2}K})_0 \).
+Summarizing 
+
+\( V_0 = (C_{T_2,K})_{0} + (P_{T_1, (1+r)^{T_1 - T_2}K})_0 \)
+
+Prove an equivalent characterization for self-financing trading strategies:
+
+To demonstrate that a trading strategy \(\vartheta\) is self-financing under the condition \(\sum_{i=0}^d S^i_k(\vartheta^i_k - \vartheta^i_{k-1}) = 0\), we need to show that the change in value of the portfolio solely depends on changes in asset prices, rather than any injection or withdrawal of funds.
+The value of the portfolio at time \(t\) \(V_t\), is given by:
+
+\[
+V_t = \sum_{i=0}^n \vartheta^i_t S^i_t.
+\]
+
+A trading strategy is self-financing if the change in the portfolio value from time \(k-1\) to \(k\) is due only to changes in asset prices, i.e.,
+
+\[
+V_k - V_{k-1} = \sum_{i=0}^d \vartheta^i_{k-1} (S^i_k - S^i_{k-1}).
+\]
+
+Let's analyze the change in value of the portfolio:
+
+\[
+V_k - V_{k-1} = \sum_{i=0}^n \vartheta^i_k S^i_k - \sum_{i=0}^n \vartheta^i_{k-1} S^i_{k-1}.
+\]
+
+We can rewrite this as:
+
+\[
+V_k - V_{k-1} = \sum_{i=0}^n (\vartheta^i_k S^i_k - \vartheta^i_{k-1} S^i_{k-1}).
+\]
+
+This can be decomposed into:
+
+\[
+V_k - V_{k-1} = \sum_{i=0}^n \vartheta^i_k S^i_k - \sum_{i=0}^n \vartheta^i_{k-1} S^i_k + \sum_{i=0}^n \vartheta^i_{k-1} S^i_k - \sum_{i=0}^n \vartheta^i_{k-1} S^i_{k-1}.
+\]
+
+Combining terms, we get:
+
+\[
+V_k - V_{k-1} = \sum_{i=0}^n (\vartheta^i_k - \vartheta^i_{k-1}) S^i_k + \sum_{i=0}^n \vartheta^i_{k-1} (S^i_k - S^i_{k-1}).
+\]
+
+Given the condition \(\sum_{i=0}^d S^i_k (\vartheta^i_k - \vartheta^i_{k-1}) = 0\), the first term vanishes. Thus we are left with:
+
+\[
+V_k - V_{k-1} = \sum_{i=0}^n \vartheta^i_{k-1} (S^i_k - S^i_{k-1}).
+\]
+
+This shows that the change in the portfolio's value is entirely due to changes in asset prices, rather than changes in portfolio positions. Therefore, the strategy \(\vartheta\) is self-financing.
+
+
+Explain capital allocation principles and state examples
+
+Mathematical description
+Consider \(n\) risky sub-portfolios whose outcomes are given by \(X_1, \ldots, X_n\).
+Then the total portfolio is given by \(X := X_1 + \cdots + X_n\).
+If risk is measured in terms of a sub-additive risk measure \(\rho\), then there is a diversification effect in the total portfolio:
+\(
+\rho(X) \leq \sum_{i=1}^n \rho(X_i)
+\)
+
+Goal
+Allocate to each sub-portfolio \(X_i\), \(i = 1, \ldots, n\), a risk capital contribution \(\rho(X_i \mid X)\) which reflects its contribution 
+to the total risk \(\rho(X)\) and to the diversification effect.
+
+Key properties of a meaningful capital allocation
+Complete capital allocation: \(\sum_{i=1}^n \rho(X_i \mid X) = \rho(X)\)
+Diversification: For each sub-portfolio \(X_i\), \(i = 1, \ldots, n\), the allocated capital is at most as large as the sub-portfolio’s standalone capital:
+\(
+\rho(X_i \mid X) \leq \rho(X_i) \quad \text{for } i = 1, \ldots, n.
+\)
+
+
+Proportional allocation:
+\(
+\rho(X_i \mid X) = \frac{\rho(X_i)}{\sum_{j=1}^n \rho(X_j)} \rho(X)
+\)
+
+Marginal principles, e.g.:
+Euler allocation (for homogeneous risk measures):
+\(
+\rho(X_i \mid X) = \left. \frac{d}{dh} \rho(X + h X_i) \right|_{h=0}
+\)
+ Covariance principle:
+\(
+\rho(X_i \mid X) = \frac{\text{Cov}(X_i, X)}{\sigma^2(X)} \rho(X)
+\)
+
+Euler's capital allocation principle can be expressed more succinctly if \( \rho(X) = f(X) \)
+for some \( f : \mathbb{R}^n \to \mathbb{R} \) which is positive homogeneous of order \( \alpha \).
+It holds 
+\( \rho(X_i|X) = \frac{\partial f_{\rho}}{\partial x_i}(\mathbf{1}) \)
+and it satisfies both Complete capital allocation and Diversification.
+Under certain technical conditions the \( \text{V@R}_{\lambda} \) actually satisfies this with 
+\( \text{V@R}_{\lambda} = \mathbb{E}[-X_i| -X =\text{V@R}_{\lambda}(X)] \)

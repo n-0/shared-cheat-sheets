@@ -1,0 +1,162 @@
+State the different versions of the Put-Call Parity
+
+
+The put call parity for European style options on an asset \( S_t \) paying a fixed amount dividend \( D \) is
+\( C_t = P_t + S_t - Ke^{-r(T - t)} - De^{-r(T-t)} \)
+If the dividend yields is instead given as \( q \) of the share price
+\( C_t = P_t + S_t e^{-q(T - t)} - Ke^{-r(T - t)} \)
+
+Note that this implies that one can find implied dividend yields via this parity, if \( C_t, P_t, S_t \) are given.
+
+For European style currency options (let \( S_t \) be the value of one unit foreign currency in domestic currency) it reads
+\( C_t = P_t + S_te^{-r_f (T - t)} - Ke^{-r(T-t)}  \)
+where \( r_f \) is the risk-free rate in foreign currency.
+
+The Put-Call parity for options on futures is
+
+\( C_t = P_t + F_0 e^{-r(T-t)} + Ke^{-r(T-t)} \)
+
+For Barrier options a similar identity exist, let \( C^{\text{do}}_t, C^{\text{di}}_t \) be the 
+prices of a down-and-out and down-and-in call respectively, with same barrier and underlying option.
+Then
+\( C^{\text{do}}_t + C^{\text{di}}_t = C_t \)
+
+Last there's a Put-Call Parity for Caps \( C_t \) and Floors \( F_t \), which reads
+\( C_t = F_t + S_t \)
+where \( S_t \) is the value of a swap to pay the strike interest rate (of the cap/floor) for floating interest rate.
+
+
+State Girsanov's theorem and give an example how to turn a process into martingale
+
+
+(Girsanov)
+Let \( Y(t) \in \mathbb{R}^n \) be an Ito process of the form  
+\[  
+dY(t) = a(t, \omega) dt + dB(t); \quad t \leq T, \quad Y_0 = 0.  
+\]  
+where \( T \leq \infty \) is a given constant and \( W(t) \) is an \( n \)-dimensional Wiener process. Put  
+\[  
+M_t = \exp \left( -\int_0^t a(s, \omega) dB_s - \frac{1}{2} \int_0^t a^2(s, \omega) ds \right); \quad 0 \leq t \leq T.  
+\]  
+Assume that \( M_t \) is a martingale w.r.t. \( \mathcal{F}_t^{(n)} \) and \( P \). Define the measure \( Q \) on \( \mathcal{F}_t^{(n)} \) by  
+\[  
+dQ(\omega) = M_T(\omega) dP(\omega).  
+\]  
+Then \( Q \) is a probability measure on \( \mathcal{F}_t^{(n)} \) and \( Y(t) \) is an \( n \)-dimensional Wiener process motion w.r.t. \( Q \) for \( 0 \leq t \leq T \).  
+
+(Cameron-Martin-Girsanov). 
+If \( (W(t))_{t \geq 0} \) is a \( P \)-Wiener process and \( (\gamma(t))_{t \geq 0} \) is an \( \mathcal{F} \)-previsible process satisfying the boundedness condition  
+\[  
+E^P \left[ \exp \left( \frac{1}{2} \int_0^T \gamma(t)^2 dt \right) \right] < \infty,  
+\]  
+then there exists a measure \( Q \) s.t.  
+- \( Q \sim P \)  
+- \( \frac{dQ}{dP} = \exp \left( - \int_0^T \gamma(t) dW(t) - \frac{1}{2} \int_0^T \gamma(t)^2 dt \right), \)  
+- \( \widetilde{W}(t) := W(t) + \int_0^t \gamma(s) ds \) is a \( Q \)-Wiener process.  
+
+In particular for the gBM of an asset \( \frac{dS_t}{S_t} = \mu_t dt + \sigma_t dW_t \) with drift \( \mu_t \), which is discounted \( S^{\ast}_t = \frac{S_t}{e^{r_f t}} \)
+\( \frac{dS^{\ast}_t}{S^{\ast}_t} = (\mu_t - r_f) dt + \sigma_t dW_t \)
+the choice \( \gamma(t) = \frac{\mu_t - r_f}{\sigma_t} \) is referred to as the market price of risk.
+The SDE then transforms to
+\( \frac{dS^{\ast}_t}{S^{\ast}_t} = \sigma_t d\tilde{W}_t \)
+and the non-discounted \( S_t \) to
+\( \frac{dS^{\ast}_t}{S^{\ast}_t} = r_f dt + \sigma_t d\tilde{W}_t \)
+
+
+Give a list of portfolios of options and exotic derivatives
+
+Spread:
+Bull:
+long call K1
+short call K2
+K2 > K1
+Bear:
+short call K1
+long call K2
+K2 > K1
+
+Butterfly spread:
+long call K1
+short 2 calls K2
+long call K3
+K3 > K2 > K1
+
+Straddle:
+long put K
+long call K
+
+
+Strangle:
+long put K1
+long call K2
+K2 > K1
+
+Risk reversal:
+long put K1
+short call K2
+K2 > K1
+
+Compound options (simply options on options, typically their maturities differ)
+
+Chooser Option
+Using put-call-parity, we have
+\( \text{max}(C_t, P_t) = \text{max}(C_t, C_t + Ke^{-r_f(T_2 - T_1)} - S_{T_1}) \)
+\( C_t + \text{max}(0, Ke^{-r_f(T_2 - T_1)} - S_{T_1})  \)
+Thus, the chooser option is a portfolio of
+(i) a call with strike \( K \) and maturity  
+(ii) a put with strike \( Ke^{-r_f(T_2 - T_1)} \) and maturity \( T_1 \).
+
+Barrier Options
+Path-dependent
+(i) Down-and-out
+(ii) Down-and-in
+(iii) Up-and-out
+(iv) Up-and-in
+
+Binary Option
+
+A binary call pays a fixed amount (e.g., \( N = 1 \)) if the underlying is above the strike at
+maturity and zero otherwise
+\( C_T^b = N\mathbf{1}_{S_T > K} \)
+\( C_t^b = Ne^{-r_f(T - t)}\Phi(d_2) \)
+
+Forward Start Option
+An option where the strike is determined in the future \( T_1 \) before maturity \( T_2 \)
+Valuation:
+Call (or put) today \( K = S_0 \) with a time to maturity of \( T_2 - T_1 \) but from today.
+
+Exchange Option:
+The right to exchange asset \( S_2(t) \) for \( S_1(t) \) at \( T \). It is priced via Margrabe's formula
+\( C_t = e^{-q_1 T}S_1(0)\Phi(d_{+}) - e^{-q_2 T}S_2(0)\Phi(d_{-}) \),
+where \( q_1, q_2 \) are the expected dividend yields and
+\( d_{\pm} = \frac{\ln(\frac{S_1(0)}{S_2(0)} + (q_2 - q_1 \pm \frac{1}{2} \sigma^2)T}{\sigma \sqrt(T)} \)
+
+
+Motivate the Black-Scholes PDE
+
+For \( S_t = S_0e^{(\mu_t - \frac{1}{2}\sigma_t^2)t + \sigma W_t} \) a derivative \( V_t = f(S_t, t) \) satisfies
+by Ito's lemma 
+\[ dV_t = (\mu S \frac{\partial V_t}{\partial S_t} + \frac{1}{2} \sigma^2 S_t^2 \frac{\partial^2 V_t}{\partial S_t^2} + \frac{\partial V_t}{\partial t}) dt + \sigma S_t \frac{\partial V_t}{\partial S_t} dW_t 
+\]
+
+We now want to construct a hedging portfolio for the derivative, depending solely on \( S_t \), so let \( \Pi_t = -V_t + \Delta_t S_t \).
+Then 
+\[
+d\Pi_t = - (\mu S \frac{\partial V_t}{\partial S_t} - \mu \Delta_t S_t + \frac{1}{2} \sigma^2 S_t^2 \frac{\partial^2 V_t}{\partial S_t^2} + \frac{\partial V_t}{\partial t}) dt - \sigma S_t(\frac{\partial V_t}{\partial S_t} - \Delta_t) dW_t
+\]
+to eliminate any risk (equivalently stochastic fluctations) we can set \( \Delta_t = \frac{\partial V_t}{\partial S_t} \)
+and get
+\[
+d\Pi_t = - (\frac{1}{2} \sigma^2 S_t^2 \frac{\partial^2 V_t}{\partial S_t^2} + \frac{\partial V_t}{\partial t})dt.
+\]
+Since this portfolio should at earn interest (equivalently satisfy the usual no-arbitrage condition as a martingale), it should hold
+\( d\Pi_t = r \Pi_t dt \)
+inserting the previous then yields the Black-Scholes PDE:
+\[
+\frac{1}{2} \sigma^2 S_t^2 \frac{\partial^2 V_t}{\partial S_t^2} + \frac{\partial V_t}{\partial t} = r V_t - r S_t \frac{\partial V_t}{\partial S_t}
+\]
+Actually the previous even holds, if we assume \( \mu, \sigma \) to be time varying.
+This can also be expressed in terms of the greeks as:
+\( \Theta_t + rS_t \Delta_t + \frac{1}{2} \Gamma_t \sigma^2_t S^2_t = r\Pi_t \)
+
+Setting \( \Delta_t = 0 \), yields the Gamma-Theta relationship (which is of interest for dynamic hedging). 

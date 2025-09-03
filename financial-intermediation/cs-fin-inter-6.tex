@@ -1,0 +1,165 @@
+What is the pricing kernel? Give examples for the BSM and Binomial Tree
+
+Consider a payoff in the Binomial tree of the form
+\( S_j = e^{-rT}\sum_{i=0}^N \binom{N}{i}q^i(1 - q)^{N-i}\mathbf{1}_{i=j} = e^{-rT} \binom{N}{j}q^j(1-q)^{N-j} \)
+where \( q \) are the risk-neutral probabilities and state \( j \) stands for \( S_0d^{N-j}u^j \).
+Let the physical probability to end in state j be:
+\( \binom{N}{i}p^i(1 - p)^{N-i} \)
+We're interested in solving the optimization problem if we should consume our capital \( S_0 \)
+today (call it state \( c \)) or in the future in some of the states \(c_j,\ j \in \{0, \dots, N\} \).
+We normalize \( S_0 = 1 \) and solve the optimization problem
+
+\( \max_{c, c_1, \dots, c_j} u(c_0) + \delta \sum_{j=0}^N \binom{N}{i}p^i(1 - p)^{N-i}u(c_j)\)
+with the condition
+\( c + \sum_{j=0}^N e^{-rT} \binom{N}{i}q^i(1 - q)^{N-i} c_j = 1 \)
+The solution via Lagrange yields
+\(\frac{\partial \mathcal{L}}{\partial c} = 0\)
+\(u'(c) - \lambda = 0\)
+\(\frac{\partial \mathcal{L}}{\partial c_{j}} = 0 \)
+\({\binom{N}{j}} p^j (1-p)^{N-j} \cdot \delta \cdot u'(c_{j}) - \lambda \cdot e^{-rT} \binom{N}{j} q^j (1-q)^{N-j} = 0\)
+
+The corresponding \( \lambda \) is the pricing kernel
+
+\( \delta \frac{u'(u(c_j)}{u'(c)} = e^{-rT}\frac{\binom{N}{j}q^j(1 - q)^{N-j}}{\binom{N}{j}p^j(1 - p)^{N-j}} \)
+
+It is the Radon-Nikodym derivate \( \frac{dQ}{dP} \) where \( d\mu \) is the density of the measure \( \mu \) if it exists.
+
+In the case of the BSM, the \( dQ, dP \) are log-normal densities (with means \( r \), \( \mu \) respectively).
+One can derive that
+\( \delta \frac{u'(u(c_j)}{u'(c)} = \alpha S^{\frac{\mu -r}{\sigma^2}} \)
+with \( \alpha \in \mathbb{R} \) with CRRA coeff. \( \frac{\mu -r}{\sigma^2} \).
+
+
+Explain the basic idea for bond pricing with the pricing kernel.
+
+Note how it holds as usual \( \mathbb{E}_Q[e^{-rT}\pi(S_T)] = \mathbb{E}_P[\pi(S_T)e^{-rT}\frac{dQ}{dP}] \).
+Set \( M_t = e^{-rt}\frac{dQ}{dP} \) then pricing with the kernel for a bond would be
+
+\( P_0 = \mathbb{E}_P[\pi(S_T)M_T(S_T)] = e^{-rT}\mathbb{E}_P[\pi(S_T)] + \text{Cov}[\pi(S_T), M_T(S_T)]\)
+where the latter summand stands for the risk adjustment depending on covariation with marginal utility.
+
+The intution is that if an asset pays off in bad states (states with high marginal
+utility, i.e. an additional dollar helps a lot), this asset insures
+against bad states. Most investors like these assets which
+drives prices up and returns down (recall: payoff function is
+fixed).
+
+For a given probability of default \( \rho \) one can determine the price for \( 1 \) unit cash in the BSM via
+\( e^{-rT}\mathbb{P}_Q[S_T > K] = e^{-rT}\Phi(-\Phi^{-1}(\rho) - \frac{(\mu - r)}{\sigma}\sqrt{T}) \).
+
+
+
+Define the Risks of Banks and split up the aspect of credit risk
+
+- Credit Risk
+- Market Risk
+- Operational Risk
+
+Credit risk \( \text{CR} \) is the risk that a borrower defaults and
+does not honor its obligation to service debt.
+
+\( \text{CR} = \text{PD}\cdot\text{LGD}\cdot\text{EAD} \)
+
+PD - Probability of default (associated with Default risk)
+
+LGD - Loss Given Default (associated with Loss risk)
+Loss risk determines the loss as a fraction of the exposure in the
+case of default. A \( \text{LGD} < 0 \) indicates a profit (e.g. due to penalty fees)
+\( \text{LGD} > 1 \) is possible for example due to ligitation costs.
+The recovery rate \( \text{RR} \) is derived as \( \text{RR} = 1 - \text{LGD} \)
+
+EAD - Exposure at the time of default (associated with Exposure risk)
+The maximum amount lost at default, this isn't always obvious as for bonds,
+e.g. in case of credit cards the maximum amount varies. 
+Typical observation: Financially stressed counterparts have
+high liquidity needs and tend to use most of the limits.
+
+Solution: Additional clauses in the contract that allow reduced
+limits or contract renegotiation when specific events occur.
+Referred to as covenants or material adverse clauses.
+
+
+
+What are PD rankings and the default rate?
+
+PD rankings are an ordinal, relative measure of default risk,
+e.g. Moody's Aaa, (Aa1, ...) to D scale or S\&P's AAA (AA+, ...) to D.
+
+Ratings result from an (quantitative and qualitative) analysis of public and
+private information. They're financed by commission fees by issuers (incentive problem).
+Typical modelling techniques are
+
+Financial models
+- Structure Models (e.g., Merton's model)
+- Term Structure of Default (Hazard Rates)
+- Reduced-form Models (e.g., Cox process)
+Empirical data based models
+Expert models
+
+Only the Financial models are relevant to the lecture.
+
+They're usually complemented by a cardinal measure such as the default rate.
+For a time period \( t \in \{0, \dots, T\} \) and rating grade \( k \), let \( n_{k,t} \) 
+be the number of borrowers and \( D_{i, t} = 1 \) if the \( i \)-th borrower defaults at \( t \), then
+the default rate is
+\[ \bar{D}_{k,t} = \frac{\sum_{i=1}^{n_{k,t}}D_{i,t}}{n_{k,t}} \]
+
+
+Give the statistical model for the probability of default (PD) from the lecture.
+
+Let the default probability for borrower \( i \) at \( t \) be \( \pi_{i,t} \) (compare notation to default rate anki cards)
+a statistical model based on generalized linear models (GLM) is:
+
+\( \pi_{i,t} = F(\beta_0 + \beta'x_{i,t}\)
+with
+- \( F \) the link function
+- \( \beta_0 \) the intercept (to estimate) 
+- \( \beta \) factors (to estimate), \( \beta' \) for transpose,
+and where \( x_{i,t} \) are exogenous variables. Typically it's components are in the lecture
+- NITA = Net Income ./ Total Asset
+- TLTA = (Current Liab. + Non Current Liab.) ./ Total Asset
+- CASHTA = Current Assets (Cash) ./ Total Asset
+- Size = log(Total Asset)
+- FAR = Fixed Asset ./ Total Asset
+- AGE = age of company
+
+Examples for the link function are:
+
+Probit function
+\( F = \Phi \) then the linear predictor \( c_{i,t} = \beta_0 + \beta'x_{i,t} \) acts as a proxy
+for Merton's model \( - \frac{(\mu_i - \frac{1}{2}\sigma^2_i)t + \ln(\frac{F_{i,t}}{A_{i,t}})}{\sigma_i\sqrt{t}} \).
+
+Logistic function
+\( L(s) = \frac{e^s}{1 + e^s} \)
+
+To estimate the \( \beta \), one uses MLE, e.g. for probit
+
+\( \ell_{i,t}(\beta, \bar{D}_{i,t}) = \phi(c_{i,t})^{\bar{D}_{i,t}}(1 - \phi(c_{i,t}))^{1 - \bar{D}_{i,t}} \)
+with default rate \( \bar{D}_{i,t} \) and normal pde \( \phi \).
+Then we maximize
+\( \mathcal{L}(\beta, \bar{D}_i) = \prod_{t=0}^T \ell_{i,t}(\beta, \bar{D}_{i,t})\)
+
+Example
+INSERT IMAGE FROM SLIDE 29, 30 
+
+
+
+How do ROC and confusion matrices work in the context of statistics models for PD?
+
+
+A receiver operating characteristic (ROC) is a curve, created by plotting the
+true positive rate (TPR) against the false positive rate (FPR) at various
+threshold settings.
+
+A large area under the ROC-curve (AUC) also known as c-statistic can be interpreted as a good model.
+
+Confusion matrix
+
+INSERT IMAGE SLIDE 33
+INSERT IMAGE SLIDE 35
+
+
+
+E.g. let \( \text{D} \) be the defaulted companies and \( \text{D} \) the non-defaulted,
+then for given threshold \( c \), \( \text{TP} = \{i \in D | \hat{\pi}_i > c\},\ \text{FP} = \{i \in \text{ND} | \hat{\pi}_i > c\} \).
+

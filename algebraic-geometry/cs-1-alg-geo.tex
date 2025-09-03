@@ -1,0 +1,135 @@
+Define Natural Transformations
+
+Given two functors \(F, G: \mathcal{C} \to \mathcal{D}\), a natural transformation \(\eta\) from \(F\) to \(G\), 
+denoted as \(\eta: F \Rightarrow G\), is a family of morphisms \(\eta_X: FX \to GX\) for each object \(X \in \mathcal{C}\) 
+such that the following diagram commutes for every morphism \(f: X \to Y\) in \(\mathcal{C}\):
+\[
+\begin{array}{ccc}
+FX & \xrightarrow{\eta_X} & GX \\
+Ff \downarrow & & \downarrow Gf \\
+FY & \xrightarrow{\eta_Y} & GY \\
+\end{array}
+\]
+For any morphism \(f: X \to Y\), 
+\(\eta_Y \circ Ff = Gf \circ \eta_X\)
+Let \( Z \in \in \mathcal{C} \)
+The \( \eta_Z \) are also referred to as components at \( Z \) respectively.
+If for every \( Z \), \( \eta_Z \) is an isomorphism in the category \( \mathcal{D} \)
+then \( \eta \) is a natural isomorphism. 
+More generally any pair \( F : \mathcal{C} \to \mathcal{D} \)
+and \( F' : \mathcal{D} \to \mathcal{C} \) s.t. \( F \circ F' = \text{id}_{\mathcal{C}} \) and 
+\( F' \circ F = \text{id}_{\mathcal{D}} \) is defined as a natural isomorphism or equivalence of categories.
+
+In the category of functors \( \mathcal{F}(\mathcal{C}, \mathcal{D}) \) natural transformations are precisely the morphisms.
+
+
+Define fibered products
+
+Suppose we have morphisms \(\alpha: X \to Z\) and \(\beta: Y \to Z\) (in any category). Then the fibered product (or fibred product is an object \(X \times_Z Y\) 
+along with morphisms \(\mathrm{pr}_X: X \times_Z Y \to X\) and \(\mathrm{pr}_Y: X \times_Z Y \to Y\), where the two compositions 
+\(\alpha \circ \mathrm{pr}_X\), \(\beta \circ \mathrm{pr}_Y: X \times_Z Y \to Z\) agree, such that given any object \(W\) with maps to \(X\) and \(Y\) 
+(whose compositions to \(Z\) agree), these maps factor through some unique \(W \to X \times_Z Y\):
+
+INSERT DIAGRAM 39
+
+(Warning: the definition of the fibered product depends on \(\alpha\) and \(\beta\), even though they are omitted from the notation \(X \times_Z Y\).)
+
+By the usual universal property argument, if it exists, it is unique up to unique isomorphism. (You should think this through until it is clear to you.)
+As an example, if \(\pi: X \to Y\) is a morphism, and the fibered product \(X \times_Y X\) exists, 
+then this determines a diagonal morphism \(\delta_\pi: X \to X \times_Y X\). The diagonal morphism will turn out to be a very useful notion.
+
+Depending on your religion, the diagram
+
+INSERT DIAGRAM 40
+
+is called a fibered/pullback/Cartesian diagram/square (six possibilities — and even more are possible if you prefer “fibred” to “fibered”).
+The right way to interpret the notion of fibered product is first to think about what it means in the category of sets.
+In Sets it holds
+\[X \times_Z Y = \{(x, y) \in X \times Y : \alpha(x) = \beta(y)\}.\]
+More precisely, show that the right side, equipped with its evident maps to \(X\) and \(Y\), satisfies the universal property of the fibered product. 
+(This will help you build intuition for fibered products.)
+
+The Diagonal Base Change Diagram
+Suppose we are given morphisms \(X_1, X_2 \to Y\) and \(Y \to Z\). The following diagram is a Cartesian square.
+INSERT IMAGE 41
+
+Two covariant functors \( F : \mathcal{A} \to \mathcal{B} \) and \(G: \mathcal{B} \to \mathcal{A}\) 
+are adjoint if there is a natural bijection for all \(A \in \mathcal{A}\) and \(B \in \mathcal{B}\) 
+\(\tau_{A,B} : \mathrm{Mor}_{\mathcal{B}}(F(A), B) \to \mathrm{Mor}_{\mathcal{A}}(A, G(B)).\)
+
+We say that \((F, G)\) form an adjoint pair, and that \(F\) is left-adjoint to \(G\) (and \(G\) is right-adjoint to \(F\)). We say \(F\) is a left adjoint 
+(and \(G\) is a right adjoint). By “natural” we mean the following. For all \(f: A \to A'\) in \(\mathcal{A}\), we require
+INSERT IMAGE 49 
+
+to commute, and for all \(g: B \to B' \) in \(\mathcal{B}\) we want a similar commutative diagram to commute. 
+(Here \(f^*\) is the map induced by \(f: A \to A'\), and \(\mathrm{Ff}^*\) is the map induced by \(\mathrm{F}f: \mathrm{F}(A) \to \mathrm{F}(A')\).)
+The map \(\tau_{AB} has the following properties. For each \(A\) there is a map \(\eta_A: A \to GF(A)\) so that for any \(g: F(A) \to B\), 
+the corresponding \(\tau_{AB}(g): A \to G(B)\) is given by the composition 
+\(A \xrightarrow{\eta_A} GF(A) \xrightarrow{Gg} G(B).\)
+Similarly, there is a map \(\epsilon_B: FG(B) \to B\) for each \(B\) so that for any \(f: A \to G(B)\), the corresponding map \(\tau_{AB}^{-1}(f): F(A) \to B\) 
+is given by the composition 
+\(F(A) \xrightarrow{Ff} FG(B) \xrightarrow{\epsilon_B} B.\)
+Here is a key example of an adjoint pair.
+
+Suppose \(M, N,\) and \(P\) are \(A\)-modules (where \(A\) is a ring). There's a bijection 
+\(\mathrm{Hom}_A(M \otimes_A N, P) \leftrightarrow \mathrm{Hom}_A(M, \mathrm{Hom}_A(N, P))\).
+
+Tensor-Hom Adjunction
+\((\cdot) \otimes_A N\) and \(\mathrm{Hom}_A(N, \cdot)\) are adjoint functors.
+
+\subsection*{1.4.B. Exercise}
+
+Show that the map \(\tau_{AB} (1.4.0.1)\) has the following properties. For each \(A\) there is a map \(\eta_A: A \to GF(A)\) so that for any \(g: F(A) \to B\), the corresponding \(\tau_{AB}(g): A \to G(B)\) is given by the composition
+
+\[
+A \xrightarrow{\eta_A} GF(A) \xrightarrow{Gg} G(B).
+\]
+
+Similarly, there is a map \(\epsilon_B: FG(B) \to B\) for each \(B\) so that for any \(f: A \to G(B)\), the corresponding map \(\tau_{AB}^{-1}(f): F(A) \to B\) is given by the composition
+
+\[
+F(A) \xrightarrow{Ff} FG(B) \xrightarrow{\epsilon_B} B.
+\]
+
+Here is a key example of an adjoint pair.
+
+Suppose \(M, N,\) and \(P\) are \(A\)-modules (where \(A\) is a ring). 
+Describe a bijection \(\mathrm{Hom}_A(M \otimes_A N, P) \leftrightarrow \mathrm{Hom}_A(M, \mathrm{Hom}_A(N, P))\). 
+(Hint: try to use the universal property of \(\otimes\).)
+Tensor-Hom Adjunction
+Show that \((\cdot) \otimes_A N\) and \(\mathrm{Hom}_A(N, \cdot)\) are adjoint functors.
+
+
+Define additive/abelian categories and sub/quotient objects
+
+Definition
+A category \(\mathcal{C}\) is said to be \textit{additive} if it satisfies the following properties.
+- For each \(A, B \in \mathcal{C}\), \(\mathrm{Mor}(A, B)\) is an abelian group, such that composition of morphisms distributes over addition. (You should think about what this means — it translates to two distinct statements.)
+- \(\mathcal{C}\) has a zero object, denoted \(0\). (This is an object that is simultaneously an initial object and a final object, Definition 1.2.2.)
+- It has products of two objects (a product \(A \times B\) for any pair of objects), and hence by induction, products of any finite number of objects.
+
+In an additive category, the morphisms are often called homomorphisms, and \(\mathrm{Mor}\) is denoted by \(\mathrm{Hom}\). In fact, this notation \(\mathrm{Hom}\) is a good indication that you’re working in an additive category. A functor between additive categories preserving the additive structure of \(\mathrm{Hom}\), is called an additive functor.
+
+By the universal property of product and coproduct, we have natural morphisms \(\varphi_{AB}: A \coprod B \to A \times B\). A2. \(\varphi_{AB}\) is an isomorphism. 
+This allows us to define a binary operation on \(\mathrm{Mor}(A, B)\), with \(f + g\) (for \(f, g \in \mathrm{Mor}(A, B)\)) defined by the composition 
+\(A \xrightarrow{(f,g)} B \times B \xrightarrow{\varphi^{-1}_{B \coprod B}} B \coprod B \to B\)
+where the last map is the “codiagonal” defined by universal property of coproduct. 
+A little work shows that this endows \(\mathrm{Mor}(A, B)\) with the structure of a \textit{commutative monoid}, i.e., an abelian semigroup with identity. 
+The identity is the composition \(A \to 0 \to B\). A3. 
+This gives the alternative definition
+A0 \( \mathcal{C} \) has a \( 0 \) object
+A1 \( \mathcal{C} \) has products and coproducts of any two objects
+A2 This commutative monoid \(\mathrm{Mor}(A, B)\) is an abelian group.
+
+One can then define
+Given some \( \mathcal{C} \) with a \( 0 \)-object. For a morphism \( f : B \to C \), a kernel is an object \( A \) with morphism \( i : A \to B \)
+s.t. \( f \circ i = 0 \). The cokernel reverses these morphisms.
+An abelian category is an additive category with
+(1) Every map has a kernel and cokernel.
+(2) Every monomorphism is the kernel of its cokernel.
+(3) Every epimorphism is the cokernel of its kernel.
+
+If \( i : A \to B \) is a monomorphism then we say that \( A \) is a subobject of \( B \),
+a quotient object is the dual of this.
+
+
