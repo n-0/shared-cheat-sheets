@@ -1,0 +1,216 @@
+\documentclass[11pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{actuarialangle, actuarialsymbol}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+
+\makeatletter
+\newcommand{\ix}{\@actothersc{i}}
+\makeatother
+
+\begin{document}
+
+
+Decompose the health insurance premium according to German regulations
+and list its calculation bases and value categories.
+
++ Risk Premium
++ Savings Premium
+= Savings Premium
++ Safety Margin
++ Surcharge Standard tariff (only optional tariffs)
++ Costs surcharge
+= Gross premium
++ 10\% Statutory Gross Premium Surcharge Until Age 60
+
+Calculation bases are
+- Actuarial interest
+- Elimination types
+- Head claims
+- Safety margin
+- Surcharge for standard tariff in optional tariffs
+- Costs surcharge
+
+For the calculation bases, we distinguish
+- true values: abstract mathematical values,
+- effective values: current empirical values,
+- calculatory values: values used in the calculation of tariffs, often including safety margins.
+
+
+
+\iffalse
+Let the total population at time \( t \) be  and \( t \in \text{KB} \), where  .
+Define  as the set of ,
+and 
+Let the  stochastic time process be 
+The true head claim for age x at time t.
+\fi
+
+Define head claims, profiles and effective calculatory head claims
+
+
+Definitions
+\( K \): head claim, expected value of insurance benefits in a certain time period for a single risk.
+\( I(t) \): insurees at time \( t \), \( t \in \text{KB} \)
+\( I = \cup_{t \in \text{KB}} I(t) \): insurees at time \( t \), \( t \in \text{KB} \)
+\( \text{KB} \): Set of admissable dates (usually one calender year increments)
+\( \text{AB} = \{x_{\text{min}}, \dots, x_{\text{max}}\} \): admissable ages of insurees
+\( I_{x}(t) = \{ i \in I(t)| \text{age}(i) = x_i(t) = x \} \): individuals aged \( x \)
+\( (s_i(t))_{t \in \text{KB}} \): stoch. process of medical expenses for individual \( i \in I \)
+\( K_x(t) = \mathbb{E}[s_i(t)] \): true head claim for age \( x \) at time \( t \).
+
+Profiles and their corresponding head claims are motivated by the:
+Method of Rusam
+The idea relies on a multiplicative splitting of tables of head claims in an age depending profile and a
+normalization factor, the basic head claim.
+\( G(t) = K_{x_0}(t) \) : true basic head claim at selected age \( x_0 \)
+\( (k_x(t))_{x \in \text{AB}} = \left(\frac{K_x(t)}{G(t)} \right)_{x \in \text{AB}} \) : profile of \(  \)
+
+\( K_x^{\text{eff}}(t_0) = \frac{S_x(t_0) - \text{RZ}_x(t_0) - \text{SO}_{x}(t_0)}{L_x(t_0)} \): effective head claims
+\( S_x(t_0) \): effective claims expenditure for \( I_x(t_0) \)
+\( \text{RZ}_x(t_0) \): sum of risk surcharges for \( I_x(t_0) \)
+\( \text{SO}_{x}(t_0) \): expenditures due to special effects for \( I_x(t_0) \), e.g. pandemics, war
+\( L_x(t_0) = |I_x(t_0)| \)
+
+\( k_x^{\text{eff}}(t_0) = \frac{K_x^{\text{eff}}(t_0)}{K_{x_0}^{\text{eff}}(t_0)} \): effective profile at selected age \(x_0\)
+\( G^{\text{eff}}(t_0) = \frac{S(t_0) - \text{RZ}(t_0) - \text{SO}(t_0)}{\sum_{x} L_x(t_0) \cdot k_x^{\text{eff}}(t_0)} \) : effective basic head claim
+\( S(t_0) = \sum_{x} S_x(t_0) \) and analogously \( \text{RZ},\text{SO}  \).
+
+Opposed to the effective head claims, the calculatory head claims are obtained via extrapolation:
+1. Choose calculatory profile \( k_x^{\text{calc}} \) by smoothing of observed values or external data.
+2. Estimation of basic head claims in the observation years
+\[
+ \hat{G}(t_j) = \frac{S(t_j) - \text{RZ}(t_j) - \text{SO}(t_j)}{\sum_{x} L_x(t_j) \cdot k_x^{\text{eff}}(t_j)}
+\]
+for \( j = 0, -1, -2 \).
+3. Choose calculatory head claims \( G^{\text{calc}}(t_2) \) by extrapolation of value from step 2.
+4. Choose calculatory head claims via Rusam-ansatz by \( K_x^{\text{calc}}(t_2) = G^{\text{calc}}(t_2) k^{\text{calc}}_x \)
+
+In case of a similar population structure, the profile is approximately independent of tariff and
+company. Thus, profile data, published by BaFin or the PKV association, can be used to
+implement new tariffs.
+Over a period of few years, the profiles are approximately independent of time. Therefore, the
+sequence of head claims is determined by the evolution of the basic head claim over time.
+For empirical data gathering of head claims, the basic head claims and the profile are determined
+separately.
+
+Last the value of the net benefits is then given by
+\[
+  A_x(t) = \sum_{\nu = 0}^{x_{\text{max}} - x} v^\nu K_{x + \nu} {}_{\nu}p_x
+\]
+with \( _\nu p_x = \mathbb{P}[i \in I_{x + \nu}(t + \nu) | i \in I_x(t)]\).
+and the corresponding net premium is \( P_x = \frac{A_x(t)}{\ddot{a}_x} \)
+
+
+
+Define the aging reserve, premium splitting and the transfer value
+
+The aging reserve is given by:
+\[ 
+  \Vx[m]{x} = \sum_{\nu = 0}^{x_{\text{max}} - (x + m)} v^\nu \cdot \px[\nu]{x + m} \cdot K_{x+m+\nu} - P_x \sum_{\nu = 0}^{x_{\text{max}} - (x + m)} v^\nu \cdot \px[\nu]{x+m} 
+\]
+
+The prospective aging Reserve on the basis of net annual premiums is computed as
+\[ \Vx[m]{x} = (A_{x+m} - P_x)\ax**{x+m} \]
+
+The contribution to the aging reserve can be decomposed into individual parts
+\( \Vx[m+1]{x} - \Vx[m]{x} = (P_x - K_{x+m})(1 + i) + i_m V_x + (\qx{x+m} + w_{x+m}) \cdot \Vx[m+1]{x} \) \\
+\( (P_x - K_{x+m})(1 + i) \): premium surplus with added accrued interest, \\
+\( i_m V_x \): calculatory interest income on the aging reserve at the beginning of the year \\
+\( (\qx{x+m} + w_{x+m}) \cdot \Vx[m+1]{x} \): calculatory inheritance of the aging reserve at the end of the year, due to exit from \( I_x \). \\
+
+This also allows to split the premium
+
+\[P_x = (v\cdot \Vx[m+1]{x} - \Vx[m]{x}) + K_{x+m} - v(\qx{x+m} + w_{x+m})\cdot \Vx[m+1]{x} \]
+\( (v\cdot \Vx[m+1]{x} - \Vx[m]{x}) \): savings premium as the change in the aging reserve \\
+\( K_{x+m} - v(\qx{x+m} + w_{x+m})\cdot \Vx[m+1]{x} \): risk premium, consisting of the natural premium \( K_{x+m} \)
+and the premium reducing impact of the aging reserve \( v(\qx{x+m} + w_{x+m})\cdot \Vx[m+1]{x} \). \\
+
+
+According to German law, the transfer value for an insurance contract must be calculated in the following terms: \\
+\( \actsymb[][(\alpha)]{B}{x} \) : Annual gross premium at age \(x\) after \( m \) contract years  \\
+\( \Vx[m]{x}[\text{GZ}] \): Aging reserve from the statutory surcharge \\
+\( \Vx[m]{x}[g] \): Aging reserve from medical expenses tariff including ported benefits of the transfer value \\
+\( \Vx[m]{x}[\text{BT}] \): (Fictitious) Aging reserve in the basic tariff if the person would have been insured in the 
+basic tariff since contract inception. \\
+
+Then the transfer value is given by
+\[ \actsymb[m]{T}{x} = \Vx[m]{x}[\text{GZ}] + \max(0, \min(\Vx[m]{x}[g] + \max(0,  \actsymb[][(\alpha)]{Z}{x}), \Vx[m]{x}[\text{BT}]) \]
+where \( \actsymb[][(\alpha)]{Z}{x} = \frac{5 - m}{5} \cdot \alpha \cdot \actsymb[][(\alpha)]{B}{x} \),
+represents the evenly distributed zillmerization for the first five years.
+
+
+Explain the old age premium problem
+
+Causes for the premium problem of older insured persons
+1. Increasing medical expenses over time
+2. The mathematical problem of old age
+3. Increasing profiles over time
+4. Decreasing elimination rates over time
+5. Lower income after start of retirement
+
+Point 2 refers to the result that under the assumptions
+- the elimination structure does not change at adjustment
+- the aging reserve is strictly positive
+a premium adjustment for insuree aged \( x \) after \( m \) contract years,
+which is represented by an increase of \( 1 + j \) of the head claims, satisfies:
+
+\[
+  \frac{P_{x / x+m }}{P_x} = 1 + j + \frac{j}{P_x} \frac{{}_m V_x}{\ddot{a}_{x+m}} > 1 + j
+\]
+so the increase of the net premium is proportionally larger than the increase of the head claims.
+
+The potential remedies of this so called old age premium problem are categorized
+1. Positive influences on gross premiums in old age; however, benefits and premiums of
+   equivalence equation for the net premium are unchanged.
+2. Change the net premium and therefore the gross premium over the contract time
+   such that old age premiums are reduced
+3. Influences on the development of head claims or limits on insurance benefits.
+
+Concrete Examples are
+1. Using unit costs surcharges, excess interest, repurposing the reserve for premium refunds
+2. dynamic tariffs, statutory 10\%-surcharge by law.
+3. Lower insurance while qualitatively keep the most relevant insurance level (extended retention, lower daily allowances), 
+   Change in standard / basic tariff
+
+
+
+In health insurance, how is determined if the premia need adjustments?
+
+According to §14 KalV the triggering value is the sole criterion for premia adjustments.
+The triggering factor serves the purpose to compare required and calculatory benefits.
+The factor is computed separately for different groups and tariffs.
+The algorithm to compute it goes like this:
+
+1. Compute with the last 3 periods \( t_0, t_{-1}, t_{-2} \) the calculatory basic head claims \( G^{\text{calc}}(t_{1}) \)
+and associated factors.
+
+2. Compute the last 3 effective basic head claims \( G^{\text{eff}}(t_j) \).
+
+3. Extrapolate the effective basic head claims according to the formula (linear regression):
+\[ G^{\text{req}}(t_{2}) = \frac{3}{2}(G^{\text{eff}}(t_0) - G^{\text{eff}}(t_{-2})) + \frac{1}{3} \sum_{i=-2}^0 G^{\text{eff}}(t_{i}) \]
+4. The triggering factor is defined as \( \text{AF}(t_{1}) = \frac{G^{\text{req}}(t_{2})}{G^{\text{calc}}(t_{1})} \)
+(actually its defined differently but one can derive this equality)
+
+The criterion for a premium adjustments at time \( t_1 = t_0 + 1 \) is then 
+\( |1 - \text{AF}(t_{1})| > 0,1 \)
+
+Alternatively this might be approximated with cash values for required (empirical) and calculated mortality rates 
+\( A^{\text{req}}_x, A^{\text{calc}}_x \):
+Let \( \text{VQ}_x^{\text{mort}} = \frac{A^{\text{req}}_x}{A^{\text{calc}}_x} \) and take the averages 
+over the age intervals \( [21, 45], [46, 70], [71, 95] \), denote them by 
+\( \text{AVQ}_i^{\text{mort}} = \frac{1}{25} \sum_x \text{VQ}_x^{\text{mort}} \), \( i \in \{1, 2, 3\}\).
+
+The triggering factor is then 
+\( \text{AF}^{\text{mort}} = \max_i \text{AVQ}_i^{\text{mort}} \)
+and the corresponding limit
+\( |1 - \text{AF}(t_{1})| > 0,05 \)
+
+Any other adjustments to premia can only be done if it is not to the disadvantage of the insured persons.
+\iffalse
+Compute \(S^{\text{req}}(t_{2}) = \sum_{x = x_{\text{min}}}^{x_{\text{max}}} K_x^{\text{req}}{x}(t_{2}) \) 
+assuming that \( I(t_{2}) = I(t_{0}) \) and the same profile, thus \( K_x^{\text{req}}{x}(t_{2}) = G^{\text{req}}(t_{2}) k_x^\text{calc} \).
+\fi
+
+
+\end{document}

@@ -1,0 +1,210 @@
+\documentclass[11pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{actuarialangle, actuarialsymbol}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+
+\makeatletter
+\newcommand{\ix}{\@actothersc{i}}
+\makeatother
+
+\begin{document}
+
+Give an overview of the factors involved composed population models (pension insurance)
+
+INSERT IMAGE FROM SLIDE 15
+
+Additionaly we require the Axioms of Pension Insurance Mathematics (Neuburger):
+1. Eliminations from populations (within one year) are uniformly distributed
+2. Linear inter-annual interest with credit at the end of the year
+3. Pension payments occur at beginning or end of periods
+
+
+Use the following notation 
+We consider the events disability and death \\
+\( T_\gamma \) : Time of event \( \gamma \) \\
+\( X_\gamma = T_\gamma - t_0 \): Age at event  \( \gamma \) \\
+let \( \gamma = 1 \) be the beginning of disability and \( \gamma = 2 \) death. \\
+We can write explicitely the additional probability terms at age \( x \):
+
+Elimination from the population of actives within one year by becoming disabled
+\[ \actsymb{i}{x} = \mathbb{P}[X_1 \leq \min(x+1, X_2) | X_1 > x, X_2 > x] \]
+Elimination from the population of actives within one year by death
+\[ \qx{x}[aa] = \mathbb{P}[X_2 < \min(x+1, X_1) | X_1 > x, X_2 > x ] \]
+Being in the population of actives (unconditional)
+\[ l^a_x = \mathbb{P}[X_1 > x, X_2 > x] \]
+Being in the population of actives (conditional)
+\[ \mathbb{P}[X_1 > x|X_2 > x] = \frac{\mathbb{P}[X_1 > x, X_2 > x]}{ \mathbb{P}[X_2 > x] } = \frac{l^a_x}{l_x} \]
+Being in the population of disabled 
+\[ \mathbb{P}[X_1 \leq x | X_2 > x] = 1 - \frac{l^a_x}{l_x} = \frac{l_x - l_x^a}{l_x} \]
+Remaining in the population of actives
+\[ \px{x}[a] = 1 - (\actsymb{i}{x} + \qx{x}[aa]) = \mathbb{P}[X_1 > x+1, X_2 > x+1|X_1 > x, X_2 > x] \]
+Disabled population mortality
+\[ \qx{x}[i] = \mathbb{P}[X_2 \leq x+1|X_1 \leq x, X_2 > x] = \qx{x}[ai] + \qx{x}[aa] \]
+Active population mortality
+\[ \qx{x}[a] = \mathbb{P}[X_2 \leq x+1|X_1 > x, X_2 > x] \]
+Total population mortality
+\[ \qx{x} = \mathbb{P}[X_2 \leq x+1|X_2 > x] \]
+Total population survival
+\[ \px{x} = \mathbb{P}[X_2 > x+1|X_2 > x] \]
+Total population survival until \( x \)
+\[ l_x = \mathbb{P}[X_2 > x] \]
+
+Moreover we have the identities: \\
+Consistency Equation.
+\[ \qx{x} = \qx{x}[i] \mathbb{P}[X_1 \leq x | X_2 > x] + \qx{x}[a] \mathbb{P}[X_1 > x|X_2 > x] \]
+Under the assumption that transitions between populations occur midyear (almost done exclusively in practice):
+\[ \qx{x} = \qx{x}[i] - \frac{l^a_x}{l_x}(\qx{x}[i] - \qx{x}[aa] - \actsymb{i}{x} \qx[\frac{1}{2}]{x + \frac{1}{2}}[i])  \]
+Keep in mind that by axiom (2) we have for \( u \in [0, 1] \) , \( \qx[u]{x}[\gamma] = u \qx[u]{x}[\gamma] \)
+for example \( u = \frac{1}{2} \) then
+\[( \qx[\frac{1}{2}]{x + \frac{1}{2}} = 1 - \frac{1 - q}{1 - \qx[\frac{1}{2}]{x}} = \frac{\frac{1}{2}\qx{x}}{1 - \frac{1}{2}\qx{x}} \]
+
+Note that this analysis can be extended by changing the probabilities with respect to cohorts (different years of birth \( t_0 \)
+and not assuming stationarity for mortality tables).
+
+
+Describe surviving dependents in the composed population model (pension insurance)
+
+
+\(h_x\) denotes the probability of a person at age \( x \) to be married at
+time of death before age \( x + 1 \). \\
+Let \( y(x) \) be the average age of the surviving dependent, given death of the insured
+person between age \( x \) and \( x+1 \) \\
+Let \( \qx{y}[w] \) be the probability of a \( y \)-year old surviving dependent to die
+within one year. \\
+Keep in mind that a surviving dependent might be born in a different cohort which could have a different mortality table.
+We will supress this in the notation, but its straightforward to adapt the formulas.\\
+
+Introducing the related probabilities \\
+Disabled within one year and die at the end of the year as a disabled
+\[ \qx{x}[ai] = \actsymb{i}{x} \qx[\frac{1}{2}]{x + \frac{1}{2}}[i] \]
+Disabled within one year and survive the end of the year as a disabled
+\[ \px{x}[ai] = \actsymb{i}{x} \px[\frac{1}{2}]{x + \frac{1}{2}}[i] \]
+Mortality of an active
+\[ \qx{x}[a] = \qx{x}[aa] = \actsymb{i}{x} \qx[\frac{1}{2}]{x + \frac{1}{2}}[i]\]
+
+Probability of a person of age \( x \) to die within one year and to have a surviving
+dependent who survives until the end of the year with age \( y_x + 1 \)
+\[ \px{x}[\gamma w] = \qx{x}h_x \px[\frac{1}{2}]{y_x + \frac{1}{2}}[w] \]
+where \( \gamma \) refers to the respective subpopulation. \\
+
+It holds the second consistency equation 
+\[ \px{x}[w] = \frac{l^a_x}{l_x}\px{x}[aw] + \frac{l_x - l_x^a}{l_x}\px{x}[iw] \]
+with the identity \( \px{x}[aw] = \px{x}[aaw] + \px{x}[aiw] \)
+
+
+Value pension insurance products and explain the two different approaches for widows
+
+Let
+\( M = [X_1] - x \) Number of complete years until the event “Disability”
+\(N = [X_2] - x\): Number of complete years until the event “Death
+Disability pension:\\
+Settlement value:
+\[ B = v^{M+1} \ax**{\angl{N - M}} \mathbf{1}_{\{N > M\}} \]
+Expected value
+\[ \mathbb{E}[B] = \ax**{x}[ai] = \sum_{k \geq 0}^{z - x - 1} v^{k+1} \px[k]{x}[a] \px{x+k}[ai] \ax**{x + k + 1}[i] \]
+where \( z \) is the pension age by law.
+
+
+Individual Method: Consideration of the actual age of the entitled and their spouse 
+(e.g., husband and wife).
+Collective Method: Using general assumptions on probabilities to be married at death. Moreover,
+assuming an age \( y(x) \) of the widow(er) at begin of the year of death of their deceased spouse.
+
+Let 
+\( M \): remaining lifetime of an x-year old man (in complete years)
+\( N \): remaining lifetime of a y -year old woman (in complete years)
+
+For the individual method, the settlement value is given by
+\[ B = v^{M+1} \ax**{\angl{N - M}} \mathbf{1}_{\{N > M\}} \]
+\[ \mathbb{E}[B] = \ax**{x}[w] = \sum_{m \geq 0} v^{m+1} \px[m]{x} \qx{x + m} \cdot \px[m+1]{y} \cdot \ax**[w]{y + m + 1} \]
+A more involved expression for this can be given with
+\[ \ax**{xy} = \mathbb{E}[\ax**{\angl{\min(M, N) + 1}}]\]
+then 
+\[ \ax**{x}[w] = \ax**{y} - \ax**{xy} \]
+
+For the collective method, introduce
+\( H \): Indicator variable, which states whether the man has a widow at death (then H = 1)
+with associated probability \( h_x \) of a man aged \( x \) having a widow at death \( x \).
+\( N \): remaining lifetime of a woman who is at the beginning of the year of death of her husband
+\( y_{x+M} \)-years old.
+
+The settlement value is
+\[ B = v^{M+1} H \ax**{\angl N} \]
+and 
+\[ \mathbb{E}[B] = \sum_{m \geq 0} \sum_{n \geq 1} v^{m+1} \ax**{\angl n} \mathbb{P}[M = m, H = 1, N = n] \]
+\[ = \ax**{x}[w] = \sum_{m \geq 0} v^{m+1} \px[m]{x} \qx{x+m} h_{x+m} \cdot \px[\frac{1}{2}]{y_{x+m} + \frac{1}{2}}[w] \cdot \ax**{y_{x+m}+1}[w] \]
+
+
+Give expressions for obligations calculated with the Heubeck Richttafeln
+
+Let \(k \in \mathbb{N}_{0}\) and \( \gamma = 0 \) be the event of receiving (legally required) pension due to old age, \\
+\( \actsymb[k]{L}{x}[(0)] \): expected value of benefits which are obtained by reaching the year \(x + k\) in the main
+population, discounted for the beginning of the year. \\
+\( \actsymb[k]{L}{x}[(\gamma)] \) : expected value of benefits which are obtained by eliminated in the year \((x + k, x + k + 1] \) 
+due to the cause \(\gamma\), discounted for the beginning of the year. \\
+\(R_k\) : Amount of annuity in case of pension event after \(k\) years of service \\
+\(w\) : Amount of dependent survivor’s pension as a percentage of the main annuity \\
+
+Then 
+\[
+  \actsymb[k]{L}{x}[(0)] = \begin{cases}
+    0, & k < z - x, \\
+    R_k(\ax**{z}[r] + \ax**{z}[rw]) & k = z - x
+  \end{cases}
+\]
+where \( \ax**{z}[r] \) is the exp. value of a lifelong annuity of 1 payable in advance for a pensioneer of required age \(z\).
+and \(\ax**{z}[rw] \) the exp. value of an entitlement for a pensioned widow of age \(z\). 
+
+\[
+  \actsymb[k]{L}{x}[(1)] = \begin{cases}
+    R_k v^{\frac{1}{2}}(\ax**{x + k \frac{1}{2}}[i] + w \ax**{x + k + \frac{1}{2}}[iw]), & k < z - x, \\
+    0 & k = z - x
+  \end{cases}
+\]
+\[
+  \actsymb[k]{L}{x}[(2)] = \begin{cases}
+    w R_k v^{\frac{1}{2}} h_{x+k} \ax**{y_{x + k} + \frac{1}{2}}[w], & k < z - x, \\
+    0 & k = z - x
+  \end{cases}
+\]
+for mixed obligations the exp. value of all benefits is
+\[ \actsymb[k]{\hat{L}}{x} =  \actsymb[k]{L}{x}[(0)] + \sum_\gamma \qx{x+k}[(\gamma)]\actsymb[k]{L}{x}[(\gamma)] \]
+
+And the settlement value is
+\[ \actsymb[m]{B}{x} = \sum_{k\geq 0} v^k \px[k]{x+m} \cdot \actsymb[m + k]{\hat{L}}{x} \]
+
+
+Cash value (annuity) of a lifelong annuity of amount \(1\), payable in \(t\) installments p.a. in advance, to an \(x\)-year old
+pensioner
+\[\ax**[][(t)]{x}[r] = \sum_{k\geq 0} v^k \px[k]{x}[r] \cdot \actsymb[m + k][(t)]{\hat{L}}{x} = \ax**{x}[r] - k^{(t)} \]
+where 
+
+\[\actsymb[m + k][(t)]{\hat{L}}{x} = \frac{1}{t} \sum_{m = 0}^{t-1} v^{\frac{m}{t}} \px[\frac{m}{t}]{x+k} =  1 - k^{(t)}(1 - v \px{x}[r]) \]
+\(k^{(t)}\): Value at the end of the pension entry year for benefits payable in this first year of pension \\
+This is independent of \(x\) but can still be evaluated from it, via  
+\(k^{(t)} = \ax**{x} - \ax**{x}[(t)]\) or \(k^{(t)} = \frac{1 + i}{t} \sum_{m = 0}^{t-1} \frac{m}{t + m i} \) where \( i \) is the interest rate. \\
+
+Opposed to annuities which are evaluated for currently paid benefits, entitlements are evaluated for paid benefits in the future and 
+do not require adjustments for inter-annual payments according to the invariance principle.
+
+Entitlement on Disability Pension
+\[ \ax**{x}[ai] =  \ax**[][(t)]{x}[ai] = \sum_{k \geq 0} \px[k]{x}[a] \cdot \actsymb[][(t)]{\hat{L}}{x+k}[ai] \]
+where 
+\[
+  \actsymb[][(t)]{L}{x+k}[ai] = \begin{cases}
+    \actsymb{i}{x} v^{\frac{1}{2}} \ax**[][(t)]{x + \frac{1}{2}}[i], & x < z, \\
+    0 & x = z
+  \end{cases}
+\]
+\[
+  \ax**[][(t)]{x + \frac{1}{2}}[i] = v^{\frac{1}{2}} \px[\frac{1}{2}]{x + \frac{1}{2}}[i] \ax**{x+1}[i] 
+  = v^{\frac{1}{2}} \frac{1 - \qx{x}[i]}{1 - \frac{1}{2} \px{x}[i]} \ax**{x+1}[i] 
+\]
+
+As usual, for constant premiums paid on a recurrent basis (instead of a one time sum) we can determine them 
+for a premium period of length \( n \) (paid in advance) by
+\[ \actsymb[0]{B}{x} = \sum_{k=0}^{n-1} v^k \px[k]{x} \cdot P_x = \ax**{x:\angl n} P_x \]
+so \( P_x = \frac{\actsymb[0]{B}{x}}{\ax**{x:\angl n}} \).
+
+\end{document}

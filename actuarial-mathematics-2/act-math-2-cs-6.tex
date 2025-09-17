@@ -1,0 +1,269 @@
+\documentclass[11pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{actuarialangle, actuarialsymbol}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+\begin{document}
+
+State the formula's for commutation figures and some important identities (but not specific insurance products)
+
+
+For each age \( x \in \{ 0, 1, \ldots, w \} \), the commutation figures for an insurance with cause of elimination death are defined by
+
+\(D_x\) := \(l_x v^x\) discounted number of the living
+\(C_x\) := \(d_x v^{x+1} \) discounted number of the deaths
+\(N_x\) := \(\sum_{k = x}^w D_k\) cumulated discounted number of the living
+\(M_x\) := \(\sum_{k = x}^w C_k\) cumulated discounted number of the deaths
+\(S_x\) := \(\sum_{k = x}^w N_k\) sum of second order of discounted number of the living
+\(R_x\) := \(\sum_{k = x}^w M_k\) sum of second order of discounted number of the deaths
+
+\( C_x = vD_x - D_{x+1} \)
+\( M_x = D_x - dN_x \)
+\( R_x = N_x - d S_x \)
+
+The recursive computation (useful for computers/going fast in the exam)
+Discounted number of the living:
+\(x = 0 : \quad D_0 = l_0\)
+\(x > 0 : \quad D_x = v^x\, l_x = v\, v^{x-1}\, l_{x-1}\, p_{x-1} = v\, D_{x-1}\, p_{x-1}\)
+
+Cumulated discounted number of the living:
+\(x = w : \quad N_w = D_w\)
+\(x < w : \quad N_x = N_{x+1} + D_x\)
+
+Sum of second order of the number of the living:
+\(x = w : \quad S_w = N_w \)
+\(x < w : \quad S_x = S_{x+1} + N_x\)
+
+
+
+State the premia for specific life insurance products in terms of the commutation figures
+
+Insurance with duration \( n \) and an insured sum of \( 1 \) , \( n \leq \omega + 1 - x \), in advance \\
+\[ \Ex[n]{x} = \mathbb{E}[v^{n} \mathbf{1}_{(n, \infty)}(T_x)] = v^n \px[n]{x} = v^n \frac{l_{x+n}}{l_x} = \frac{D_{x+n}}{D_x} \]
+
+Annual temporary annuity for life (for a living person) to be paid in advance with duration
+\( n \leq \omega + 1 - x \) and an annual payment of 1
+\[ \ax**{\endowxn} = \mathbb{E}[\sum_{k=1}^n \Ex[k]{x}] = \frac{1}{D_x}(N_{x+1} - N_{x+n+1}) \]
+Annual lifelong annuity of \( 1 \) to be paid in arrear with duration \( n = \omega + x - 1 \); last
+payment at the end of year of death:
+\[ a_x = \frac{N_{x+1}}{D_x} = \frac{1}{D_x}(N_x - D_x) = \ax**{x} - 1\]
+
+Yearly temporary annuity for life of \( 1 \) in advance, deferred by \( m \leq n \) years, with 
+duration \( n - m \) years, \( n \leq \omega + 1 - x \) 
+\begin{align*}
+  \ax**[m|]{x:\angl{n - m}} &= \mathbb{E}[\sum_{k=m}^{n-1} v^k \mathbf{1}_{(k, \infty)}(T_x)]  \\
+ &= \ax**{\endowxn} - \ax**{x:\angl m} = \frac{1}{D_x}(N_{x+m} - N_{x+n})
+\end{align*}
+
+Yearly lifelong annuity of \( 1 \) for life, paid in advance, deferred by \( m \leq \omega + 1 - x \) years,
+with \( n = \omega + 1 - x \)
+\[ \ax**[m|]{x} = \frac{N_{x+m}}{D_x} \]
+
+Yearly temporary annuity for life of duration \( n \leq \omega + 1 - x \), to be paid in advance, with
+an increasing payment beginning with \( 1 \) and a yearly increase of \( 1 \):
+\begin{align*}
+  (\Ia**)_{x:\angl n} &= \sum_{k=0}^{n-1} \ax**[k]{x:\angl{n - k}} = \frac{1}{D_x}(\sum_{k=0}^{n-1} N_x - N_{x+n}) \\
+                      &= \frac{1}{D_x}(S_x - S_{x+n} - n N_{x+n})
+\end{align*}
+
+Yearly lifelong annuity for life, to be paid in advance, with a guaranteed period of \( g \) years
+and a payment of \( 1 \):
+\[ \ax**[][g]{x} = \ax**{g} + \ax[g|]{x} = \frac{1 - v^g}{1 - v} + \frac{N_{x+g}}{D_x} \]
+
+\( n \)-year term life insurance with insured sum \( 1 \), where the benefits are due at the end of
+the year of death, \( n \leq \omega + 1 - x \):
+\begin{align*} 
+  \Ax[n]{x} &= \mathbb{E}[\sum_{k=0}^{n-1} v^{k+1} \mathbf{1}_{(k, k+1]}(T_x)] = \sum_{k=0}^{n-1} v^{k+1} \px[k]{x} \qx{x+k} \\
+ &= \frac{1}{D_x} \sum_{k=0}^{n-1} C_{x+k} = \frac{1}{D_x}(M_x - M_{x+n}) 
+\end{align*}
+
+Whole life insurance with insured sum \( 1 \) with \( n = \omega + 1 - x \):
+\[ \Ax = \frac{M_x}{D_x} = 1 - d \frac{N_x}{D_x} \]
+
+Term life insurance deferred by \( m \leq n \) years with duration \( n - m \) and insured sum \( 1 \),
+due at the end of the year of death, \( n \leq \omega + 1 - x \):
+\[ \Ax[m|n-m]{x} = \Ax[n]{x} - \Ax[m]{x} = \frac{1}{D_x}(M_{x+m} - M_{x+n}) \]
+
+Whole life insurance deferred by \( m \leq \omega + 1 - x \) years with \( n = \omega + 1 - x \):
+\[ \Ax[m]{x} = \frac{M_{x+m}}{D_x} \]
+
+Term life insurance for \( n \) years with an increasing insured sum of \( 1 \) in the first year and
+an increase of \( 1 \) per year:
+\[ (\IA)_{x:\angl n} = \sum_{k=0}^{n-1} \Ax[k|]{x} = \frac{1}{D_x}(R_x - R_{x+n} - n M_{x+n}) \]
+
+An endowment insurance for a period \( n \leq \omega + 1 - x \) covers both the risks of life and
+death.\\
+In case the insured person survives, the insured sum is paid out at the end of the term \( n \);\\
+if death occurs, then it is paid immediately.
+\[ \Ax{x:\angl n} = \Ex[n]{x} + \Ax[n]{x} = \frac{1}{D_x}(D_{x+n} + M_x - M_{x+n}) = 1 - d \ax**{\endowxn} \]
+
+
+State recursive formula's for some life insurance products
+
+Payment of the assured sum at the end of year of death, discretized:
+\[ \Ax{x} = v\qx{x} + v\px{x} \Ax{x+1} \]
+
+Immediate payment of the insured sum in the moment of death, continuous:
+\[ \Ax*{x} = \mathbb{E}[v^{T_x}| T_x \leq h] \qx[h]{x} + v^h \Ax*{x+h} \px[h]{x} \]
+
+Annuity with yearly payment of \( 1 \), payable in advance:
+\[ \ax**{x} = 1 + v \ax**{x+1} \px{x} \]
+
+
+List methods for recurring premium payments, instead of single ones
+
+Recurring premia have the feature, that the policy holder pays premiums (either constant or dynamic) 
+at certain points in time (monthly, annually, ...) until
+1. death (for example private health insurance) \\
+2. a contractually agreed upon point in time in case of survival, otherwise until death \\
+
+Recurring premiums can be modeled as an annuity for life which is to be paid to the 
+insurance company. Therefore we have for the present value of the premia: \\
+\( \premium{x} \ax**{x} \) (lifelong premium payments) \\
+\( \premium{x} \ax**{x:\angl m} \) (abbreviated premium payment period, m years) \\
+Let \( \mathbb{E}[B_x^L] \) be, as before, the expected present value of the insurance benefits. \\
+Then it follows: \\
+\( \frac{\mathbb{E}[B^L_x]}{\ax**{x}} \) (lifelong premium period), \\
+\( \frac{\mathbb{E}[B^L_x]}{\ax**{x: \angl m}} \) (lifelong premium period), \\
+
+Consider a more involved example of a dynamic premium, say \( P_x^k \), \( k \in \{1, \dots, m\} \), payable in advance, 
+increase yearly by a factor of \( c \% \). \\
+\begin{align*}
+  \sum_{k=0}^{m-1} v^k P_x^{k+1} \mathbb{P}[T_x > k] &= \sum_{k=0}^{m-1} v^k (1 + \frac{c}{100})^k P^1_x \mathbb{P}[T_x > k]  \\
+  &= P^1_x \ax**{x:\angl m}
+\end{align*}
+where \( \ax**{x:\angl m} \) uses the modified factor discount factor \( v(1 + \frac{c}{100}) \).
+
+Typically, insurances can be paid for not only annually, but also monthly, 
+per quarter or half-yearly, in general: \( k \) premiums per year. \\
+If the annual premium \( P_x \) is supposed to be paid for by \( k \) premiums in the amount of \( \frac{1}{k}P_x \)
+per year, payable in advance, then the calculation of premium involves 
+\[ \ax**{x:\angl m}[(k)] = \mathbb{E}\left[\sum^{mk - 1}_{j=0} v^{\frac{j}{k}} \frac{1}{k} \mathbf{1}_{(\frac{j}{k}, \infty)}(T_x) \right] \]
+for an annuity for life with \( k \) payments per year, in advance, to be paid for \( m \) years in the
+amount of \( \frac{1}{k} \).
+
+Therefore the principle of equivalence implies for \\
+\( P_x \ax**{x:\angl m}[(k)] = \mathbb{E}[B^L_x] \) or \( P_x \ax**{x}[(k)] = \mathbb{E}[B^L_x] \) \\
+with \( k \)-yearly premium payments, is simply 
+\( P_x = \frac{\mathbb{E}[B^L_x]}{\ax**{x:\angl m}[(k)]} \). \\
+These premiums \( \frac{1}{k}P_x \), due \( k \) times per year, are called real inter-annual premiums. \\
+In practice, inter-annual premiums are often calculated 
+approximatively on the basis of annual premiums also then referred to as false inter-annual premiums: \\
+Since the whole annual premium reaches the insurance not at the beginning of the year,
+but peu a peu during the whole year, a surcharge for installments is raised on the
+premiums \( \frac{1}{k}P_x \). This method is criticized as it is an implicit loan! \\
+
+Some notational remarks: \\
+\( m \) abbreviated premium payment period \\
+\( P_{x,m}(\mathbb{E}[B^L_x]) \) annual net premium for an \( x \)-year old that is to be paid
+for \( m \) years for a product with expected amount
+of benefits \( \mathbb{E}[B_x^L] \).
+
+
+Give some examples of standard life insurance products with recurring payments
+
+Pure endowment insurance (benefits only in case of survival) for \( n \) years with insured sum \( 1 \)
+\( m \leq n < \omega - x \), payable in advance:
+\[ P_{x,m}(\Ex[n]{x}) = \frac{\Ex[n]{x}}{\ax**{x:\angl m}} = \frac{D_{x+n}}{N_x - N_{x+m}} \]
+
+Temporary annuity for life, to be paid out in advance, deferred by \( m \leq n < \omega - x \) years
+with a duration of \( n - m \) and a yearly annuity of \( 1 \), premium payments during the deferral period:
+\[ P_{x,m}(\ax**[m|]{x:\angl m}) = \frac{\ax**[m|]{x:\angl{n - m}}}{\ax**{x:\angl m}} = \frac{N_{x+m} - N_{x+n}}{N_x - N_{x+m}}  \]
+
+Annuity for life, to be paid out in advance, deferred by \( m < \omega - x \) years and with a yearly
+annuity of \( 1 \), premium payments during the deferral period:
+\[ P_{x,m}(\ax**[m|]{x}) = \frac{\ax**[m|]{x}}{\ax**{x:\angl m}} = \frac{N_{x+m}}{N_x - N_{x+m}}  \]
+
+Insurance on a fixed date (Term-fix Insurance) with duration \( n \), insured sum \( 1 \) and
+premium payment period \( m \leq n \):
+\[ P_{x,m}(v^n) = \frac{v^n}{\ax**{x:\angl m}} = v^n \frac{D_x}{N_x - N_{x+m}} \]
+Note that only the number of premiums is unknown. \\
+
+(Temporary) term life insurance for \( n \) years with insured sum \( 1 \), benefits are to be paid
+at the end of the year of death, premium payment period \( m \leq n \):
+\[ P_{x,m}(\Ax[n]{x}) = \frac{\Ax[n]{x}}{\ax**{x: \angl m}} = \frac{M_x - M_{x+n}}{N_x - N_{x+m}} \]
+
+
+
+Define the different kinds of cost encountered in insurance contracts and how to include them in the premia
+
+We distinguish the following costs:
+\begin{enumerate}
+  \item \( \alpha^Z, \alpha^\gamma \)-costs, : direct and indirect acquisition costs respectively, direct depend on the conclusion of a contract and are due immediately (commissions, costs for doctors, etc.) and indirect (salaries and costs for office space for the sales force)
+  \item \( \gamma \)-costs : administrative costs, office rent, IT licenses
+  \begin{enumerate}
+    \item sometimes there are split into \( \gamma_1, \gamma_2 \) for concurrent with premium payments and costs afterwards.
+  \end{enumerate}
+\item \( \beta \)-costs : collection costs, incurred from money transactions (Bank fees, Employees in the collection department)
+\end{enumerate}
+The greek letters usually represent the percentage of some calculation base sum of premiums, sum assured or annuity,
+which are denoted by \( GA^Z, GA^\gamma, GG \) for \( \alpha^Z, \alpha^\gamma, \gamma \) respectively. \\
+
+In the calculation of premiums, costs of first order are used. The real costs are called
+costs of second order, in analogy to the other calculation bases.
+The resulting premia with the surcharges is also referred to as sufficient premium. \\
+
+Instead of handing these costs over to the policy holder as a single premium, these
+acquisition costs are (partly) paid for in the form of surcharges to the current premiums,
+so Acquisition costs are earned over time. \\
+
+In the simplest setting, only using the direct acquisition costs this is also called Zillmer premium,
+which must satisfy
+\[ P^Z_x \ax**{x: \angl m} = \mathbb{E}[B^L_x] + \alpha^Z GA^Z  \]
+typically \( GA^Z = m P_x^Z \) (depends on the sum of the premiums) so the premia would be given by
+\[ P^Z_x = \frac{\mathbb{E}[B^L_x]}{\ax**{x: \angl m} - \alpha^Z m} \]
+
+More generally, assume constant premia, 
+due yearly in advance, 
+policy term is \( n < \omega - x\); 
+the premium payment period is \( m \leq n \) years:
+\[ 
+\premium[][a]{x} = \frac{1}{(1 - \beta) \ax**{x: \angl m}}( \mathbb{E}[B^L_x] + \alpha^Z GA^Z + \alpha^\gamma GA^\gamma + \gamma GG \ax**{x: \angl n}) 
+\]
+If the \( \gamma \)-costs are split, and the direct acquisition costs depend through broker fees on the overall premia this is instead 
+\[ 
+\premium[][a]{x} = \frac{1}{(1 - \beta) \ax**{x: \angl m} - \alpha^Z m}( 
+\mathbb{E}[B^L_x] + \alpha^Z GA^Z + \alpha^\gamma GA^\gamma + GG (\gamma_1 \cdot \ax**{x: \angl m} + \gamma_2 \cdot \ax**[m|]{x: \angl{n - m}}) )
+\]
+if the insurance immediately only terminates with the death of the person, the \( \gamma_2 \) costs continue indefinitely 
+\[ 
+\premium[][a]{x} = \frac{1}{(1 - \beta) \ax**{x: \angl m} - \alpha^Z m}( 
+\mathbb{E}[B^L_x] + \alpha^Z GA^Z + \alpha^\gamma GA^\gamma + GG (\gamma_1 \cdot \ax**{x: \angl m} + \gamma_2 \cdot \ax**[m|]{x}))
+\]
+
+(can also be derived from equivalence principle).
+
+
+Elaborate on sum discounts and surcharges in the context of tariff premia
+
+The tariff premium is the sufficient premium adjusted for surcharges and discounts. The
+following components are to be considered:
+Unit cost surcharge: On top of the already considered costs, there may be additional
+costs which are fixed for every single contract (independent of insured sum and premium).
+These can be considered by adding a fixed amount to the premium.
+
+Surcharges or discounts for installments: If the sufficient annual premium is calculated for
+yearly payments in advance, but the premium is paid during the year (e. g., monthly),
+then a surcharge for installments is applied (artificial inter-annual premium).
+If the sufficient annual premium is calculated for yearly payments in arrears, but the
+premium is paid for over time during the year (e. g., monthly) before it is actually due,
+then a discount for installments can be applied.
+
+From an economic point of view, it therefore makes sense (and is objectively correct) to
+reduce costs for high insured sums and increase costs for small insured sums
+
+Because of the competition between insurance companies, also risk discounts have an
+increased importance, e. g., a non-smoker tariff for a term life insurance
+These are called risk discounts.
+
+If we add insurance taxes on the tariff premium, we get the gross premium.
+In Germany, there are no taxes on insurance premiums in life insurance, therefore tariff
+premium and gross premium can be used synonymously.
+
+On a last note, the German VAG requires the tariffication may not be changed according to high demand,
+any difference in price or benefit must be analytically justifiable, statistically verifiable and
+transparent for a third person.
+
+Therefore the portfolio (of insurance contracts) is split into
+disjoint subsets each using a different identical calculation base.
+\end{document}

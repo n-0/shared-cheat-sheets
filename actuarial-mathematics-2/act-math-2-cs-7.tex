@@ -1,0 +1,58 @@
+\documentclass[11pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{actuarialangle, actuarialsymbol}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+\begin{document}
+
+% paper size setting in anki \special{papersize=3in,7in}
+
+What are the methods required by law for the actuarial reserve?
+
+For life insurance products, the future benefits are usually supported by preceeding
+premium payments. This time difference of cash in/outflow introduces the necessity of an account management.
+There are two methods for determining the required reserve
+the prospective approach:
+present value of future benefits = prospective reserve + present value of future premiums
+the retrospective approach:
+terminal value of previous premiums = retrospective reserve + terminal value of previous benefits
+
+According to German HGB the prospective approach should always be preferred. The retrospective method
+is especially useful under the assumption of stationarity of the distribution (past performance predicts future value).
+
+
+Give formula's for the actuarial reserve 
+
+Assumptions: \\
+Payment times: \( \{0 = s_0, s_1, \dots, s_k \}\) \\
+Death benefit: \( D(s_{k+1}) \) if death occurs in \( (s_k, s_{k+1}] \), payable in \( s_{k+1} \) \\
+Survival benefit: \( S(s_k) \) if surviving until \( s_k \) , payable in \( s_k \) \\
+Premium \( P_x(s_k) \) for \( x \)-year old insured person in period \( (s_k , s_{k+1}] \), payable in advance in \( s_k \) \\
+Calculatory maximum age \( w_x \)  \\
+
+Assume \( s_k = k \) then the reserve can be expressed as: 
+\[ \Vx[t]{x} = \sum_{l=k}^{w - x} D(l + 1)v^{l + 1 + k} \px[l - k]{x + k} \qx{x + l} + \sum_{l = k}^{w - x} (S(l) - P_x(l)) v^{l - k} \px[l - k]{x + k} \]
+
+For inter-annual time points \( k + u \) with \( u \in [0, 1] \) under the linearity assumption \( \qx[u]{x} = u \qx{x} \)
+we get instead
+\[ \Vx[k + u]{x} = \frac{v^{1-u}}{1 - u\qx{x+k}} (D(k+1)(1 - u)\qx{x+k} + \Vx[k+1]{x} \px{x+k} \]
+
+Example \( n \)-year insurance for survival with insured sum \( 1 \) and constant annual premiums
+\( P_{x,n}(\Ex[n]{x}) \) due in advance:
+\[ \Vx[k]{x}(\Ex[n]{x}) = \Ex[n-k]{x+k} - P_{x,n}(\Ex[n]{x})\ax**{x+k: \angl n - k} = \frac{D_{x+n}}{D_{x+k}}(1 - \frac{N_{x+k} - N_{x+n}}{N_x - N_{x+n}}) \]
+
+The actuarial balance equation or fundamental equation is a recursive expression for \( \Vx[k]{x} \) which allows to fast track some computations: \\
+Forward recursion (prospective):
+\[ \Vx[k+1]{x} = \frac{1}{v \px{x+k}}(\Vx[k]{x} - S(k) + P_x(k) - v\qx{x+k} D(k+1)) \]
+with \( \Vx[0]{x} = 0 \). \\
+Backward recursion (retrospective):
+\[ \Vx[k]{x} = S(k) - P_x(k) + v \qx{x+k} D(k+1) + v\px{x+k} \Vx[k+1]{x} \]
+with \( \Vx[n]{x} = S(n) \) or \( 0 \) if no final survival benefit is included. \\
+
+The premia can be decomposed into a savings and risk component which are expressed in terms of the reserve:
+\[ P^S_x(k) = \frac{K(k)}{K(k+1)} \Vx[k+1]{x} - \Vx[k]{x} \]
+The savings component is for the adjustment of the prospetive reserve at the end of the year.
+\[ P^R_x(k) = \frac{K(k)}{K(k+1)}(D(k+1) - \Vx[k+1]{x} \mathbb{P}[T_x \leq k+1 | T_x > k]  ) \]
+The risk component is for covering the risk (of death) in the period \( (k, k+1] \) and it corresponds
+to the premium of a term life insurance in \( (k, k+1] \) with insured sum \( D(k+1) - \Vx[k+1]{x} \).
+\end{document}

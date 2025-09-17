@@ -1,0 +1,134 @@
+\documentclass[11pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{actuarialangle, actuarialsymbol}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+
+\makeatletter
+\newcommand{\ix}{\@actothersc{i}}
+\makeatother
+
+\begin{document}
+
+In life insurance what are rights and obligations of the parties on contractual alterations?
+
+
+Contractual Alterations by insurer:
+Policies in life insurance typically have long policy terms. During the contract duration,
+the insurer can adjust premiums, benefits, or policy conditions only in a very restricted
+way, see VVG, § 163
+The insurance company is allowed to recalculate the premium, if
+1. the required benefits have changed permanently and in an unforeseeable way compared to
+the calculation bases used for the agreed upon premiums,
+2. the newly calculated (via new calculation bases) premium is appropriate and needed in
+order to make sure the agreed upon benefits can be paid for
+3. and an independent trustee verified 1., 2.
+
+In practice, the most common examples of contractual alterations are:
+Repurchase: cancellation of the contract
+Release from premium payment: no future premiums, reduction of benefits
+- Change of the benefits
+- Change of policy term: premium payment period or policy term are changed (e.g. shortened)
+
+If a contract in life insurance is cancelled prematurely, the insured person has a claim on a
+certain amount of money, called the surrender value, see VVG, § 169. The process itself is called repurchase.
+
+In general, for a term life insurance, there is no surrender value (this would otherwise lead to selective cancellation)
+
+According to the law, the surrender value is given by the reserve; in case of cancellation
+it is at least the reserve that would result from a distribution of the acquisition costs on the
+first 5 years upon conclusion of contract.
+
+
+Alterations by insuree:
+By law, a policy holder can demand that their policy is transformed into a policy without
+premiums until the end of the current policy period (also called release from premia).
+In this case, they must accept reduced benefits or reduced insurance protection.
+The reduced benefits are calculated according to the principle of equivalence with the
+help of the surrender value as a single premium (VVG, § 165).
+
+
+
+Give examples for computing the surrender value and benefits after release of premia.
+
+Consider a mixed capital insurance for a \( 50 \) year old man:
+Policy term: \( 15 \) years
+Insured sum: \( 50 000 \)
+with annual premiums in advance during the whole policy term.
+Repurchase after 10 years.
+
+
+Surrender value for one-time acquisition costs:
+The annual sufficient premium is determined as before (here the commutation terms are already inserted)
+\[
+  \actsymb[][a]{P}{50} = \frac{50000}{(1 - \beta)(N_{50} - N_{65} - \alpha^Z \cdot 15 \cdot D_{50})}(D_{65} + M_{50} - M_{65} + (\alpha^\gamma + \gamma_1)(N_{50} - N_{65}) 
+\]
+
+and the sufficient reserve for ten years is
+
+\[
+  \Vx[a][10]{50} = \frac{1}{D_{60}}\left(50000 \left(M_{60} - M_{65} + D_{65} + (\alpha^\gamma + \gamma_1)(N_{60} - N_{65}) -   \actsymb[][a]{P}{50}(1 - \beta)(N_{60} - N_{65} \right) \right)
+\]
+
+
+Surrender value with acquisition costs distributed on 5 years: \\
+
+The premia can be found by solving the following equation for \( \actsymb[][a]{P}{50} \) and multiplying the result with \( 50000 \)
+\[
+  \actsymb[][a]{P}{50} \ax**{50:\angl 15} = \Ax{50:\angl 15} + \ax**{50:\angl 15} \left(\alpha^Z \frac{15 \cdot \actsymb[][a]{P}{50}}{5}  + \beta \actsymb[][a]{P}{50} + (\alpha^\gamma + \gamma_1) \right)
+\]
+Inserting this into the previous equation for \(   \Vx[a][10]{50} \) then gives the surrender value. It will typically be higher than the method one-time acquisition costs
+for the first five years.
+
+
+Consider again the previous setup, but now after \( 10 \) years the policyholder requests a release of premia, which would give a mixed
+capital insurance with a policy term of \( 5 \) years and a reduced insured sum of \( \tilde{S} \).
+
+In order to calculate \( \tilde{S} \), we consider the surrender value after \( 10 \) years and the sufficient
+reserve (with acquisition costs distributed on the first \( 5 \) years).
+This amount is considered as single premium (acquisition costs and collection costs are to
+be neglected) for the transformed insurance.
+
+\[ 
+  \Vx[a][10]{50} = \tilde{S}( \Ax{60:\angl 5} + (\alpha^\gamma + \gamma_1) \ax**{60:\angl 5}) \approx \tilde{S} \cdot 0.93059
+\]
+solving for \( \tilde{S} \) then gives the remaining benefits.
+
+
+How is the regulation for unisex tariffication included in the reserve building?
+
+The realization of the principle of equal treatment of men and women in relation to goods
+and services is the content of the directive 2004/113/EG.
+
+Potential Solutions:
+1. Continue as before!
+The reserve is simply calculated with gender-specific tables
+Problem: Different calculation bases for tariffing and reservation
+2. Careful tariffing and reservation
+The table is chosen which results in higher premiums and reserves
+3. Unisex reservation:
+For both tariffing and reservation, unisex tables are chosen.
+When constructing the tables, the temporal development of the mix must be considered.
+
+
+What are the sources and treatment of surpluses in insurance companies?
+
+Sources are often a consequence due to the especially careful choice of calculation bases:
+- Interest Surplus: The interest rate realized at the capital market is higher than the
+technical interest rate (Zinsergebnis)
+- Risk Surplus: The real, observed mortality rates are higher/lower than those used for the
+calculation of the products (Risikoergebnis)
+- Other Surplus: The costs used for the calculation are higher than the real costs
+
+The sum of the different surplus components is the gross surplus. It can be used in terms of profit participation follows:
+- Formation of equity capital
+- Payment of a dividend to the shareholders (owners of the company)
+- Feed the RfB (Rückstellung für Beitragsrückerstattung; reserve for profit participation for policy holders)
+- Participation of the policy holders via direct credit (reduced premium), interest-bearing accrual/investment, direct payment, increased benefits
+
+By legislation if there's a gross surplus there's at least a minimal participation of the insurees.
+
+The actuary responsible makes a proposal to the board, and the board then decides the surplus
+declaration for the following year.
+\end{document}
+
