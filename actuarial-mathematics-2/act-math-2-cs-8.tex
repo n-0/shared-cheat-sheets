@@ -57,7 +57,7 @@ Under the assumption that transitions between populations occur midyear (almost 
 \[ \qx{x} = \qx{x}[i] - \frac{l^a_x}{l_x}(\qx{x}[i] - \qx{x}[aa] - \actsymb{i}{x} \qx[\frac{1}{2}]{x + \frac{1}{2}}[i])  \]
 Keep in mind that by axiom (2) we have for \( u \in [0, 1] \) , \( \qx[u]{x}[\gamma] = u \qx[u]{x}[\gamma] \)
 for example \( u = \frac{1}{2} \) then
-\[( \qx[\frac{1}{2}]{x + \frac{1}{2}} = 1 - \frac{1 - q}{1 - \qx[\frac{1}{2}]{x}} = \frac{\frac{1}{2}\qx{x}}{1 - \frac{1}{2}\qx{x}} \]
+\[( \qx[\frac{1}{2}]{x + \frac{1}{2}} = 1 - \frac{1 - q_x}{1 - \qx[\frac{1}{2}]{x}} = \frac{\frac{1}{2}\qx{x}}{1 - \frac{1}{2}\qx{x}} \]
 
 Note that this analysis can be extended by changing the probabilities with respect to cohorts (different years of birth \( t_0 \)
 and not assuming stationarity for mortality tables).
@@ -85,8 +85,9 @@ Mortality of an active
 
 Probability of a person of age \( x \) to die within one year and to have a surviving
 dependent who survives until the end of the year with age \( y_x + 1 \)
-\[ \px{x}[\gamma w] = \qx{x}h_x \px[\frac{1}{2}]{y_x + \frac{1}{2}}[w] \]
-where \( \gamma \) refers to the respective subpopulation. \\
+\[ \px{x}[\gamma w] = \qx{x}[\gamma](g)h_x(g) \px[\frac{1}{2}]{y_x + \frac{1}{2}}[w](g') \]
+where \( \gamma \) refers to the respective subpopulation and \( \gamma \) to the base cohort and \( g' = g + x - y_x \) 
+(which is irrelevant under the stationarity assumption between cohorts or only one mortality table). \\
 
 It holds the second consistency equation 
 \[ \px{x}[w] = \frac{l^a_x}{l_x}\px{x}[aw] + \frac{l_x - l_x^a}{l_x}\px{x}[iw] \]

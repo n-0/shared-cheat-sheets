@@ -31,15 +31,17 @@ Premium \( P_x(s_k) \) for \( x \)-year old insured person in period \( (s_k , s
 Calculatory maximum age \( w_x \)  \\
 
 Assume \( s_k = k \) then the reserve can be expressed as: 
-\[ \Vx[t]{x} = \sum_{l=k}^{w - x} D(l + 1)v^{l + 1 + k} \px[l - k]{x + k} \qx{x + l} + \sum_{l = k}^{w - x} (S(l) - P_x(l)) v^{l - k} \px[l - k]{x + k} \]
+\[ 
+\Vx[k]{x} = \sum_{l=k}^{w - x} D(l + 1)v^{l + 1 - k} \px[l - k]{x + k} \cdot \qx{x + l} + \sum_{l = k}^{w - x} (S(l) - P_x(l)) v^{l - k} \px[l - k]{x + k}
+\]
 
 For inter-annual time points \( k + u \) with \( u \in [0, 1] \) under the linearity assumption \( \qx[u]{x} = u \qx{x} \)
 we get instead
-\[ \Vx[k + u]{x} = \frac{v^{1-u}}{1 - u\qx{x+k}} (D(k+1)(1 - u)\qx{x+k} + \Vx[k+1]{x} \px{x+k} \]
+\[ \Vx[k + u]{x} = \frac{v^{1-u}}{1 - u\qx{x+k}} (D(k+1)(1 - u)\qx{x+k} + \Vx[k+1]{x} \px{x+k}) \]
 
 Example \( n \)-year insurance for survival with insured sum \( 1 \) and constant annual premiums
 \( P_{x,n}(\Ex[n]{x}) \) due in advance:
-\[ \Vx[k]{x}(\Ex[n]{x}) = \Ex[n-k]{x+k} - P_{x,n}(\Ex[n]{x})\ax**{x+k: \angl n - k} = \frac{D_{x+n}}{D_{x+k}}(1 - \frac{N_{x+k} - N_{x+n}}{N_x - N_{x+n}}) \]
+\[ \Vx[k]{x}(\Ex[n]{x}) = \Ex[n-k]{x+k} - P_{x,n}(\Ex[n]{x})\ax**{x+k: \angl{n - k}} = \frac{D_{x+n}}{D_{x+k}}(1 - \frac{N_{x+k} - N_{x+n}}{N_x - N_{x+n}}) \]
 
 The actuarial balance equation or fundamental equation is a recursive expression for \( \Vx[k]{x} \) which allows to fast track some computations: \\
 Forward recursion (prospective):
@@ -51,6 +53,7 @@ with \( \Vx[n]{x} = S(n) \) or \( 0 \) if no final survival benefit is included.
 
 The premia can be decomposed into a savings and risk component which are expressed in terms of the reserve:
 \[ P^S_x(k) = \frac{K(k)}{K(k+1)} \Vx[k+1]{x} - \Vx[k]{x} \]
+with \( K(k) = v^{-k} \) (or a suitable discount function).
 The savings component is for the adjustment of the prospetive reserve at the end of the year.
 \[ P^R_x(k) = \frac{K(k)}{K(k+1)}(D(k+1) - \Vx[k+1]{x} \mathbb{P}[T_x \leq k+1 | T_x > k]  ) \]
 The risk component is for covering the risk (of death) in the period \( (k, k+1] \) and it corresponds

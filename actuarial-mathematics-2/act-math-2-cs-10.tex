@@ -61,7 +61,7 @@ Repurchase after 10 years.
 Surrender value for one-time acquisition costs:
 The annual sufficient premium is determined as before (here the commutation terms are already inserted)
 \[
-  \actsymb[][a]{P}{50} = \frac{50000}{(1 - \beta)(N_{50} - N_{65} - \alpha^Z \cdot 15 \cdot D_{50})}(D_{65} + M_{50} - M_{65} + (\alpha^\gamma + \gamma_1)(N_{50} - N_{65}) 
+  \actsymb[][a]{P}{50} = \frac{50000}{(1 - \beta)(N_{50} - N_{65} - \alpha^Z \cdot 15 \cdot D_{50})}(D_{65} + M_{50} - M_{65} + (\alpha^\gamma + \gamma_1)(N_{50} - N_{65}))
 \]
 
 and the sufficient reserve for ten years is
@@ -75,7 +75,7 @@ Surrender value with acquisition costs distributed on 5 years: \\
 
 The premia can be found by solving the following equation for \( \actsymb[][a]{P}{50} \) and multiplying the result with \( 50000 \)
 \[
-  \actsymb[][a]{P}{50} \ax**{50:\angl 15} = \Ax{50:\angl 15} + \ax**{50:\angl 15} \left(\alpha^Z \frac{15 \cdot \actsymb[][a]{P}{50}}{5}  + \beta \actsymb[][a]{P}{50} + (\alpha^\gamma + \gamma_1) \right)
+  \actsymb[][a]{P}{50} \ax**{50:\angl{15}} = \Ax{50:\angl{15}} + \ax**{50:\angl{15}} \left(\alpha^Z \frac{15 \cdot \actsymb[][a]{P}{50}}{5}  + \beta \actsymb[][a]{P}{50} + (\alpha^\gamma + \gamma_1) \right)
 \]
 Inserting this into the previous equation for \(   \Vx[a][10]{50} \) then gives the surrender value. It will typically be higher than the method one-time acquisition costs
 for the first five years.

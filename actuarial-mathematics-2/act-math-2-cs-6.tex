@@ -43,7 +43,10 @@ Insurance with duration \( n \) and an insured sum of \( 1 \) , \( n \leq \omega
 
 Annual temporary annuity for life (for a living person) to be paid in advance with duration
 \( n \leq \omega + 1 - x \) and an annual payment of 1
-\[ \ax**{\endowxn} = \mathbb{E}[\sum_{k=1}^n \Ex[k]{x}] = \frac{1}{D_x}(N_{x+1} - N_{x+n+1}) \]
+\[ \ax**{\endowxn} = \mathbb{E}[\sum_{k=1}^n \Ex[k]{x}] 
+= \frac{1}{D_x}(N_{x} - N_{x+n}) = \frac{D_x + N_{x+1} - N_{x+n}}{D_x} = 1 + \ax**{x:\angl{n-1}} 
+\]
+
 Annual lifelong annuity of \( 1 \) to be paid in arrear with duration \( n = \omega + x - 1 \); last
 payment at the end of year of death:
 \[ a_x = \frac{N_{x+1}}{D_x} = \frac{1}{D_x}(N_x - D_x) = \ax**{x} - 1\]
@@ -57,7 +60,7 @@ duration \( n - m \) years, \( n \leq \omega + 1 - x \)
 
 Yearly lifelong annuity of \( 1 \) for life, paid in advance, deferred by \( m \leq \omega + 1 - x \) years,
 with \( n = \omega + 1 - x \)
-\[ \ax**[m|]{x} = \frac{N_{x+m}}{D_x} \]
+\[ \ax**[m|]{x} = \frac{N_{x+m}}{D_x} = \frac{N_x - N_x + N_{x+m}}{D_x} = \ax**{x} - \ax**{x:\angl m} \]
 
 Yearly temporary annuity for life of duration \( n \leq \omega + 1 - x \), to be paid in advance, with
 an increasing payment beginning with \( 1 \) and a yearly increase of \( 1 \):
@@ -78,7 +81,7 @@ the year of death, \( n \leq \omega + 1 - x \):
 \end{align*}
 
 Whole life insurance with insured sum \( 1 \) with \( n = \omega + 1 - x \):
-\[ \Ax = \frac{M_x}{D_x} = 1 - d \frac{N_x}{D_x} \]
+\[ \Ax{x} = \frac{M_x}{D_x} = \frac{vN_x - N_{x+1}}{D_x} = v \ax**{x} - \ax{x} \]
 
 Term life insurance deferred by \( m \leq n \) years with duration \( n - m \) and insured sum \( 1 \),
 due at the end of the year of death, \( n \leq \omega + 1 - x \):
@@ -95,7 +98,12 @@ An endowment insurance for a period \( n \leq \omega + 1 - x \) covers both the 
 death.\\
 In case the insured person survives, the insured sum is paid out at the end of the term \( n \);\\
 if death occurs, then it is paid immediately.
-\[ \Ax{x:\angl n} = \Ex[n]{x} + \Ax[n]{x} = \frac{1}{D_x}(D_{x+n} + M_x - M_{x+n}) = 1 - d \ax**{\endowxn} \]
+\begin{align*}
+  \Ax{x:\angl n} = \Ex[n]{x} + \Ax[n]{x} &= \frac{1}{D_x}(D_{x+n} + M_x - M_{x+n}) \\
+                                         &= \frac{v(N_x - N_{x+n}) - (N_{x+1} - N_{x+n})}{D_x}  \\
+                                         &= \ax**{x:\angl n} - \ax{x:\angl{n-1}}  \\
+                                         &= 1 - d \ax**{\endowxn}
+\end{align*}
 
 
 State recursive formula's for some life insurance products
