@@ -1,0 +1,351 @@
+Git Cheat Sheet
+
+A list of Git related topics that I tend to forget about:
+
+The different locations for changes in Git:
+
+https://miro.medium.com/1*tjrF1ff5UjVNclwwe_GREg.png
+
+
+Note that the Staging area is also referred to as the index and treated by Git almost like commit
+(in that it has a parent trees, blobs etc.)
+
+
+Fundamental constructs:
+Git is a content-addressable filesystem. It means that at the core of Git is a simple key-value data store. 
+You can insert any kind of content into a Git repository, for which Git will hand you back a unique key you can use later to retrieve that content.
+
+You have objects and references
+Objects split into
+- blobs (file contents)
+- trees (hierarchies of other trees with blobs as leafs (aka like UNIX directories))
+- commits
+
+For a detailled treatment how to work with the underlying objects refer to https://git-scm.com/book/en/v2/Git-Internals-Git-Objects 
+One can inspect the underlying objects via their SHA-1 by `git cat-file -p <hash>`.
+As a short reminder the order of the underlying operations for a typical Git workflow is as follows
+- `git hash-object <file>`
+- `git update-index --add --cacheinfo <hash>`
+- `git update-index --add new.txt`
+- `git write-tree` (stores all previous index additions into one tree)
+- `git commit-tree <hash-of-tree> -p <parent-commit>` (creates an actual commit and paste it after parent)
+Note that a commit can also have patch-ids, which are specific parts of another commit (hashes in a tree), which comes in handy
+when their are conflicts due to pulling forced history rewrites from a remote origin or if one wants to partially reset changes.
+
+There are special flavors of references (branches (HEAD -> master), tags, remotes and more).
+Of particular interest is the HEAD reference which give the latest commit, which points to the previous history 
+and will be the parent of the next commit (given by index) 
+
+
+When Git initializes a directory it creates the following structure in `.git`
+
+```
+$ ls -F1
+config
+description
+HEAD
+hooks/
+info/
+objects/
+refs/
+```
+
+The interesting parts are 
+
+- config file contains your project-specific configuration options
+- info directory keeps a global exclude file for ignored patterns that you don’t want to track in a .gitignore file
+- The hooks directory contains your client- or server-side hook scripts
+- the HEAD and (yet to be created) index files, and the objects and refs
+
+You can fairly easily create your own tree. 
+Git normally creates a tree by taking the state of your staging area or index and writing a series of tree objects from it.
+
+
+Git References
+```
+$ find .git/refs
+.git/refs
+.git/refs/heads
+.git/refs/tags
+```
+Instead of writing commits directly in a specific `.git/refs/<ref_name>` git uses internally something like this
+```git update-ref refs/heads/master 1a410efbd13591db07496601ebc7a059dd55cfe9```
+Changing the HEAD to another location works like this
+`git symbolic-ref HEAD <ref-to-change-head-to>
+Of course checkout and reset change some parts about the index and working directory as well.
+Branches are nothing but entries in `.git/refs/heads`.
+
+HEAD is the pointer to the current branch reference, which is in turn a pointer to the last commit made on that branch. 
+That means HEAD will be the parent of the next commit that is created. The detached HEAD occurs, when
+HEAD points directly to a commit instead of a branch. Nice for experimenting and by `git switch <branch>` one can go 
+restore the pointer to a branch, if one would like to persist their changes in detached head mode, one needs to create a new branch
+e.g. `git switch -c <branch-name>`.
+
+Tags
+Tags are either annotated or lightweight. 
+A lightweight tag is a reference that never moves. 
+An annotated tag is more complex, however. If you create an annotated tag, Git creates a tag object and then writes a reference to point to it rather than directly to the commit. 
+You can see this by creating an annotated tag (using the -a option):
+```
+$ git tag -a v1.1 1a410efbd13591db07496601ebc7a059dd55cfe9 -m 'Test tag' 
+$ cat .git/refs/tags/v1.1
+9585191f37f7b0fb9444f35a9bf50de191beadc2
+
+$ git cat-file -p 9585191f37f7b0fb9444f35a9bf50de191beadc2
+object 1a410efbd13591db07496601ebc7a059dd55cfe9
+type commit
+tag v1.1
+tagger Scott Chacon <schacon@gmail.com> Sat May 23 16:48:58 2009 -0700
+
+Test tag
+```
+Notice that the object entry points to the commit SHA-1 value that you tagged. 
+Also notice that it doesn’t need to point to a commit; you can tag any Git object.
+
+Remotes
+If you add a remote and push to it, Git stores the value you last pushed to that remote for each branch in the `.git/refs/remotes` directory.
+Remote references differ from branches mainly in that they’re considered read-only. You can `git checkout` one, but  Git won’t symbolically reference HEAD to one,
+so `git commit` never updates them directly.
+
+
+
+Undoing/updating existing things in Git
+
+Only locally commited changes
+```
+$ git commit --amend
+```
+This command takes your staging area and uses it for the commit. 
+
+
+Unstaging/Unmodifying a Staged File
+Unstaging
+```
+git reset HEAD <file>
+```
+or modern version
+```
+git restore --staged <file>
+```
+Unmodifying
+```
+git checkout -- CONTRIBUTING.md
+```
+or modern version
+```
+git restore <file>
+```
+Undoing commits
+```
+git revert <commit-or-ref>
+```
+Undoing merge commits
+```
+git revert -m <stage-whose-changes-should-be-kept> <commit-or-ref-from-which-to-start>
+```
+For the `<stage-whose-changes-should be kept>` part, one typically has `1` for the target (ours)
+and `2` for the merge (theirs) branch
+in short
+
+Ref
+
+How git reset works under the hood
+`git reset` uses 3 steps by default (which can be modified via cli arguments)
+1. `git reset --soft <commit-hash>`, move head and the pointer of the current branch to given commit (do not touch index or working dir)
+(this is essentially the underlying mechanism of `git commit --ammend`)
+2. `git reset --mixed <commit-hash>` Unstages (removes from index) all changes
+3. `git reset hard <commit-hash>` 
+One can apply those changes partially by passing instead a file name (which leverages the underlying patch-ids), 
+this does not change the head and branch, but instead overwrites the local file with the version referenced and adds it to the index.
+
+
+Git revert allows to undo commits, in case of multiple commits (which were not introduced by a merge commit)
+usually one should start with the latest one in time and successively revert the ones before (reverse in time).
+
+If one wants to apply specific commits from another branch (or some reverted ones), one can use `git cherry-pick <commit_1> <commit_2> ...`
+In case that these are reverted ones (that is the one that is referenced by a revert commit (not the revert commit itself, as this is not recommended), 
+it is most sensible to start with the historical first commit (so we work forward in time) and then the ones afterwards. 
+
+Some operations for branches
+Create branch
+```
+git branch <name-of-new-branch>
+```
+or create and switch
+```
+git checkout -b <name-of-new-branch> #or
+git switch -c <name-of-new-branch>
+```
+Switch/Checkout branch
+```
+git checkout <name-of-branch> #or
+git switch <name-of-branch>
+```
+Note that `git switch` is only intended for branches and is just a user-friendly version of `git checkout`
+which also works for checking out specific files. 
+Lists all branches with latest commits
+```
+git branch -v
+```
+Lists all remote branches
+```
+git ls-remote <remote>
+git remote show <remote>
+```
+Delete branch
+```
+git branch -d <name-of-branch>
+```
+Applies only locally, to also delete the remote branch use
+```
+git push origin --delete <name-of-branch> 
+```
+Rename branch
+```
+$ git branch --move bad-branch-name corrected-branch-name
+```
+This change only applies locally, to apply those changes to a remote origin
+```
+git push --set-upstream origin corrected-branch-name
+```
+
+Git Rebase Finetuning
+Suppose you wanted to include the changes from main on you feature branch (and not include this in the history as a merge), 
+than the basic syntax is
+```
+git checkout <feature-branch>
+git rebase main
+# or multiple branches
+git rebase --onto master <feature1> <feature2>
+```
+Something helpful to decide when to rebase and when to merge
+***Do not rebase commits that exist outside your repository and that people may have based work on.***
+(e.g. do not take the remote main branch and rewrite its history by rebasing it onto something else)
+When you rebase stuff, you’re abandoning existing commits and creating new ones that are similar but different. 
+If you push commits somewhere and others pull them down and base work on them, and then you rewrite those commits with git rebase and push them up again, 
+your collaborators will have to re-merge their work and things will get messy when you try to pull their work back into yours.
+Fixing this can be quite hard.
+
+
+Git Merge Finetuning
+Some vocabulary first, target branch refers to the branch one is currently on (ours).
+The merge branch (theirs) is the branch whose commits are merged into the target branch.
+Note that one can merge multiple branches (resolution strategy octopus) at once, which has some special cases not treated here.
+The command for merging (if it is not implicitely started by something like `git pull`) is
+```
+git merge <feature-branch>
+```
+
+Git stores all of these versions in the index under “stages” which each have numbers associated with them. 
+Stage 1 is the common ancestor, stage 2 is your version and stage 3 is from the MERGE_HEAD, the version you’re merging in (“theirs”).
+To compare the changes after doing some resolutions that will be commited one can use the following:
+```
+git diff --ours # perspective from target branch before merge
+git diff --theirs # perspective from merge branch before merge
+git diff --base # perspective from latest common commit of the two branches 
+```
+The syntax of merging conflicts works like this
+```
+<<<<<<< HEAD:index.html
+<div id="footer">contact : email.support@github.com</div>
+=======
+<div id="footer">
+ please contact us at support@github.com
+</div>
+>>>>>>> featurebranch:index.html
+```
+The `<<< HEAD:file_name` refers to the state on the target branch while the part below `====`
+refers to the changes from the merge branch. Git can also display this information together
+with the base (latest common commit) state via the option `git checkout --conflict=diff3 <file-to-resolve>`.
+
+To only accept changes from one stage/source one can use the following commands
+
+```
+git merge -Xours <merge-branch>
+git merge -Xtheirs <merge-branch>
+```
+Or for specific files
+```
+git merge-file --ours <file-to-resolve>
+git merge-file --ours <file-to-resolve>
+```
+
+
+Rewriting history
+One can do quite advanced modifications of the git history with the help of 
+```
+git rebase -i
+```
+the interactive rebase mode. Of course this requires a force push to affect origins and should be done with care.
+
+Some examples of what is possible are
+- changing multiple commit messages
+- reordering commits
+- splitting commits
+- squashing (fusioning subsequent) commits
+- deleting commits
+- changing the content of a commit (uses `git replace` under the hood)
+
+How this is done in detail is easier to try out instead of explaining it.
+Git rewinds to the latest commit not affected by the changes requested via `git rebase -i`
+and then selectively reapplies the changes or stops at a commit, unstage its changes and let you introduce
+multiple commits there (and remove files or changes that were committed or add them). This effectively rebases
+this edited history on the latest unaffected commit. Many of them have the effect of changing all subsequent commits (e.g. deleting one).
+
+Changing the content of a commit makes often sense in combination with the filter-branch functionality 
+```
+git filter-branch --tree-filter 'rm -f passwords.txt' HEAD
+```
+E.g. a secret was committed.
+The --tree-filter option runs the specified command after each checkout of the project and then recommits the results. 
+In this case, you remove a file called passwords.txt from every snapshot, whether it exists or not. 
+
+
+Some notes on remotes and their branches
+Adding a new remote
+```
+git remote add <shortname> <url>:
+```
+Renaming remotes
+```
+git remote rename <original-name> <new-name>
+```
+Removing remotes
+```
+git remote remove <remote-name>
+```
+Pushing to remotes
+```
+git push <remote> <branch>
+```
+
+Checking out a local branch from a remote-tracking branch automatically creates what is called a “tracking branch” 
+(and the branch it tracks is called an “upstream branch”). 
+Tracking branches are local branches that have a direct relationship to a remote branch. 
+If you’re on a tracking branch and type git pull, Git automatically knows which server to fetch from and which branch to merge in.
+
+When you clone a repository, it generally automatically creates a master branch that tracks origin/master. 
+However, you can set up other tracking branches if you wish — ones that track branches on other remotes, or don’t track the master branch. 
+The simple case is the example you just saw, running `git checkout -b <branch> <remote>/<branch>`. 
+This is a common enough operation that Git provides the --track shorthand:
+```
+$ git checkout --track origin/<rbranch>
+```
+If the branch name you’re trying to checkout (a) doesn’t exist and (b) exactly matches a name on only one remote
+than one does not even need to specify the remote and track info
+```
+$ git checkout <rbranch>
+```
+If you already have a local branch and want to set it to a remote branch you just pulled down, or want to change the upstream branch you’re tracking, you can use the -u or --set-upstream-to option to git branch to explicitly set it at any time.
+```
+$ git branch -u origin/serverfix
+```
+Recall that remote branches are also a form of references, remotes are stored as refspecs in the `.git/config` file, e.g.
+```
+[remote "origin"]
+	url = https://github.com/schacon/simplegit-progit
+	fetch = +refs/heads/*:refs/remotes/origin/*
+```
+The format of the refspec is, first, an optional +, followed by <src>:<dst>, where <src> is the pattern for references on the remote side 
+and <dst> is where those references will be tracked locally. The + tells Git to update the reference even if it isn’t a fast-forward
+

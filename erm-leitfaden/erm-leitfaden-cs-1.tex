@@ -1,0 +1,369 @@
+Geben Sie klassische Kenngroeszen zur Datenanalyse
+
+Bilanzgrößen (Prämie, Reserve, Marktpreis), 
+Momente (insbesondere Erwartungswert und Varianz), 
+Quantile (inbesondere Median und Quartile), Ausreißer
+
+- Anlagen: Validierung der Marktpreise und der entsprechenden Bilanzwerte
+- Verpflichtungen: Validierung der Prämien und Reserven und der entsprechenden Bilanzwerte
+- Portfolien: Plausibilisierung der Anteile bei Aufteilung in Gruppen (Geschlecht, Tarifgruppen), und Kenngrößen 
+(Erwartungswert, Varianz, Quartile, Ausreißer) von stetigen Verteilungen (Prämie, Versicherungssumme, Reserve)
+
+Typische Methoden sind hier das Momente- und Maximum-
+Likelihood-Verfahren. Die Anpassung der Daten – und damit die Eignung des Modells
+– sollte danach mit einem Verteilungstest geprüft werden (Kolmogorow-Smirnow-
+Test oder Q-Q-Plots).
+
+Zur Schätzung von Korrelationen und Parametern von Copulae sind große Daten-
+mengen nötig. Statistisch sinnvoll ist das nur im Versicherungskontext auf der Kapi-
+talmarktseite umzusetzen.
+Die Korrelation kann dort direkt mit Standardverfahren
+geschätzt werden. Die Fehler bei der Schätzung sind aber insbesondere bei kleine-
+ren Stichproben erheblich. Für andere Anwendungen in der Versicherung werden
+üblicherweise Expertenschätzungen verwendet.
+
+
+Erlaeutern sie den Best Practise Prozess zur Modellimplementierung für Qualitätssicherungsmaßnahme (Testverfahren und Plausibilisierung)
+
+Konsequente Erstellung von Fachkonzept und Testkonzept durch die Fachabteilung
+- Organisatorische Trennung von Personen, die die Modelle implementieren von
+denen, die die Modelle testen
+- Systemtechnisch wird ein reibungsloser Betrieb durch die Trennung von drei
+Umgebungen ermöglicht: Test-, Integrations- und Praxisumgebung
+
+r die Durchführung von Tests eignet sich dann das folgende Vorgehen:
+1. Testkonzept erstellen: Bereits bei der Erstellung des Fachkonzepts
+sollte ein Testkonzept mit erstellt werden. Hier werden mögliche Fehler in der Imple-
+mentierung antizipiert, trennscharfe Testfälle definiert und Kriterien zur Prü-
+fung festgelegt.
+2. Integritätstest (vs. Unit tests)
+
+
+Geben Sie Beispiele fuer Hypothesentests via Martingale Tests und Leakage
+
+- Martingal-Test: Sind die stochastisch erzeugten Kapitalmarkt-Pfade für die risi-
+koneutrale Bewertung tatsächlich Martingale? Notwendige Eigenschaft: Erwar-
+tungswert konstant für alle Zeitschritte.
+- Leakage: Ergibt der Erwartungswert der Barwerte der Cash-Flows der Anlagen
+auch tatsächlich deren Marktpreis?
+
+Im Zeitverlauf erhalten, dem „Funnel of Uncertainty“. 
+Der zeitliche Verlauf des Mittelwerts im Vergleich zum Median und die Verläufe z.B. der 1, 5, 25, .., 99 \% 
+Quantile lassen auf unplausible Asymmetrien und Inkonsistenzen im Zeitverlauf schließen.
+
+Beisppiele
+Profitabilität eines Teilbestandes: Nach gefallenem Zins wird vermutet, dass
+ein Teilbestand von aufgeschobenen Renten nicht mehr profitabel bewirtschaftet
+werden kann. Muss der Tarif angepasst werden oder nicht? Betrachtung des Funnel
+of Uncertainty zum PVFP des Tarifs und zusätzlich Sensitivitäten zu Bestandsverän-
+derung und Zinsschwankung.
+
+
+Was sind die Anforderungen an Solvency II
+
+Für die Dokumentation eines Modells eignet sich grundsätzlich eine Zweiteilung:
+- Ein statischer Teil, in dem alle theoretischen Grundlagen, Annahmen und Einschränkungen 
+des Modells sowie die methodische Umsetzung des Modells in
+allen Facetten beschrieben werden
+
+- Variable d.h. jährlich zu aktualisierende Teile, in denen Berichte zur Durchführung 
+der Kalibrierung und Validierung und der entsprechenden Schlussfolgerungen gesammelt werden.
+
+Am Beispiel von Solvency II wird diese Aufteilung detaillierter betrachtet. Die regu-
+latorischen Anforderungen an die Dokumentation gemäß §121 VAG:
+(1) Der Aufbau und die Funktionsweise des internen Modells sind zu dokumentieren.
+Aus dieser Dokumentation muss hervorgehen, dass die Anforderungen der §§ 115
+bis 120 VAG eingehalten werden.
+(2) Die Dokumentation enthält eine detaillierte Erläuterung der theoretischen Grund-
+lagen, der Annahmen sowie der mathematischen und der empirischen Basis, auf
+die sich das interne Modell stützt, und beschreibt alle Konstellationen, in denen das
+interne Modell nicht wirksam funktioniert.
+(3) Versicherungsunternehmen haben alle größeren Veränderungen an ihrem inter-
+nen Modell (§111 Absatz 2) zu dokumentieren.
+
+Daraus leitet sich der Inhalte der Dokumentation (insbesondere für Solvency II) ab:
+- (statisch) Theoretische Grundlagen, Annahmen und mathematische / empirische Basis,
+- (statisch und variabel) Statistische Qualitätsstandards für Wahrscheinlichkeits-
+verteilungsprognosen: Vollständigkeit der betrachteten Risiken, Datenbasis,
+statistische Methoden und deren Plausibilität,
+- (statisch und variabel) Zuordnen von Gewinnen und Verlusten: Vergleich und
+Plausibilisierung zwischen Modell und Realität,
+- (statisch und variabel) Validierung des Modells.
+
+
+
+Geben Sie Beispiele für Definition von Risiko und deren Eigenschaften
+
+- Risiko ist der Effekt den Unsicherheit auf die Erreichung von Zielen hat. (ISO - 31000).
+- Risiko als Matrixkombination von Eintrittswahrscheinlichkeit und Auswirkung
+- Risiko als Maß für die Volatilität der Rendite einer Investition in der Finanzwirt-
+schaft.
+
+Unterscheiden kann man dabei einen einseitigen und einen zweiseitigen Risikobe-
+griff.
+
+Bei der einseitigen Sichtweise besteht Risikomanagement konsequenterweise in
+der Vermeidung von Risiko. Ansätze zur wertorientierten Steuerung von Unterneh-
+men setzen zwingend einen zweiseitigen Risikobegriff voraus.
+
+Gebräuchlich ist die Unterscheidung hinsichtlich der Ungewissheit über die Zukunft
+in Risiko (messbar) und der eigentlichen Unsicherheit (Ambiguität).
+
+
+Was sind die grundlegenden Konzepte von ERM
+
+- Es wird ein ganzheitlicher Ansatz verfolgt. Risiken werden nicht isoliert be-
+trachtet und gesteuert. Vielmehr kommen der Berücksichtigung von Abhän-
+gigkeiten zwischen den einzelnen Risikokategorien und den Interaktionen der
+betroffenen Einheiten eine wesentliche Bedeutung zu.
+
+- Die Betrachtung von Risiken erfolgt zweiseitig
+- Auch nicht quantifizierbare Risiken werden berücksichtigt und dabei nach Mög-
+lichkeit qualitativ bewertet.
+
+ISO 31000 wurde von der International Organization for Standardization
+2009 veröffentlicht mit dem Anspruch Prinzipien und Leitlinien zu formulieren für
+das Risikomanagent
+
+COSO hat im Jahr 2004 ihren Standard für ein internes Kontrollsystem erweitert
+und auch S\&P (Standard and Poor's) hat in 2005 die Kategorie ERM zu Ihrem Rating hinzugefügt.
+
+
+Was sind die Schritte des ERM Control Cycles?
+
+Der ERM Control Cycle umfasst die Identifikation, Klassifikation, 
+die Bewertung, die Steuerung und die Überwachung von Risiken
+Der aktuarielle Control Cycle ist ein Subprozess dessen und besteht aus:
+- Spezifikation des Problems,
+- Entwicklung einer Lösung,
+- Beobachtung des Verlaufs
+
+Eine besondere Herausforderung sind Emerging Risks: 
+Dabei handelt es sich um Risiken, die im Beobachtungszeitraum nicht bestanden
+oder sich noch nicht verwirklicht hatten.
+
+E.g. Niedrigzinsphasen in der Lebensversicherung
+
+
+
+Nenne Sie Beispiele von Stakeholdern und deren Interessen im ERM
+
+- Eigentümer und Investoren haben ein Mindestinteresse am Erhalt der Or-
+ganisation und auch an einer angemessenen Rendite in Bezug auf die einge-
+gangenen Risiken.
+- Für Gläubiger ist der Erhalt der Zahlüngsfähigkeit wesentlich.
+- Kunden wie beispielsweise Versicherungsnehmer erwarten, dass die ein-
+gegangenen Vertr̈age erfüllt werden. Je nach zugrundeliegendem Vertrag kann
+damit auch ein Interesse am wirtschaftlichen Erfolg der Organisation verbun-
+den sein, wenn der Kunde daran partizipiert.
+
+Darüber hinaus gibt es noch die
+- Ratingagenturen, Verbraucherschützer, Regulatoren, Regierung und Politik, Arbeitnehmer,
+Vermittler, Wirtschaftsprüfern, Geschäftsleitung und zuletzt die allgemeine Öffentlichkeit
+
+
+
+Was ist das Risikoprofil, Risikoappetit und Risikotoleranz
+
+- Risikoprofil einer Organisation versteht man die Gesamtheit aller Risi-
+ken, die mit ihrer Tätigkeit einhergehen
+
+- Der Risikoappetit einer Organisation ist die Beschreibung von Risikozielen und
+Risikogrenzen auf Ebene der Gesamtorganisation (e.g. Solvenzquote, risikoadjustierte Ertragsgröße)
+
+- Die resultierende Gesamtheit von Indikatoren und Metriken in den einzelnen Geschäftseinheiten ergibt die Risikotoleranz.
+Beispielsweise könnte vorgegeben sein, dass die Wahrscheinlichkeit für eine Belastung von mehr als
+100 Mio EUR durch eine Naturkatastrophe kleiner als 0,5 Prozent sein soll.
+
+Für die operative Steuerung der Risiken auf Ebene der risikonehmenden Einheiten
+und deren Mitarbeiter müssen konkrete Risikolimiten vorgegeben werden
+
+
+
+Geben Sie die detaillierte Klassifikation von Risiken an
+
+Es gibt 3 allg. Risikokategorien in ERM:
+
+Finanzielle Risiken:
+- Marktrisiko (Volatilität)
+- Kreditrisiko (Bonität)
+- Liquiditätsrisiko (Fungibilität)
+- Basisrisiko (Hedging ist nicht ausreichend, e.g. CDS, Interest Swaps, Reinsurance) 
+
+Operationale Risiken:
+Unangemessenheit oder dem Versagen von internen Prozessen, Mitarbeitern oder Systemen.
+
+- Rechtsrisiko
+- Cyber-Risiko (wird kombiniert mit fehlerhafter Programmierung Systemrisiko genannt)
+- Managementrisiken, Betrug, kriminelle Handlungen
+
+Strategische Risiken:
+Konsequenz nachteiligen Entwicklung des Unternehmens aufgrund strategischer Geschäftsentscheidungen
+- die Geschäftsstrategie unzureichend auf das politische, ökonomische oder tech-
+nologische Umfeld ausgerichtet ist (insbesondere Unterlassungsentscheidungen (nicht rechtzeitig handeln))
+
+Modell Risiken (speziell für Insurance):
+Unzureichendes oder fehlerhaftes Modellieren der Realität 
+
+Diese Risiken haben verschiedene Eigenschaften:
+
+Quantifizierbar
+mögliche Modelle sind
+- faktor (GLM)
+- analytisch (geschlossene Formen)
+- Szenariobasisert
+- Simulation (ähnlich wie Szenariobasiert, aber es werden Standardverteilungen zur Generierung der Szenarien verwendet)
+
+Als Gegenbeispiel für schwer quantifizierbare Risiken gilt das Reputationsrisiko. Darüber hinaus Risiken die stark korrellieren
+und dessen Parameter schwer schätzbar auf Grund mangelnder Daten sind.
+
+Werden die Risiken auf einzelnen Geschäftseinheiten übertragen sollte darauf geachtet werden dass sie folgende
+Grundsätze erfüllen:
+- Vollständigkeit
+- Überschneidungsfreiheit
+- Homogenität
+- Transparenz
+
+
+
+Wie erfolgt der Prozess der Risikoidentifikation und die Beschreibung dieser?
+
+
+Es gibt mehrere Methoden zur Risikoidentifikation, welche je nach Kontext einsetzbar sind:
+
+- Identifikation von Prozessrisiken durch Prozess-Eigner im Rahmen des IKS (Internen Kontrollsystem)
+- Checklisten oder Risikoregister (standardisierte Listen generischer Risiken) als
+Basis für unternehmensspezifische Analyse
+- Befragung der Mitarbeiter
+- externe Einschätzung (z. B. Berater, Rückversicherer)
+- statistische Datenanalysen
+
+Die Beschreibung/Dokumentation der einzelnen Risiken sollte beinhalten
+
+- Allg. Zusammenfassung
+- Risikokategorie (Financial, Operational, Systemic, Model)
+- Zeitraum, Erfassungsdatum
+- Verantwortliche
+- Brutto-Netto-Bewertung (mit Bewertungsansaetzen)
+- Strategie für Kontrolle 
+
+Unter Brutto Risiko versteht man die marginale Verteilung des entstehendes Schadens/Ereignisses .
+Unter Netto Risiko die miteinbeziehung von Faktoren wie Steuern und Überschussbeteiligung.
+
+
+
+Nennen Sie mögliche Umgangsstrategien für identifizierbare Risiken
+
+- Risikonahme/Risikoakzeptanz
+- Risikovermeidung
+- Risikobegrenzung
+- Risikoübertragung/Risikominderung
+- Diversifikation
+
+Konkrete Beispiele sind:
+- Produktdesign, Pricing: Risikonahme/Risikovermeidung; vt. Risiken (e.g. Berufsunfähigkeit neben Pensionsgeschäft aber nicht für psychisches Leiden)
+- Kapitalanlageprozess, strategische Asset-Allokation: Risikonahme/Risikovermeidung;
+Marktrisiken
+- Limitsysteme: Risikobegrenzung; grundsätzlich alle Risikokategorien
+
+
+Was sind Limitsysteme im ERM?
+
+Definition: Limite sind Instrumente, um die gewählte Risikostrategie unter Berück-
+sichtigung der Risikotragfähigkeit umzusetzen.
+
+Limitsysteme sind systematisch aufgebaute und an die individuellen Bedürfnisse
+eines Unternehmens angepasste Gruppen von Kenngrößen, die für die Steuerung
+von Risiken eingesetzt werden.
+
+Sie dienen insbesondere zwei Aspekten:
+- Ergebnissteuerung, Erreichen von Planwerten → Controlling
+- Mögliche negative Abweichungen von Planwerten → Risikomanagement
+
+
+Kategorien
+- harten Limiten (Risikolimite) => sofortiger Handelsbedarf, schränkt Entscheidungsspielraum ein
+- weichen Limiten (Risikoindikatoren) => Mehr Informativ, möglicher Diskussionsbedarf
+- präventive Limite => unantastbar
+
+
+Die konkrete Implementierung ist wie folgt:
+1. Ermittlung des Risikodeckungspotential das freigegebene Risikokapital = Risikoappetit
+1.1 (freigegebenes Risikokapital = Risikodeckungspotential - Marge)
+2. Risikoappetit auf Risikoklassen alloziert
+3. Limits pro Klasse festlegen und korrespondierende Schwellenwerte
+
+
+
+Systematisieren Sie das verstech. Risiko und nennen Sie dessen Instanzen nach Geschäft
+
+Das versicherungstechnische Risiko ist das Risiko, dass der tatsächliche Aufwand
+für Schäden und Leistungen vom erwarteten Aufwand abweicht.
+
+Es besteht aus
+- Zufallsrisiko
+- Änderungsrisiko 
+- Irrtumsrisiko / Modellrisiko
+
+
+In der LebensVer. sind typische Bestandteile
+
+Sterblichkeitsrisiko,
+- das Langlebigkeitsrisiko,
+- Invaliditätsrisiko,
+- Stornorisiko (bestehend aus Stornoanstiegs-, Stornorückgangs- und Massenstornorisiko)
+- Kostenrisiko,
+- Katastrophenrisiko;
+
+Schaden-Unfall-Ver.
+
+- Prämienrisiko
+- Reserverisiko
+- Stornorisiko,
+- Katastrophenrisiko
+
+Mögliche Bewertungsmethoden sind:
+
+1. Solvency-II-Standardformel:
+1.1 szenariobasiert mit absoluten/prozentualen Anpassungen der betreffenden Wahrscheinlichkeiten oder Kostensätze (Lebens und Krankenver.)
+1.2 faktorbasiert mit unternehmensspezifischen Parametern (Schaden-Unfall-Ver)
+1.3 modular 
+2. multiplikative Gesamtschadenschwankung, bestehend aus vier stochastischen
+Komponenten (zufällige Schwankungen, Katastrophen, Schätz-/Irrtumsrisiko Ba-
+sistafel, Trend-/Änderungsrisiko)
+
+
+
+Systematisieren Sie das markt/kredit-technische und Konzentrations Risiko
+
+- Zinsänderungsrisiko
+- Wechselkurs- oder Währungsrisiko
+- Aktien und Immobilienrisiko
+
+und der zugehörigen Sensitivität des Portfolios des Unternehmens
+
+Bewertungsansätze sind:
+- Monte-Carlo Simulation auf Basis von Kapitalmarkt modellen (geo. BM, CIR Process) mit ökomischen Szenariogenerator 
+- faktorbasiert (z. B. Solvency-II)
+- Stresstests
+- Durationsanalysen
+
+Das Kreditrisiko lässt sich einteilen in
+- Ausfallrisiko
+- Migrationsrisiko (Änderung der Bonität)
+- Spread-Risiko (Änderung des Marktpreises (meist durch Bonität))
+
+Bewertungsansätze
+- faktorbasiert (Solvency II mit Bonität und mod. Duration)
+- ratingbasiert
+- Reduktionsmodelle (stochastisches Modell)
+
+Unter Konzentrationsrisiken versteht man korrelierende Risiken 
+innerhalb des Unternehmens.
+
+Bewertungsansätze
+- Solvency-II Standardformel
+- indirekte Modellierung mit Copulas
+- direkte Modellierung mittels Szenarioanalysen
+
+

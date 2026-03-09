@@ -1,0 +1,220 @@
+Give a small overview of Keycloak
+
+Keycloak is a solution to manage authentication and authorization of users as well as their security profiles.
+
+
+Some of the central features are
+
+- Single Sign-On and Single Sign-Out for browser applications
+- OpenID Connect support
+- OAuth 2.0 support
+- SAML support
+- Kerberos support
+- Identity Brokering - Authenticate with external OpenID Connect or SAML Identity Providers
+- Social Login (Google, GitHub etc.)
+- User Federation (sync with external Idp such as LDAP and ADs)
+- Session and Token management
+- 2FA authentication (e.g. OTP)
+
+Also Keycloak allows to create custom authentication and authorization flows.
+
+Typically Keycloak facilitates auth via the following flow:
+Browser applications redirect a user’s browser from the application to the Keycloak authentication server where they enter their credentials. 
+During the redirect Keycloak assigns a session to the user, to which their tokens are associated. The session information is 
+also forwarded to the users client.
+This redirection is important because users are completely isolated from applications and applications never see a user’s credentials. 
+Applications instead are given an identity token or assertion that is cryptographically signed. 
+These tokens can have identity information like username, address, email, and other profile data. 
+They can also hold permission data so that applications can make authorization decisions. 
+
+
+What is a Keycloak realm?
+
+Keycloak has an adminstrator account, which is initially setup to manage all aspects of Keycloak.
+Next realms are setup, a realm consists of users, groups of them and roles they can take on (a user can have more than one)
+and clients among other things. In particular realms can configure session, token and client specific settings.
+They usually try to encapsulate one application or a collection of applications that are used in tandem.
+
+
+What are Clients in Keycloak?
+
+Clients are entities that can request Keycloak to authenticate a user. This is also called a direct grant on behalf of the user.
+Most often, clients are applications and services that want to use Keycloak to secure themselves and provide a single sign-on solution. 
+Clients can also be entities that just want to request identity information or an access token so that they can securely invoke other services 
+on the network that are secured by Keycloak. 
+This can be for example an ambassador proxy (s.t. the user does not directly interact with the Keycloak, which sits in a VPN)
+
+Client adapters are plugins that you install into your application environment to be able to communicate and be secured by Keycloak. 
+
+When a client is registered, you must define protocol mappers and role scope mappings for that client. 
+It is often useful to store a client scope, to make creating new clients easier by sharing some common settings. 
+This is also useful for requesting some claims or roles to be conditionally based on the value of scope parameter.
+
+
+Give an overview of identity brokering (abstraction of SSO protocols)
+
+(INSERT DIAGRAM OF KEYCLOAK BROKERING OVERVIEW)
+
+
+
+1. The unauthenticated user requests a protected resource in a client application.
+2. The client application redirects the user to Keycloak to authenticate.
+3. Keycloak displays the login page with a list of identity providers configured in a realm.
+4. The user selects one of the identity providers by clicking its button or link.
+5. Keycloak issues an authentication request to the target identity provider requesting authentication and redirects the user to the identity provider’s login page. The administrator has already set the connection properties and other configuration options for the Admin Console’s identity provider.
+6. The user provides credentials or consents to authenticate with the identity provider.
+7. Upon successful authentication by the identity provider, the user redirects back to Keycloak with an authentication response. Usually, the response contains a security token used by Keycloak to trust the identity provider’s authentication and retrieve user information.
+8. Keycloak checks if the response from the identity provider is valid. If valid, Keycloak imports and creates a user if the user does not already exist. Keycloak may ask the identity provider for further user information if the token does not contain that information. This behavior is identity federation. If the user already exists, Keycloak may ask the user to link the identity returned from the identity provider with the existing account. This behavior is account linking. With Keycloak, you can configure Account linking and specify it in the First Login Flow. At this step, Keycloak authenticates the user and issues its token to access the requested resource in the service provider.
+9. When the user authenticates, Keycloak redirects the user to the service provider by sending the token previously issued during the local authentication.
+10. The service provider receives the token from Keycloak and permits access to the protected resource.
+
+
+
+What is the OpenID Connect (OIDC) protocol and its steps
+
+OpenID Connect (OIDC) is an authentication protocol that is an extension of OAuth 2.0.
+OAuth 2.0 is a framework for building authorization protocols and is incomplete. 
+OIDC, however, is a full authentication and authorization protocol that uses the Json Web Token (JWT) standards. 
+Also OIDC specifies methodology to log out a user (e.g. via session timeout or user initiated).
+
+In general, OIDC implements two use cases. 
+1.
+The first case is an application requesting that a Keycloak server authenticates a user. 
+Upon successful login, the application receives an identity token and an access token. 
+The identity token contains user information including user name, email, and profile information. 
+The realm digitally signs the access token which contains access information (such as user role mappings) 
+that applications use to determine the resources users can access in the application.
+2.
+1.The second use case is a client accessing remote services.
+2. The client requests an access token from Keycloak to invoke on remote services on behalf of the user.
+3. Keycloak authenticates the user and asks the user for consent to grant access to the requesting client.
+4. The client receives the access token which is digitally signed by the realm.
+5. The client makes REST requests on remote services using the access token.
+6. The remote REST service extracts the access token.
+7. The remote REST service verifies the tokens signature.
+8. The remote REST service decides, based on access information within the token, to process or reject the request.
+
+This use cases have multiple implementations for different requirements, so called auth flows:
+Some of the more common auth flows are:
+Authorization Code Flow:
+As described above via a browser redirect. More concretely, the client passes a callback URL as a query parameter 
+for the redirect. Keycloak then generates a temporary code (one-usage only), and after successful authentication redirects the user to the passed callback
+and adds the code also as a query paramter. Last the application extracts the temporary code and makes a REST call to the Keycloak to exchange
+the code for the access/identity token.
+
+Moreover, there are public and confidential clients, which use client secrets to exchange the code for tokens. Public Clients (such as JavaScript based)
+are unable to do so and are therefore not required to so. Additionally to protect confidential clients (apps on smartphones typically)
+one can use Proof Key for Code Exchange (PKCE, pixy pronounced) from another client sniffing their code (essentially the client and the keycloak
+are consenting on some symmetric secret key upfront, which is used to encrypt to code)
+
+Resource owner password credentials grant (Direct Access Grants)
+Direct Access Grants are used by REST clients to obtain tokens on behalf of users. 
+It is a HTTP POST request that contains credentials of the user, client id and potentially a client secret.
+
+Client credentials grant:
+The Client Credentials Grant creates a token based on the metadata and permissions of a service account 
+associated with the client instead of obtaining a token that works on behalf of an external user. 
+Client Credentials Grants are used by REST clients. 
+This uses internally the service account (client accounts) functionality of Keycloak.
+
+Refresh token grant:
+By default, Keycloak returns refresh tokens in the token responses from most of the flows. 
+Some exceptions are implicit flow or client credentials grant.
+Refresh token is tied to the user session of the SSO browser session and can be valid for the lifetime of the user session. 
+However, that client should send a refresh-token request at least once per specified interval. 
+Otherwise, the session can be considered "idle" and can expire.
+
+Client initiated backchannel authentication grant (CIBA):
+This feature is used by clients who want to initiate the authentication flow by communicating with the OpenID Provider directly 
+without redirect through the user’s browser like OAuth 2.0’s authorization code grant. Here’s a brief summary of the protocol:
+
+1. The client requests Keycloak an `auth_req_id` that identifies the authentication request made by the client. Keycloak creates the `auth_req_id`.
+2. After receiving this `auth_req_id, this client repeatedly needs to poll Keycloak to obtain an Access Token, Refresh Token and ID Token from Keycloak in return 
+   for the `auth_req_id` until the user is authenticated.
+
+There are quite some nuances to this mechanism, which should be looked up, if necessary. 
+In particular questions how the Keycloak is getting the information of authentication from the IdP (called Authentication Channel Provider).
+
+
+
+What is Security Assertion Markup Language (SAML)?
+
+SAML 2.0 is a similar specification to OIDC which is more verbose but has been around longer. 
+It descended from SOAP and web service messaging specifications so is generally more verbose than OIDC. 
+SAML 2.0 is an authentication protocol that exchanges XML documents between authentication servers and applications. 
+XML signatures and encryption are used to verify requests and responses.
+
+
+In general, SAML implements two use cases.
+
+The first use case is an application that requests the Keycloak server authenticates a user. 
+Upon successful login, the application will receive an XML document. 
+This document contains an SAML assertion that specifies user attributes. 
+The realm digitally signs the document which contains access information (such as user role mappings) that applications 
+use to determine the resources users are allowed to access in the application.
+
+The second use case is a client accessing remote services. 
+The client requests a SAML assertion from Keycloak to invoke on remote services on behalf of the user.
+
+The standard flow of SAML is the following
+
+
+1. A user connects to an application using a browser. The application detects the user is not authenticated.
+
+2. The application generates an XML authentication request document and includes it in the body of a POST quest which also redirects to the Keycloak server. Depending on your settings, the application can also digitally sign the XML document and include the signature in the body. This signature is used to validate the client that sends the request.
+3. The browser redirects to Keycloak.
+4. The server extracts the XML auth request document and verifies the digital signature, if required.
+5. The user enters their authentication credentials.
+6. After authentication, the server generates an XML authentication response document. The document contains a SAML assertion that holds metadata about the user. 
+   The document is usually digitally signed using XML signatures, and may also be encrypted.
+7. The XML authentication response document is included in the body of the redirect request back to the application. The digital signature is also included.
+8. The application receives the redirect URI and extracts the XML document.
+9. The application verifies the realm’s signature to ensure it is receiving a valid authentication response. 
+The information inside the SAML assertion is used to make access decisions or display user data.
+
+There is also a GET version of this flow, which is only recommended if there's some issue with the POST based workflow.
+An extension for SAML Enhanced Client or Proxy (ECP), a SAML v.2.0 profile, which allows the exchange of SAML attributes outside the context of a web browser. 
+It is often used by REST or SOAP-based clients.
+
+
+Compare SSO with other authentication schemes
+Single sign-on (SSO) is an authentication scheme that allows a user to log in with a single ID to any of several related, yet independent, software systems.
+True single sign-on allows the user to log in once and access services without re-entering authentication factor
+It should not be confused with same-sign on (Directory Server Authentication), such as LDAP and LDAP dbs on directory servers.
+Directory Server Authentication refers to systems requiring authentication for each application but using the same credentials from a directory server.
+
+
+How are JWTs (JSON Web Token) structured?
+
+The JWT standards define an identity token JSON format and methods to digitally sign and encrypt data in a compact and web-friendly way.
+Usually there are multiple types of JWT tokens in a security setup such as identity and access tokens ("Bearer eyJ..."), which differentiate in reagrd to the payload.
+It is not recommended to store them in local/session storage in the frontend (since other clients can access this), but rather as HTTP-Cookie or some other secure mechanism.
+
+For example, a server could generate a token that has the claim "logged in as administrator" and provide that to a client. 
+The client could then use that token to prove that it is logged in as admin. 
+The tokens can be signed by one party's private key (usually the server's) so that any party can subsequently verify whether the token is legitimate. 
+If the other party, by some suitable and trustworthy means, is in possession of the corresponding public key, they too are able to verify the token's legitimacy. 
+
+The token consists on the first level of
+- Header (identifies that this is a JWT and the hashing algo (e.g.  SH256) for the signature)
+- Payload (set of claims)
+- Signature (Base64(Header + '.' + Payload) |> HasingAlgo) 
+
+An example payload of an access token might look like this:
+```
+{
+  "access_token": "eyJhb...",
+  "token_type": "Bearer",
+  "expires_in": 3600
+}
+```
+
+The standard fields supported  by the standard are
+- iss, Issuer (name or url)
+- sub, Subject (username or account id)
+- aud, Audience (if present a client must include this to highlight that it belongs to this audience) 
+- exp, Expiration Time
+- nfbf, Not Before (Identifies the time on which the JWT will start to be accepted for processing)
+- iat, Issued at
+- jti, JWT ID
+

@@ -1,0 +1,260 @@
+Give the small dictionary of statistics to algebraic geometry
+
+Probability/Statistics
+Probability distribution
+Statistical model
+Discrete exponential family
+Conditional inference
+Maximum likelihood estimation
+Model selection
+Multivariate Gaussian model
+Phylogenetic model
+MAP estimates
+
+Algebra/Geometry
+Point
+(Semi)Algebraic set
+Toric variety
+Lattice points in polytopes
+Polynomial optimization
+Geometry of singularities
+Spectrahedral geometry
+Tensor networks
+Tropical geometry
+
+
+% Probabiliity primer
+
+State how all multivariate normal distributions can be obtained from affine transforms of the standard mv. normal
+
+
+We say that a random vector \( X = (X_1, \ldots, X_m) \) is distributed according to the standard multivariate normal distribution 
+\( \mathcal{N}_m(0, I) \) if its components \( X_1, \ldots, X_k \) are independent and identically distributed as \( X_i \sim \mathcal{N}(0,1) \). 
+Thus, the distribution \( \mathcal{N}_m(0, I) \) has the density function
+\[
+\varphi_{0,I}(x) = \prod_{i=1}^m \frac{1}{\sqrt{2\pi}} \exp\left\{ -\frac{1}{2} x_i^2 \right\}
+= \frac{1}{(2\pi)^{m/2}} \exp\left\{ -\frac{1}{2} x^T x \right\}.
+\]
+
+Let \( \Lambda \in \mathbb{R}^{m \times m} \) be a matrix of full rank and let \( \mu \in \mathbb{R}^m \). Suppose \( X \sim \mathcal{N}_m(0,I) \) 
+and define \( Y = \Lambda X + \mu \). Integratin by substitution implies, that the random vector \( Y \) has the density function
+\[
+\varphi_Y(y) = \frac{1}{(2\pi)^{m/2}} \exp\left\{ -\frac{1}{2} (y-\mu)^T \Lambda^{-T} \Lambda^{-1} (y-\mu) \right\} |\Lambda^{-1}|,
+\]
+where \(|\cdot|\) denotes the determinant, and \(\Lambda^{-T}\) denotes the transpose of the inverse. 
+Define \(\Sigma = \Lambda \Lambda^T\). Then the density \(\varphi_Y\) is seen to depend only on \(\mu\) and \(\Sigma\) and can be rewritten as
+\[
+\varphi_{\mu,\Sigma}(y) = \frac{1}{(2\pi)^{m/2} |\Sigma|^{1/2}} \exp\left\{ -\frac{1}{2} (y-\mu)^T \Sigma^{-1} (y-\mu) \right\}.
+\]
+Note that since the standard multivariate normal random vector has expectation \( 0 \) and covariance matrix \( I \), it follows 
+that \( Y \) has expectation \( \Lambda 0 + \mu = \mu \) and covariance matrix \( \Lambda \Lambda^T = \Sigma \).
+
+
+State the conditionals of multivariate normal distributions and distribution of subindices
+
+Theorem. Let \( X \sim \mathcal{N}_m(\mu, \Sigma) \) and let \( A, B \subseteq [m] \) be two disjoint index sets.
+
+(i) The marginal distribution of \( X \) over \( B \), that is, the distribution of the subvector \( X_B = (X_i \mid i \in B) \), 
+is multivariate normal; namely,
+\[
+X_B \sim \mathcal{N}_{\#B}(\mu_B, \Sigma_{B,B}),
+\]
+where \( \mu_B \) is the respective subvector of the mean vector \( \mu \) and \( \Sigma_{B,B} \) is the corresponding principal submatrix of 
+\( \Sigma \).
+
+(ii) For every \( x_B \in \mathbb{R}^B \), the conditional distribution of \( X_A \) given \( X_B = x_B \) is the multivariate normal distribution
+\[
+\mathcal{N}_{\#A}\left( \mu_A + \Sigma_{A,B}\Sigma_{B,B}^{-1}(x_B - \mu_B),\, \Sigma_{A,A} - \Sigma_{A,B}\Sigma_{B,B}^{-1}\Sigma_{B,A} \right).
+\]
+
+The matrix \( \Sigma_{A,B}\Sigma_{B,B}^{-1} \) appearing in the theorem is the matrix of regression coefficients. The positive definite matrix
+\[
+\Sigma_{AA.B} = \Sigma_{A,A} - \Sigma_{A,B}\Sigma_{B,B}^{-1}\Sigma_{B,A}
+\]
+is the conditional covariance matrix. We also note that \( (X_A \mid X_B = x_B) \) is not well-defined as a random vector. It is merely a way of denoting the conditional distribution of \( X_A \) given \( X_B = x_B \).
+
+
+% Algebra preliminaries
+
+State the elimination theorem and the vanishing ideal of the graph of a rational map
+
+
+Recall the Elimination theorem:
+Let \(\pi : \mathbb{K}^{r_1 + r_2} \to \mathbb{K}^{r_1}\) be the coordinate projection
+\[
+(a_1, \ldots, a_{r_1}, b_1, \ldots, b_{r_2}) \mapsto (a_1, \ldots, a_{r_1}).
+\]
+
+Let \(V \subseteq \mathbb{K}^{r_1 + r_2}\) be a variety and let
+\[
+I = I(V) \subseteq \mathbb{K}[p, q] := \mathbb{K}[p_1, \ldots, p_{r_1}, q_1, \ldots, q_{r_2}]
+\]
+be its vanishing ideal. Then the vanishing ideal of the image \( \pi(V) \) is the
+ideal
+\[ I(\pi(V)) = I \cap \mathbb{K}[p] \]
+where RHS is also called the elimination ideal.
+For practical purposes also keep in mind that for an ordering \( p_1 \prec \dots \prec q_{r_2} \),
+that if \( \mathcal{G} \) is a Groebner basis of \( I \), \( \mathcal{G} \cap \mathbb{K}[p] \) is a Groebner basis
+for \( I \cap \mathbb{K}[p] \).
+
+The generalization to arbitrary rational maps (instead of projections) is:
+Suppose that \(\phi : \mathbb{K}^{r_2} \to \mathbb{K}^{r_1}\) is a polynomial map (each component function is a polynomial). The \emph{graph} of the map is the set of points
+\[
+\Gamma_\phi = \{ (\phi(\theta), \theta) : \theta \in \mathbb{K}^{r_2} \} \subset \mathbb{K}^{r_1 + r_2}.
+\]
+
+If \(\mathbb{K}\) is an infinite field the vanishing ideal of the graph is
+\[
+I(\Gamma_\phi) = \langle p_1 - \phi_1(q), \ldots, p_{r_1} - \phi_{r_1}(q) \rangle.
+\]
+
+Let \(I \subset \mathbb{K}[q]\) be the vanishing ideal of a variety \(V \subset \mathbb{K}^{r_2}\). 
+Let \(\phi\) be a polynomial map \(\phi : \mathbb{K}^{r_2} \to \mathbb{K}^{r_1}\). 
+Then the vanishing ideal of the Zariski closure is the elimination ideal
+\[
+I(\phi(V))\quad =\quad (I + I(\Gamma_\phi)) \cap \mathbb{K}[p].
+\]
+If \( \phi : \mathbb{K}^{r_2} \to \mathbb{K}^{r_1} \) is rational with coord. functions \( \phi_i = \frac{f_i}{g_i} \) 
+then
+\[
+    I(\phi(V)) = \left(I + \langle g_1 p_1 - f_1, \dots, g_{r_1}p_{r_1} - f_{r_1}, zg_1 \cdots g_{r_1} - 1 \rangle \right) \cap \mathbb{K}[p]
+\]
+The \( zg_1 \cdots g_{r_1} - 1 \) is necessary to consider only points where the denominator doesn't vanish and \( z \) is necessary
+to clear denominators.
+
+
+Give an application of the elimination theorem for the binomial distributions (Implicitization)
+
+Consider the parametrization of the binomial random variable model with two trials from. 
+To compute the implicit description of this model, we can start with the vanishing ideal \(I\) of the probability simplex \(\Delta_1\), 
+which is the ideal
+\[
+I = \langle s + t - 1 \rangle \subseteq \mathbb{R}[s, t].
+\]
+
+The parametrization has the form
+\[
+\phi(s, t) = (s^2, 2st, t^2).
+\]
+
+We form the ideal of the graph
+\[
+I + I(\Gamma_\phi) = \langle s + t - 1,\, p_0 - s^2,\, p_1 - 2st,\, p_2 - t^2 \rangle \subseteq \mathbb{R}[s, t, p_0, p_1, p_2].
+\]
+
+Computing a lexicographic Gröbner basis for this ideal with \(s \succ t \succ p_0 \succ p_1 \succ p_2\) produces the vanishing ideal of the model
+\[
+\langle p_0 + p_1 + p_2 - 1,\, 4p_0p_2 - p_1^2 \rangle.
+\]
+
+
+What is the primary decomposition? State related facts.
+
+Proposition.
+1. Every irreducible ideal is primary.
+2. If \( Q \) is primary, then \( \sqrt{Q} = P \) is a prime ideal, called the associated prime of \( Q \).
+3. If \( Q_1 \) and \( Q_2 \) are primary, and \( \sqrt{Q_1} = \sqrt{Q_2} = P \), then \( Q_1 \cap Q_2 \) is also primary, 
+   with associated prime \( P \).
+
+Deﬁnition 
+Let \( I \subseteq \mathbb{K}[p] \) be an ideal. A primary decomposition of \( I \)
+is a representation \( I = \bigcap_{i=1}^r Q_i \); an intersection of finitely primary ideals. 
+The decomposition is irredundant if no \( \bigcap_{j\neq i} Q_j \subseteq Q_i \) and
+all the associated primes \( \sqrt{Q}_i \) are distinct.
+
+Theorem
+Let \(I\) be an ideal in a polynomial ring.
+- Then \(I\) has an irredundant primary decomposition \(I = Q_1 \cap \cdots \cap Q_k\) such that the prime ideals \(\sqrt{Q_i}\) are all distinct.
+- The set of prime ideals \(\mathrm{Ass}(I) := \{\sqrt{Q_i} : i \in [k]\}\) is uniquely determined by \(I\), and does not depend on the particular irredundant primary decomposition. They are called the associated primes of \(I\).
+- The minimal elements of \(\mathrm{Ass}(I)\) with respect to inclusion are called minimal primes of \(I\). The primary components \(Q_i\) associated to minimal primes of \(I\) are uniquely determined by \(I\).
+- The minimal primes of \(I\) are precisely the minimal elements among all prime ideals that contain the ideal \(I\).
+- Associated primes of \(I\) that are not minimal are called embedded primes. The primary components \(Q_i\) associated to embedded primes of \(I\) are not uniquely determined by \(I\).
+- \(\sqrt{I} = \bigcap \sqrt{Q_i}\). If the intersection is taken over the minimal primes of \(I\), this gives a primary (in fact, prime) decomposition of \(\sqrt{I}\).
+- The decomposition \(V(I) = \bigcup V(\sqrt{Q_i})\), where the union is taken over the minimal primes of \(I\), is the irreducible decomposition of the variety \(V(I)\).
+
+Note that this can be interpreted geometrically that any variety has a decomposition into irreducible subvarieties \( V = \bigcup_{i=1}^{r} V_i \),
+where \( V_i \neq W_1 \cup W_2 \) (irreducible) for any proper subvarieties \( W_1, W_2 \subset V \). Also recall that a variety is irreducible
+if and only if \( I(V) \) is a prime ideal.
+
+% Conditional independence
+
+State the conditional independence inference rules
+
+Let \(A, B, C, D \subseteq [m]\) be pairwise disjoint subsets. Then
+(i) \emph{(symmetry)} \quad \(X_A \perp\!\!\!\perp X_B \mid X_C \implies X_B \perp\!\!\!\perp X_A \mid X_C;\)
+(ii) \emph{(decomposition)} \quad \(X_A \perp\!\!\!\perp X_{B \cup D} \mid X_C \implies X_A \perp\!\!\!\perp X_B \mid X_C;\)
+(iii) \emph{(weak union)} \quad \(X_A \perp\!\!\!\perp X_{B \cup D} \mid X_C \implies X_A \perp\!\!\!\perp X_B \mid X_{C \cup D};\)
+(iv) \emph{(contraction)} \quad \(X_A \perp\!\!\!\perp X_B \mid X_{C \cup D}\) and \(X_A \perp\!\!\!\perp X_D \mid X_C\) \(\implies X_A \perp\!\!\!\perp X_{B \cup D} \mid X_C.\)
+
+Suppose that the join distribution satisfies \( f(x) > 0 \) for all \( x \in \Omega \) then
+\[ X_A \perp\!\!\!\perp X_B \mid X_{C \cup D} \text{ and } X_A \perp\!\!\!\perp X_C \mid X_{B \cup D} \implies X_A \perp\!\!\!\perp X_{B \cup C} \mid X_D; \]
+
+The conditional independence ideal:
+Let \( X = (X_1, \ldots, X_m) \) be a vector of discrete random variables. 
+Returning to the notation used in previous chapters, we let \([r_j]\) be the set of values taken by \(X_j\). 
+Then \(X\) takes its values in \(\mathcal{R} = \prod_{j=1}^m [r_j]\). 
+For \(A \subseteq [m]\), \(\mathcal{R}_A = \prod_{a \in A} [r_a]\). 
+In this discrete setting, a conditional independence constraint translates into a system of quadratic polynomial equations in the 
+joint probability distribution.
+
+Proposition: 
+If \(X\) is a discrete random vector, then the conditional independence statement \(X_A \perp\!\!\!\perp X_B \mid X_C\) holds if and only if
+\[
+p_{i_A, i_B, i_C, +} \cdot p_{j_A, j_B, i_C, +}
+-
+p_{i_A, j_B, i_C, +}
+\cdot
+p_{j_A, i_B, i_C, +}
+=
+0
+\]
+for all \(i_A, j_A \in \mathcal{R}_A\), \(i_B, j_B \in \mathcal{R}_B\), and \(i_C \in \mathcal{R}_C\).
+The ideal \( I_{X_A \perp\!\!\!\perp X_B \mid X_C} \)independence generated by these quadr. polynomials is called the conditional independence ideal.
+
+
+State the conditional independence condition for multivariate normals and relate it to primary decompositions
+
+Proposition
+The conditional independence statement \( X_A \perp\!\!\!\perp X_B \mid X_C \) holds for a multivariate normal random vector 
+\( X \sim \mathcal{N}(\mu, \Sigma) \) if and only if the submatrix \( \Sigma_{A \cup C,\, B \cup C} \) of the covariance matrix \( \Sigma \) 
+has rank \(\# C\).
+
+Definition:
+Fix pairwise disjoint subsets \(A\), \(B\), and \(C\) of \([m]\). The Gaussian conditional independence ideal 
+\(J_{A \perp\!\!\!\perp B \mid C}\) is the following ideal in \(\mathbb{R}[ \sigma_{ij},\, 1 \leq i \leq j \leq m ]\):
+\[
+J_{A \perp\!\!\!\perp B \mid C} = \langle (\#C + 1) \times (\#C + 1)\ \text{minors of}\ \Sigma_{A \cup C,\, B \cup C} \rangle.
+\]
+
+
+Similarly as with the discrete case, 
+we can take a collection \(\mathcal{C}\) of conditional independence constraints, and get a conditional independence ideal
+\[
+J_{\mathcal{C}} = \sum_{A \perp\!\!\!\perp B \mid C \in \mathcal{C}} J_{A \perp\!\!\!\perp B \mid C}.
+\]
+The resulting Gaussian conditional independence model is a subset of the cone \(PD_m\) of \(m \times m\) symmetric positive definite matrices:
+\[
+\mathcal{M}_{\mathcal{C}} := V(J_{\mathcal{C}}) \cap PD_m.
+\]
+We use the notation \(PD_m\) to denote the set of all \(m \times m\) symmetric positive definite matrices.
+
+Example (Gaussian contraction axiom). 
+Let \(\mathcal{C} = \{ 1 \perp\!\!\!\perp 2 \mid 3,\, 2 \perp\!\!\!\perp 3 \}\). 
+By the contraction axiom these two statements imply that \(2 \perp\!\!\!\perp \{ 1, 3 \}\). 
+Let us consider this in the Gaussian case. We have
+\[
+\begin{aligned}
+J_{\mathcal{C}} &= \langle \det \Sigma_{\{1,3\}, \{2,3\}},\, \sigma_{23} \rangle \\
+    &= \langle \sigma_{12} \sigma_{33} - \sigma_{13} \sigma_{23},\, \sigma_{23} \rangle \\
+    &= \langle \sigma_{12} \sigma_{33},\, \sigma_{23} \rangle \\
+    &= \langle \sigma_{12},\, \sigma_{23} \rangle \cap \langle \sigma_{33},\, \sigma_{23} \rangle.
+\end{aligned}
+\]
+(which is a primary decomposition).
+
+In particular, the variety defined by the ideal \(J_{\mathcal{C}}\) has two components. 
+However, only one of these components is interesting from the probabilistic standpoint, since
+\(V(\langle \sigma_{33}, \sigma_{23} \rangle)\) does not intersect the cone of positive definite matrices.
+
+Similar approaches for discrete multivariate distributions via their independence ideal.
+This allows us to parameterize families of distributions sometimes more easily, which satisfy certain independence statements.

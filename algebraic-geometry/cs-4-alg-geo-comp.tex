@@ -1,0 +1,228 @@
+Define the projective space and give different ways of deconstructing it
+
+Definition 1. \( n \)-dimensional projective space over the field \(k\), denoted \(\mathbb{P}^n(k)\), is the set of equivalence classes of \(\sim\) on \(k^{n+1} \setminus \{0\}\). Thus,
+\[
+\mathbb{P}^n(k) = (k^{n+1} \setminus \{0\})/\sim.
+\]
+
+Given an \((n+1)\)-tuple \((x_0, \ldots, x_n) \in k^{n+1} \setminus \{0\}\), its equivalence class \(p \in \mathbb{P}^n(k)\) will be denoted \((x_0 : \cdots : x_n)\), and we will say that \((x_0 : \cdots : x_n)\) are homogeneous coordinates of \(p\). Thus
+\[
+(x_0' : \cdots : x_n') = (x_0 : \cdots : x_n)
+\iff
+(x_0',\ldots,x_n') = \lambda (x_0, \ldots, x_n)
+\]
+for some \(\lambda \in k \setminus \{0\}\).
+
+Proposition 2. Let
+\[
+U_0 = \{ (x_0 : \cdots : x_n) \in \mathbb{P}^n(k) \mid x_0 \ne 0 \}.
+\]
+Then the map \(\phi\) that sends \((a_1, \ldots, a_n) \in k^n\) to \((1 : a_1 : \cdots : a_n) \in \mathbb{P}^n(k)\) is a one-to-one correspondence between \(k^n\) and \(U_0 \subseteq \mathbb{P}^n(k)\).
+
+Points at infinity:
+By the definition of \(U_0\), we see that \(\mathbb{P}^n(k) = U_0 \cup H\), where
+\[
+H = \{ p \in \mathbb{P}^n(k) \mid p = (0 : x_1 : \cdots : x_n) \}.
+\]
+
+If we identify \(U_0\) with the affine space \(k^n\), then we can think of \(H\) as the hyperplane at infinity. It follows from (2) that the points in \(H\) are in one-to-one correspondence with nonzero \(n\)-tuples \((x_1, \ldots, x_n)\), where two \(n\)-tuples represent the same point of \(H\) if one is a nonzero scalar multiple of the other (just ignore the first component of points in \(H\)). In other words, \(H\) is a copy of \(\mathbb{P}^{n-1}(k)\), the projective space of one smaller dimension. Identifying \(U_0\) with \(k^n\) and \(H\) with \(\mathbb{P}^{n-1}(k)\), we can write
+\[
+\mathbb{P}^n(k) = k^n \cup \mathbb{P}^{n-1}(k).
+\]
+
+\(H = \mathbb{P}^{n-1}(k)\) roughly corresponds to all lines parallel to a line (which is a point in \( \mathbb{P}^n(k) \) and corresponds to a point of \( k^n \) in the decomposition) given by a point of \( k^n \).
+
+Corollary 3. For each \(i = 0, \ldots, n\), let
+\[
+U_i = \{ (x_0 : \cdots : x_n) \in \mathbb{P}^n(k) \mid x_i \ne 0 \}.
+\]
+(i) The points of each \(U_i\) are in one-to-one correspondence with the points of \(k^n\).
+(ii) The complement \(\mathbb{P}^n(k) \setminus U_i\) may be identified with \(\mathbb{P}^{n-1}(k)\).
+(iii) We have \(\mathbb{P}^n(k) = \bigcup_{i=0}^n U_i\).
+
+
+Define homogeneous polynomials and projective varieties as well as homogenization
+
+A polynomial \( f \in k[x_1, \dots, x_n] \) is homogeneous if it satisfies \( f(\lambda x_1, \dots, \lambda x_n) = \lambda^n f(x_1, \dots, x_n) \)
+for some \( n \geq 1 \) and all \( x \in k^n \) and every \( \lambda \in k \setminus \{0\} \).
+
+Definition 5. Let \(k\) be a field and let \(f_1, \ldots, f_s \in k[x_0, \ldots, x_n]\) be homogeneous polynomials. We set
+\[
+V(f_1, \ldots, f_s) = \{ (a_0 : \cdots : a_n) \in \mathbb{P}^n(k) \mid f_i(a_0, \ldots, a_n) = 0 \text{ for all } 1 \le i \le s \}.
+\]
+We call \(V(f_1, \ldots, f_s)\) the projective variety defined by \(f_1, \ldots, f_s\).
+
+
+Proposition 7. Let \(g(x_1, \ldots, x_n) \in k[x_1, \ldots, x_n]\) be a polynomial of total degree \(d\).
+(i) Let \(g = \sum_{i=0}^d g_i\) be the expansion of \(g\) as the sum of its homogeneous components where \(g_i\) has total degree \(i\). Then
+\[
+g^h(x_0, \ldots, x_n) = \sum_{i=0}^d g_i(x_1, \ldots, x_n) x_0^{d-i}
+\]
+\[
+g^h(x_0, \ldots, x_n) = g_d(x_1, \ldots, x_n) + g_{d-1}(x_1, \ldots, x_n)x_0 + \cdots + g_0(x_1, \ldots, x_n)x_0^d
+\]
+is a homogeneous polynomial of total degree \(d\) in \(k[x_0, \ldots, x_n]\). We will call \(g^h\) the homogenization of \(g\).
+(ii) The homogenization of \(g\) can be computed using the formula
+\[
+g^h = x_0^d \cdot g\left(\frac{x_1}{x_0}, \ldots, \frac{x_n}{x_0}\right).
+\]
+
+(iii) Dehomogenizing \(g^h\) yields \(g\), i.e., \(g^h(1, x_1, \ldots, x_n) = g(x_1, \ldots, x_n)\).
+
+(iv) Let \(F(x_0, \ldots, x_n)\) be a homogeneous polynomial and let \(x_0^e\) be the highest power of \(x_0\) dividing \(F\). If \(f = F(1, x_1, \ldots, x_n)\) is a dehomogenization of \(F\), then \(F = x_0^e \cdot f^h\).
+
+
+Define graded rings, homogeneous ideals and homogeneous prime ideals
+
+Let \(S\) be a ring which, as all the rings we will consider in this text, is commutative and with unity. Moreover let \(G(+)\) be an abelian group. The ring \(S\) will be said to be \(G\)-graded or endowed with a \(G\) {-grading} (or simply a graded ring, or a ring with a grading, when \(G = \mathbb{Z}\)) if there is a decomposition
+\[
+S = \bigoplus_{g \in G} S_g
+\]
+as a direct sum of abelian subgroups of the additive group of \(S\), such that \(1 \in S_0\) and for any pair \((g, h) \in G \times G\) one has \(S_g \cdot S_h \subseteq S_{g+h}\), where, if \(A\) and \(B\) are subsets of \(S\), we set
+\[
+A \cdot B = \{ ab : a \in A,\, b \in B \}
+\]
+and similarly for \(A + B\). The group \(S_g\) is called the part of degree \(g\) of \(S\). 
+The elements of \(S_g\) are called the homogeneous elements of degree \(g\) of \(S\). 
+If \(F\) is a nonempty subset of \(S\), we set \(F_g = F \cap S_g\) for all \(g \in G\) and we denote by \(H(F)\) the set \(\bigcup_{g \in G} F_g\) of all homogeneous elements in \(F\).
+Classically (and mostly done in alg-geo. we use \( G = \mathbb{Z} \)).
+- \(S_0\) is a subring of \(S\) and \(S_g\) is an \(S_0\)-module for all \(g \in G\). In particular, if \(S_0\) is a field, then \(S_g\) is a \(S_0\)-vector space;
+- if \(G = \mathbb{Z}\), we set, for every integer \(n\), \(S_{>n} = \bigoplus_{d > n} S_d\). If \(S_d = \{0\}\) for all \(d < 0\), then \(S_{>n}\) is an ideal of \(S\) for all integer \(n\), moreover \(S = S_{>-1}\), \(\bigcap_{n \in \mathbb{N}} S_{>n} = \{0\}\) and \(S_{>0}\) will be denoted with the symbol \(S_+\) and is called the  irrelevant ideal of \(S\).
+- each \( S_n \) is an \( S_0 \)-algebra.
+
+4.5.F. Exercise.
+- Show that an ideal \(I\) is homogeneous if and only if it contains the degree \(n\) piece of each of its elements for each \(n\). (Hence \(I\) can be decomposed into homogeneous pieces, \(I = \bigoplus I_n\), and \(S_{\bullet} / I\) has a natural \(\mathbb{Z}\)-grading. This is the reason for the name homogeneous ideal.)
+- Show that the set of homogeneous ideals of a given \(\mathbb{Z}\)-graded ring \(S_{\bullet}\) is closed under sum, product, intersection, and radical.
+- Show that a homogeneous ideal \(I \subset S_{\bullet}\) is prime if \(I \neq S_{\bullet}\), and if for any homogeneous \(a, b \in S_{\bullet}\), if \(ab \in I\), then \(a \in I\) or \(b \in I\).
+
+
+Proposition 1.3.2  If \(S\) is a \(G\)-graded ring and \(I_1, I_2\) are homogeneous ideals of \(S\), then \(I_1 \cdot I_2\), \(I_1 \cap I_2\), \(I_1 + I_2\), and the ideal generated by \(I_1 \cup I_2\), are homogeneous ideals. If moreover \(G = \mathbb{Z}\) and \(I\) is a homogeneous ideal of \(S\), then:
+
+- the radical of \(I\), i.e.,
+\[
+\mathrm{rad}(I) = \{ f \in S : \exists r \in \mathbb{N} : f^r \in I \}
+\]
+is homogeneous;
+- \(I\) is prime if and only if for every pair \((f, g) \in H(S) \times H(S)\) such that \(fg \in I\), either \(f \in I\) or \(g \in I\).
+
+
+Let \(S\) be a \(G\)-graded ring and \(S'\) a \(H\)-graded ring, and suppose we have a homomorphism \(\phi : G \to H\). 
+A homomorphism \(f : S \to S'\) is said to be \(\phi\)-homogeneous, if for all \(g \in G\) one has \(f(S_g) \subseteq S'_{\phi(g)}\). 
+If \(f\) and \(\phi\) are isomorphisms then the inverse of \(f\) is still a homomorphism of graded rings, hence \(f\) is a isomorphism of graded rings. If \(G = H\), a \(\mathrm{id}_G\)-homogeneous homomorphism \(f : S \to S'\) will be said to be  homogeneous of degree 0. 
+A homogeneous isomorphism of degree 0 will be simply called a isomorphism.
+
+If \(G = H = \mathbb{Z}\) and \(f : S \to S'\) is homogeneous, then \(\phi : \mathbb{Z} \to \mathbb{Z}\) is the multiplication by an integer \(d\), 
+hence \(f(S_g) \subseteq S'_{dg}\) for all \(g \in G\). 
+In this case we will say that \(f\) is  homogeneous of weight \(d\). A homogeneous homomorphism of weight \( 1 \) is of degree \( 0 \).
+
+
+
+Define the \( \text{Proj } S \) construction (homogeneous spectrum) and some related facts
+
+Definition. 
+Let \(S\) be a graded ring. We define \(\mathrm{Proj}(S)\) to be the set of homogeneous prime ideals \(\mathfrak{p}\) of \(S\) 
+such that \(S_+ \not\subseteq \mathfrak{p}\). 
+The set \(\mathrm{Proj}(S)\) is a subset of \(\mathrm{Spec}(S)\) and we endow it with the induced topology. 
+The topological space \(\mathrm{Proj}(S)\) is called the homogeneous spectrum of the graded ring \(S\).
+
+Note that by construction there is a continuous map
+\[
+\mathrm{Proj}(S) \longrightarrow \mathrm{Spec}(S_0).
+\]
+
+Let \(S = \bigoplus_{d \geq 0} S_d\) be a graded ring. Let \(f \in S_d\) and assume that \(d \geq 1\). 
+We define \(S_{(f)}\) to be the subring of \(S_f\) consisting of elements of the form \(r/f^n\) with \(r\) homogeneous and \(\deg(r) = nd\). If \(M\) is a graded \(S\)-module, then we define the \(S_{(f)}\)-module \(M_{(f)}\) as the submodule of \(M_f\) consisting of elements of the form \(x/f^n\) with \(x\) homogeneous of degree \(nd\).
+
+
+Lemma 57.2. Let \(S\) be a \(\mathbb{Z}\)-graded ring containing a homogeneous invertible element of positive degree. 
+Then the set \(G \subset \mathrm{Spec}(S')\) of \(\mathbb{Z}\)-graded primes of \(S\) (with induced topology) maps homeomorphically 
+to \(\mathrm{Spec}(S_0)\). (The proof is helpful for understanding how to handle residual fields)
+Proof. First we show that the map is a bijection by constructing an inverse. 
+Let \(f \in S_d\), \(d > 0\) be invertible in \(S\). If \(\mathfrak{p}_0\) is a prime of \(S_0\), then \(\mathfrak{p}_0 S\) is a \(\mathbb{Z}\)-graded ideal of \(S\) such that \(\mathfrak{p}_0 S \cap S_0 = \mathfrak{p}_0\). And if \(ab \in \mathfrak{p}_0 S\) with \(a, b\) homogeneous, then \(a^d b^d / f^{\deg(a) + \deg(b)} \in \mathfrak{p}_0\). Thus either \(a^d / f^{\deg(a)} \in \mathfrak{p}_0\) or \(b^d / f^{\deg(b)} \in \mathfrak{p}_0\), in other words either \(a^d \in \mathfrak{p}_0 S\) or \(b^d \in \mathfrak{p}_0 S\). It follows that \(\sqrt{\mathfrak{p}_0 S}\) is a \(\mathbb{Z}\)-graded prime ideal of \(S\) whose intersection with \(S_0\) is \(\mathfrak{p}_0\).
+
+To show that the map is a homeomorphism we show that the image of \(G \cap D(g)\) is open. If \(g = \sum g_i\) with \(g_i \in S_i\), 
+then by the above \(G \cap D(g)\) maps onto the set \(\bigcup D(g_i^d / f^{i})\) which is open. \(\qquad \Box\)
+
+For \(f \in S\) homogeneous of degree \(> 0\) we define
+\[
+D_+(f) = \{ \mathfrak{p} \in \mathrm{Proj}(S) \mid f \notin \mathfrak{p} \}.
+\]
+
+Finally, for a homogeneous ideal \(I \subset S\) we define
+\[
+V_+(I) = \{ \mathfrak{p} \in \mathrm{Proj}(S) \mid I \subset \mathfrak{p} \}.
+\]
+
+We will use more generally the notation \(V_+(E)\) for any set \(E\) of homogeneous elements \(E \subset S\).
+One can then show, that this induces a topology on \( \text{Proj } S \) analogous to the Zariski topology.
+Some facts which are more specific are:
+
+- Let \(g = g_0 + \ldots + g_m\) be an element of \(S\) with \(g_i \in S_i\). Then
+\[
+D(g) \cap \mathrm{Proj}(S) = (D(g_0) \cap \mathrm{Proj}(S)) \cup \bigcup_{i \geq 1} D_+(g_i).
+\]
+- Let \(g_0 \in S_0\) be a homogeneous element of degree 0. Then
+\[
+D(g_0) \cap \mathrm{Proj}(S) = \bigcup_{f \in S_d,\, d \geq 1} D_+(g_0 f).
+\]
+- Let \(f \in S\) be homogeneous of positive degree. The ring \(S_f\) has a natural \(\mathbb{Z}\)-grading. 
+  The ring maps \(S \to S_f \gets S_{(f)}\) induce homeomorphisms
+\[
+D_+(f) \leftrightarrow \{\mathbb{Z}\text{-graded primes of } S_f\} \to \mathrm{Spec}(S_{(f)}).
+\]
+- There exists an \(S\) such that \(\mathrm{Proj}(S)\) is not quasi-compact (different from affine case).
+- Any closed subset \(T \subset \mathrm{Proj}(S)\) is of the form \(V_+(I)\) for some homogeneous ideal \(I \subset S\).
+- For any graded ideal \(I \subset S\) we have \(V_+(I) = \emptyset\) if and only if \(S_+ \subset \sqrt{I}\).
+
+
+Relate the projective space to the \( \text{Proj } S \) construction
+
+4.5.9. Definition. We (re)define projective space (over a ring \(A\)) by
+\[
+\mathbb{P}_A^n := \mathrm{Proj}\, A[x_0, \ldots, x_n].
+\]
+
+Note that the variables \(x_0, \ldots, x_n\), which we call the projective coordinates on \(\mathbb{P}_A^n\), are part of the definition. 
+This doesn't require any gluing or equivalence class construction.
+
+We call a scheme of the form \( \text{Proj } S \) where is \( S \) is a finitely generated graded ring over \( A \)
+a projective scheme over \( A \) or a projective \( A \)-scheme. A quasi-projective \( A \)-scheme is a quasicompact 
+open subscheme of a projective \( A \)-scheme. 
+Quasicompactness is granted if \( \text{Proj } S \) is noetherian as a topological space.
+
+
+
+State the projective Nullstellensaetze and ideal-variety correspondence 
+
+(The Projective Weak Nullstellensatz). 
+Let \(k\) be algebraically closed and let \(I\) be a homogeneous ideal in \(k[x_0, \ldots, x_n]\). Then the following are equivalent:
+
+(i) \(V(I) \subseteq \mathbb{P}^n(k)\) is empty.
+(ii) Let \(G\) be a reduced Gröbner basis for \(I\) (with respect to some monomial ordering). Then for each \(0 \leq i \leq n\), there is \(g \in G\) such that \(\operatorname{LT}(g)\) is a nonnegative power of \(x_i\).
+(iii) For each \(0 \leq i \leq n\), there is an integer \(m_i \geq 0\) such that \(x_i^{m_i} \in I\).
+(iv) There is some \(r \geq 1\) such that \(\langle x_0, \ldots, x_n \rangle^{r} \subseteq I\).
+(v) \(I : \langle x_0, \ldots, x_n \rangle^{\infty} = k[x_1, \ldots, x_n]\).
+
+Theorem 9 (The Projective Strong Nullstellensatz). 
+Let \(k\) be an algebraically closed field and let \(I\) be a homogeneous ideal in \(k[x_0, \ldots, x_n]\). 
+If \(V = V(I)\) is a nonempty projective variety in \(\mathbb{P}^n(k)\), then we have
+\[
+\mathbf{I}(V(I)) = \sqrt{I}.
+\]
+
+
+Theorem 10. Let \(k\) be an algebraically closed field. 
+If we restrict the correspondences of Theorem 5 to nonempty projective varieties and radical homogeneous ideals properly contained in 
+\(\langle x_0, \ldots, x_n \rangle\), then
+\[
+\left\{ \text{nonempty projective varieties} \right\}
+\overset{\mathbf{I}}{\longrightarrow}
+\left\{ \begin{array}{c} \text{radical homogeneous ideals} \\ \text{properly contained in }\langle x_0, \ldots, x_n\rangle \end{array} \right\}
+\]
+and
+\[
+\left\{ \begin{array}{c} \text{radical homogeneous ideals} \\ \text{properly contained in }\langle x_0, \ldots, x_n\rangle \end{array} \right\}
+\overset{\mathbf{V}}{\longrightarrow}
+\left\{ \text{nonempty projective varieties} \right\}
+\]
+are inclusion-reversing bijections which are inverses of each other.

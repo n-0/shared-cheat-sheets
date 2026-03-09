@@ -51,11 +51,80 @@ Backward recursion (retrospective):
 \[ \Vx[k]{x} = S(k) - P_x(k) + v \qx{x+k} D(k+1) + v\px{x+k} \Vx[k+1]{x} \]
 with \( \Vx[n]{x} = S(n) \) or \( 0 \) if no final survival benefit is included. \\
 
+This also yields an expression for the premia in terms of the reserve :
+\[ P_x(k) = v \Vx[k+1]{x} - \Vx[k]{x} + v(D(k+1) - \Vx{k+1}{x})\qx{x+k}\]
 The premia can be decomposed into a savings and risk component which are expressed in terms of the reserve:
-\[ P^S_x(k) = \frac{K(k)}{K(k+1)} \Vx[k+1]{x} - \Vx[k]{x} \]
-with \( K(k) = v^{-k} \) (or a suitable discount function).
+\[ P^S_x(k) = v  \Vx[k+1]{x} - \Vx[k]{x} \]
 The savings component is for the adjustment of the prospetive reserve at the end of the year.
-\[ P^R_x(k) = \frac{K(k)}{K(k+1)}(D(k+1) - \Vx[k+1]{x} \mathbb{P}[T_x \leq k+1 | T_x > k]  ) \]
+Typically it turns negative over the insurance term. 
+\[ P^R_x(k) = v(D(k+1) - \Vx{k+1}{x})\qx{x+k} \]
 The risk component is for covering the risk (of death) in the period \( (k, k+1] \) and it corresponds
 to the premium of a term life insurance in \( (k, k+1] \) with insured sum \( D(k+1) - \Vx[k+1]{x} \).
+Typically it increases over the insurance term.
+
+
+Explain how to determine the reserve heuristically
+
+Originally the reserve is defined as the difference between benefits and premia, either under the retro- or prospective approach.
+
+If we let \( \actsymb[m][L]{B}{x}[\text{pro}] \) denote the future benefits of a contract for an individual aged \( x \) 
+discounted to time point \( m \) and \( \actsymb[m][P]{B}{x}[\text{pro}] \) the remaining premia discounted, then the reserve is
+\[ \Vx[m]{x} = \mathbb{E}[\actsymb[m][L]{B}{x}[\text{pro}]] - \mathbb{E}[\actsymb[m][P]{B}{x}[\text{pro}]] \]
+The condition \(\Vx[0]{x} = 0\) forces \( \mathbb{E}[\actsymb[0][L]{B}{x}[\text{pro}]] = \mathbb{E}[\actsymb[0][P]{B}{x}[\text{pro}]] \),
+making it clear that premia overtime are equivalent to the future benefits.
+The corresponding retrospective definition instead uses the past benefits and premia with accrued interest until \( m \):
+\[ \Vx[m]{x} = \mathbb{E}[\actsymb[m][L]{B}{x}[\text{ret}]] - \mathbb{E}[\actsymb[m][P]{B}{x}[\text{ret}]] \]
+\\
+With this more general definition its usually faster for standard products to determine the reserve than with recursion.
+
+Consider an \( n \)-term endowement insurance with insured sum \( 1 \) and recurring payments in advance:
+\[
+  \actsymb[m][L]{B}{x}[\text{pro}]  = v^{n-m} \mathbf{1}_{T_x > m}
+\]
+Let \( \Px[0]{x} = \frac{\Ex[n]{x}}{\ax**{x:\angl{n}}} \) then
+\[
+  \actsymb[m][P]{B}{x}[\text{pro}] = \Px[0]{x} \sum_{k=0}^{n - m - 1} v^k \mathbf{1}_{T_x > m + k}
+\]
+thus the reserve is
+\begin{align*}
+  \Vx[m]{x} &= v^{n - m} \px[n-m]{x + m} - \Px[0]{x} \sum_{k=0}^{n - m - 1} v^k \px[k]{x + m} \\
+            &= \Ex[x + m]{n - m} -  \Px[0]{x} \ax**{x + m : \angl{n - m}} \\
+\end{align*}
+The general pattern is for premium payment until \( t \leq n \): \\
+\[\Vx[m]{x} = L - P \]
+where 
+\[ L = \text{remaining benefits for } n - m \text{ discounted to } m \]
+\[ P = \text{premia discounted for remaining payment term } t - m \]
+both considered for an individual aged \( x + m \).
+
+
+Define the Zillmerized and sufficient reserve
+
+The Zillmerized reserve \( \Vx[m]{x}[Z] \) includes the direct acquisition cost into the premia,
+that is for payment term \( t \leq n \) and contract length \( n \) 
+\[ 
+  P^Z_x = \frac{ \mathbb{E}[\actsymb[L][0]{B}{x}] }{ \ax**{x:\angl t} - \alpha^Z t}
+\]
+yielding for \( m < t \):
+\[ 
+  \Vx[m]{x}[Z] = \mathbb{E}[\actsymb[m][L]{B}{x} ] - P^Z_x \ax**{x+m:\angl{t - m}}
+\]
+and for \( m \geq t \)
+\[ 
+  \Vx[m]{x}[Z] = \mathbb{E}[ \actsymb[m][L]{B}{x} ]
+\]
+Since it always holds that \( P^Z_x > P_x \) we have \( \Vx[m]{x}[Z] \leq \Vx[m]{x} \), which is strict for \( m < t \)
+and an equality for \( m \geq t \). As \( \Vx[m]{x} = 0 \), the Zillmerized reserve starts out negative.
+
+The sufficient reserve \( \Vx[m][a]{x} \) is for \( m < t \):
+\[
+  \Vx[m][a]{x} = \mathbb{E}[ \actsymb[m][L]{B}{x} ] + ( \alpha^\gamma \text{GA}^\gamma + \gamma_1 GG)\cdot \ax**{x+m:\angl{t - m}}
+  + \gamma_2 \text{GG} \cdot \ax**[t - m]{x+m:\angl{n - t}} - (1 - \beta) \Px[][a]{x} \cdot \ax**{x+m:\angl{t - m}}
+\]
+and for \( t > m \):
+\[
+  \Vx[m][a]{x} = \mathbb{E}[ \actsymb[m][L]{B}{x} ] + \gamma_2 \text{GG} \cdot \ax**{x+m:\angl{n - m}}
+\]
+where \( \Px[][a]{x} \) is the sufficient premia (including all costs).
+
 \end{document}

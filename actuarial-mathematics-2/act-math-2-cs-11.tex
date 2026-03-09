@@ -1,0 +1,108 @@
+Define nonuniformly learnable classes and state related theorems 
+
+A hypothesis class \(\mathcal{H}\) is nonuniformly learnable if there exist a learning algorithm \( A \), and a function
+\(m_{\mathcal{H}}^{\mathrm{NUL}} : (0,1)^2 \times \mathcal{H} \to \mathbb{N}\)
+such that, for every \(\epsilon, \delta \in (0,1)\) and for every \(h \in \mathcal{H}\), 
+if \(m \geq m_{\mathcal{H}}^{\mathrm{NUL}}(\epsilon, \delta, h)\) then for every distribution \(\mathcal{D}\), 
+with probability at least \(1 - \delta\) over the choice of \(S \sim \mathcal{D}^m\), it holds that
+\[
+  L_{\mathcal{D}}(A(S)) \leq L_{\mathcal{D}}(h) + \epsilon.
+\]
+Note that agnostic learnability implies nonuniformly learnability.
+
+Theorem 7.2 
+A hypothesis class \( \mathcal{H} \) of binary classifiers is nonuniformly learnable 
+if and only if it is a countable union of agnostic PAC learnable hypothesis classes.
+
+Theorem 7.3
+Let \( \mathcal{H} \) be a hypothesis class that can be written as a countable  union of hypothesis classes, 
+\( \mathcal{H} = \cup_{n \in \mathbb{N}} \mathcal{H}_n\) , where each \( \mathcal{H}_n \) 
+enjoys the uniform convergence property. Then, \( \mathcal{H} \) is nonuniformly learnable.
+
+Define the associated function
+\[
+  \varepsilon_n(m, \delta) = \inf \{ \varepsilon \in (0, 1) : m_{\mathcal{H}_n}^{\text{UC}}(\varepsilon, \delta) \leq m \}  
+\]
+that is the lower bound for the gap between empirical and true risks achievable using \( m \) samples.
+Consider a weight function \( w : \mathbb{N} \to [0, 1] \) with \( \sum_{n=1}^\infty w(n) \leq 1 \),
+which introduces a preference (or a priori bias) over the hypothesis classes \( \{ \mathcal{H}_n \}_{n \in \mathbb{N}} \).
+
+Theorem 7.4
+Suppose each of the \( \mathcal{H}_n \) has the uniform convergence property.
+Then, for every \( \delta \in (0, 1) \) and distribution \( \mathcal{D} \), 
+with probability of at least \( 1 - \delta \) over the choice of \( S \sim \mathcal{D}^m \), 
+the following bound holds (simultaneously) for every \( n \in \mathbb{N} \) and \( h \in \mathcal{H}_n \):
+\[ 
+| L_{\mathcal{D}}(h) - L_S(h) | \leq \varepsilon_n(m, w(n) \cdot \delta)
+\]
+In particular it holds with probability \( 1 - \delta \) and for all \( h \in \cup_{n \in \mathbb{N}} \mathcal{H}_n \)
+\[
+ L_{\mathcal{D}} (h) \leq L_S(h) + \min_{n,h \in \mathcal{H}_n} \varepsilon_n(m, w(n)\cdot \delta)
+\]
+
+This motivates the following algorithm, let \( n(h) = \min \{ n : h \in \mathcal{H}_n \} \)
+then finding the solution to  \( \argmin_{h \in \mathcal{H}} L_S(h) + \varepsilon_{n(h)}(m, w(n(h))\cdot \delta) \) 
+is called Structural Risk Minimization (SRM). 
+Intuitively we trade off some empirical risk minimization with our preference for certain \( \mathcal{H}_n \) via \( w \).
+
+Theorem
+Choose \( w(n) = \frac{6}{n^2 \pi^2} \). For \( \mathcal{H} \) as above, \( \mathcal{H} \) is nonuniformly learnable using
+the SRM algorithm with rate
+\[ 
+  m_{\mathcal{H}}^{\text{NUL}}(\varepsilon, \delta, h) \leq m_{\mathcal{H}_{n(h)}}^{\text{UC}}(\frac{\varepsilon}{2}, \frac{6\delta}{(\pi n(h))^2})
+\]
+
+
+Define the minimum description length rule and consistency
+
+Let \( \mathcal{H} \) be a hypothesis class, and \( \Sigma \) some alphabet with a function \( d : \mathcal{H} \to \Sigma^\ast \)
+(the codomain are all words in terms of this alphabet). Call \( |h| = |d(h)| \) the length of the description \( d(h) \) for \( h \).
+A language is prefix-free, if and only if for no distinct \( h_1, h_2 \), \( d(h_1) \) are the first \( |h_1| \) symbols of \( d(h_2) \).
+
+Theorem
+Let \( \mathcal{H} \) be a hypothesis class and let \( d : H \to \{0, 1\}^\ast \) be a prefix-free 
+description language for H. Then, for every sample size, \( m \), every confidence
+parameter, \( \delta > 0 \), and every probability distribution, \( \mathcal{D} \), with probability greater
+than \( 1 - \delta \) over the choice of \( S \tilde \mathcal{D}^m \) we have for all \( h \in \mathcal{H} \),
+\[
+  L_{\mathcal{D}}(h) \leq L_{S}(h) + \sqrt{\frac{|h| + \ln(\frac{2}{\delta})}{2m}}
+\]
+
+The minimum description length algorithm then solves the problem
+\[
+  \argmin_{h \in \mathcal{H}} L_{S}(h) + \sqrt{\frac{|h| + \ln(\frac{2}{\delta})}{2m}}
+\]
+
+Note how this implies for hypotheses \( h_1, h_2 \) with same empirical risk, the one with shorter  description has better true risk minimization.
+This could be considered to be an instance of Occam's razor. 
+The clue is here that a choice of \( d \) is similar to a choice of some preference function \( w \).
+
+Consistency
+
+Let \( Z \) be a domain set, let \( \mathcal{P} \) be a set of
+probability distributions over \( Z \), and let \( \mathcal{H} \) be a hypothesis class. 
+A learning rule \( A \) is consistent with respect to \( \mathcal{h} \) and \( \mathcal{P} \) 
+if there exists a function \( m^{\text{CON}}_{\mathcal{H}} : (0, 1)^2 \times \mathcal{H} \times \mathcal{P} \to \mathbb{N} \) s.t.,
+for every \( \varepsilon, \delta (0, 1) \) every \( h \in \mathcal{H} \) and every \( \mathcal{D} \in \mathcal{P} \), if
+\( m \geq  m^{\text{CON}}_{\mathcal{H}}(\varepsilon, \delta, h, \mathcal{D}) \) then with probability of at least \( 1 - \delta \) over
+the choice of \( S \sim \mathcal{D}^m \) it holds that
+\[
+  L_{\mathcal{D}}(A(S)) \leq L_{\mathcal{D}}(h) + \varepsilon
+\]
+If \( \mathcal{P} \) is the set of all distributions, we say that \( A \) is universally consistent with
+respect to \( \mathcal{H} \).
+
+Consistency also includes flexibility in the underlying choice of distribution and is the weakest of all the learnability conditions.
+Unlike the notions of PAC learnability and nonuniform learnability, the definition of consistency does not yield a 
+natural learning algorithm or a way to encode prior knowledge. 
+In fact, in many cases there is no need for prior knowledge at all.
+
+We can make any nonuniform learner for \( \mathcal{H} \) be consistent with respect to the class of all classifiers \( \mathcal{X} \to \mathcal{Y} \):
+Upon receiving a training set, we will first run the nonuniform learner over the training set, and then we will obtain a bound
+on the true risk of the learned predictor. If this bound is small enough we are
+done. Otherwise, we revert to the Memorize algorithm (simply returning the most common label of the training set for the input). 
+This simple modification makes the algorithm consistent with respect to all classifiers.
+Thus it is not of interest to prefer any consistent learner but has no stronger learnability condition over one which is 
+only nonuniformly or PAC learnable.
+
+In general PAC learning is quite preferable because it gives a strict answer for the number of samples required.

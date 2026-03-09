@@ -1,0 +1,230 @@
+Was ist ein Modell und die Schritte zur Erstellung
+
+
+Ein Modell ist eine mathematische Darstellung von Phänomenen, die in der realen
+Welt stattfinden. Modelle sind weit verbreitet in allen Finanzinstitutionen und erlauben komplexe Fragestellungen auf das Wesentliche zu reduzieren, um sie leichter zu verstehen.
+
+Modelle enthalten zwangsläufig Vereinfachungen der Sachverhalte, die sie abbil-
+den sollen. Genau diese Vereinfachungen ermöglichen nämlich ein besseres Ver-
+ständnis der untersuchten Fragestellungen
+Umgekehrt muss
+der abgebildete Prozess trotzdem genau genug dargestellt werden, um nicht die
+Ergebnisse zu verfälschen.
+
+(Normative) Standardansätze zur Modellbildung
+
+1. Konkrete Aufgabenstellung auswählen: Welche Aspekte sollen genau modelliert werden
+2. Analyse der Daten: Im Rahmen der statistischen Inferenz ist ein erster (manch-
+mal sogar der erste) Schritt Daten zu sammeln und sie zu analysieren
+3. Entwurf und Kalibrierung des Modells: Das erste Modell wird entworfen und die
+darin enthaltenen Parameter werden aus den Daten geschätzt.
+4.Test des Modells: Das kalibrierte Modell wird gegen die Realität getestet. Mög-
+liche Methoden
+4.1 Back-Testing
+4.2 Out-Of-Sample Testing
+4.3 Projektion (Prognose)
+
+Bei den Schritten 3, 4 und 5 sollte man den Grundsatz der Sparsamkeit beach-
+ten. (e.g. Hypothesenthest mit einem statt zwei Parametern)
+
+Informationsfunktion minimieren: Das ausgewählte Modell minimiert eine In-
+formationsfunktion, die aus der Maximum Likelihood Funktion abgeleitet ist
+und die mit der Anzahl an Parametern wächst. Eine Überzahl an Parametern
+wird dadurch bestraft. (Penalty function)
+
+
+
+
+Beschreiben Sie den Actuarial Control Cycle
+
+Actuarial Control
+Cycle:
+1. Analyse und Identifikation der Problemstellung,
+2. Auswahl und Kalibrierung des Modells,
+3. Validierung der Modellparameter,
+4. Berechnungen mit dem Modell,
+5. Plausibilisierung der erhaltenen Ergebnisse,
+6. Kommunikation der Ergebnisse und Etablierung des Modells im 
+
+
+
+Nennen Sie die Kategorien von Fehlern bei Modellbildung im aktuariellen Kontext.
+
+Modellfehler sind Fehler, die den Modellaufbau selbst betreffen, wie z. B.:
+– Wurden alle relevanten Punkte in der Modellierung berücksichtigt?
+– Sind im Modell implizite Annahmen enthalten und sind diese gerechtfer-
+tigt?
+Simulationsfehler sind Fehler, die das numerische oder technische Verfahren
+zur Modellimplementierung in das Tool betreffen. Wie z. B.:
+– Wie viele Iterationen soll man durchführen, damit man eine gute numeri-
+sche Schätzung erhält?
+– Welche sind die statistischen Eigenschaften der angewendeten Näherungs-
+methoden?
+
+
+
+Welche (groben) Eigenschaften kann ein Modell haben (diskret/stochastisch etc.)
+
+Deterministische Modelle berücksichtigen keine Zufälligkeit. Alle Annahmen sind
+mit festen Werten belegt. (E.g. garantierte Zinsrechnungen, kurz-mittelfristige Liquiditätsrechnungen)
+
+In einem stochastischen Modell sind die Annahmen Zufallsgrößen (e.g. Zinsrechnung mit Vascizeck modell für Zins)
+
+Eine andere Möglichkeit, deterministische Modelle zu erweitern, ist, die festen Wer-
+te der Annahmen zu verändern. Man könnte im obigen Beispiel überprüfen, was
+passiert, wenn der Zins 5% statt 2% beträgt. Eine solche Analyse wird „Szenario“
+genannt. Ein Szenario wird durch die Veränderung der Werte der festen Annah-
+men spezifiziert. Man kann Szenarien auch für stochastische Modelle entwerfen,
+indem man z. B. die Verteilungs- oder Abhängigkeitsannahmen der Zufallsgrößen
+ändert. Ein Beispiel von Szenarien im Versicherungsbereich sind die in regelmäßi-
+gen Abständen stattfindenden EIOPA Stresstests)
+
+Die Unterscheidung diskret/stetig gilt nicht nur für die Zeitspanne, sondern auch für
+den Ergebnisraum. Ein Beispiel für ein Modell mit einem diskreten Ergebnisraum ist
+ein Entscheidungsbaum oder ein Netz. Ein Beispiel aus diesem Bereich sind Kau-
+salmodelle. Ein kausales Modell ist eine abstrakte, quantitative Darstellung der Ab-
+hängigkeitsbeziehungen in einem System von Variablen. Ziel solcher Modelle ist es,
+einen Zusammenhang zwischen gewissen zu erklärenden Sachverhalten und ihren
+Ursachen herzustellen. Dazu muss das Modell alle in Frage kommenden Ursachen
+als Variable enthalten. Das einfachste Beispiel für ein Kausalmodell ist ein linea-
+res Regressionsmodell
+
+
+
+Welche Arten von Wahrscheinlichkeitsmaßen sollten wann in einem Modell verwendet werden
+
+- Risikoneutrales Maß (RN-Maß),
+- Real World Maß (RW-Maß).
+
+Die Bewertung von Lebensversicherungsbeständen erfolgt nach dem gleichen Muster wie die Bewertung von Finanzinstrumenten. Um den Wert von Optionen und Garantien zu bestimmen kommt nämlich, wie in der Bewertung von Derivaten, das RN-Maß zum Einsatz. Die entsprechenden Pfade müssen deswegen risikoneutral
+sein. Das risikoneutrale Maß ist ein Modellansatz, um den marktkonsistenten Wert
+z.B. von Garantien und Optionen zu bestimmen.
+
+Dafür benutzt man das RW-Maß, das dem RN-Maß
+äquivalent ist. Ein stochastisches Modell kann mit beiden Maßen benutzt werden.
+Es ist deswegen wichtig zwischen diesen zwei Einsatzgebieten zu unterscheiden.
+
+
+Ein Modell, das zur Bewertung der versicherungstechnischen Verpflichtungen an-
+gewendet wird, wird Bewertungsmodell genannt
+
+
+
+
+Nennen Sie Quellen von Kosten bei der Modellentwicklung 
+
+Kosten, um Daten zu sammeln und zu überprüfen,
+- Kosten, um die Modellparameter zu schätzen,
+- Kosten, um das Modell zu testen und zu validieren,
+- Hardware- und Softwarekosten,
+- Kosten, die mit der Kommunikation und der Etablierung des Modells im Unter-
+nehmen verbunden sind,
+- Kosten, um Aufsichtsvorgaben zu erfüllen.
+
+
+
+
+Was ist ein Unternehmensmodel und welche Sparten untersuchen sie je nach Versicherungsart
+
+
+Ein stochastisches Unternehmensmodell ist ein Modell, das mittels stochasti-
+scher Verfahren Aktiv- und Passivgrößen einer Versicherungsgesellschaft abbildet
+
+Anwendungen sind:
+- Unternehmensplanung,
+- Risikokapitalberechnung,
+- Prämien- und Rückstellungsberechnung
+
+Das Modell sollte so-
+wohl eine Marktsichtweise als auch eine den lokalen Normen entsprechende bilan-
+zielle Sichtweise enthalten
+
+Grobe Unterteilung der Modelle:
+
+- Ein Bewertungsmodell, ein (stochastisches) Unternehmensmodell, das zur Be-
+wertung eines Versicherungsbestandes eingesetzt wird.
+- Ein Risikomodell, ein (stochastisches) Unternehmensmodell, das zur Bestim-
+mung der Quantile oder der Gesamtverteilung der ökonomischen Eigenmittel
+und des benötigten Risikokapitals eingesetzt wird.
+
+In der Kranken- und Lebensversicherung werden die Schäden (Sterblichkeit,
+Invalidität, Morbidität...) auch in einem stochastischen Unternehmensmodell
+in den meisten Fällen deterministisch modelliert.
+- In der Sachversicherung werden stattdessen sowohl die Schäden als auch die
+Reserven stochastisch modelliert.
+In allen Sparten wird der Kapitalmarkt über einen Economic Scenario Generator
+(ESG) stochastisch modelliert.
+
+INSERT DIAGRAMS P. 15-16
+
+
+Nennen Sie mögliche Größen die in Unternehmensmodellen beachtet werden
+
+- Erwartete Erträge,
+- Einnahmen,
+- Leistungen,
+- Steuern,
+- Ausschüttungen,
+- Bilanzielle Kennzahlen.
+
+
+
+
+
+
+Nennen Sie konkrete Beispiele im Versicherungsbereich von deterministischen Projektions und stochastischen Modellen
+
+
+Beispiele für deterministische Projektionsmodelle sind:
+- Reine Passivmodelle in der Personenversicherung,
+- Unternehmensplanungsmodelle in der Schadenversicherung.
+
+Für Passivmodelle in der Personenversicherung sind sie:
+- Going Concern- vs. Run-Off-Betrachtung (Fortführung oder Einstellung der Ge-
+schäftstätigkeit),
+- Open oder Closed Fund-Projektion (mit oder ohne zukünftiges Neugeschäft
+- Bestandsverdichtung: Erzeugung eines Teilbestandes des Versichertenbestandes, der dieselben oder ähnliche Eigenschaften aufweist, wie der Ausgangsbestand. Notwendig, um vertretbare Modelllaufzeiten zu bekommen.
+
+Für Unternehmensplanungsmodelle in der Schadenversicherung sind sie:
+- Getrennte Submodelle für Beiträge, Kosten und Schäden
+- Wesentliche Messgrößen (Exponierung, Kostenquote, Schadenquote, Combi-
+ned Ratio...)
+
+In der Lebensversicherung kann man als Anwendung eines stochastischen Modells
+die ökonomische Bilanz unter Solvency II und der Market Consistent Embedded
+Values darstellen. Ein konkretes Beispiel ist das Branchensimulationsmodell (BSM)
+des GDV. Anhand des BSM kann man sowohl die ökonomische Bilanz als auch die in
+einem Modell notwendigen Näherungen gut erklären.
+
+In der Schadenversicherung sollte man sich auf die stochastische Schadenmodel-
+lierung (z. B. stochastisches Chain Ladder) und auf die Modellierung von Basisschä-
+den, Großschäden und Katastrophenschäden fokussieren. In diesem Rahmen kann
+man auch die verschiedenen Möglichkeiten zur Modellierung der Abhängigkeiten
+durch Korrelationen und Copulas vertiefen.
+
+
+Was ist das ALM und mögliche Methoden zu dessen Implementierung 
+
+Ziel des Asset-Liability-Managements (ALM) ist es eine Abstimmung der Fälligkeits-
+struktur der aktiven (Assets) und passiven (Liabilities) Bilanzpositionen zu erreichen.
+Die Herausforderung im ALM besteht v.a. darin eine konsistente und vergleichbare
+Sicht der Zahlungsströme der Anlagen und der Fälligkeitsstrukturen der Verpflich-
+tungen zu erreichen. Insbesondere die Zahlungsströme der Verpflichtungen zeigen
+eine starke Abhängkeit vom Kapitalmarkt
+
+
+- Die Mikrosicht, d.h. die Untersuchung einzelner Tarife oder Musterpolicen zur
+Bewertung von impliziten Optionen und Garantien z.B. im Rahmen von Profi-
+tabilitätsüberlegungen
+- Die Makrosicht, d.h. die integrierte Analyse der Wechselwirkungen zwischen
+Aktiv- und Passivseite auf Unternehmensebene
+
+- Strategisches ALM: Mittelfristig (3-5 Jahre) oder langfristig (mehr als 5 Jahre)
+sicherstellen, dass den Verpflichtungen durch ausreichend verfügbaren Anla-
+gen nachgekommen werden kann. Mittelfristig wird v.a. auf die Zielerreichen
+im Rahmen der Planung geachtet, langfristig auf die Erfüllbarkeit von Garanti-
+en bei Spar-, und Rentenprodukten, aber auch bei Haftpflichtdeckungen
+- Taktisches ALM: Die Kapitalanleger können in einem gewissen Rahmen häufig gemessen an verbrauchtem Risikokapital oder einfacherer Kenngrößen vom strategischen ALM abweichen, um so höhere Erträge zu erzielen.
+- Liquidität: Sicherstellen, dass jederzeit ausreichend Zahlungsmittel zur Ver-
+fügung stehen, um den Verpflichtungen gegenüber den Schuldner (Kunden
+aber auch Banken z.B. bei Collaterals) zu genügen

@@ -1,0 +1,161 @@
+
+Define monomial orderings give examples and state useful side definitions 
+
+Monomial Orderings
+
+A monomial ordering \(>\) on \(k[x_1, \ldots, x_n]\) is a relation \(>\) on \(\mathbb{Z}_{\geq 0}^n\), or equivalently, 
+a relation on the set of monomials \(x^{\alpha}\), \(\alpha \in \mathbb{Z}_{\geq 0}^n\), satisfying:
+1. \(>\) is a total (or linear) ordering on \(\mathbb{Z}_{\geq 0}^n\).
+2. If \(\alpha > \beta\) and \(\gamma \in \mathbb{Z}_{\geq 0}^n\), then \(\alpha + \gamma > \beta + \gamma\).
+3.  \item \(>\) is a well-ordering on \(\mathbb{Z}_{\geq 0}^n\). This means that every nonempty subset of \(\mathbb{Z}_{\geq 0}^n\) has a smallest element under \(>\). In other words, if \(A \subseteq \mathbb{Z}_{\geq 0}^n\) is nonempty, then there is \(\alpha \in A\) such that \(\beta > \alpha\) for every \(\beta \ne \alpha\) in \(A\).
+
+An equivalent condition for well ordering is that \( \alpha \geq 0 \) for all \( \alpha \in \mathbb{Z}^n_{\geq 0} \).
+
+Given a monomial ordering \(>\), we say that \(\alpha \geq \beta\) when either \(\alpha > \beta\) or \(\alpha = \beta\).
+
+- Lexicographic (lex): Compare exponents left to right (\( \alpha > \beta \iff \alpha - \beta \) has its leftmost component positive.
+- reverse lexicographic (rlex): Compare exponents right to left (\( \alpha > \beta \iff \alpha - \beta \) has its rightmost component negative.
+- Graded lex (grlex): Compare total degree, then lex \( \alpha > \beta \iff |\alpha| > |\beta| \text{ or } |\alpha| = |\beta| \text{ and }\)
+  \( \alpha >_{\text{lex}} \beta \).
+- Graded reverse lex (grevlex): Compare total degree, then right to left.
+
+Multidegree \( \text{multideg}(f) = \max \{ \alpha \in \mathbb{Z}^n_{\geq 0} | a_\alpha \neq 0 \} \) where \( f = \sum_\alpha a_{\alpha} x^\alpha \).
+Leading monomial (LM): Largest monomial (w.r.t. order) with nonzero coefficient in \( f \).
+Leading coefficient (LC): Coefficient of the LM in \( f \).
+Leading term (LT): \( LC(f) \cdot LM(f) \).
+
+The multidegree satisfies \( \text{multideg}(fg) = \text{multideg}(f) + \text{multideg}(g) \)
+and \( \text{multideg}(f + g) \leq \max(\text{multideg}(f),\text{multideg}(g)) \), if \( f + g \neq 0 \).
+
+
+Give the polynomial division algorithm with respect to some basis of an ideal
+
+
+Input: \( f_1, \ldots, f_s, f \)
+Output: \( q_1, \ldots, q_s, r \)
+
+\[
+q_1 := 0; \ldots; q_s := 0;\; r := 0
+\]
+\[
+p := f
+\]
+WHILE \( p \ne 0 \) {
+    \( i := 1 \)
+    \( divisionoccurred := \mathrm{false} \)
+    WHILE \( i \leq s \) AND \( divisionoccurred = \mathrm{false} \) {
+        IF \( \mathrm{LT}(f_i) \) divides \( \mathrm{LT}(p) \) {
+            \( q_i := q_i + \mathrm{LT}(p)/\mathrm{LT}(f_i) \)
+            \( p := p - (\mathrm{LT}(p)/\mathrm{LT}(f_i)) f_i \)
+            \( divisionoccurred := \mathrm{true} \)
+        } ELSE {
+            \( i := i + 1 \)
+        }
+    }
+    IF \( divisionoccurred = \mathrm{false} \) {
+        \( r := r + \mathrm{LT}(p) \)
+        \( p := p - \mathrm{LT}(p) \)
+    }
+RETURN \( q_1, \ldots, q_s, r \)
+
+The central difference compared to regular division is that the algorithm does not terminate if the intermediate 
+dividend's \( p \) leading term is not divisible by any \( f_i \). Instead it moves the undivisble parts into the remainder 
+term (which are not further divided by the \( f_i \) and just left as is).
+E.g. \( x + y^2 + y : y^2 - 1 \) is turned into \( y^2 + y : y^2 - 1 \) and the remainder set to \( x \)
+this becomes \( y + 1  \) which is no further divisible by \( y^2 - 1 \) and thus the final result reads:
+\( f = 1\cdot (y^2 - 1) + (x + y + 1) \).
+
+
+
+State some facts related to monomial ideals
+
+An ideal \( I \subseteq k[x_1, \dots, x_n] \) is a monomial ideal if there is a subset
+\( A \subseteq \mathbb{Z}^n_{\geq 0} \) (possibly infinite) such that \( I \) consists of all polynomials which are finite
+sums of the form \( \sum_{\alpha \in A} h_{\alpha}x^\alpha \), where \( h_\alpha \in k[x_1, \dots, x_n] \). 
+In this case, we write \( I = \langle x^\alpha | \alpha \in A \rangle \).
+
+Lemma Let \( I = \langle x^\alpha | \alpha \in A \rangle  \) be a monomial ideal. 
+Then \( x^\beta \in I \) if and only if \( x^\beta \) is divisible by \( x^\alpha \) for some \( \alpha \in A \).
+
+Dickson's Lemma
+Let \( I = \langle x^\alpha | \alpha \in A \rangle \) be a monomial ideal. 
+Then \( I \) can be written in the form \( I = \langle x^{\alpha(1)}, \dots, x^{\alpha(s)} \rangle \), where
+\( \alpha(1), \dots, \alpha(s) \in A \). In particular, I has a finite basis.
+(Here \( \alpha(1), \alpha(s) \) are denoting different elements in \( A \).)
+
+A monomial ideal \( I \subseteq k[x_1, \dots, x_n] \) has a basis \( x^{\alpha(1)}, \dots, x^{\alpha(s)} \) with
+the property that \( x^{\alpha(i)} \) does not divide \( x^{\alpha(j)} \) for \( i \neq j \). 
+Furthermore, this basis is unique and is called the minimal basis of I.
+
+
+Define Groebner bases their reduced form and Buchberger’s Criterion
+
+Groebner basis \( G = \{g_1,\ldots,g_t\} \) for an ideal \( I \): a finite generating set such that 
+\( \langle LT(G) \rangle = \langle LT(I) \rangle \) where \( \langle LT(I) \rangle \) is the ideal of the leading terms of \( I \).
+That is, for every \( f \in I \), \( LM(f) \) is divisible by \( LM(g_i) \) for some \( i \).
+
+A Groebner basis is by definition a monomial ideal but is dependent on the monomial ordering chosen.
+It can be shown that every Groebner basis is also a basis for an ideal \( I \).
+Due to Hilbert's basis theorem a Groebner basis is always finite.
+A Groebner basis is not unique but produces a unique remainder.
+
+The main obstruction to reduced Groebner bases are Syzygy's that is if \( I = \langle LT(f_1), \dots, LT(f_n) \rangle \)
+any collection of \( \{h_1, \dots, h_2\} \subset k[x_1, \dots, x_m] \) with
+\[
+    \sum_{i=1}^n h_i LT(f_i) = 0
+\]
+Those create issues since if we start our search for a basis by some set of leading terms of elements in \( I \)
+their differences might not be again in this set (their leading terms cancel each other out).
+
+For \( \text{multideg}(f) = \alpha, \text{multideg}(g) = \beta \), 
+let \( \gamma = (\gamma_1, \dots, \gamma_m) \) with \( \gamma_i = \max(\alpha_i, \beta_i) \)
+then \( x^\gamma := LCM(LM(f), LM(g)) \) is the least common multiple.
+With that notion the insight of Buchberger was to add to the initial candidate set, remainders of elements of the form 
+\( S(f, g) = \frac{x^\gamma}{LT(f)}\cdot f - \frac{x^\gamma}{LT(g)} \cdot g \).
+
+Buchberger's criterion
+Let \( I \) be a polynomial ideal. Then a basis
+\( G = \{g_1, \dots, g_t \}  \) of \( I \) is a Gröbner basis of \( I \) if and only if for all pairs \( i \neq j \), the
+remainder on division of \( S(g_i, g_j) \) by \( G \) (listed in some order) is zero.
+
+
+Reduced Groebner basis: 
+Unique for a fixed order; all leading coefficients are \( 1 \) and no monomial in any \( g_i \) 
+is divisible by the leading monomial of any other \( g_j \).
+
+A reduced Groebner basis is obtained by removing \( g_i \) from \( G \) dividing/reducing \( g_i \)
+by the set \( G \setminus \{ g \} \) and adding the remainder to \( G \setminus \{ g_i \} \) until no progress is made.
+
+
+Give applications for Groebner bases
+
+Consider the equations
+
+\[
+x^2 + y^2 + z^2 = 1 \\
+x^2 z^2 = y \\
+x = z
+\]
+then a Groebner basis for the corresponding ideal of this variety is
+\[
+g_1 = x - z \\
+g_2 = y - 2z^2 \\
+g_3 = z^4 + \frac{1}{2} z^2 - \frac{1}{4}
+\]
+the last equation can be solved and inserting the solutions into the previous equations
+gives all points (although an infinite amount) of the variety (note how much easier it is to determine the solutions in this shape).
+One can consider this as a concrete instance of elimination theory.
+
+Implicitization
+Define the parameterized curve
+\[
+x = t^4
+y = t^3
+z = t^2
+\]
+Computing a Groebner basis of the corresponding ideal gives
+\( G = \{ t^2 - z, ty - z^2, tz - y, x - z^2, y^2 - z^3 \} \)
+then we know that the curve lies in the variety, defined by \( x - z^2 = 0, y^2 - z^3 = 0 \),
+(which can be proven to be always the smallest variety containing it), which doesn't depend on the parameterization.
+Again this is an instance of Elimination theory.
+

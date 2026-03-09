@@ -1,0 +1,254 @@
+## 1. The Core Concept
+
+ANOVA tests the null hypothesis that the means of $k$ populations are equal. It does this by comparing the variance **between** groups to the variance **within** groups.
+
+* **Null Hypothesis ($H_0$):** $\mu_1 = \mu_2 = \dots = \mu_k$
+* **Alternative Hypothesis ($H_a$):** At least one $\mu_i$ is different.
+
+### Fundamental Identity
+
+The Total Sum of Squares ($SS_{Total}$) is decomposed as:
+
+
+$$SS_{Total} = SS_{Between} + SS_{Within}$$
+
+
+(Also written as $SS_{Total} = SS_{Treatment} + SS_{Error}$)
+
+---
+
+## 2. One-Way ANOVA Table
+
+This is the heart of any ANOVA problem. You will likely be asked to fill one of these out.
+
+| Source | Deg. of Freedom ($df$) | Sum of Squares ($SS$) | Mean Square ($MS$) | F-Statistic |
+Between | $k - 1$ | $SS_B$ | $MS_B = \frac{SS_B}{k-1}$ | $F = \frac{MS_B}{MS_W}$ |
+Within | $N - k$ | $SS_W$ | $MS_W = \frac{SS_W}{N-k}$ |  |
+Total | $N - 1$ | $SS_T$ |  |  |
+
+* $N$ = Total number of observations.
+* $k$ = Number of groups/levels.
+
+---
+
+## 3. Assumptions (The "LINE" mnemonic)
+
+For the F-test to be valid, the residuals ($\epsilon_{ij}$) must satisfy:
+
+1. **L**inearity/Additivity: The model is a linear combination of effects.
+2. **I**ndependence: Observations are independent (crucial for the $df$ calculation).
+3. **N**ormality: Residuals are normally distributed, $\epsilon_{ij} \sim N(0, \sigma^2)$.
+4. **E**qual Variance (Homoscedasticity): $\sigma_1^2 = \sigma_2^2 = \dots = \sigma_k^2$.
+
+---
+
+## 4. Key Formulas for $SS$
+
+If you have to calculate these by hand, use the "Computational Forms":
+
+* **$SS_{Total} = \sum X^2 - \frac{(\sum X)^2}{N}$**
+* **$SS_{Between} = \sum \frac{T_i^2}{n_i} - \frac{(\sum X)^2}{N}$** (where $T_i$ is the sum of group $i$)
+* **$SS_{Within} = SS_{Total} - SS_{Between}$**
+
+---
+
+## 5. Post-Hoc Tests
+
+If you reject $H_0$, ANOVA doesn't tell you *which* groups differ. You must use post-hoc tests to control the **Family-Wise Error Rate (FWER)**.
+
+* **Tukey’s HSD:** Used for all pairwise comparisons when group sizes are equal.
+* **Bonferroni Correction:** Very conservative; divide $\alpha$ by the number of tests ($m$): $\alpha_{new} = \frac{\alpha}{m}$.
+* **Scheffé’s Method:** Most flexible, used for "unplanned" or complex contrasts.
+
+---
+
+## 6. Effect Size: $\eta^2$ (Eta-Squared)
+
+While the p-value tells you if there is an effect, $\eta^2$ tells you the magnitude.
+
+
+$$\eta^2 = \frac{SS_{Between}}{SS_{Total}}$$
+
+
+*Interpret as the proportion of total variance explained by the grouping factor.*
+
+---
+
+## Quick Exam Tips
+
+* **The F-distribution:** Always right-skewed. The F-statistic is always positive. If $F \approx 1$, you fail to reject $H_0$.
+* **Relationship to t-test:** For $k=2$, $F = t^2$.
+* **Mean Squares:** Note that $MS_W$ (or $MS_{Error}$) is an unbiased estimator of the common population variance $\sigma^2$.
+
+Would you like me to create a similar summary for **Two-Way ANOVA** or perhaps work through a numerical example to practice the $SS$ calculations?
+
+The \( F \)-distribution is the distribution of a random variable
+\( X = \frac{\chi^2_1 / d_1}{\chi^2_2 / d_2} \), where \( \chi^2_{1}, \chi^2_{1} \) are independent chi-square distributions with df \( d_1, d_2 \) respectively.
+
+
+
+**Factor Analysis (FA)** is best understood as a statistical method for **data reduction** and **latent variable modeling**. 
+Unlike PCA (which is a linear combination of observed variables), FA assumes that observed variables are linear combinations of unobserved (latent) factors plus error.
+## 1. The Fundamental Equation
+
+In FA, we model a vector of $p$ observed variables $X$ as a linear combination of $m$ common factors $F$ and $p$ specific errors $\epsilon$.
+
+$$X = \Lambda F + \epsilon$$
+
+* $X_{p \times 1}$: Vector of observed variables ($X - \mu$).
+* $\Lambda_{p \times m}$: Matrix of **Factor Loadings** ($\lambda_{ij}$ is the loading of variable $i$ on factor $j$).
+* $F_{m \times 1}$: Vector of **Common Factors** ($E(F)=0, Var(F)=I$).
+* $\epsilon_{p \times 1}$: Vector of **Specific Factors** (Unique variance/error).
+
+### Covariance Structure
+
+The model implies the following decomposition of the covariance matrix $\Sigma$:
+$$\Sigma = \Lambda \Lambda^T + \Psi$$
+Where $\Psi = diag(\psi_1, \dots, \psi_p)$ is the variance of the specific factors.
+
+## 2. Key Terminology
+* **Communality ($h_i^2$):** The proportion of variance in variable $i$ explained by the $m$ common factors.
+$$h_i^2 = \sum_{j=1}^m \lambda_{ij}^2$$
+* **Uniqueness ($\psi_i$):** The variance "unique" to variable $i$ (not shared with others).
+$$\psi_i = 1 - h_i^2$$
+
+* **Eigenvalues:** In the context of FA, these represent the amount of variance explained by each factor.
+* **Factor Score:** The estimated value of a latent factor for a specific observation.
+
+## 3. Exploratory Factor Analysis (EFA) Process
+
+### Step A: Check Factorability
+
+Before running FA, ensure your data is suitable:
+
+* **Kaiser-Meyer-Olkin (KMO):** Measures sampling adequacy (Value $> 0.6$ is generally acceptable).
+* **Bartlett’s Test of Sphericity:** Tests $H_0: \Sigma = I$. You want to **reject** this to prove variables are correlated.
+
+### Step B: Extraction Methods
+
+* **Principal Axis Factoring (PAF):** Analyzes shared variance; preferred when normality is violated.
+* **Maximum Likelihood (ML):** Best if data is multivariate normal; allows for goodness-of-fit tests.
+
+### Step C: Determining the Number of Factors ($m$)
+
+1. **Kaiser Criterion:** Keep factors with eigenvalues $> 1$.
+2. **Scree Plot:** Look for the "elbow" where the eigenvalues level off.
+3. **Parallel Analysis:** Compare your eigenvalues to those from a random dataset of the same size.
+
+---
+
+## 4. Factor Rotation
+
+The initial solution $\Lambda$ is not unique (the "Rotation Problem"). We rotate $\Lambda$ to achieve **Simple Structure** (where each variable loads highly on only one factor).
+ **Varimax (Orthogonal)** Minimizes number of factors. | Focuses on explaining one general factor.
+ **Promax / Oblimin (Oblique)** Factors **can be correlated**. | More realistic for human/social behaviors.
+## 5. PCA vs. Factor Analysis
+This is a frequent exam question for mathematicians.
+| Feature | PCA | Factor Analysis (FA) |
+| **Goal** | Variance Maximization. | Correlation Explanation. |
+| **Model** | $PC = w_1X_1 + w_2X_2 \dots$ | $X = \lambda_1F_1 + \lambda_2F_2 + \epsilon$ |
+| **Variance** | Analyzes **Total** variance. | Analyzes **Shared** (Common) variance. |
+| **Latent Variable** | No; components are just math constructs. | Yes; assumes factors "cause" the variables. |
+
+## Quick Exam Tips
+
+* **Indeterminacy:** Unlike PCA, factor scores in FA are estimated, not calculated exactly.
+* **Loading Interpretation:** Loadings are essentially the correlation between the variable and the factor (for orthogonal rotations). 
+$\lambda_{ij}^2$ is the percent variance explained.
+* **Heywood Case:** If an estimation results in a communality $h^2 > 1$ or negative uniqueness, it's a mathematical impossibility usually caused by too few samples or too many factors.
+
+
+
+PCA
+---
+
+## 1. The Optimization Objective
+
+Given a centered data matrix $X$ ($n \times p$) where each column has mean zero, we seek a direction $w \in \mathbb{R}^p$ ($||w|| = 1$) that maximizes the variance of the projected data.
+
+The variance of the projection $Xw$ is:
+
+
+$$\text{Var}(Xw) = \frac{1}{n-1} (Xw)^T(Xw) = w^T \left( \frac{X^T X}{n-1} \right) w = w^T \Sigma w$$
+
+
+where $\Sigma$ is the $p \times p$ sample covariance matrix.
+
+Using the **Rayleigh Quotient**, the maximum of $w^T \Sigma w$ subject to $||w|| = 1$ is achieved when $w$ is the eigenvector corresponding to the largest eigenvalue of $\Sigma$.
+
+---
+
+## 2. Eigendecomposition of $\Sigma$
+
+Since $\Sigma$ is a symmetric, positive semi-definite matrix, the **Spectral Theorem** guarantees:
+
+
+$$\Sigma = V \Lambda V^T$$
+
+* **$V$:** An orthogonal matrix ($V^T V = I$) whose columns $v_1, v_2, \dots, v_p$ are the eigenvectors (Principal Components).
+* **$\Lambda$:** A diagonal matrix of eigenvalues $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_p \ge 0$.
+
+### Key Mathematical Properties:
+
+* **Total Variance:** $\text{Tr}(\Sigma) = \sum_{i=1}^p \text{Var}(X_i) = \sum_{i=1}^p \lambda_i$.
+* **Proportion of Variance Explained (PVE):** For the $k$-th component, $PVE_k = \frac{\lambda_k}{\sum \lambda_i}$.
+* **Orthogonality:** The principal components are orthogonal by construction, meaning the scores (projected data) are uncorrelated: $\text{Cov}(Xv_i, Xv_j) = 0$ for $i \neq j$.
+
+---
+
+## 3. Connection to Singular Value Decomposition (SVD)
+
+SVD is the more numerically stable way to compute PCA without explicitly forming $\Sigma$.
+For a centered matrix $X$:
+
+
+$$X = U D V^T$$
+
+* **$V$:** The right singular vectors of $X$ (identical to the eigenvectors of $\Sigma$).
+* **$U$:** The left singular vectors of $X$ (eigenvectors of $XX^T$).
+* **$D$:** A diagonal matrix of singular values $s_i$.
+
+**The Identity:** The eigenvalues of $\Sigma$ are related to the singular values of $X$ by:
+
+
+$$\lambda_i = \frac{s_i^2}{n-1}$$
+
+---
+
+## 4. PCA as Best Low-Rank Approximation
+
+The **Eckart-Young-Mirsky Theorem** states that if we want to find a matrix $\hat{X}$ of rank $k < p$ that minimizes the Frobenius norm $||X - \hat{X}||_F$, the solution is:
+
+
+$$\hat{X}_k = \sum_{i=1}^k s_i u_i v_i^T$$
+
+
+This proves that PCA provides the optimal $k$-dimensional linear subspace for representing the data in terms of minimizing reconstruction error (Mean Squared Error).
+
+---
+
+## 5. Geometric Interpretation
+
+PCA can be viewed as a rigid rotation of the coordinate axes to a new system where:
+
+1. The first axis ($v_1$) lies along the direction of maximum sample variance.
+2. Each subsequent axis ($v_k$) is orthogonal to the previous ones and captures the maximum remaining variance.
+3. The coordinates of the data points in this new system are called **Principal Component Scores**, $Z = XV$.
+
+---
+
+## 6. Mathematical Constraints and Nuances
+
+* **Mean Centering:** Crucial. If $X$ is not centered, the first PC will likely point toward the mean of the data rather than the direction of maximum variance.
+* **Scaling (Correlation vs. Covariance):** PCA on the covariance matrix $\Sigma$ is sensitive to units. PCA on the **Correlation Matrix** $R$ (where $R_{ij} = \frac{\sigma_{ij}}{\sigma_i \sigma_j}$) is equivalent to performing PCA on standardized data ($z$-scores).
+* **Invariance:** PCA is rotationally invariant but **not** scale-invariant.
+
+---
+
+## Quick Exam Identifiers
+
+* **The "Trace" Property:** $\sum \text{Var}(X_{original}) = \sum \text{Var}(PC_{scores})$.
+* **Determinant:** $|\Sigma| = \prod \lambda_i$. If any $\lambda_i = 0$, the data lives in a lower-dimensional degenerate subspace (multi-collinearity).
+* **Projection Matrix:** The matrix $P_k = V_k V_k^T$ is the orthogonal projector onto the $k$-dimensional principal subspace.
+
+Would you like me to derive the **Lagrangian** for the PCA optimization problem, or perhaps explain the **Kernel PCA** extension for non-linear dimensionality reduction?

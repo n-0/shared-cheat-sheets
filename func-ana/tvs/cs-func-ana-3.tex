@@ -1,0 +1,280 @@
+Define sublinear functions, relate them to seminorms
+
+Recall subadditivity: \( f(x + y) \leq f(x) + f(y) \) for all \( x, y \in X \)
+
+A real function \( f : X \to \mathbb{R} \) on a vector space is sublinear if it is both
+positively homogeneous and subadditive, or equivalently, if it is both positively
+homogeneous and convex.
+
+A seminorm is a subadditive function \( p : X \to \mathbb{R} \) satisfying
+\( p(\alpha x) = |\alpha|x \)
+for all \( \alpha \in \mathbb{R} \) and \( x \in X \).
+A seminorm \( p \) is a norm if and only if \( p(x) = 0 \iff x = 0 \)
+
+Every seminorm is sublinear and a sublinear function satisfying \( f(x) = f(-x) \) is also a seminorm.
+
+If \( p : X \to \mathbb{R} \) is sublinear, then:
+1. \( p(0) = 0 \).
+2. For all \( x \) we have \( - p(x) \leq p(-x) \). Consequently \( p \) is linear if and only if
+\( p(-x) = - p(x) \) for all \( x \in X \).
+3. The function \( q(x) := \text{max}(p(x), p(-x)) \) is a seminorm.
+4. If \( p \) is a seminorm, then \( p(x) \geq 0 \) for all \( x \).
+5. If \( p \) is a seminorm, then the set \( \{ x : p(x) = 0\} \) is a linear subspace.
+
+A nonnegative sublinear function on a tvs is:
+1. Lower semicontinuous if and only if it is the gauge/Minkowski functional of an absorbing closed
+convex set.
+2. Continuous if and only if it is the gauge of a convex neighborhood of zero.
+
+(Verification of linear cont. functions)
+A linear functional on a tvs is continuous if and only if it is dominated by a continuous seminorm.
+
+
+
+What are Gauges/Minkowski functionals? State some useful theorems about them
+
+The gauge or the Minkowski functional, \( p_A \) of a subset \( A \subseteq X \) 
+is defined as
+\( p_A(x) = \text{inf} \{ \alpha > 0 : x \in \alpha A\} \)
+where, by convention, \( \text{inf} \emptyset = \infty \) 
+In other words, \( p_A(X) \) is the smallest factor by which the set \( A \) 
+must be enlarged to contain the point \( x \).
+
+The gauge satisfies the following properties:
+**Lemma**  
+For nonempty subsets \( B \) and \( C \) of a vector space \( X \):
+1. \( p_C(x) = p_C(-x) \) for all \( x \in X \).
+2. If \( C \) is symmetric, then \( p_C(x) = p_C(-x) \) for all \( x \in X \).
+3. \( B \subset C \) implies \( p_C \leq p_B \).
+4. If \( C \) includes a subspace \( M \), then \( p_C(x) = 0 \) for all \( x \in M \).
+5. If \( C \) is star-shaped about zero, then  
+   \[
+   \{ x \in X : p_C(x) < 1 \} \subset C \subset \{ x \in X : p_C(x) \leq 1 \}.
+   \]
+6. If \( X \) is a tvs and \( C \) is closed and star-shaped about zero, then  
+   \[
+   C = \{ x \in X : p_C(x) \leq 1 \}.
+   \]
+7. If \( B \) and \( C \) are star-shaped about zero, then \( p_{B \vee C} = p_B \vee p_C \), where as usual  
+   \[
+   (p_B \vee p_C)(x) = \max \{ p_B(x), p_C(x) \}.
+   \]
+
+
+For a nonnegative function \( p : X \to \mathbb{R} \) on a vector space, we have the following:
+1. \( p \) is positively homogeneous if and only if it is the gauge of an absorbing set—in which case for every subset \( A \) of \( X \) satisfying  
+   \[
+   \{ x \in X : p(x) < 1 \} \subset A \subset \{ x \in X : p(x) \leq 1 \}
+   \]  
+   we have \( p_A = p \).
+2. \( p \) is sublinear if and only if it is the gauge of a convex absorbing set \( C \), in which case we may take \( C = \{ x \in X : p(x) \leq 1 \} \).
+
+3. \( p \) is a seminorm if and only if it is the gauge of a circled convex absorbing set \( C \), in which case we may take \( C = \{ x \in X : p(x) \leq 1 \} \).
+4. When \( X \) is a tvs, \( p \) is a continuous seminorm if and only if it is the gauge of a unique closed, circled and convex neighborhood \( V \) of zero, namely  
+   \[
+   V = \{ x \in X : p(x) \leq 1 \}.
+   \]
+5. When \( X \) is finite dimensional, \( p \) is a norm if and only if it is the gauge of a unique circled, convex and compact neighborhood \( V \) of zero, namely  
+   \[
+   V = \{ x \in X : p(x) \leq 1 \}.
+   \]
+
+
+
+What is a dual pairing and the corresponding topology?
+
+A dual pair (or a dual system) is a pair \((X, X')\) of vector spaces together with a bilinear functional \((x, x') \mapsto \langle x, x' \rangle\), from \(X \times X'\) to \(\mathbb{R}\), that separates the points of \(X\) and \(X'\). That is:
+1. The mapping \(x' \mapsto \langle x, x' \rangle\) is linear for each \(x \in X\).
+2. The mapping \(x \mapsto \langle x, x' \rangle\) is linear for each \(x' \in X'\).
+3. If \(\langle x, x' \rangle = 0\) for each \(x' \in X'\), then \(x = 0\).
+4. If \(\langle x, x' \rangle = 0\) for each \(x \in X\), then \(x' = 0\).
+
+3-4 mean that they separate points of each other (total).
+
+Since we can consider X to be a vector subspace of \( \mathbb{R}^{X'} \), \( X \)  inherits the product topology of \( \mathbb{R}^X \). 
+This topology is referred to as the weak topology on \( X \) and is denoted \( \sigma(X, X') \), 
+or simply \( w \). Since the product topology on \( \mathbb{R}^{X'} \) is a locally
+convex Hausdorff topology, the weak topology \( \sigma(X, X') \) is likewise Hausdorff and locally convex.
+As \( x_{\alpha} \to^{w} x \iff \langle x_{\alpha}, x' \rangle \to \langle x, x' \rangle \) in \( \mathbb{R} \)
+this is also called the topology of pointwise convergence on \( X' \).
+
+A family of seminorms that generates the weak
+topology \( \sigma(X, X') \) is \( \{p : x' : x' \in X'\} \), where
+\( p_{x'}(x) = \|\langle x, x' \rangle\| \)
+
+The analogous construction for \( \sigma(X', X) \) is called the \( w^\ast \)-topology
+The central strength with this construction is that all possible topologies are identified by certain choices of the dual
+(which is not unique in the infinite dimensional case)
+
+If \( \langle X, X' \rangle \) is a dual pair, then
+the topological dual of the TVS \( (X, \sigma(X, X')) \) is \( X' \), meaning
+if \( f : X \to \mathbb{R} \) is cont. with respect to \( \sigma(X, X') \), then there is some unique
+\( x' \in X' \) s.t. \( f(x) = \langle x, x' \rangle \) for all \( x \in X \).
+
+A locally convex topology \( \tau \) on \( X \) is consistent (or compatible)
+with the dual pair \( (X, X') \) if \( (X, \tau)' = X' \). 
+
+Suprisingly, there are many stronger topologies which are consistent with \( (X, X') \) aside from \( \sigma(X, X') \).
+Every topology consistent with a dual pair is Hausdorff.
+All locally convex topologies consistent with a given dual pair have the same collection of closed convex sets.
+
+
+Define the polar of a pairing
+
+1. For a dual pair \((X, X')\), the absolute polar, or simply the polar, \(A^{\circ}\) of a nonempty subset \(A\) of \(X\), 
+is the subset of \(X'\) defined by  
+\[
+A^{\circ} = \{ x' \in X' : \left| \langle x, x' \rangle \right| \leq 1 \text{ for all } x \in A \}.
+\]
+2. The bipolar of a subset \(A\) of \(X\) or \(X'\) is the set \((A^{\circ})^{\circ}\), written simply as \(A^{\circ \circ}\).  
+3. The one-sided polar of \(A \subset X\), denoted \(A^{\ominus}\), is defined by  
+\[
+A^{\ominus} = \{ x' \in X' : \langle x, x' \rangle \leq 1 \text{ for all } x \in A \}.
+\]
+
+These definitions are analogous for \( X' \).
+
+Let \(A, B\) be nonempty subsets of \(X\), and let \(\{A_i\}\) be a family of nonempty subsets of \(X\). Then:
+1. If \(A \subset B\), then \(A^{\circ} \supset B^{\circ}\) and \(A^{\ominus} \supset B^{\ominus}\).
+2. If \(\varepsilon \neq 0\), then \((\varepsilon A)^{\circ} = \frac{1}{\varepsilon} A^{\circ}\) and \((\varepsilon A)^{\ominus} = \frac{1}{\varepsilon} A^{\ominus}\).
+3.
+\[
+\bigcap A_i^{\circ} = \left(\bigcup A_i\right)^{\circ}
+\]
+and
+\[
+\bigcap A_i^{\ominus} = \left(\bigcup A_i\right)^{\ominus}.
+\]
+4. The absolute polar \(A^{\circ}\) is nonempty, convex, circled, \(\sigma(X', X)\)-closed, and contains zero.
+5. The one-sided polar \(A^{\ominus}\) is nonempty, convex, \(\sigma(X', X)\)-closed, and contains zero.
+6. If \(A\) is absorbing, then both \(A^{\circ}\) and \(A^{\ominus}\) are \(\sigma(X', X)\)-bounded.
+7. The set \(A\) is \(\sigma(X, X')\)-bounded if and only if \(A^{\circ}\) is absorbing.
+The corresponding dual statements are true for subsets of \(X'\).
+
+
+State the bipolar theorem and the polar version of Alaoglu’s compactness theorem
+
+Bipolar Theorem  
+Let \((X, X')\) be a dual pair, and let \(A\) be a nonempty subset of \(X\).
+
+1. The bipolar \(A^{\circ\circ}\) is the convex circled \(\sigma(X, X')\)-closed hull of \(A\). Hence if \(A\) is convex, circled, and \(\sigma(X, X')\)-closed, then \(A = A^{\circ\circ}\).
+2. The one-sided bipolar \(A^{\ominus\ominus}\) is the convex \(\sigma(X, X')\)-closed hull of \(A \cup \{0\}\). Hence if \(A\) is convex, \(\sigma(X, X')\)-closed, and contains zero, then \(A = A^{\ominus\ominus}\).
+Corresponding results hold for subsets of \(X'\).
+
+
+Let \( V \) be a neighborhood of zero for some locally convex topology on \( X \) consistent with the dual pair 
+\( (X, X') \). Then its polar \( V^\circ \) is a \( w^\ast \)-compact subset of \( X' \).
+Similarly, if \( W \) is a neighborhood of zero for some consistent locally convex
+topology on \( X' \), then its polar \( W^\circ \) is a weakly compact subset of \( X \).
+
+Relate the polar to the annhilator of a subspace.
+
+Let \( (X, X') \) be a dual pair and let \( M \) be a linear subspace of \( X \).
+Then \( M^{\bot} = M^{\ominus} = M^\circ \). If \( M \) is weakly closed, then \( M^{\bot \bot} = M \).
+An analogous result holds for linear subspaces of \( X' \).
+
+Let \( (X, X') \) be a dual pair and let
+\( Y' \) be a linear subspace of \( X' \). Then the following are equivalent.
+1. \( Y' \) is total. That is, \( Y' \) separates points of \( X \).
+2. \( (Y')^{\bot} = \{0\} \).
+3. \( Y' \) is weak* dense in \( X \).
+The corresponding symmetric result is true for subspaces of \( X \).
+
+
+
+Define Polar Topologies (\( \mathfrak{G} \)-topologies)
+
+We start with an arbitrary nonempty \( \sigma(X', X) \)-bounded
+\( A \subseteq X' \). Then 
+\[
+    q_A(x) = \sup \{ \|\langle x, x' \rangle : x' \in A \|\}  
+\]
+is a seminorm on \( X \). Further \( A^\circ = \{x \in X : q_A(x) \leq 1\} \)
+and this is related to the Minkowski funtional via
+\[
+    q_A(x) = \inf \{ \alpha > 0 : x \in \alpha A^\circ \} = p_{A^\circ}(x)
+\]
+By the bipolar theorem we can also deduce \( q_A = q_{A^{\circ \circ}} \).
+
+Now let \( S \) be a family of nonempty \( \sigma(X', X) \)-bounded subsets of \( X' \). 
+The corresponding polar topology \( \mathfrak{S} \)-topology on \( X \) is the locally convex topology 
+generated by the family of seminorms \( q_A : A \in S \). 
+Equivalently, it is the topology generated by the neighborhood subbase (so all intersections of the following)
+\( \{\varepsilon A^\circ : A \in S \text{ and } \varepsilon > 0\} \) 
+at the origin.
+
+The \( \mathfrak{S} \)-topology is Hausdorff if and only if the
+span of the set \( \bigcup_{A \in \mathfrak{S}} A \) is \( \sigma(X', X) \)-dense in \( X' \). 
+TFAE:
+1. \( x_\alpha \to^{\mathfrak{S}} x \) in \( X \) 
+2. \( q_A(x_\alpha − x) \to 0 \) for all \( A \in \mathfrak{S} \)
+3. \( \{x_\alpha\} \) converges uniformly to \( x \) on each \( A \in \mathfrak{S} \).
+this motivates to call the polar topology also the topology of uniform convergence on members of \( \mathfrak{S} \).
+
+Remarkably, every consistent locally convex topology on X (or on \( X' \)) is an \( \mathfrak{S} \)-topology,
+which is referred to as the Mackey–Arens Theorem.
+
+The weak topology \( \sigma(X, X') \) is the coarsest locally convex topology on \( X \) consistent with 
+\( (X, X') \). The finest consistent locally convex topology on \( X \) is by the \( \mathfrak{S} \)-topology for 
+\( \mathfrak{S} \)consisting of all convex, circled, \( \sigma(X', X) \)-compact subsets of \( X' \). 
+This is called the Mackey topology and denoted \( \tau(X, X') \).
+
+Lemma (Mackey neighborhoods)  
+If a nonempty subset \(K\) of \(X'\) is \(\sigma(X', X)\)-compact, 
+then the one-sided polar \(K^{\ominus}\) is a convex \(\tau(X, X')\) (Mackey) neighborhood of zero in \(X\). 
+Conversely, the one-sided polar \(V^{\ominus}\) of an arbitrary \(\tau(X, X')\)-neighborhood \(V\) of zero is 
+nonempty, convex, and \(\sigma(X', X)\)-compact.
+
+Note that the strong topology generated by all \( \sigma(X', X) \)-bounded subsets in \( X' \) is not always consistent with \( (X, X') \),
+however for a normed space \( X \), the Mackey topology, the strong topology, and the norm topology are the same.
+Its topological bidual is the traditional (algebraic) bidual, and is therefore relevant in questions of reflexivity for non normable TVS.
+
+
+State the main differences for the topologies in the finite and infinite dimensional case 
+
+For a normed space \( X \) tfae:
+1. The vector space \( X \) is finite dimensional.
+2. The weak and norm topologies on \( X \) coincide.
+3. The weak topology on \( X \) is metrizable.
+4. The weak topology is first countable.
+
+The weak interior of every closed or open ball in an infinite dimensional normed space is empty.
+
+In any infinite dimensional normed space, the closed unit sphere is weakly dense in the closed unit ball.
+A normed space is separable if and only if the closed unit ball of its dual space is \( w^\ast \) -metrizable.
+
+Banach-Alaoglu Theorem
+If \( X \) is a normed space then the closed unit ball in the continuous dual space \( X' \)
+(endowed with its usual operator norm) is compact with respect to the \( w^\ast \)-topology.
+
+The dual \( X' \) of a Banach space \( X \) is separable if and only if the unit ball of \( X \) is weakly metrizable.
+If the dual \( X' \) of a normed space \( X \) includes a countable total set, then every weakly compact subset of \( X \) is weakly metrizable.
+
+
+State the standard collection of theorems for weak compactness in Banach spaces
+
+Grothendiecks Theorem:
+A subset \( A \) of a Banach space \( X \) is relatively weakly compact if and only if for each \( \varepsilon > 0 \) 
+there exists a weakly compact set \( W \) such that \( A \subseteq W + \varepsilon U \), where \( U \) denotes the closed unit ball of \( X \).
+
+Eberlein–Šmulian Theorem:
+In the weak topology on a normed space, compactness and sequential compactness coincide. 
+That is, a subset \(A\) of a normed space \(X\) is relatively weakly compact (respectively, weakly compact) 
+if and only if every sequence in \(A\) has a weakly convergent subsequence in \(X\) (respectively, in \(A\)).
+
+Krein–Šmulian Theorem:
+In a Banach space, both the convex circled hull and the convex hull of a relatively weakly compact set are relatively weakly compact sets.
+
+James' Theorem:
+A nonempty weakly closed bounded subset of a Banach space is weakly compact if and only if 
+every continuous linear functional attains a maximum on the set.
+
+
+Bishop-Phelps
+Let \(B \subseteq X\) be a bounded, closed, convex subset of a real Banach space \(X.\) 
+Then the set of all cont. lin. \(f\) that achieve their supremum on \(B\) 
+(meaning that there exists some \(b_0 \in B\) such that \(|f(b_0)| = \sup_{b \in B} |f(b)|\)) 
+\[
+\left\{f \in X^* : f \text{ attains its supremum on } B\right\} 
+\]
+is (dual norm)-dense in the \( X' \).

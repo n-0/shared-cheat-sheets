@@ -1,0 +1,259 @@
+State James Theorem and its Lemmas
+
+
+The lemmas leading to James Theorem are:
+Let \(X\) be a Banach space and \(A\) a weakly closed nonempty subset of \(X.\) The following conditions are equivalent:
+* \(A\) is weakly compact.
+* For every \(f \in X^{\prime},\) there exists an element \(a_0 \in A\) such that \(\left|f\left(a_0\right)\right| = \sup_{a \in A} |f(a)|\).
+* For any \(f \in X^{\prime}_{\mathbb{R}},\) there exists an element \(a_0 \in A\) such that \(f\left(a_0\right) = \sup_{a \in A} |f(a)|\).
+* For any \(f \in X^{\prime}_{\mathbb{R}},\) there exists an element \(a_0 \in A\) such that \(f\left(a_0\right) = \sup_{a \in A} f(a)\).
+
+A Banach space being reflexive if and only if its closed unit ball is weakly compact one deduces from this, 
+since the norm of a continuous linear form is the upper bound of its modulus on this ball:
+
+James's theorem
+A Banach space \(X\) is reflexive if and only if for all \(f \in X^{\prime},\) 
+there exists an element \(a \in X\) of norm \(\|a\| \leq 1\) such that \(f(a) = \|f\|\)
+
+
+State the Theorem of Bishop \& Phelps
+
+
+Let \(B \subseteq X\) be a bounded, closed, convex subset of a real [[Banach space]] \(X.\) Then the set of all continuous linear functionals \(f\) that achieve 
+their supremum on \(B\) (meaning that there exists some \(b_0 \in B\) such that \(|f(b_0)| = \sup_{b \in B} |f(b)|\)) 
+\[
+    \left\{f \in X^\ast : f \text{ attains its supremum on } B\right\}
+\]
+is Dual norm-dense in the continuous dual space \(X^*\) of \(X.\) 
+
+Importantly, this theorem fails for complex Banach spaces.
+However, for the special case where \(B\) is the closed unit ball then this theorem does hold for complex Banach spaces.
+
+
+Explain the concept of the weak derivative
+
+
+For functions \( u, \phi \in H^1_1([a, b]), [a, b] \subset \mathbb{R} \) (Sobolev-Space) integration by parts states
+\[
+    \int_a^b u \phi' dx = \left [u \phi]_a^b - \int_a^b u' \phi dx \right.
+\]
+The weak derivative of a function \( u \in L^p([a, b]) \) (so only integrable but not cont. differentiable) is a function 
+\( v \in L^p([a, b]) \) which mimics this rule:
+\[
+    \int_a^b u \phi' dx = \left [u \phi]_a^b - \int_a^b v' \phi dx \right.
+\]
+This is dependent on the choice of test functions \( \phi \) (and \( v \) should fit for all \( \phi \) in the choosen family), 
+typically these are bump functions \( C^\infty_{c}([a, b]) \) and alike, hence \( \phi(a) = \phi(b) = 0 \), so the formula simplifies 
+and we have in general for locally integrable function \( L^1_{\text{loc}}(U) \) and \( U \subseteq \mathbb{R}^n \)
+and multi-index \( \alpha \):
+\[
+    \int_U u D^\alpha \phi = (-1)^{|\alpha|} \int_U v \phi.
+\]
+
+Example:
+The characteristic function of the rational numbers \( \mathbf{1}_{\mathbb{Q}} \) with integration in respect to the Lebesgue measure
+satisfies
+\[
+    \int \mathbf{1}_{Q} \phi d\lambda = 0
+\]
+hence \( v = 0 \) is a weak derivative of \( \mathbf{1} \).
+
+
+
+Explain the weak formulation of PDE's and its relation to the Lax-Milgram Theorem
+
+Let \(V\) be a [[Banach space]], let \(V'\) be the [[dual space]] of \(V\), let \(A\colon V \to V'\) be a [[linear map]], and let \(f \in V'\). 
+A vector \(u \in V\) is a solution of the equation
+
+\[ Au = f \]
+
+if and only if for all \(v \in V\),
+
+\[(Au)(v) = f(v).\]
+A particular choice of \(v\) is called a test vector (in general) or a test function (if \(V\) is a function space).
+
+To bring this into the generic form of a weak formulation, find \(u\in V\) such that
+
+\[
+    a(u,v) = f(v) \quad \forall v \in V,
+\]
+
+by defining the bilinear form (e.g. a matrix in the finite dim. case):
+
+\[
+    a(u,v) := (Au)(v).
+\]
+
+Let \(V\) be a real [[Hilbert space]] and \(a( \cdot ,\cdot )\) a [[bilinear form]] on {{nowrap|\(V\),}} which is
+* bounded: \(|a(u,v)| \le C \|u\| \|v\|\) and
+* coercive: \(a(u,u) \ge c \|u\|^2\)
+
+Then, for any bounded \(f\in V'\), there is a unique solution \(u\in V\) to the equation
+\[
+    a(u,v) = f(v) \quad \forall v \in V
+\]
+and it holds
+\[
+    |u\| \le \frac1c \|f\|_{V'}
+\]
+
+To solve Poisson's equation
+\(\nabla^2 u = f,\)
+
+on a domain \(\Omega\subset \mathbb R^d\) with \(u=0\) on its boundary (topology), 
+and to specify the solution space \(V\) later, one can use the \(L^2\) scalar product
+
+\[
+    \langle u,v\rangle = \int_\Omega uv\,dx
+\]
+to derive the weak formulation. Then, testing with differentiable function \(v\) yields
+
+\[
+    \int_\Omega ( \nabla^2 u ) v \,dx = \int_\Omega fv \,dx.
+\]
+
+The left side of this equation can be made more symmetric by integration by parts using Green's identity 
+and assuming that \(v=0\) on \(\partial\Omega\):
+
+\[
+    \int_\Omega \nabla u \cdot \nabla v \,dx = \int_\Omega f v \,dx.
+\]
+
+This is what is usually called the weak formulation of Poisson's equation.
+
+The relation to Lax-Milgram's Theorem is:
+Here, choose \(V = H^1_0(\Omega)\) with the norm
+\[
+    \|v\|_V := \|\nabla v\|,
+\]
+
+where the norm on the right is the \(L^2\)-norm on \(\Omega\) (this provides a true norm on \(V\) by the Poincaré inequality.
+But, we see that \(|a(u,u)| = \|\nabla u\|^2\) and by the Cauchy–Schwarz inequality, \(|a(u,v)| \le \|\nabla u\|\,\|\nabla v\|\).
+
+Therefore, for any \(f \in [H^1_0(\Omega)]'\), there is a unique solution \(u\in V\) of Poisson's equation and we have the estimate
+\[
+\|\nabla u\| \le \|f\|_{[H^1_0(\Omega)]'}
+\]
+
+
+More generally for a PDE operator defined on some open \( U \subset \mathbb{R}^n \)
+\[
+P(x, \partial)u(x)=\sum a_{\alpha_1, \alpha_2, \dots, \alpha_n}(x) \, \partial^{\alpha_1}\partial^{\alpha_2}\cdots \partial^{\alpha_n} u(x), 
+\]
+The PDE
+\[
+P(x, \partial)u(x) = 0
+\]
+can be transformed into the weak form by multiplying and integrating with a test function
+\[
+\int_W u(x) Q(x, \partial) \varphi (x) dx =0,
+\]
+where 
+\[
+    Q(x, \partial)\varphi (x) = \sum (-1)^{| \alpha |} \partial^{\alpha_1} \partial^{\alpha_2} \cdots \partial^{\alpha_n} \left[a_{\alpha_1, \alpha_2, \dots, \alpha_n}(x)  \varphi(x) \right]
+\]
+Formally \( Q(x, \partial) \) is formal adjoint of \( P(x, \partial) \).
+
+
+What is the space of distributions
+
+The spaces of test functions and distributions are TVSs that are used in the definition and application of distributions. 
+Test functions are usually \( C^\infty_c(U) \) for \( U \subset \mathbb{R}^n  \) (i.e. smooth functions with compact support in \( U \)). 
+One is often interested in some restrictions e.g. \( C^k_c(U) \) and we endow the space with a certain topology, 
+called the canonical LF-topology (locally convex inductive limit of a countable many Fréchet spaces), that makes 
+\( C_{\text{c}}^{k}(U) \) into a complete Hausdorff locally convex TVS. The strong dual space of 
+\( C_{\text{c}}^{k}(U) \) is called the \textbf{space of distributions} on  \( U \)
+and is denoted by \( \mathcal{D}^{\prime }(U) \), endowed with the strong dual topology.
+
+The LF-topology is quite technical and is the locally convex colimit of countable many Fréchet spaces
+and it is a final topology since they contain each other.
+For the distributions these are given by choosing a chain of compact sets \( \{K_i\}_{i \in \mathbb{N}} \) s.t. \( \cup_{i \in \mathbb{N}} K_i = \mathbb{R}^n \)
+and taking the colimit of \( \{ C^\inf_c(K_i) \}_{i \in \mathbb{N}} \). It has a metric.
+The strong dual topology is as usual the topology of uniform convergence on bounded subsets of \( C^\infty_c(U) \).
+
+Sometimes one is interested more in well-behaved subspaces of \( \mathcal{D}^{\prime'}(U) \). 
+One common example is the space of Schwarz functions/tempered distributions, which have Fourier Transformations. 
+
+Proposition: If \( T \) is a linear functional on \( C_c^\infty(U) \) then the \( T \) is a distribution if and only if the following equivalent conditions 
+for all compact \( K \subseteq U \) are satisfied
+1. There exist constants 
+\( |T(f)|\leq C\sup\{|\partial ^{\alpha }f(x)|:x\in U,|\alpha |\leq N\}.)
+2. \( |T(f)|\leq C\sup\{|\partial ^{\alpha }f(x)|:x\in K,|\alpha |\leq N\}. \)
+3. If for any sequence \( {\partial ^{\alpha }f_{i}\}_{i=1}^{\infty }} \) converges uniformly to zero on \( K \) for all multi-indices \( \alpha \), then 
+\(T(f_{i})\to 0.\)
+
+Further equivalent definitions are that 
+1. \( T \) is cont.
+2. \( T \) is uniformly cont.
+3. \( T \) is a bounded operator
+4. \( T \) is seq. cont.
+A distribution is the further restriction 
+
+For compact \( K \) and \( k = \infty \) \( C^k_c(K) \) has no metric. If \( k < \infty \) the space is Banach and has a norm/metric, given by 
+\[
+    |f| = \sup_{|p| < k} \left \sup_{x_0 \in K} | \partial^p  f(x_0) | \right)
+\]
+For open \( U \), \( C^k_c(U) \) has never a norm.
+
+One can also define the transpose of a distribution, which allows to identify all Radon measures as distributions of \( C^0_c(U) \).
+\( D^{\prime}(U) \) as the the dual of \( C^k_c(U) \) makes all linear partial differential operators of order \( k \) to distributions.
+
+
+Give some typical geometric classifications of sets in TVS and its relation to NHDs bases
+
+A subset \( A \) of a vector space is:
+1. convex, if it includes the line segment joining any pair of its points.
+2. absorbing (or radial) if for any \( x \) some multiple of \( A \) includes the line segment joining \( x \) and zero. 
+That is, if there exists some \( \alpha_0 > 0 \) satisfying \( \alpha x \in A \) for every \( 0 \leq \alpha \leq \alpha_0 \)
+Equivalently, \( A \) is absorbing if for each vector \( x \) there exists some \( \alpha_0 > 0 \) such that \( \alpha x\in A \) whenever \( - \alpha_0 \leq \alpha \leq \alpha_0 \)
+3. circled (or balanced) if for each \( x \in A \) the line segment joining \( x \) and \( -x \) lies in A. 
+That is, if for any \( x \in A \) and any \( |\alpha| \lq 1 \), we have \( \alpha x \in A \).
+4. symmetric if \( x \in A \) implies \( - x \in A \).
+5. star-shaped about zero if it includes the line segment joining each of its points with zero. 
+That is, if for any \( x \in A \) and any \( 0 \leq \alpha \leq 1 \) we have \( \alpha x \in A \).
+
+Structure Theorem If \( (X, \tau) \) is a tvs, then there is a neighborhood base \( \mathcal{B} \) at zero such that:
+1. Each \( V \in \mathcal{B} \) is absorbing.
+2. Each \( V \in \mathcal{B} \) is circled.
+3. For each \( V \in \mathcal{B} \) there exists some \( W \in \mathcal{B} \) with \( W + W \subset V \).
+4. Each \( V \in \mathcal{B} \) is closed.
+Conversely, if a filter base \( \mathcal{B} \) on a vector space X satisﬁes properties \( (1-3) \), 
+then there exists a unique linear topology \( \tau \) on X having \( \mathcal{B} \) as a neighborhood base at zero.
+
+A Hausdorff topological vector space is metrizable if and only
+if zero has a countable neighborhood base. In this case, the topology is generated
+by a translation invariant metric.
+
+
+
+Define dual pairs and dual topologies induced by subspaces.
+
+A dual pair (or a dual system) is a pair \( \langle X, X' \rangle \) of vector
+spaces together with a bilinear functional  \( (x, x') \mapsto \langle x, x' \rangle \) from \( X \times X' \to \mathbb{R} \), that
+separates the points of \( X \) and \( X' \). That is:
+1. The mapping \( \langle \cdot, \cdot, \rangle \) is bilinear.
+2. Fix \( x \) in, if \( \langle x, x', \rangle = 0 \), for all \( x' \in X' \) then \( X = 0 \) and the symmetric version for \( x' \) fixed.
+
+Since we can consider X to be a vector subspace of \( \mathbb{R}^X \), \( X \) inherits the product
+topology of \( \mathbb{R}^X \) . This topology is referred to as the weak topology on \( X \) and is
+denoted by \( \sigma(X, X') \), or simply \( w \). Since the product topology on \( \mathbb{R}^X \) is a locally
+convex Hausdorﬀ topology, the weak topology \( \sigma(X, X') \) is likewise Hausdorﬀ and locally convex.
+For this reason the weak topology is also known as the topology of pointwise convergence on X  . 
+
+A family of seminorms that generates the weak
+topology \( \sigma(X, X') \) is 
+\[
+  p_{x'}(x) = | \langle x, x' \rangle|, \quad x \in X
+\]
+The locally convex Hausdorff topology \( \sigma(X', X) \) is deﬁned in a similar manner
+and is the \( w^\ast \)-topology with the generating seminorms
+\[
+  p_{x}(x') = | \langle x, x' \rangle|, \quad x' \in X'
+\]
+
+Theorem 
+If \( (X, X') \)is a dual pair, then the topological dual of the tvs \( X \), \( \sigma(X, X') \) is \( X' \). 
+That is, if \( f : X \to \mathbb{R} \) is a \( \sigma(X, X') \)-continuous linear functional, then there exists a unique \( x' \in X' \) such that
+\[
+    f(x) = \langle x, x' \rangle
+\]

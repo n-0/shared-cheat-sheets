@@ -1,0 +1,343 @@
+State the essential results of Elimination theory (affine case)
+
+
+In the succeeding the lex order is always applied.
+
+Given \( I = \langle f_1, \dots, f_s \rangle \subseteq k[x_1, \dots, x_n] \) the \( l \)-th elimination ideal
+refers to the ideal \( I_l \) defined by \( I_l = I \cap k[x_{l+1}, \dots, x_n] \).
+
+Thus \( I_l \) consists of all consequences of \( f_1 = \dots = f_s = 0 \) where the variables \( x_1, \dots, x_l \) have been eliminated.
+
+
+Elimination Theorem (Groebner basis form)
+Let \( I  \subseteq k[x_1, \dots, x_n] \) be an ideal with Groebner basis \( G \)
+then \( G_l = G \cap k[x_{l+1}, \dots, x_n] \) is the Groebner basis of \( I_l \).
+
+The reverse direction of extending partial solutions has some pitfalls one needs to circumvent.
+Essentially after finding all solutions \( \{(a_{l+1}, \dots, a_n) \in V(I_l) \} \), we determine \( I_{l-1} = \{g_1, \dots, g_r\} \) and try to find
+all \( x_l \) with \( \{(x_l, a_{l+1}, \dots, a_n) \in V(I_{l-1}) \} \), which might seem trivial on first sight. 
+However, consider \( xy - 1 = 0, xz -1 = 0 \), then \( I_1 = \langle y - z \rangle \) and \( V(I_1) = \{ (y, z) | y = z = \text{ const } c \in k\} \), 
+extending this to \( V(I_0) = V(I) \) is valid for all \( (\frac{1}{c}, c, c) \) except for \( c = 0 \).
+
+INSERT IMAGE FROM PAGE 130 HERE
+
+
+Extension theorem
+Let \( I = \langle f_1, \dots, f_s \rangle \subset k[x_1, \dots, x_n] \), \( k = \bar{k} \)
+Write each \( f_i \in I_1 \) as \( f_i = h_i(x_2, \dots, x_n) x_1^{N_i} + \text{ terms in which } x_1 \text{ has degree } < N_i \),
+where \( N_i \geq 0 \) and \( h_i \in \mathbb{C}[x_2, \dots, x_n] \) is nonzero. Suppose that we have
+a partial solution \( (a_2, \dots, a_n) \in V(I_1) \). If \( (a_2, \dots, a_n) \nin V(c_1, \dots, c_s) \),
+there there exists \( \alpha_1 \in \mathbb{C} \) s.t. \( (a_1, \dots, a_n) \in V(I) \).
+
+
+This holds analogously for \( I_l \) and \( I_{l-1} \).
+For non algebraically closed fields this works as long as one checks if extended partial solutions would stay in \( k \).
+Note that the minimal extension property of this theorem is the content of the closure theorem.
+
+
+State the closure theorem and the geometric version of the extension theorem
+
+Let \( \pi_l : (a_1, \dots, a_n) \mapsto (a_{l+1}, \dots, a_n) \) denote the projection
+
+Geometric extension theorem
+Given \( F = V(f_1, \dots, f_s) \subseteq k^n \), \( k \) alg. closed,
+let \( h_i \in k[x_1, \dots, x_n] \) as in the previous extension theorem.
+We have the equality
+\( V(I_1) = \pi_1(F) \cup (V(h_1, \dots, h_s) \cap V(I_1)) \)
+In particular if there's some \( i \) s.t. \( h_i \in k \) (so without zeros) then \( \pi_1(V) = V(I_1) \).
+
+This tells us that \( \pi_1(F) \) fills up the affinte variety \( V(I_1) \) except for a part that lies 
+in \( V(c_1, \dots, c_s) \). It is not easy to determine how large \( V(c_1, \dots, c_s) \) is.
+
+Closure theorem
+Given \( F = V(f_1, \dots, f_s) \subseteq k^n \), \( k \) alg. closed, then
+- \( V(I_l) \) is the smallest affine variety containing \( \pi_l(V) \subseteq k^{n-l} \)
+- When \( F \neq 0 \) there is an affine variety \( W \subsetneq V(I_l) \) s.t. \( V(I_l) \setminus W \subseteq \pi_l(F) \).
+  Put differently \( V(I_l) \) is the Zariski closure of \( \pi_l(F) \).
+
+
+
+
+State the theorems for implicitization as consequences of Elimination theory (affine case)
+
+Recall that polynomial parametrization \( H : k^m \to k^n \) tries to express a variety in \( (x_1, \dots, x_n) \) via 
+a set of parameters \( (t_1, \dots, t_m) \) as \( x_i = h_i(t_1, \dots, t_m) \)
+
+Theorem (Polynomial Implicitization). 
+If \( k \) is an infinite field, let \( H : k^m \to k^n \) be the function determined by the polynomial parametrization. 
+Let \( I \) be the ideal \( I = \langle x_1 - h_1, \ldots, x_n - h_n \rangle \subseteq k[t_1, \ldots, t_m, x_1, \ldots, x_n] \) and 
+let \( I_m = I \cap k[x_1, \ldots, x_n] \) be the \( m \)-th elimination ideal. 
+Then \( V(I_m) \) is the smallest variety in \( k^n \) containing \( H(k^m) \).
+
+Note that this makes use of the graph of \( H \) as variety.
+The theorem gives the following implicitization algorithm for polynomial parametrizations: 
+if we are given \( x_i = h_i(t_1, \dots, t_m) \) for polynomials \( h_i \in k[t_1, \dots, t_m] \), 
+consider the ideal \( I = \langle x_1 - h_1, \dots, x_n - h_n \rangle \) and compute a Groebner
+basis with respect to a lexicographic ordering where every \( t_i > x_j \) for all \( i,j \).
+By the Elimination Theorem, the elements of the Groebner basis not involving \( t_i \)
+form a basis of \( I_m \), and by the Theorem, they define the smallest variety in \( k^n \) containing the parametrization.
+
+Now allow for the \( h_i = \frac{f_i}{g_i} \) to be rational.
+
+Theorem (Rational Implicitization).
+If \( k \) is an infinite field, let \( H : k^m \setminus W \to k^n \) be the function determined by the rational parametrization. 
+Let \( J \) be the ideal 
+\( J = \langle g_1 x_1 - f_1, \ldots, g_n x_n - f_n, 1 - g y \rangle \subseteq k[y, f_1, \ldots, f_n, t_1, \ldots, t_m, x_1, \ldots, x_n] \), 
+where \( g = g_1 \cdot g_2 \cdots g_n \) and \( W = V(g) \). 
+Also let \( J_{1+m} = J \cap k[x_1, \ldots, x_n] \) be the \( (1+m) \)-th elimination ideal. 
+Then \( V(J_{1+m}) \) is the smallest variety in \( k^n \) containing \( F(k^m \setminus W) \).
+
+The Theorem implies the following implicitization algorithm for rational parametrizations: 
+if we have \(x_i = f_i/g_i\) for polynomials \(f_1, g_1, \ldots, f_n, g_n \in k[t_1, \ldots, t_m]\), 
+consider the new variable \(y\) and set \(J = \langle g_1 x_1 - f_1, \ldots, g_n x_n - f_n, 1 - g y \rangle\), 
+where \(g = g_1 \cdots g_n\). Compute a Groebner basis with respect to a lexicographic ordering where 
+\(y\) and every \(t_i\) are greater than every \(x_i\). 
+Then the elements of the Groebner basis not involving \(y, t_1, \ldots, t_m\) define the smallest variety in \(k^n\) containing the parametrization. 
+This algorithm is due to Kalkbrenner.
+
+
+
+State Hilbert's Nullstellensaetze and some important Corollaries
+
+
+Weak Nullstellensatz
+Let \( k \) be an algebraically closed field and \( I \subseteq k[x_1, \dots, x_n] \) be an ideal satisfying \( V(I) = \emptyset \). 
+Then \( I = k[x_{1}, \dots, x_n] \).
+(Hard to prove)
+
+Strong Nullstellensatz
+Let \( k \) be an algebraically closed field.
+If \( f, f_1, \dots, f_s \in k[x_1, \dots, x_n] \) then \( f \in I(V(f_1, \dots, f_s)) \) if and only if
+\( f^m \in \langle f_1, \dots, f_s \rangle \) for some integer \( m \geq 1 \).
+
+Ansatz
+By assumption
+\[
+    f^m = \sum_{i=1}^s h_i f_i
+\]
+for some \( h_i \in k[x_1, \dots, x_n] \), consider the ideal \( \tilde{I} = \langle f_1, \dots, f_s,  1 - yf \rangle  \)
+in the ring \( k[x_1, \dots, x_n, y] \). By case consideration one realizes that \( V(\tilde{I}) = \emptyset \).
+By the weak Nullstellensatz we have some \( h_i \in k[x_1, \dots, x_n] \) with
+\( 1 = h_{s+1}(1 - yf) \sum_{i=1}^s h_i f_i  \), now set \( y = \frac{1}{f} \) then rewriting yields
+\( 1 = \sum_{i=1}^s h_i(x_1, \dots, \frac{1}{f}) f_i(x_1, \dots, \frac{1}{f}) \) 
+thus multiplying by some power of \( f^m \) cancels all occurences of \( \frac{1}{f} \) on the RHS but leaves some power of \( f \) on the LHS.
+
+A more idiomatic way of expressing this result is
+Let \( k \) be an algebraically closed field. If \( I \subseteq k[x_1, \dots, x_n] \) is an ideal then 
+\( I(V(I)) = \sqrt{I} \).
+Ansatz
+\( \sqrt{I} \subseteq I(V(I)) \) follows from \( f^m \) vanishing on \( V(I) \) implies that \( f \) vanishes on \( V(I) \).
+Conversely, take \( f \in I(V(I)) \). Then, by definition, f vanishes on \( V(I) \). By Hilbert’s Nullstellensatz,
+there exists an integer \( m \geq \sqrt{I} \) such that \( f^m \in I \), so \( f \in \sqrt{I} \).
+
+Corollary 12. If \( k \) is an algebraically closed field, then there is a one-to-one correspondence 
+between points of \( k^n \) and maximal ideals of \( k[x_1, \dots, x_n] \).
+
+Theorem 11. If \( k \) is an algebraically closed field, then every maximal ideal of
+\( k[x_1, \dots, x_n] \) is of the form \( \langle x_1 - a_1, \dots, x_n - a_n \rangle \) for some \( a_1, \dots, a_n \in k \).
+
+Proposition 13. A variety \( V \) is irreducible if and only if for every variety \( W \subseteq V \),
+the difference \( V \setminus W \) is Zariski dense in \( V \).
+
+
+State the Ideal-Variety correspondence
+
+
+Let \( k \) be an arbitrary field.
+
+(i) The maps
+\[
+\text{affine varieties} \xrightarrow{\mathrm{I}} \text{ideals}
+\]
+and
+\[
+\text{ideals} \xrightarrow{\mathrm{V}} \text{affine varieties}
+\]
+are inclusion-reversing, i.e., if \( I_1 \subseteq I_2 \) are ideals, then \( \mathrm{V}(I_1) \supseteq \mathrm{V}(I_2) \) and, similarly, if \( V_1 \subseteq V_2 \) are varieties, then \( \mathrm{I}(V_1) \supseteq \mathrm{I}(V_2) \).
+
+(ii) For any variety \( V \),
+\[
+\mathrm{V}(\mathrm{I}(V)) = V,
+\]
+so that \( \mathrm{I} \) is always one-to-one. On the other hand, any ideal \( I \) satisfies
+\[
+\mathrm{V}(\sqrt{I}) = \mathrm{V}(I).
+\]
+
+(iii) If \( k \) is algebraically closed, and if we restrict to radical ideals, then the maps
+\[
+\text{affine varieties} \xrightarrow{\mathrm{I}} \text{radical ideals}
+\]
+and
+\[
+\text{radical ideals} \xrightarrow{\mathrm{V}} \text{affine varieties}
+\]
+are inclusion-reversing bijections which are inverses of each other.
+
+
+
+
+Define the Zariski topology and related notations
+
+Consider a subset \( E \subset A \) of a commutative unital ring \( A \) 
+and the associated ideal \( \mathfrak{a} = (E) \subset A \) generated by \( E \) in \( A \). 
+Define
+\[
+\begin{aligned}
+V(E) &= \{ x \in \mathrm{Spec}\, A ;\, f(x) = 0 \text{ for all } f \in E \} \\
+     &= \{ x \in \mathrm{Spec}\, A ;\, E \subset \mathfrak{p}_x \}
+\end{aligned}
+\]
+it is also referred to as the variety of \( E \), which explains the usage of the letter \( V \). 
+For \( f \in A \) we will apply the notations
+\[
+V(f) = \{ x \in \mathrm{Spec}\, A ;\, f(x) = 0 \},
+\]
+\[
+D(f) = \mathrm{Spec}\, A - V(f) = \{ x \in \mathrm{Spec}\, A ;\, f(x) \ne 0 \}
+\]
+\( D(f) \) is also known as the domain of \( f \), which explains the usage of the letter \( D \). 
+
+Proposition:
+Consider subsets \( E, E' \), and a family of subsets \( (E_\lambda)_{\lambda \in \Lambda} \) of a ring \( A \). Then:
+(i) \( V(0) = \mathrm{Spec}\, A \), \( V(1) = \emptyset \).
+(ii) \( E \subset E' \implies V(E) \supset V(E') \).
+(iii) \( V \left( \bigcup_{\lambda \in \Lambda} E_\lambda \right) = V \left( \sum_{\lambda \in \Lambda} E_\lambda \right) = \bigcap_{\lambda \in \Lambda} V(E_\lambda) \).
+(iv) \( V(E E') = V(E) \cup V(E') \), where \( E E' = \{ f f' ;\, f \in E,\, f' \in E' \} \).
+(v) \( V(E) = V(\sqrt{(E)}) \).
+
+Let \( A \) be a commutative unital ring and \( X = \text{Spec } A \) its spectrum. There exists a
+unique topology on \( X \), the so-called Zariski topology, whose closed sets consist
+precisely of the subsets of type \( V(E) \subset X \) for some subset \( E \subset A \).
+Furthermore:
+(i) The sets of type \( D(f) \) for \( f, f' \in A \) are open and satisfy the intersection
+relation \( D(f) \cap D(f') = D(f f') \).
+(ii) Every open subset of \( X \) is a union of sets of type \( D(f) \). In particular,
+the latter form a basis of the Zariski topology on \( X \) (which is the reason why
+the sets of type \( D(f) \) are referred to as the basic open subsets of X).
+The Zariski topology is Hausdorff and for any \( f \in A \), \( D(f) \) is quasi-compact.
+
+In particular \( V(E) = \bigcap_{f \in E} V(f) \) and any open \( U \subset X \) can be expressed as \( U = \bigcup_{f \in E} D(f) \).
+Note that \( D(E) = \bigcap_{f \in E} D(f) \) which is again open if \( (E) \) has a finite basis.
+
+The somewhat inverse notion to \( V \) is defined as 
+\( I(Y) = \{ f \in A ; f(y) = 0 for all y \in Y \} = \bigcap_{y \in Y} \mathfrak{p}_y \).
+
+Let A be a ring.
+(i) Let \( Y \subset Y' \subset \text{Spec } A \) be subsets. Then \( I(Y) \supsect I(Y') \).
+(ii) \( I(\bigcup_{\lambda \in \Lambda} Y_\lambda) = \bigcap_{\lambda \in \Lambda} \) for any family \( \bigcup_{\lambda \in \Lambda} Y_\lambda) \)
+    of subsets of \( \text{Spec } A \).
+
+Hilbert's Nullstellensatz then expresses \( I(V(I)) = \sqrt{I} \) and for any \( Y \subset \text{Spec } A \), \( V(I(Y)) \) coincides
+with the Zariski closure of \( Y \). Thus for closed \( Y \), \( V \) and \( I \) are inverse and inclusion-reversing.
+In particular
+\( I(\bigcup_{\lambda \in \Lambda } = \bigcap_{\lambda \in \Lambda} I(Y_\lambda) \) for any \( Y \subset \text{Spec } A  \)
+and for closed \( Y_\lambda \) it holds
+\( I(\bigcap_{\lambda \in \Lambda } = \sqrt{ \sum_{\lambda \in \Lambda} I(Y_\lambda)} \).
+
+For any ideal \( \mathfrak{a} \subset A \) it holds that the homomorphism \( \pi : A \to A / \mathfrak{a} \)
+introduces a map 
+\( \tilde{\pi} : \text{Spec} A / \mathfrak{a} \to \text{Spec} A \) via \( \mathfrak{p} \mapsto \pi^{-1}(\mathfrak{p}) \)
+which is a homomorphism if restricting the codomain to \( V(\mathfrak{a}) \), where \( V(\mathfrak{a}) \) has 
+the subspace topology of \( \text{Spec } A \).
+
+
+
+Define and give algorithms for arithmetic operations on varieties
+
+\( I + J \) is the smallest ideal containing \( I, J \) and for \( I = \langle f_1, \dots, f_i \rangle, J = \langle g_1, \dots, g_j \rangle \)
+\( I + J = \langle f_1, \dots, f_i, g_1, \dots, g_j \rangle \).
+It follows that \( V(I + J) = V(I) \cap V(J) \).
+
+Similarly for \( IJ \) we get \( IJ = \langle f_1 g_1, f_1 g_2, \dots, f_1, g_j, \dots, f_i g_j \rangle \) on the generators
+and \( V(IJ) = V(I) \cup V(J) \).
+
+To compute intersections of ideals (which are ideals themselves) we can make use of the fact 
+\( I \cap J = (tI + (1 - t)J) \cap k[x_1, \dots, x_n] \).
+
+The above result and the Elimination Theorem lead to the following algorithm for computing intersections of ideals: 
+if \( I = \langle f_1, \ldots, f_r \rangle \) and \( J = \langle g_1, \ldots, g_s \rangle \) are ideals in \( k[x_1, \ldots, x_n] \), 
+we consider the ideal
+\[
+\langle t f_1, \ldots, t f_r,\, (1-t) g_1, \ldots, (1-t) g_s \rangle \subseteq k[x_1, \ldots, x_n, t]
+\]
+and compute a Gröbner basis with respect to lex order in which \( t \) is greater than the \( x_i \). 
+The elements of this basis which do not contain the variable \( t \) will form a basis (in fact, a Gröbner basis) of \( I \cap J \).
+
+Define the least common multiple as 
+\( \text{lcm}(f, g) = h_1^{\max(a_1, b_1)} \cdots h_l^{\max(a_l, b_l)} f_{l+1}^{a_{l+1}} \cdots g_{l+1}^{b_{l+1}} \),
+where \( f_i, g_j \) are the irreducible factors of \( f, g \) appearing with power \( a_i, b_j \) respectively and \( h_i \) those which are
+common to both of them.
+
+For principal ideals \( I = \langle f \rangle, J = \langle g \rangle \),
+the intersection can then be convienently be expressed as \( I \cap J = \text{lcm}(f,g) \).
+
+Also the relation \( \text{lcm}(f, g) \cdot \text{gcd}(f, g) = fg \) allows for an explicit way of determining the \( gcd \) of \( 2 \) polynomials.
+
+Last geometrically the intersection satisfies \( V(I \cap J) = V(I) \cup V(J) \).
+
+
+Define the ideal quotient and its algebro-geometric relevance
+
+If \( I, J \subset R \) are ideals in a ring \( R \) then the ideal quotient is the ideal
+\( I : J = \{ f \in R | fg \in I, \forall  g \in I \} \).
+
+Proposition
+(i) If \( V, W \) are varieties in \( k^n \) then
+\( V = (V \cap W) \cup (\overline{V \setminus W}) \)
+(ii) If \( I, J \subset k[x_1, \dots, x_n] \) are ideals then
+\( V(I) = V(I + J) \cup V(I : J) \)
+and \( \overline{V(I) \setminus V(J)} \subseteq V(I:J) \)
+
+
+The saturation of \( I \) with respect to \( J \) is the set
+\( I : J^\infty = \{ f \in R | \forall g \in J, \exist N \geq 0, fg^N \in I \} \).
+It holds \( I : J^\infty = \bigcup_{n \in \mathbb{N}} I : J^n \).
+
+For \( R = k[x_1, \dots, x_n] \) it holds
+(i) \(I \subseteq I : J \subseteq I : J^\infty \)
+(ii) \( I : J^\infty = I : J^N \) for some sufficiently large \( N \).
+(iii) \( \sqrt{I : J^\infty} = \sqrt{I} : J \).
+
+Moreover 
+
+(i) If \( V, W \) are varieties in \( k^n \) then
+\( V = V(I+J) \cup V(I : J^\infty) \)
+(ii) 
+\( \overline{V(I) \setminus V(J)} \subseteq V(I: J^\infty) \)
+and if \( k \) is alg. closed this is an equality.
+
+For multiple ideals we have
+
+\( I : \sum_{i=1}^r J_i = \bigcap_{i=1}^r (I : J_i) \)
+\( I : \left(\sum_{i=1}^r J_i \right)^\infty = \bigcap_{i=1}^r (I : J_{i}^\infty) \)
+
+
+To actually compute it one can use the following result
+
+Theorem. Let \( I \) be an ideal and \( g \) an element of \( k[x_1, \ldots, x_n] \). Then:
+
+(i) If \(\{h_1, \ldots, h_p\}\) is a basis of the ideal \( I \cap \langle g \rangle \), then \(\{h_1 / g, \ldots, h_p / g\}\) is a basis of \( I : g \).
+(ii) If \(\{f_1, \ldots, f_s\}\) is a basis of \( I \) and \( \tilde{I} = \langle f_1, \ldots, f_s, 1 - yg \rangle \subseteq k[x_1, \ldots, x_n, y] \), where \( y \) is a new variable, then
+\[
+I : g^{\infty} = \tilde{I} \cap k[x_1, \ldots, x_n].
+\]
+Furthermore, if \( G \) is a lex Gröbner basis of \( \tilde{I} \) for \( y > x_1 > \cdots > x_n \), then \( G \cap k[x_1, \ldots, x_n] \) is a basis of \( I : g^{\infty} \).
+
+algorithm for computing a basis of an ideal quotient: 
+Given \( I = \langle f_1, \ldots, f_r \rangle \) and \( J = \langle g_1, \ldots, g_s \rangle \), to compute a basis of \( I : J \), 
+we first compute a basis for \( I : g_i \) for each \( i \). 
+In view of the previous theorem, this means computing a basis \( \{h_1, \ldots, h_p\} \) of 
+\( \langle f_1, \ldots, f_r \rangle \cap \langle g_i \rangle \). 
+Recall that we do this via the algorithm for computing intersections of ideals. 
+Using the division algorithm, we divide each of basis element \( h_j \) by \( g_i \) to get a basis for \( I : g_i \) by part (i) of the Theorem. 
+Finally, we compute a basis for \( I : J \) by applying the intersection algorithm \( s-1 \) times, computing first a basis for 
+\( I : \langle g_1, g_2 \rangle = (I : g_1) \cap (I : g_2) \), 
+then a basis for \( I : \langle g_1, g_2, g_3 \rangle = (I : \langle g_1, g_2 \rangle) \cap (I : g_3) \), and so on.
+
+Similarly, we have an algorithm for computing a basis of a saturation: 
+Given \( I = \langle f_1, \ldots, f_r \rangle \) and \( J = \langle g_1, \ldots, g_s \rangle \), 
+to compute a basis of \( I : J^\infty \), we first compute a basis for \( I : g_i^\infty \) for each \( i \) 
+using the method described in part (ii) of the Theorem. Then by the summation property of quotient ideal, 
+we need to intersect the ideals \( I : g_i^\infty \), which we do as above by applying the intersection algorithm \( s-1 \) times.
+
